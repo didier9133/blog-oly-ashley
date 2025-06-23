@@ -86,7 +86,7 @@ export default async function Home() {
       </div>
 
       <div className="bg-gradient-to-b from-[#e0e0d0] to-[#c2c2b2]">
-        <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-20 md:p-20 font-[family-name:var(--font-lora)] ">
+        <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-10 md:pt-20 font-[family-name:var(--font-lora)] ">
           <div className=" flex flex-col  justify-center gap-4 w-full ">
             <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
               The latest Raices & Returnings Originals
@@ -147,7 +147,7 @@ export default async function Home() {
               </Card>
             </div>
 
-            <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4 md:pb-20  font-[family-name:var(--font-lora)] ">
+            <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4 pb-20  font-[family-name:var(--font-lora)] ">
               <Card className="overflow-hidden bg-white/70 backdrop-blur-sm border-stone-200/50 shadow-sm hover:shadow-md transition-all duration-300 group">
                 <CardContent className="p-0">
                   <div className="grid grid-cols-1 lg:grid-cols-2 lg: gap-0">
