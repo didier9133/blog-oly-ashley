@@ -21,9 +21,10 @@ export const data = {
       isActive: false,
     },
     {
-      title: "Roots & Returnings",
-      url: "/roots-returnings",
+      title: "Merch",
+      url: "https://raices-and-returnings.printify.me/",
       isActive: false,
+      external: true,
     },
     {
       title: "Contact",
@@ -53,9 +54,10 @@ export const data = {
       isActive: false,
     },
     {
-      title: "Roots & Returnings",
-      url: "/roots-returnings",
+      title: "Merch",
+      url: "https://raices-and-returnings.printify.me/",
       isActive: false,
+      external: true,
     },
     {
       title: "Contact",

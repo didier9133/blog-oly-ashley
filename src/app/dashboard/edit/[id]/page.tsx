@@ -262,7 +262,7 @@ export default function CreatePostPage() {
       setErrorMessage("El contenido es obligatorio");
       return;
     }
-    toast.loading("Actualizando post...");
+
     // Check if data has changed before updating
     if (post.current) {
       const hasChanged =
@@ -271,21 +271,22 @@ export default function CreatePostPage() {
         post.current.subcategory !== values.subcategory ||
         post.current.content !== content ||
         post.current.isPublished !== values.isPublished ||
-        !isDeletedImage.current;
+        isDeletedImage.current;
 
       if (!hasChanged) {
         toast.dismiss();
-        toast.success("No hay cambios para guardar");
-        router.push("/dashboard");
+        toast.info("No hay cambios para guardar");
         return;
       }
     }
+    toast.loading("Actualizando post...");
     setIsSubmitting(true);
     let urlImage = imagePreview;
     try {
       // Si se ha eliminado la imagen, no subir una nueva
       if (isDeletedImage.current) {
         urlImage = await uploadImageToS3(values.image[0], values.image[0].type);
+        console.log("Imagen subida:", urlImage);
       }
       const data = {
         title: values.title,
@@ -551,6 +552,7 @@ export default function CreatePostPage() {
                                     setImagePreview("");
                                     formPost.setValue("image", "");
                                     isDeletedImage.current = true;
+                                    console.log("Imagen eliminada");
                                   }}
                                 >
                                   Eliminar
@@ -620,6 +622,7 @@ export default function CreatePostPage() {
                     <Save className="h-4 w-4 mr-2" />
                     Guardar
                   </Button>
+                  <span>{isDeletedImage.current}</span>
                 </div>
               </CardFooter>
             </Card>

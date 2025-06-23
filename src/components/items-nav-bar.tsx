@@ -10,7 +10,7 @@ export async function ItemsNavBar() {
   return (
     <div className="hidden md:flex items-center gap-4">
       {items.map((item) => (
-        <ItemNavBar key={item.title} title={item.title} url={item.url} />
+        <ItemNavBar key={item.title} {...item} />
       ))}
     </div>
   );
