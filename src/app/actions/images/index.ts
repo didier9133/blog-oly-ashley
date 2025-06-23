@@ -2,7 +2,7 @@
 
 import { S3Client } from "@aws-sdk/client-s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs/server";
 
 const s3Client = new S3Client({
@@ -23,22 +23,22 @@ const CLOUDFRONT_DISTRIBUTION = process.env.CLOUDFRONT_DISTRIBUTION;
  * @param expiresIn - Tiempo de expiración en segundos (default: 3600 = 1 hora)
  */
 
-async function createPresignedUploadUrl(
-  key: string,
-  contentType: string,
-  expiresIn = 3600
-): Promise<string> {
-  if (!BUCKET_NAME) {
-    throw new Error("BUCKET_NAME no está definido en variables de entorno");
-  }
-  const command = new PutObjectCommand({
-    Bucket: BUCKET_NAME,
-    Key: key,
-    ContentType: contentType,
-  });
+// async function createPresignedUploadUrl(
+//   key: string,
+//   contentType: string,
+//   expiresIn = 3600
+// ): Promise<string> {
+//   if (!BUCKET_NAME) {
+//     throw new Error("BUCKET_NAME no está definido en variables de entorno");
+//   }
+//   const command = new PutObjectCommand({
+//     Bucket: BUCKET_NAME,
+//     Key: key,
+//     ContentType: contentType,
+//   });
 
-  return getSignedUrl(s3Client, command, { expiresIn });
-}
+//   return getSignedUrl(s3Client, command, { expiresIn });
+// }
 
 /**
  * Obtiene la URL pública de una imagen
@@ -53,32 +53,37 @@ export async function uploadImageToS3(
   contentType: string,
   folder: string = "uploads"
 ): Promise<string> {
+  console.log("Iniciando subida directa a S3", {
+    bucketName: BUCKET_NAME,
+    region: process.env.AWS_REGION,
+    hasCredentials:
+      !!process.env.AWS_ACCESS_KEY_ID && !!process.env.AWS_SECRET_ACCESS_KEY,
+  });
+
   const { userId } = await auth();
+
   const fileExtension =
     file.name.substring(file.name.lastIndexOf(".")) || ".jpg";
   const key = `${folder}/${userId}/${Date.now()}${fileExtension}`;
 
-  // Genera la URL prefirmada para subir la imagen
-  const uploadUrl = await createPresignedUploadUrl(key, contentType);
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
 
   try {
-    const response = await fetch(uploadUrl, {
-      method: "PUT",
-      headers: {
-        "Content-Type": contentType,
-      },
-      body: file,
+    // Subir directamente usando el SDK
+    const command = new PutObjectCommand({
+      Bucket: BUCKET_NAME!,
+      Key: key,
+      Body: buffer,
+      ContentType: contentType,
     });
-    console.log("Response from S3:", response);
-    if (!response.ok) {
-      throw new Error(`Error al subir la imagen: ${response.statusText}`);
-    }
-  } catch (error) {
-    console.error("Error al subir la imagen:", error);
-    throw new Error(
-      "Error al subir la imagen. Por favor, inténtalo de nuevo más tarde."
-    );
-  }
 
-  return getPublicImageUrl(key);
+    await s3Client.send(command);
+    console.log("Imagen subida correctamente a S3", { key });
+
+    return getPublicImageUrl(key);
+  } catch (error) {
+    console.error("Error detallado en la subida a S3:", error);
+    throw new Error("Error al subir la imagen: " + (error as Error).message);
+  }
 }
