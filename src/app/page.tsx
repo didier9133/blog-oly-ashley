@@ -1,103 +1,151 @@
+import { ParallaxHero } from "@/components/parallax-hero";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main>
+      <ParallaxHero imageSrc="/hero-image.jpeg" imageAlt="Hero image">
+        <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl lg:text-6xl font-bold mb-4 hero-text">
+          Between Flavors, Bodies, and Borders
+        </h1>
+        <p className="text-xl md:text-2xl max-w-2xl mx-auto font-[family-name:var(--font-lora)] hero-text">
+          Recipes with history, everyday stories, and unfiltered queer life.
+        </p>
+      </ParallaxHero>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-20 md:p-20 font-[family-name:var(--font-lora)] text-base">
+        <div className=" flex flex-col  justify-center gap-4 w-full ">
+          <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
+            Queer Flavors: Stories, Tastes, and Soul in a Digital Sanctuary for
+            Free Bodies and Spirits
+          </h2>
+          <p>
+            Welcome to our intimate corner where stovetops, words, and queer
+            pride collide with Latinx spice. We are Ashley and Oly, a digital
+            refuge created by two migrant women who cook stories to feed quiet
+            revolutions. Here, every recipe holds a secret of identity, every
+            story seasons the sacred in the mundane, and every reflection is an
+            act of loving resistance. We dance between pots and memories,
+            weaving an altar where queerness isn’t just celebrated—it’s lived
+            with spiritual depth. Our words are windows to see yourself, our
+            shared meals are rituals of belonging, and our conversations about
+            migration are maps for bodies rewriting home. The mission? To invite
+            you to a feast where activism tastes like dulce de leche,
+            spirituality smells like freshly cut herbs, and transformation is
+            the flavor of freedom. This isn’t just a blog. It’s a tender,
+            unapologetic yes to existing in full color.
+          </p>
+
+          <p>
+            Join us as we explore the intersection of food, culture, and
+            identity.
+          </p>
+          <p>
+            Whether you&apos;re looking for recipes, stories, or just a place to
+            feel at home, we hope you find something that resonates with you.
+          </p>
+          <p>
+            Thank you for being here with us. We can&apos;t wait to share our
+            journey with you!
+          </p>
+          <p>With love,</p>
+          <p>The Queer Kitchen Team</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      <div className="bg-gradient-to-b from-[#e0e0d0] to-[#c2c2b2]">
+        <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-20 md:p-20 font-[family-name:var(--font-lora)] ">
+          <div className=" flex flex-col  justify-center gap-4 w-full ">
+            <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
+              The latest Raices & Returnings Originals
+            </h2>
+            <p>
+              Welcome to our intimate corner where stovetops, words, and queer
+              pride collide with Latinx spice. We are Ashley and Oly, a digital
+              refuge created by two migrant
+            </p>
+          </div>
+        </div>
+        <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4  font-[family-name:var(--font-lora)] ">
+          <Card className="overflow-hidden bg-white/70 backdrop-blur-sm border-stone-200/50 shadow-sm hover:shadow-md transition-all duration-300 group">
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                <div className="relative h-80   overflow-hidden">
+                  <Image
+                    src="https://cdn.pixabay.com/photo/2016/12/26/17/28/spaghetti-1932466_1280.jpg"
+                    alt="Logo"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover  transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                </div>
+                <div className="lg:order-1 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
+                  <CardTitle className="text-lg font-semibold mb-2 text-primary group-hover:underline transition-all duration-300">
+                    Title of the Post
+                  </CardTitle>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the
+                    industry&apos;s standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and...
+                  </p>
+                  <div className="flex flex-col mt-6 sm:flex-row gap-3">
+                    <Button className="rounded-full">Read More</Button>
+                    <Button
+                      variant="outline"
+                      className="px-6 py-2 rounded-full transition-all duration-200  border-primary  hover:bg-transparent hover:text-primary text-primary"
+                    >
+                      All Post
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4 md:pb-20  font-[family-name:var(--font-lora)] ">
+          <Card className="overflow-hidden bg-white/70 backdrop-blur-sm border-stone-200/50 shadow-sm hover:shadow-md transition-all duration-300 group">
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg: gap-0">
+                <div className="order:1 lg:order-0 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
+                  <CardTitle className="text-lg font-semibold mb-2 text-primary group-hover:underline transition-all duration-300">
+                    Title of the Post
+                  </CardTitle>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the
+                    industry&apos;s standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and...
+                  </p>
+                  <div className="flex flex-col mt-6 sm:flex-row gap-3">
+                    <Button className="rounded-full">Read More</Button>
+                    <Button
+                      variant="outline"
+                      className="px-6 py-2 rounded-full transition-all duration-200  border-primary  hover:bg-transparent hover:text-primary text-primary"
+                    >
+                      All Post
+                    </Button>
+                  </div>
+                </div>
+                <div className="relative h-80  overflow-hidden">
+                  <Image
+                    src="https://cdn.pixabay.com/photo/2016/12/26/17/28/spaghetti-1932466_1280.jpg"
+                    alt="Logo"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </main>
   );
 }

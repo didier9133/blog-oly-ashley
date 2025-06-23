@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ignore all files in the postgres directory
+/postgres_data/*
+/app/generated/prisma
+
+/app/generated/prisma
