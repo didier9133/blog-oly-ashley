@@ -54,7 +54,9 @@ export async function uploadImageToS3(
   folder: string = "uploads"
 ): Promise<string> {
   const { userId } = await auth();
-  const key = `${folder}/${userId}/${Date.now()}`;
+  const fileExtension =
+    file.name.substring(file.name.lastIndexOf(".")) || ".jpg";
+  const key = `${folder}/${userId}/${Date.now()}${fileExtension}`;
 
   // Genera la URL prefirmada para subir la imagen
   const uploadUrl = await createPresignedUploadUrl(key, contentType);
