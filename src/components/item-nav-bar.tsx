@@ -10,10 +10,6 @@ interface ItemProps {
 }
 
 export function ItemNavBar({ title, url, external = false }: ItemProps) {
-  console.log({
-    external,
-    title,
-  });
   const pathname = usePathname();
   const isActive = pathname.startsWith(url);
 
