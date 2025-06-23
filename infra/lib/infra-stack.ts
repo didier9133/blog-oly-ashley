@@ -38,13 +38,17 @@ export class InfraStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
+    const oai = new cloudfront.OriginAccessIdentity(this, "ImagesOAI");
+
     // Agregamos CloudFront Distribution
     const distribution = new cloudfront.Distribution(
       this,
       "ImagesDistribution",
       {
         defaultBehavior: {
-          origin: new origins.S3Origin(imagesBucket),
+          origin: new origins.S3Origin(imagesBucket, {
+            originAccessIdentity: oai,
+          }),
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,

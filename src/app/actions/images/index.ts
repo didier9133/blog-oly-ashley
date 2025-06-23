@@ -54,17 +54,29 @@ export async function uploadImageToS3(
   folder: string = "uploads"
 ): Promise<string> {
   const { userId } = await auth();
-  const key = `${folder}/${userId}/${Date.now()}${file.name}`;
+  const key = `${folder}/${userId}/${Date.now()}`;
 
   // Genera la URL prefirmada para subir la imagen
   const uploadUrl = await createPresignedUploadUrl(key, contentType);
-  await fetch(uploadUrl, {
-    method: "PUT",
-    headers: {
-      "Content-Type": contentType,
-    },
-    body: file,
-  });
+
+  try {
+    const response = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": contentType,
+      },
+      body: file,
+    });
+    console.log("Response from S3:", response);
+    if (!response.ok) {
+      throw new Error(`Error al subir la imagen: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Error al subir la imagen:", error);
+    throw new Error(
+      "Error al subir la imagen. Por favor, inténtalo de nuevo más tarde."
+    );
+  }
 
   return getPublicImageUrl(key);
 }

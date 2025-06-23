@@ -309,6 +309,9 @@ export default function CreatePostPage() {
       }
       toast.dismiss();
       toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+      isDeletedImage.current = false; // Reset after submission
     }
   };
 
