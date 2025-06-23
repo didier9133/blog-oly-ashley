@@ -4,7 +4,9 @@ import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const evt = await verifyWebhook(req);
+    const evt = await verifyWebhook(req, {
+      signingSecret: process.env.CLERK_WEBHOOK_SIGNING_SECRET,
+    });
     const eventType = evt.type;
 
     if (eventType !== "user.created") {
