@@ -53,13 +53,6 @@ export async function uploadImageToS3(
   contentType: string,
   folder: string = "uploads"
 ): Promise<string> {
-  console.log("Iniciando subida directa a S3", {
-    bucketName: BUCKET_NAME,
-    region: process.env.AWS_REGION,
-    hasCredentials:
-      !!process.env.AWS_ACCESS_KEY_ID && !!process.env.AWS_SECRET_ACCESS_KEY,
-  });
-
   const { userId } = await auth();
 
   const fileExtension =
@@ -79,8 +72,6 @@ export async function uploadImageToS3(
     });
 
     await s3Client.send(command);
-    console.log("Imagen subida correctamente a S3", { key });
-
     return getPublicImageUrl(key);
   } catch (error) {
     console.error("Error detallado en la subida a S3:", error);
