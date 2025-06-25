@@ -85,16 +85,17 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-[#e0e0d0] to-[#c2c2b2]">
-        <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-10 md:pt-20 font-[family-name:var(--font-lora)] ">
+      <div className="bg-gradient-to-b from-[#e0e0d0] to-[#c2c2b2] dark:from-[#504e4e] dark:to-[#625f5f] dark:border-t-4 dark:border-border">
+        <div className="flex flex-1 flex-col conatiner max-w-3xl m-auto  p-4 pb-10 md:pt-20 font-[family-name:var(--font-lora)] ">
           <div className=" flex flex-col  justify-center gap-4 w-full ">
             <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
-              The latest Raices & Returnings Originals
-            </h2>
+              The latest Raices & Returnings Originalsr{" "}
+            </h2>{" "}
             <p>
-              Welcome to our intimate corner where stovetops, words, and queer
-              pride collide with Latinx spice. We are Ashley and Oly, a digital
-              refuge created by two migrant
+              Welcome to our intimate corner where stovetops, words, and queerp
+              pride collide with Latinx spice. We are Ashley and Oly, a
+              digitalith Latinx spice. We are Ashley and Oly, a digital refuge
+              created by two migrant
             </p>
           </div>
         </div>
@@ -103,30 +104,30 @@ export default async function Home() {
           <NoPostsView />
         ) : (
           <>
-            <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4  font-[family-name:var(--font-lora)] ">
-              <Card className="overflow-hidden bg-white/70 backdrop-blur-sm border-stone-200/50 shadow-sm hover:shadow-md transition-all duration-300 group">
+            <div className="flex flex-1 flex-col container max-w-3xl mx-auto p-4 font-[family-name:var(--font-lora)]">
+              <Card className="overflow-hidden bg-card backdrop-blur-sm border-border shadow-sm hover:shadow-md transition-all duration-300 group">
                 <CardContent className="p-0">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                    <div className="relative h-80   overflow-hidden">
+                    <div className="relative h-80 overflow-hidden">
                       <Image
                         src={recentPostOfBlog.image}
                         alt="Logo"
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover  transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
+                        className="object-cover transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent dark:from-black/30"></div>
                     </div>
                     <div className="lg:order-1 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
-                      <CardTitle className="text-lg font-semibold mb-2 text-primary group-hover:underline transition-all duration-300">
+                      <CardTitle className="text-lg font-semibold mb-2 text-primary dark:text-primary/90 group-hover:underline transition-all duration-300">
                         {recentPostOfBlog.title}
                       </CardTitle>
-                      <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden">
+                      <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden dark:text-gray-200">
                         {DOMPurify.sanitize(recentPostOfBlog.content ?? "", {
                           ALLOWED_TAGS: [],
                         })}
                       </div>
-                      <div className="flex flex-row mt-6  gap-3">
+                      <div className="flex flex-row mt-6 gap-3">
                         <Link
                           href={`/${CategoryEnum.Blog}/${recentPostOfBlog?.slug}`}
                         >
@@ -135,7 +136,7 @@ export default async function Home() {
                         <Link href={`/${CategoryEnum.Blog}`}>
                           <Button
                             variant="outline"
-                            className="px-6 py-2 rounded-full transition-all duration-200  border-primary  hover:bg-transparent hover:text-primary text-primary"
+                            className="px-6 py-2 rounded-full transition-all duration-200 border-primary hover:bg-transparent hover:text-primary text-primary dark:text-primary-foreground dark:hover:text-primary"
                           >
                             All Blog Posts
                           </Button>
@@ -147,15 +148,15 @@ export default async function Home() {
               </Card>
             </div>
 
-            <div className=" flex flex-1 flex-col container max-w-3xl mx-auto  p-4 pb-20  font-[family-name:var(--font-lora)] ">
-              <Card className="overflow-hidden bg-white/70 backdrop-blur-sm border-stone-200/50 shadow-sm hover:shadow-md transition-all duration-300 group">
+            <div className="flex flex-1 flex-col container max-w-3xl mx-auto p-4 pb-20 font-[family-name:var(--font-lora)]">
+              <Card className="overflow-hidden bg-card backdrop-blur-sm border-border shadow-sm hover:shadow-md transition-all duration-300 group">
                 <CardContent className="p-0">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 lg: gap-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                     <div className="order:1 lg:order-0 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
-                      <CardTitle className="text-lg font-semibold mb-2 text-primary group-hover:underline transition-all duration-300">
+                      <CardTitle className="text-lg font-semibold mb-2 text-primary dark:text-primary/90 group-hover:underline transition-all duration-300">
                         {recentPostOfRecipes.title}
                       </CardTitle>
-                      <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden">
+                      <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden dark:text-gray-200">
                         {DOMPurify.sanitize(recentPostOfRecipes.content ?? "", {
                           ALLOWED_TAGS: [],
                         })}
@@ -169,14 +170,14 @@ export default async function Home() {
                         <Link href={`/${CategoryEnum.Recipes}`}>
                           <Button
                             variant="outline"
-                            className="px-6 py-2 rounded-full transition-all duration-200  border-primary  hover:bg-transparent hover:text-primary text-primary"
+                            className="px-6 py-2 rounded-full transition-all duration-200 border-primary hover:bg-transparent hover:text-primary text-primary dark:text-primary-foreground dark:hover:text-primary"
                           >
                             All Recipes Posts
                           </Button>
                         </Link>
                       </div>
                     </div>
-                    <div className="relative h-80  overflow-hidden">
+                    <div className="relative h-80 overflow-hidden">
                       <Image
                         src={recentPostOfRecipes.image}
                         alt="Logo"
@@ -184,7 +185,7 @@ export default async function Home() {
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent dark:from-black/30"></div>
                     </div>
                   </div>
                 </CardContent>

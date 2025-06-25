@@ -323,7 +323,7 @@ export default function CreatePostPage() {
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
             Editar Post
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-600">
             Comparte tus ideas con el mundo
           </p>
         </div>
@@ -333,7 +333,7 @@ export default function CreatePostPage() {
             onSubmit={formPost.handleSubmit(onSubmit)}
             className="space-y-6"
           >
-            <Card className="border-slate-200 shadow-sm">
+            <Card className="ƒ shadow-sm">
               <CardHeader>
                 <CardTitle>Información del Post</CardTitle>
               </CardHeader>
@@ -454,11 +454,7 @@ export default function CreatePostPage() {
                 {/* Editor de Contenido */}
 
                 <FormItem>
-                  <FormLabel
-                    className={
-                      errorMessage ? "text-destructive" : "text-slate-700"
-                    }
-                  >
+                  <FormLabel className={errorMessage ? "text-destructive" : ""}>
                     Contenido
                   </FormLabel>
                   <FormControl>
@@ -483,7 +479,7 @@ export default function CreatePostPage() {
                       <FormLabel> Imagen destacada</FormLabel>
                       <FormControl>
                         {!imagePreview ? (
-                          <div className="border-2 relative  border-dashed border-slate-200 rounded-lg p-6 text-center hover:border-primary transition-colors">
+                          <div className="border-2 flex flex-col justify-center min-h-[500px]  relative  border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
                             <Input
                               type="file"
                               accept="image/*"
@@ -574,10 +570,8 @@ export default function CreatePostPage() {
                 {/* Estado de Publicación */}
                 <div className="flex items-center justify-between rounded-lg border-slate-200 focus:border-teal-500">
                   <div>
-                    <h3 className="font-medium text-slate-800">
-                      Estado de publicación
-                    </h3>
-                    <p className="text-sm text-slate-500">
+                    <h3 className="font-medium ">Estado de publicación</h3>
+                    <p className="text-sm text-gray-600">
                       {formPost.watch("isPublished")
                         ? "Tu post será visible para todos"
                         : "Tu post se guardará como borrador"}
@@ -609,7 +603,7 @@ export default function CreatePostPage() {
                 </div>
               </CardContent>
 
-              <CardFooter className="flex justify-end border-t border-slate-100 pt-6">
+              <CardFooter className="flex justify-end border-t border-border pt-6">
                 <div className="flex space-x-2">
                   <Link href="/dashboard">
                     <Button

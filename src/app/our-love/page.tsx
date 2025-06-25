@@ -58,7 +58,7 @@ export default async function Page() {
         <h1 className="text-4xl sm:text-6xl font-bold mb-4 text-primary transition-all duration-700 ease-out hover:tracking-wide">
           Our Love
         </h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-400 max-w-2xl mx-auto">
           We&apos;ve made it out of the closet, now it&apos;s time to unpack all
           that comes with finding yourself! Every week, Mal Glowenke, a
           recovering Texas-raised lesbian, will bring her unfiltered perspective
@@ -79,34 +79,29 @@ export default async function Page() {
             .map((item, index) => (
               <div key={index} className="relative flex items-start group">
                 {/* Timeline dot */}
-                <div className="relative z-10 flex items-center justify-center w-16 h-16 bg-white rounded-full border-4 border-blue-100 shadow-lg group-hover:border-blue-200 transition-colors duration-300">
+                <div className="relative z-10 flex items-center justify-center w-16 h-16 bg-background rounded-full border-2 border-blue-100 shadow-lg group-hover:border-blue-200 transition-colors duration-300">
                   <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-primary to-amber-600 rounded-full text-white">
                     <item.icon className="w-4 h-4" />
                   </div>
                 </div>
 
                 {/* Content card */}
-                <Card className="ml-8 flex-1 bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
+                <Card className="ml-8 flex-1 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
                   <CardContent className="p-6">
                     <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
                           <Badge variant="default">{item.year}</Badge>
-                          <Badge
-                            variant="outline"
-                            className="text-gray-600 border-gray-200"
-                          >
+                          <Badge variant="outline" className=" border-border">
                             {item.category}
                           </Badge>
                         </div>
 
-                        <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-semibold text-primary mb-3 group-hover:text-2xl transition-all duration-300">
                           {item.title}
                         </h3>
 
-                        <p className="text-gray-600 leading-relaxed">
-                          {item.description}
-                        </p>
+                        <p className="leading-relaxed">{item.description}</p>
                       </div>
 
                       <div className="lg:w-64 flex-shrink-0">

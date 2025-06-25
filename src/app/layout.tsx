@@ -10,6 +10,7 @@ import { Lora, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -39,17 +40,24 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${cormorantGaramond.variable} ${lora.variable} antialiased`}
+          className={`${cormorantGaramond.variable} ${lora.variable} antialiased `}
         >
-          <Toaster position="top-right" richColors />
-          <SidebarProvider defaultOpen={false}>
-            <AppSidebar className="font-[family-name:var(--font-cormorant-garamond)]" />
-            <SidebarInset>
-              <Header />
-              {children}
-              <Footer />
-            </SidebarInset>
-          </SidebarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster position="top-right" richColors />
+            <SidebarProvider defaultOpen={false}>
+              <AppSidebar className="font-[family-name:var(--font-cormorant-garamond)]" />
+              <SidebarInset>
+                <Header />
+                {children}
+                <Footer />
+              </SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

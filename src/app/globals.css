@@ -45,7 +45,7 @@
   --radius: 0.75rem;
 
   /* Base - Bone White */
-  --background: #f9f9f9;
+  --background: #f4efec;
 
   /* Texto - Charcoal */
   --foreground: #2b2b2b;
@@ -139,8 +139,8 @@
   --destructive-foreground: #f9f8f6;
 
   /* Bordes con opacidad */
-  --border: #f9f8f6 / 15%;
-  --input: #f9f8f6 / 20%;
+  --border: #525249;
+  --input: #c9b078 / 20%;
 
   /* Anillos de enfoque con Clay */
   --ring: #c47456;

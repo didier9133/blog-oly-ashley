@@ -40,7 +40,7 @@ export default function RichTextEditor({
     editorProps: {
       attributes: {
         class: isEditable
-          ? "min-h-[156px] border rounded-md bg-slate-50 py-2 px-3 font-[family-name:var(--font-lora)]"
+          ? "min-h-[156px] border-border  rounded-md bg-slate-50 py-2 px-3 font-[family-name:var(--font-lora)] dark:bg-slate-800 dark:text-slate-200 text-slate-900 focus-within:border-border focus-within:ring-1 focus-within:ring-border focus-within:outline-none"
           : "outline-none font-[family-name:var(--font-lora)]",
       },
     },

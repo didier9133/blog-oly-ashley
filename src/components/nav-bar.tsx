@@ -28,7 +28,7 @@ export async function Header() {
               alt="Logo"
               fill
               sizes="(max-width: 768px) 80px, (max-width: 1200px) 100px, 100px"
-              className="object-contain"
+              className="object-contain dark:[filter:brightness(0)_invert(1)]"
             />
           </div>
         </Link>

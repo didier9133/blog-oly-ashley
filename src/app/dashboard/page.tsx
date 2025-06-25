@@ -38,7 +38,7 @@ export default async function Page() {
               <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
                 Dashboard
               </h1>
-              <p className="mt-1 text-sm text-gray-500">Bienvenido de vuelta</p>
+              <p className="mt-1 text-sm text-gray-600">Bienvenido de vuelta</p>
             </div>
             <Link href="/dashboard/create">
               <Button className="gap-2">
@@ -51,17 +51,17 @@ export default async function Page() {
       </div>
       <div className="container   max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Mensaje de bienvenida personalizado */}
-        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-border dark:from-slate-800 dark:to-slate-900 ">
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-100 rounded-full">
+              <div className="p-3 bg-blue-200 rounded-full">
                 <User className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 font-[family-name:var(--font-cormorant-garamond)]">
+                <h2 className="text-xl font-semibold text-primary font-[family-name:var(--font-cormorant-garamond)]">
                   ¡Hola, Administrador! 👋
                 </h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-400 mt-1">
                   Tienes {postData.length} posts en total.{" "}
                   {postData.filter((p) => !p.published).length} borradores
                   pendientes de publicación.

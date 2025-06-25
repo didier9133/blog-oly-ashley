@@ -72,6 +72,7 @@ export async function uploadImageToS3(
     });
 
     await s3Client.send(command);
+
     return getPublicImageUrl(key);
   } catch (error) {
     console.error("Error detallado en la subida a S3:", error);

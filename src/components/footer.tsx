@@ -2,9 +2,11 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { ModeToggle } from "@/components/toggle-theme";
+
 export function Footer() {
   return (
-    <footer className="border-t py-6 px-4  mt-auto lg:px-0 ">
+    <footer className="border-t py-6 px-4  mt-auto lg:px-0 bg-card ">
       <div className="container  flex flex-col items-center justify-between gap-4 mx-auto md:flex-row">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-4">
@@ -15,8 +17,8 @@ export function Footer() {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -36,8 +38,8 @@ export function Footer() {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -55,8 +57,8 @@ export function Footer() {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -67,33 +69,8 @@ export function Footer() {
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
               </svg>
             </a>
-            <a
-              href="#"
-              className="text-foreground hover:text-primary"
-              aria-label="Pinterest"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0z" />
-                <path d="M12 2v4" />
-                <path d="M12 18v4" />
-                <path d="m4.93 4.93 2.83 2.83" />
-                <path d="m16.24 16.24 2.83 2.83" />
-                <path d="M2 12h4" />
-                <path d="M18 12h4" />
-                <path d="m4.93 19.07 2.83-2.83" />
-                <path d="m16.24 7.76 2.83-2.83" />
-              </svg>
-            </a>
+
+            <ModeToggle />
           </div>
         </div>
         <div className="flex w-full max-w-sm items-center space-x-2">
@@ -107,12 +84,12 @@ export function Footer() {
               alt="Logo"
               fill
               sizes="80px"
-              className="object-contain"
+              className="object-contain  dark:[filter:brightness(0)_invert(1)]"
             />
           </div>
         </div>
       </div>
-      <p className="text-center text-sm text-gray-500 my-10 ba">
+      <p className="text-center text-sm text-gray-600 my-10 ba">
         &copy; 2019-{new Date().getFullYear()}{" "}
         <a href="#" className="hover:underline" target="_blank">
           Themesberg
