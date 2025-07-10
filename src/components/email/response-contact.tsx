@@ -4,7 +4,6 @@ import {
   Head,
   Heading,
   Html,
-  Preview,
   Text,
   Hr,
   Section,
@@ -21,43 +20,49 @@ const ContactEmailTemplate = ({
 }: ContactEmailTemplateProps) => (
   <Html>
     <Head />
-    <Preview>Gracias por escribirnos - Pronto estaremos en contacto</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-          <Heading style={h1}>¡Hola {customerName}!</Heading>
+          <Heading style={h1}>Hi {customerName}</Heading>
         </Section>
 
         <Section style={content}>
-          <Text style={greeting}>
-            Gracias por tomarte el tiempo de escribirnos. Nos emociona mucho
-            saber de ti.
-          </Text>
+          <Text style={greeting}>Thank you for being here.</Text>
 
-          <Text style={brandMessage}>
-            Somos una pareja que decidió compartir nuestra historia y pasión a
-            través de nuestra línea de ropa. Cada pieza que creamos lleva un
-            pedacito de nuestra experiencia, amor y autenticidad. Creemos en la
-            importancia de ser genuinas y crear conexiones reales con personas
-            como tú.
-          </Text>
+          <Section style={brandMessage}>
+            We’re Ashley & Oly, the voices and hearts behind Raíces &
+            Returnings. This space was born from our stories—stories of
+            migration, memory, queerness, healing, and home. It’s a space where
+            recipes carry history, reflections hold truth, and even the merch is
+            made with meaning. Here’s what you’ll find in our little corner of
+            the internet:
+            <Text>🥄 Recipes rooted in culture and love</Text>
+            <Text>
+              📝 Blogs that reflect on identity, spirituality, and growth
+            </Text>
+            <Text>🛍 Merch designed with intention (and a lot of corazón)</Text>
+          </Section>
 
           <Section style={messageSection}>
-            <Text style={messageLabel}>Tu mensaje:</Text>
+            <Text style={messageLabel}>Your message:</Text>
             <Text style={customerMessage}>{`"${message}"`}</Text>
           </Section>
 
           <Hr style={divider} />
 
           <Text style={responseMessage}>
-            Hemos recibido tu mensaje y lo leeremos con mucho cariño. Te
-            responderemos personalmente en las próximas 24-48 horas.
+            We’re so glad you reached out. Whether you had a question, an idea,
+            or just wanted to say hi—your presence here matters to us. We’re
+            building a community, not a following. Thanks for being part of it.
+            We’ll get back to you as soon as we can.
           </Text>
 
           <Text style={closing}>
-            Con amor y gratitud,
+            With gratitude,
             <br />
-            <strong>El equipo de Raíces & Returning</strong>
+            <strong>Raíces & Returnings</strong>
+            <br />
+            Ashley & Oly
           </Text>
         </Section>
 

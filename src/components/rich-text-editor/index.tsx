@@ -48,6 +48,7 @@ export default function RichTextEditor({
       // console.log(editor.getHTML());
       if (onChange) onChange(editor.getHTML());
     },
+    immediatelyRender: false, // Prevents immediate rendering to avoid performance issues
   });
 
   return (

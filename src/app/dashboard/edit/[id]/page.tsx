@@ -45,6 +45,7 @@ import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
 
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
+const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 
 const formPostSchema = z.object({
   title: z.string().min(1, "El título es obligatorio"),
@@ -71,6 +72,7 @@ const formPostSchema = z.object({
               return;
             }
           }
+
           // If it's a FileList
           else if (val instanceof FileList) {
             if (val.length === 0) {
@@ -88,12 +90,18 @@ const formPostSchema = z.object({
               return;
             }
           }
-          // If it's neither string nor FileList
-          else if (!(val instanceof FileList) && typeof val !== "string") {
+
+          // Verificar formato de archivo
+          const fileName = val[0].name.toLowerCase();
+
+          const fileExtension = fileName.substring(fileName.lastIndexOf("."));
+
+          if (!validExtensions.includes(fileExtension)) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
-              message: "Formato de imagen no válido",
+              message: "Formato de imagen no compatible",
             });
+            return;
           }
         })
       : z.any()
@@ -149,8 +157,10 @@ export default function CreatePostPage() {
       toast.loading("Cargando post...");
       try {
         const postData = await getPostById(Number(params.id));
+        console.log("Post data:", postData);
 
         if (!postData) throw new Error("Post no encontrado");
+
         // Transform the response to match FormPost structure
         post.current = {
           title: postData.title,
@@ -525,7 +535,8 @@ export default function CreatePostPage() {
                                 Haz clic para subir una imagen
                               </p>
                               <p className="text-xs text-slate-400">
-                                PNG, JPG, GIF hasta 5MB
+                                Tamaño máximo: 5MB. Formatos permitidos: JPG,
+                                PNG, GIF, WebP o SVG.
                               </p>
                             </div>
                           </div>
@@ -551,7 +562,6 @@ export default function CreatePostPage() {
                                     setImagePreview("");
                                     formPost.setValue("image", "");
                                     isDeletedImage.current = true;
-                                    console.log("Imagen eliminada");
                                   }}
                                 >
                                   Eliminar
@@ -609,7 +619,7 @@ export default function CreatePostPage() {
                     <Button
                       type="button"
                       variant="outline"
-                      className="border-primary hover:border-primary  hover:bg-transparent hover:text-slate-800"
+                      className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
                     >
                       Cancelar
                     </Button>

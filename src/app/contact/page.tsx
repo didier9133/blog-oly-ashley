@@ -89,12 +89,12 @@ export default function ContactPage() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
-            Contact Us
+            Want to reach us?
           </h1>
           <p className="mt-1 text-sm text-gray-400">
-            Do you have questions or feedback? We would love to hear from you!
-            Fill out the form below and we will get back to you as soon as
-            possible.
+            We’d love to hear from you—whether it’s a thought, a question, a
+            collaboration, or just something you wanted to say. Fill out the
+            form below, and we’ll do our best to get back to you soon.
           </p>
         </div>
 
@@ -211,11 +211,11 @@ export default function ContactPage() {
 
               <CardFooter className="flex justify-end border-t border-border pt-6">
                 <div className="flex space-x-2">
-                  <Link href="/dashboard">
+                  <Link href="/">
                     <Button
                       type="button"
                       variant="outline"
-                      className="border-primary hover:border-primary  hover:bg-transparent hover:text-slate-800"
+                      className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
                     >
                       Back
                     </Button>

@@ -25,7 +25,7 @@ export async function sendContactEmail({
     const { error } = await resend.emails.send({
       from: `Raices & Returning <no-reply@${DOMAIN}>`,
       to: email,
-      subject: "Ohh! Estamos felices de que nos contactes 🤗🤗",
+      subject: "Thanks for reaching out to Raíces & Returnings 🌿",
       react: ContactEmailTemplateProps({
         customerName: `${firstName} ${lastName}`.trim(),
         message: content,

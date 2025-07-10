@@ -504,7 +504,7 @@ export default function CreatePostPage() {
                     <Button
                       type="button"
                       variant="outline"
-                      className="border-primary hover:border-primary  hover:bg-transparent hover:text-slate-800"
+                      className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
                     >
                       Cancelar
                     </Button>
