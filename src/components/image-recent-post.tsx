@@ -26,6 +26,8 @@ export default function ImageRecentPost({ post }: ImageCardBlogDetailProps) {
           target.style.opacity = "1";
         }}
         style={{ opacity: 0, transition: "opacity 0.3s ease" }}
+        priority={false}
+        loading="lazy"
       />
     </div>
   );
