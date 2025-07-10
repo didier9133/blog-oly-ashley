@@ -196,6 +196,10 @@
     animation: fadeInUp 1.5s ease-out forwards;
   }
 
+  .text-important {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70;
+  }
+
   .\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-4 {
     & svg:not([class*="size-"]) {
       height: 24px !important;

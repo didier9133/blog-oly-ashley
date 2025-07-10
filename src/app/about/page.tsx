@@ -6,7 +6,7 @@ export default function Page() {
       <section className="w-full flex flex-col md:flex-row items-center gap-8 mb-16">
         <div className="w-full md:w-1/2 group transition-all duration-700">
           <Image
-            src="/teamphoto.jpeg"
+            src="/teamphoto2.jpeg"
             alt="Nuestro equipo"
             width={600}
             height={400}
@@ -18,37 +18,42 @@ export default function Page() {
           />
         </div>
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h1 className="text-4xl sm:text-6xl font-bold mb-4 text-primary transition-all duration-700 ease-out hover:tracking-wide">
-            Raices & Returnings
+          <h1 className="text-important text-4xl sm:text-6xl font-bold mb-4 text-primary transition-all duration-700 ease-out hover:tracking-wide">
+            Oly & Ashley
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground transition-opacity duration-700 ease-in hover:opacity-80">
-            We&apos;ve made it out of the closet, now it&apos;s time to unpack
-            all that comes with finding yourself! Every week, Mal Glowenke, a
-            recovering Texas-raised lesbian, will bring her unfiltered
-            perspective to conversations with other queer people across the
-            country, digging into everything from relationships to religion, sex
-            and culture, and anything that affects or interests the lesbian
-            community.
+            Two voices, one home. Rooted in different lands, shaped by survival,
+            stitched together by healing. We created Raíces & Returnings to hold
+            everything that never fit neatly into categories— love that defies
+            scripts, food that carries memory, queerness that feels holy, and
+            stories that don’t end where they began. It’s part blog, part
+            kitchen table, part altar. A little messy. Deeply honest. And always
+            real.
           </p>
         </div>
       </section>
       <section className="w-full  flex flex-col-reverse md:flex-row items-center gap-8 mb-16">
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h3 className="text-xl font-semibold mb-2 text-primary transition-colors duration-700">
-            Mallorie Glownke
+          <h3 className="text-2xl font-semibold mb-2 text-primary transition-colors duration-700">
+            Olydi
           </h3>
-          <span className="text-muted-foreground text-sm mb-2">
-            Host & Producer
+          <span className=" text-muted-foreground text-lg sm:text-xl mb-2">
+            Truth-Teller & Rooter Creator
           </span>
-          <p className="text-muted-foreground text-center transition-opacity duration-700 hover:opacity-80">
-            Mal is a Texas-raised lesbian who made it out of the heterosexual
-            trap to start a new life in LA. Her hobbies include hiking,
-            meditating, and unpacking all her trauma on a mic.
+          <p className="text-lg sm:text-xl text-muted-foreground text-center transition-opacity duration-700 hover:opacity-80">
+            I was born in Venezuela and raised by real life—not by a plan. I’ve
+            lived through silence, migration, heartbreak, survival. I’ve lost
+            parts of myself and found new ones in places I never expected. I’m
+            not here to impress anyone—I’m here because I know what it means to
+            start over. More than once. You’ll find me mostly in the kitchen
+            section of this site—where food becomes language and memory. But I’m
+            also part of everything else: the healing, the humor, the truth. I’m
+            here because I believe what I share.
           </p>
         </div>
         <div className="w-full md:w-1/2 group transition-all duration-700">
           <Image
-            src="/profile.jpeg"
+            src="/profile3.jpeg"
             alt="Nuestro equipo"
             width={600}
             height={400}
@@ -63,7 +68,7 @@ export default function Page() {
       <section className="w-full flex flex-col md:flex-row items-center gap-8 mb-16">
         <div className="w-full md:w-1/2 group transition-all duration-700">
           <Image
-            src="/profile2.jpeg"
+            src="/profile4.jpeg"
             alt="Nuestro equipo"
             width={600}
             height={400}
@@ -77,18 +82,21 @@ export default function Page() {
         </div>
 
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h3 className="text-xl font-semibold mb-2 text-primary transition-colors duration-700">
-            Mathilde Jourdan
+          <h3 className="text-2xl font-semibold mb-2 text-primary transition-colors duration-700">
+            Ashley
           </h3>
-          <span className="text-muted-foreground text-sm mb-2">
-            producer, co-creator
+          <span className=" text-muted-foreground text-lg sm:text-xl mb-2">
+            Conscious Creator
           </span>
-          <p className="text-muted-foreground text-center transition-opacity duration-700 hover:opacity-80">
-            Mathilde grew up in Portugal and moved to LA to pursue
-            entertainment. After a short stint at WME (see: Brie Larson cup) she
-            produced reality tv and documentaries before finding her passion in
-            creating lesbian content. Mathilde directs, produces and edits every
-            episode of Made It Out.
+          <p className="text-lg sm:text-xl text-muted-foreground text-center transition-opacity duration-700 hover:opacity-80">
+            I’m a conscious creator—of words, of space, of meaning. I was shaped
+            in the in-between. Between languages. Between cultures. I’ve lived
+            through things that made me question everything—then offered me a
+            voice to speak through it. Now, I live with intention. I write to
+            remember. I create to reclaim. I’ve lived through chaos, through
+            closeting, through calling. Now, I live in a way that honors all of
+            it. My voice here is rooted in reflection—on identity, spirituality,
+            queerness, healing, and the sacredness of returning.
           </p>
         </div>
       </section>

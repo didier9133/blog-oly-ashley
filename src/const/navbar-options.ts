@@ -15,11 +15,11 @@ export const data = {
       url: "/recipes",
       isActive: false,
     },
-    {
-      title: "Our Love",
-      url: "/our-love",
-      isActive: false,
-    },
+    // {
+    //   title: "Our Love",
+    //   url: "/our-love",
+    //   isActive: false,
+    // },
     {
       title: "Merch",
       url: "https://raices-and-returnings.printify.me/",
@@ -48,11 +48,11 @@ export const data = {
       url: "/recipes",
       isActive: false,
     },
-    {
-      title: "Our Love",
-      url: "/our-love",
-      isActive: false,
-    },
+    // {
+    //   title: "Our Love",
+    //   url: "/our-love",
+    //   isActive: false,
+    // },
     {
       title: "Merch",
       url: "https://raices-and-returnings.printify.me/",

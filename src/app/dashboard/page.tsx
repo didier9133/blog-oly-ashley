@@ -38,7 +38,7 @@ export default async function Page() {
               <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
                 Dashboard
               </h1>
-              <p className="mt-1 text-sm text-gray-600">Bienvenido de vuelta</p>
+              <p className="mt-1 text-sm text-gray-400">Bienvenido de vuelta</p>
             </div>
             <Link href="/dashboard/create">
               <Button className="gap-2">

@@ -16,7 +16,7 @@ interface ParallaxHeroProps {
 export function ParallaxHero({
   imageSrc,
   imageAlt,
-  height = "80vh",
+  height = "88vh",
   children,
   overlayOpacity = 0.3,
   className, // Clase adicional para el contenedor del contenido
@@ -65,6 +65,8 @@ export function ParallaxHero({
           style={{ opacity: overlayOpacity }}
         ></div>
       </div>
+      {/* Gradiente de difuminado inferior */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 z-[5] pointer-events-none bg-gradient-to-b from-transparent to-transparent dark:from-transparent dark:via-background/30 dark:to-background"></div>
 
       {/* Contenedor para el contenido (no se mueve con el efecto parallax) */}
       <div className="absolute inset-0 flex items-center justify-center z-10">

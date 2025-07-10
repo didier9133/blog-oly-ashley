@@ -97,7 +97,7 @@ export default async function Page() {
                           </Badge>
                         </div>
 
-                        <h3 className="text-xl font-semibold text-primary mb-3 group-hover:text-2xl transition-all duration-300">
+                        <h3 className="text-important text-xl font-semibold text-primary mb-3 group-hover:text-2xl transition-all duration-300">
                           {item.title}
                         </h3>
 

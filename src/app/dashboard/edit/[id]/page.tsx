@@ -323,7 +323,7 @@ export default function CreatePostPage() {
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
             Editar Post
           </h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-gray-400">
             Comparte tus ideas con el mundo
           </p>
         </div>
@@ -571,7 +571,7 @@ export default function CreatePostPage() {
                 <div className="flex items-center justify-between rounded-lg border-slate-200 focus:border-teal-500">
                   <div>
                     <h3 className="font-medium ">Estado de publicación</h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-400">
                       {formPost.watch("isPublished")
                         ? "Tu post será visible para todos"
                         : "Tu post se guardará como borrador"}

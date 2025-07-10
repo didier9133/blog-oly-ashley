@@ -70,7 +70,7 @@ export const columns: ColumnDef<Post>[] = [
     cell: ({ row }) => (
       <div>
         <div className="font-medium">{row.original.title}</div>
-        <div className="text-sm text-gray-600 mt-1 overflow-hidden whitespace-nowrap text-ellipsis max-w-xs">
+        <div className="text-sm text-gray-400 mt-1 overflow-hidden whitespace-nowrap text-ellipsis max-w-xs">
           {/* Sanitizing content to prevent XSS attacks */}
           {DOMPurify.sanitize(row.original.content || "", {
             ALLOWED_TAGS: [],

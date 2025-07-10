@@ -1,7 +1,5 @@
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
+import { FormSubscribeNewsletter } from "@/components/subscribe-newsletter";
 import { ModeToggle } from "@/components/toggle-theme";
 
 export function Footer() {
@@ -73,10 +71,7 @@ export function Footer() {
             <ModeToggle />
           </div>
         </div>
-        <div className="flex w-full max-w-sm items-center space-x-2">
-          <Input type="email" placeholder="Email" />
-          <Button type="submit">Subscribe</Button>
-        </div>
+        <FormSubscribeNewsletter />
         <div className="flex items-center">
           <div className="relative w-[80px] h-[50px]">
             <Image
@@ -89,10 +84,10 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <p className="text-center text-sm text-gray-600 my-10 ba">
-        &copy; 2019-{new Date().getFullYear()}{" "}
+      <p className="text-center text-sm  my-10 text-foreground/60">
+        &copy; 2023-{new Date().getFullYear()}{" "}
         <a href="#" className="hover:underline" target="_blank">
-          Themesberg
+          @decscode
         </a>
         . All rights reserved.
       </p>

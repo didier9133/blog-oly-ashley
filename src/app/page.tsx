@@ -37,51 +37,50 @@ export default async function Home() {
   return (
     <main>
       <ParallaxHero imageSrc="/hero-image.jpeg" imageAlt="Hero image">
-        <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl lg:text-6xl font-bold mb-4 hero-text">
-          Between Flavors, Bodies, and Borders
-        </h1>
-        <p className="text-xl md:text-2xl max-w-2xl mx-auto font-[family-name:var(--font-lora)] hero-text">
-          Recipes with history, everyday stories, and unfiltered queer life.
-        </p>
+        <div className="absolute md:top-1/3 md:left-8">
+          <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 hero-text">
+            Welcome to
+          </h1>
+          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-extrabold mb-2 md:mb-4 hero-text">
+            Raíces & Returnings
+          </h2>
+        </div>
       </ParallaxHero>
 
       <div className="flex flex-1 flex-col conatiner max-w-4xl m-auto  p-4 pb-20 md:p-20 font-[family-name:var(--font-lora)] text-base">
         <div className=" flex flex-col  justify-center gap-4 w-full ">
           <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
-            Queer Flavors: Stories, Tastes, and Soul in a Digital Sanctuary for
-            Free Bodies and Spirits
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 text-4xl font-extrabold">
+              Returning to your raíces
+            </span>
+            – one recipe, ritual, <br /> and reflection at a time
           </h2>
-          <p>
-            Welcome to our intimate corner where stovetops, words, and queer
-            pride collide with Latinx spice. We are Ashley and Oly, a digital
-            refuge created by two migrant women who cook stories to feed quiet
-            revolutions. Here, every recipe holds a secret of identity, every
-            story seasons the sacred in the mundane, and every reflection is an
-            act of loving resistance. We dance between pots and memories,
-            weaving an altar where queerness isn’t just celebrated—it’s lived
-            with spiritual depth. Our words are windows to see yourself, our
-            shared meals are rituals of belonging, and our conversations about
-            migration are maps for bodies rewriting home. The mission? To invite
-            you to a feast where activism tastes like dulce de leche,
-            spirituality smells like freshly cut herbs, and transformation is
-            the flavor of freedom. This isn’t just a blog. It’s a tender,
-            unapologetic yes to existing in full color.
+          <p className="text-base md:text-lg lg:text-xl">
+            A space for the stories we carry, the ones we&apos;re still learning
+            how to tell, and the ones we&apos;re finally ready to live.
           </p>
 
-          <p>
-            Join us as we explore the intersection of food, culture, and
-            identity.
+          <p className="text-base md:text-lg lg:text-xl">
+            Here, you&apos;ll find reflections on identity, queerness, healing,
+            spirituality, and home. You&apos;ll find recipes passed down and
+            reimagined. You&apos;ll find reminders—written and wearable—that
+            speak to the parts of you still becoming.
           </p>
-          <p>
-            Whether you&apos;re looking for recipes, stories, or just a place to
-            feel at home, we hope you find something that resonates with you.
+          <p className="text-base md:text-lg lg:text-xl">
+            This isn&apos;t a brand.
           </p>
-          <p>
-            Thank you for being here with us. We can&apos;t wait to share our
-            journey with you!
+          <p className="text-base md:text-lg lg:text-xl">
+            It&apos;s our life—offered with intention.
           </p>
-          <p>With love,</p>
-          <p>The Queer Kitchen Team</p>
+
+          <div className="flex justify-start mt-8">
+            <p className="text-left text-lg md:text-xl lg:text-2xl italic font-[family-name:var(--font-cormorant-garamond)]">
+              With love,
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-semibold">
+                Oly & Ash
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -89,13 +88,15 @@ export default async function Home() {
         <div className="flex flex-1 flex-col conatiner max-w-3xl m-auto  p-4 pb-10 md:pt-20 font-[family-name:var(--font-lora)] ">
           <div className=" flex flex-col  justify-center gap-4 w-full ">
             <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
-              The latest Raices & Returnings Originalsr{" "}
+              Fresh from: <br />
+              <span className="text-important text-4xl font-extrabold">
+                Raíces & Returnings
+              </span>{" "}
             </h2>{" "}
-            <p>
-              Welcome to our intimate corner where stovetops, words, and queerp
-              pride collide with Latinx spice. We are Ashley and Oly, a
-              digitalith Latinx spice. We are Ashley and Oly, a digital refuge
-              created by two migrant
+            <p className="text-base md:text-lg lg:text-xl">
+              New reflections. New recipes. Same corazón. Catch the latest
+              stories, kitchen moments, and real talk—straight from us to you.
+              Scroll through, click around, stay a while.
             </p>
           </div>
         </div>
@@ -152,7 +153,7 @@ export default async function Home() {
               <Card className="overflow-hidden bg-card backdrop-blur-sm border-border shadow-sm hover:shadow-md transition-all duration-300 group">
                 <CardContent className="p-0">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                    <div className="order:1 lg:order-0 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
+                    <div className="order-1 lg:order-0 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
                       <CardTitle className="text-lg font-semibold mb-2 text-primary dark:text-primary/90 group-hover:underline transition-all duration-300">
                         {recentPostOfRecipes.title}
                       </CardTitle>
@@ -177,7 +178,7 @@ export default async function Home() {
                         </Link>
                       </div>
                     </div>
-                    <div className="relative h-80 overflow-hidden">
+                    <div className=" order-0 relative h-80 overflow-hidden">
                       <Image
                         src={recentPostOfRecipes.image}
                         alt="Logo"
