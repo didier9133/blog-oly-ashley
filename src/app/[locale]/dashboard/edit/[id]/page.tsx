@@ -36,10 +36,10 @@ import {
   getCategoriesWithSubcategories,
   getPostById,
   updatePost,
-} from "@/app/actions/posts";
+} from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "../../../generated/prisma/index";
 import RichTextEditor from "@/components/rich-text-editor";
-import { uploadImageToS3 } from "@/app/actions/images";
+import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";

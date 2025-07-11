@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
 import { Separator } from "@/components/ui/separator";
 import { ComboboxDemo } from "@/components/ui/combobox";
 import {
@@ -12,6 +14,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import RichTextEditor from "@/components/rich-text-editor";
 import ImageBlogDetail from "@/components/image-post-detail";
+
 import { Slash } from "lucide-react";
 import ImageRecentBlog from "@/components/image-recent-post";
 import { CategoryEnum } from "@/enums";
@@ -19,7 +22,7 @@ import { CategoryEnum } from "@/enums";
 type Params = Promise<{ slug: string }>;
 type SearchParams = Promise<{ category?: string }>;
 
-const PATH = CategoryEnum.Recipes;
+const PATH = CategoryEnum.Blog;
 
 export default async function BlogPostPage(props: {
   params: Params;
@@ -38,7 +41,6 @@ export default async function BlogPostPage(props: {
       published: true, // Ensure only published posts are included
     },
   });
-
   if (!post || !category) return notFound();
 
   let recentPosts = await prisma.post.findMany({
@@ -84,7 +86,7 @@ export default async function BlogPostPage(props: {
               <Slash />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <Link href={`/${PATH}`}>{PATH}</Link>
+              <Link href="/blog">Blog</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <Slash />
@@ -122,7 +124,7 @@ export default async function BlogPostPage(props: {
       {/* Sidebar de posts recientes */}
       <aside className="w-full md:w-[25%] mt-10 md:mt-0 lg:pl-6">
         <div className="max-w-sm w-full mx-auto md:mx-0">
-          <ComboboxDemo categoryId={category.id} />
+          <ComboboxDemo categoryId={category.id} categoryName={category.name} />
           <Separator className="flex my-4" />
           <div>
             <h3 className="text-base font-semibold mb-2 transition-colors duration-700">
@@ -132,7 +134,7 @@ export default async function BlogPostPage(props: {
               {recentPosts.map((recent) => (
                 <li key={recent.id}>
                   <Link
-                    href={`/${PATH}/${recent.slug}`}
+                    href={`/blog/${recent.slug}`}
                     className="flex items-center gap-2"
                   >
                     <ImageRecentBlog

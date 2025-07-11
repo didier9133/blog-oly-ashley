@@ -1,0 +1,45 @@
+{
+  "categories": {
+    "blog": "Blog",
+    "recipes": "Recetas",
+    "select": "Selecciona una categoría",
+    "search": "Buscar",
+    "empty": "No se encontraron categorías."
+  },
+  "subcategories": {
+    "blog": {
+      "reflections": "Reflexiones",
+      "rituals": "Rituales",
+      "letters": "Cartas"
+    },
+    "recipes": {
+      "comfort-food": "Comida Reconfortante",
+      "quick-easy": "Rápido y Fácil",
+      "healthy": "Saludable",
+      "vegan": "Vegano",
+      "venezuelan": "Venezolano"
+    }
+  },
+  "language-selector": {
+    "en": "Inglés",
+    "es": "Español"
+  },
+  "Home": {
+    "title": "Bienvenidos a",
+    "subtitle": "Raíces & Returnings",
+    "title-description": "Regresando a tus raíces",
+    "subtitle-description-one": " – una receta, ritual,",
+    "subtitle-description-two": "y reflexión a la vez",
+    "paragraph-description": "Un espacio para las historias que llevamos, las que aún estamos aprendiendo a contar, y las que finalmente estamos listos para vivir.",
+    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, queerness, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y portables—que hablan a las partes de ti que aún están convirtiéndose.",
+    "paragraph-description-three": " Esto no es una marca.",
+    "paragraph-description-four": " Es nuestra vida—ofrecida con intención.",
+    "pre-signature": "  Con amor,",
+    "signature": "Oly & Ashley",
+    "fresh-title-one": "Fresco de:",
+    "fresh-title-two": "Raíces & Returnings",
+    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. Mismo corazón. Descubre las últimas historias, momentos de cocina, y conversaciones reales—directamente de nosotros para ti. Navega, haz clic, quédate un rato.",
+    "btn-fresh": "Leer Más",
+    "btn-fresh-two": " Todas las Recetas"
+  }
+}

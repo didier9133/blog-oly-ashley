@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import { data } from "@/const/navbar-options";
 import { currentUser } from "@clerk/nextjs/server";
+import Link from "next/link";
 
 export async function AppSidebar({
   ...props
@@ -34,7 +35,7 @@ export async function AppSidebar({
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority
-              className="object-contain"
+              className="object-contain dark:[filter:brightness(0)_invert(1)]"
             />
           </div>
         </div>
@@ -46,7 +47,9 @@ export async function AppSidebar({
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
-                    <a href={item.url}>{item.title}</a>
+                    <Link className="px-4 py-3 pb-4" href={item.url}>
+                      {item.title}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

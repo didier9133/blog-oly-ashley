@@ -102,8 +102,8 @@ export function DataTable<TData, TValue>({
                 table.getColumn("published")?.getFilterValue() === undefined
                   ? "all"
                   : table.getColumn("published")?.getFilterValue() === true
-                  ? "published"
-                  : "draft"
+                    ? "published"
+                    : "draft"
               }
               onValueChange={(value) => {
                 return table
@@ -112,8 +112,8 @@ export function DataTable<TData, TValue>({
                     value === "all"
                       ? undefined
                       : value === "published"
-                      ? true
-                      : false
+                        ? true
+                        : false
                   );
               }}
             >

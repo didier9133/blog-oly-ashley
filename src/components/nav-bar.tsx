@@ -5,6 +5,7 @@ import { ItemsNavBar } from "./items-nav-bar";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { User } from "lucide-react";
+import { LanguageSelector } from "./language-selector";
 
 export async function Header() {
   return (
@@ -20,7 +21,6 @@ export async function Header() {
           margin: "0 auto",
         }}
       >
-        <SidebarTrigger className="-ml-1 md:hidden" />
         <Link href="/">
           <div className="relative w-[70px] h-[64px] md:w-[100px] cursor-pointer">
             <Image
@@ -37,14 +37,14 @@ export async function Header() {
 
         <div
           style={{
-            width: 40,
-            height: 40,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             position: "relative",
+            gap: "0.5rem",
           }}
         >
+          <LanguageSelector />
           <SignedOut>
             <SignInButton>
               <Button
@@ -66,6 +66,8 @@ export async function Header() {
               }}
             />
           </SignedIn>
+
+          <SidebarTrigger className="-ml-1 md:hidden" />
         </div>
       </nav>
     </header>

@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { getCategoriesPosts } from "@/app/actions/posts";
+import { getCategoriesPosts } from "@/app/[locale]/actions/posts";
 
 export function SearchPost() {
   const [filters, setFilters] = useState({

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import NoPostsView from "@/components/empty-post";
+import { getTranslations } from "next-intl/server";
 
 export default async function Home() {
   const recentPostOfBlog = await prisma.post.findFirst({
@@ -34,15 +35,17 @@ export default async function Home() {
     },
   });
 
+  const t = await getTranslations("Home");
+
   return (
     <main>
       <ParallaxHero imageSrc="/hero-image.jpeg" imageAlt="Hero image">
         <div className="absolute md:top-1/3 md:left-8">
           <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 hero-text">
-            Welcome to
+            {t("title")}
           </h1>
           <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-extrabold mb-2 md:mb-4 hero-text">
-            Raíces & Returnings
+            {t("subtitle")}
           </h2>
         </div>
       </ParallaxHero>
@@ -51,9 +54,10 @@ export default async function Home() {
         <div className=" flex flex-col  justify-center gap-4 w-full ">
           <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 text-4xl font-extrabold">
-              Returning to your raíces
+              {t("title-description")}
             </span>
-            – one recipe, ritual, <br /> and reflection at a time
+            {t("subtitle-description-one")} <br />{" "}
+            {t("subtitle-description-two")}
           </h2>
           <p className="text-base md:text-lg lg:text-xl">
             A space for the stories we carry, the ones we&apos;re still learning

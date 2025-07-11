@@ -1,4 +1,4 @@
-import { PrismaClient } from "../src/app/generated/prisma";
+import { PrismaClient } from "../src/app/[locale]/generated/prisma";
 import {
   CategoryEnum,
   SubBlogCategoryEnum,
@@ -530,61 +530,61 @@ const posts = [
 export async function main() {
   await prisma.post.deleteMany({});
   // await prisma.user.deleteMany({});
-  await prisma.subcategory.deleteMany({});
-  await prisma.category.deleteMany({});
+  // await prisma.subcategory.deleteMany({});
+  // await prisma.category.deleteMany({});
 
   //Crea categorías y guarda sus IDs
-  const createdCategories = {} as Record<string, { id: number }>;
-  const createdCategoriesOfBlog = {} as Record<string, { id: number }>;
-  const createdCategoriesOfRecipes = {} as Record<string, { id: number }>;
+  // const createdCategories = {} as Record<string, { id: number }>;
+  // const createdCategoriesOfBlog = {} as Record<string, { id: number }>;
+  // const createdCategoriesOfRecipes = {} as Record<string, { id: number }>;
 
-  for (const cat of categories) {
-    const created = await prisma.category.create({ data: cat });
-    createdCategories[cat.name] = created;
-  }
+  // for (const cat of categories) {
+  //   const created = await prisma.category.create({ data: cat });
+  //   createdCategories[cat.name] = created;
+  // }
 
-  for (const subCat of subCategoriesOfBlog) {
-    const created = await prisma.subcategory.create({
-      data: {
-        name: subCat.name,
-        category: { connect: { id: createdCategories[CategoryEnum.Blog].id } },
-      },
-    });
-    createdCategoriesOfBlog[subCat.name] = created;
-  }
+  // for (const subCat of subCategoriesOfBlog) {
+  //   const created = await prisma.subcategory.create({
+  //     data: {
+  //       name: subCat.name,
+  //       category: { connect: { id: createdCategories[CategoryEnum.Blog].id } },
+  //     },
+  //   });
+  //   createdCategoriesOfBlog[subCat.name] = created;
+  // }
 
-  for (const subCat of subCategoriesOfRecipes) {
-    const created = await prisma.subcategory.create({
-      data: {
-        name: subCat.name,
-        category: {
-          connect: { id: createdCategories[CategoryEnum.Recipes].id },
-        },
-      },
-    });
-    createdCategoriesOfRecipes[subCat.name] = created;
-  }
+  // for (const subCat of subCategoriesOfRecipes) {
+  //   const created = await prisma.subcategory.create({
+  //     data: {
+  //       name: subCat.name,
+  //       category: {
+  //         connect: { id: createdCategories[CategoryEnum.Recipes].id },
+  //       },
+  //     },
+  //   });
+  //   createdCategoriesOfRecipes[subCat.name] = created;
+  // }
 
   // Crea posts conectando user y category
-  for (const post of posts) {
-    await prisma.post.create({
-      data: {
-        title: post.title,
-        content: post.content,
-        image: post.image,
-        slug: post.slug,
-        category: { connect: { id: createdCategories[post.category].id } },
-        subcategory: {
-          connect:
-            post.category === CategoryEnum.Blog
-              ? { id: createdCategoriesOfBlog[post.subcategory!].id }
-              : { id: createdCategoriesOfRecipes[post.subcategory!].id },
-        },
-        author: { connect: { email: post.authorEmail } },
-        published: post.published,
-      },
-    });
-  }
+  // for (const post of posts) {
+  //   await prisma.post.create({
+  //     data: {
+  //       title: post.title,
+  //       content: post.content,
+  //       image: post.image,
+  //       slug: post.slug,
+  //       category: { connect: { id: createdCategories[post.category].id } },
+  //       subcategory: {
+  //         connect:
+  //           post.category === CategoryEnum.Blog
+  //             ? { id: createdCategoriesOfBlog[post.subcategory!].id }
+  //             : { id: createdCategoriesOfRecipes[post.subcategory!].id },
+  //       },
+  //       author: { connect: { email: post.authorEmail } },
+  //       published: post.published,
+  //     },
+  //   });
+  // }
 }
 
 main().catch((e) => {

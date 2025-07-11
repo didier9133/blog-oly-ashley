@@ -2365,50 +2365,41 @@ export namespace Prisma {
 
   export type PostMinAggregateOutputType = {
     id: number | null
-    title_es: string | null
-    content_es: string | null
-    slug_es: string | null
-    title_en: string | null
-    content_en: string | null
-    slug_en: string | null
+    title: string | null
+    content: string | null
     published: boolean | null
     authorId: string | null
     image: string | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
+    slug: string | null
   }
 
   export type PostMaxAggregateOutputType = {
     id: number | null
-    title_es: string | null
-    content_es: string | null
-    slug_es: string | null
-    title_en: string | null
-    content_en: string | null
-    slug_en: string | null
+    title: string | null
+    content: string | null
     published: boolean | null
     authorId: string | null
     image: string | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
+    slug: string | null
   }
 
   export type PostCountAggregateOutputType = {
     id: number
-    title_es: number
-    content_es: number
-    slug_es: number
-    title_en: number
-    content_en: number
-    slug_en: number
+    title: number
+    content: number
     published: number
     authorId: number
     image: number
     updatedAt: number
     categoryId: number
     subcategoryId: number
+    slug: number
     _all: number
   }
 
@@ -2427,50 +2418,41 @@ export namespace Prisma {
 
   export type PostMinAggregateInputType = {
     id?: true
-    title_es?: true
-    content_es?: true
-    slug_es?: true
-    title_en?: true
-    content_en?: true
-    slug_en?: true
+    title?: true
+    content?: true
     published?: true
     authorId?: true
     image?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    slug?: true
   }
 
   export type PostMaxAggregateInputType = {
     id?: true
-    title_es?: true
-    content_es?: true
-    slug_es?: true
-    title_en?: true
-    content_en?: true
-    slug_en?: true
+    title?: true
+    content?: true
     published?: true
     authorId?: true
     image?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    slug?: true
   }
 
   export type PostCountAggregateInputType = {
     id?: true
-    title_es?: true
-    content_es?: true
-    slug_es?: true
-    title_en?: true
-    content_en?: true
-    slug_en?: true
+    title?: true
+    content?: true
     published?: true
     authorId?: true
     image?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    slug?: true
     _all?: true
   }
 
@@ -2562,18 +2544,15 @@ export namespace Prisma {
 
   export type PostGroupByOutputType = {
     id: number
-    title_es: string
-    content_es: string | null
-    slug_es: string
-    title_en: string
-    content_en: string | null
-    slug_en: string
+    title: string
+    content: string | null
     published: boolean
     authorId: string
     image: string
     updatedAt: Date
     categoryId: number
     subcategoryId: number
+    slug: string
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -2597,18 +2576,15 @@ export namespace Prisma {
 
   export type PostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title_es?: boolean
-    content_es?: boolean
-    slug_es?: boolean
-    title_en?: boolean
-    content_en?: boolean
-    slug_en?: boolean
+    title?: boolean
+    content?: boolean
     published?: boolean
     authorId?: boolean
     image?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    slug?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2616,18 +2592,15 @@ export namespace Prisma {
 
   export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title_es?: boolean
-    content_es?: boolean
-    slug_es?: boolean
-    title_en?: boolean
-    content_en?: boolean
-    slug_en?: boolean
+    title?: boolean
+    content?: boolean
     published?: boolean
     authorId?: boolean
     image?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    slug?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2635,18 +2608,15 @@ export namespace Prisma {
 
   export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title_es?: boolean
-    content_es?: boolean
-    slug_es?: boolean
-    title_en?: boolean
-    content_en?: boolean
-    slug_en?: boolean
+    title?: boolean
+    content?: boolean
     published?: boolean
     authorId?: boolean
     image?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    slug?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2654,21 +2624,18 @@ export namespace Prisma {
 
   export type PostSelectScalar = {
     id?: boolean
-    title_es?: boolean
-    content_es?: boolean
-    slug_es?: boolean
-    title_en?: boolean
-    content_en?: boolean
-    slug_en?: boolean
+    title?: boolean
+    content?: boolean
     published?: boolean
     authorId?: boolean
     image?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    slug?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_es" | "content_es" | "slug_es" | "title_en" | "content_en" | "slug_en" | "published" | "authorId" | "image" | "updatedAt" | "categoryId" | "subcategoryId", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "authorId" | "image" | "updatedAt" | "categoryId" | "subcategoryId" | "slug", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -2694,18 +2661,15 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      title_es: string
-      content_es: string | null
-      slug_es: string
-      title_en: string
-      content_en: string | null
-      slug_en: string
+      title: string
+      content: string | null
       published: boolean
       authorId: string
       image: string
       updatedAt: Date
       categoryId: number
       subcategoryId: number
+      slug: string
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -3133,18 +3097,15 @@ export namespace Prisma {
    */
   interface PostFieldRefs {
     readonly id: FieldRef<"Post", 'Int'>
-    readonly title_es: FieldRef<"Post", 'String'>
-    readonly content_es: FieldRef<"Post", 'String'>
-    readonly slug_es: FieldRef<"Post", 'String'>
-    readonly title_en: FieldRef<"Post", 'String'>
-    readonly content_en: FieldRef<"Post", 'String'>
-    readonly slug_en: FieldRef<"Post", 'String'>
+    readonly title: FieldRef<"Post", 'String'>
+    readonly content: FieldRef<"Post", 'String'>
     readonly published: FieldRef<"Post", 'Boolean'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly image: FieldRef<"Post", 'String'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly categoryId: FieldRef<"Post", 'Int'>
     readonly subcategoryId: FieldRef<"Post", 'Int'>
+    readonly slug: FieldRef<"Post", 'String'>
   }
     
 
@@ -5781,18 +5742,15 @@ export namespace Prisma {
 
   export const PostScalarFieldEnum: {
     id: 'id',
-    title_es: 'title_es',
-    content_es: 'content_es',
-    slug_es: 'slug_es',
-    title_en: 'title_en',
-    content_en: 'content_en',
-    slug_en: 'slug_en',
+    title: 'title',
+    content: 'content',
     published: 'published',
     authorId: 'authorId',
     image: 'image',
     updatedAt: 'updatedAt',
     categoryId: 'categoryId',
-    subcategoryId: 'subcategoryId'
+    subcategoryId: 'subcategoryId',
+    slug: 'slug'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -5980,18 +5938,15 @@ export namespace Prisma {
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
     id?: IntFilter<"Post"> | number
-    title_es?: StringFilter<"Post"> | string
-    content_es?: StringNullableFilter<"Post"> | string | null
-    slug_es?: StringFilter<"Post"> | string
-    title_en?: StringFilter<"Post"> | string
-    content_en?: StringNullableFilter<"Post"> | string | null
-    slug_en?: StringFilter<"Post"> | string
+    title?: StringFilter<"Post"> | string
+    content?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
+    slug?: StringFilter<"Post"> | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     subcategory?: XOR<SubcategoryScalarRelationFilter, SubcategoryWhereInput>
@@ -5999,18 +5954,15 @@ export namespace Prisma {
 
   export type PostOrderByWithRelationInput = {
     id?: SortOrder
-    title_es?: SortOrder
-    content_es?: SortOrderInput | SortOrder
-    slug_es?: SortOrder
-    title_en?: SortOrder
-    content_en?: SortOrderInput | SortOrder
-    slug_en?: SortOrder
+    title?: SortOrder
+    content?: SortOrderInput | SortOrder
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    slug?: SortOrder
     author?: UserOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
     subcategory?: SubcategoryOrderByWithRelationInput
@@ -6018,15 +5970,12 @@ export namespace Prisma {
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    slug_es?: string
-    slug_en?: string
+    slug?: string
     AND?: PostWhereInput | PostWhereInput[]
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
-    title_es?: StringFilter<"Post"> | string
-    content_es?: StringNullableFilter<"Post"> | string | null
-    title_en?: StringFilter<"Post"> | string
-    content_en?: StringNullableFilter<"Post"> | string | null
+    title?: StringFilter<"Post"> | string
+    content?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
@@ -6036,22 +5985,19 @@ export namespace Prisma {
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     subcategory?: XOR<SubcategoryScalarRelationFilter, SubcategoryWhereInput>
-  }, "id" | "slug_es" | "slug_en">
+  }, "id" | "slug">
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
-    title_es?: SortOrder
-    content_es?: SortOrderInput | SortOrder
-    slug_es?: SortOrder
-    title_en?: SortOrder
-    content_en?: SortOrderInput | SortOrder
-    slug_en?: SortOrder
+    title?: SortOrder
+    content?: SortOrderInput | SortOrder
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    slug?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -6064,18 +6010,15 @@ export namespace Prisma {
     OR?: PostScalarWhereWithAggregatesInput[]
     NOT?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Post"> | number
-    title_es?: StringWithAggregatesFilter<"Post"> | string
-    content_es?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    slug_es?: StringWithAggregatesFilter<"Post"> | string
-    title_en?: StringWithAggregatesFilter<"Post"> | string
-    content_en?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    slug_en?: StringWithAggregatesFilter<"Post"> | string
+    title?: StringWithAggregatesFilter<"Post"> | string
+    content?: StringNullableWithAggregatesFilter<"Post"> | string | null
     published?: BoolWithAggregatesFilter<"Post"> | boolean
     authorId?: StringWithAggregatesFilter<"Post"> | string
     image?: StringWithAggregatesFilter<"Post"> | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     categoryId?: IntWithAggregatesFilter<"Post"> | number
     subcategoryId?: IntWithAggregatesFilter<"Post"> | number
+    slug?: StringWithAggregatesFilter<"Post"> | string
   }
 
   export type CategoryWhereInput = {
@@ -6248,15 +6191,12 @@ export namespace Prisma {
   }
 
   export type PostCreateInput = {
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
+    slug: string
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
@@ -6264,30 +6204,24 @@ export namespace Prisma {
 
   export type PostUncheckedCreateInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    slug: string
   }
 
   export type PostUpdateInput = {
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -6295,62 +6229,50 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostCreateManyInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    slug: string
   }
 
   export type PostUpdateManyMutationInput = {
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type CategoryCreateInput = {
@@ -6604,18 +6526,15 @@ export namespace Prisma {
 
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
-    title_es?: SortOrder
-    content_es?: SortOrder
-    slug_es?: SortOrder
-    title_en?: SortOrder
-    content_en?: SortOrder
-    slug_en?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    slug?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
@@ -6626,34 +6545,28 @@ export namespace Prisma {
 
   export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
-    title_es?: SortOrder
-    content_es?: SortOrder
-    slug_es?: SortOrder
-    title_en?: SortOrder
-    content_en?: SortOrder
-    slug_en?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    slug?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
     id?: SortOrder
-    title_es?: SortOrder
-    content_es?: SortOrder
-    slug_es?: SortOrder
-    title_en?: SortOrder
-    content_en?: SortOrder
-    slug_en?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    slug?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
@@ -7145,32 +7058,26 @@ export namespace Prisma {
   }
 
   export type PostCreateWithoutAuthorInput = {
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
+    slug: string
     category: CategoryCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
   }
 
   export type PostUncheckedCreateWithoutAuthorInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    slug: string
   }
 
   export type PostCreateOrConnectWithoutAuthorInput = {
@@ -7204,18 +7111,15 @@ export namespace Prisma {
     OR?: PostScalarWhereInput[]
     NOT?: PostScalarWhereInput | PostScalarWhereInput[]
     id?: IntFilter<"Post"> | number
-    title_es?: StringFilter<"Post"> | string
-    content_es?: StringNullableFilter<"Post"> | string | null
-    slug_es?: StringFilter<"Post"> | string
-    title_en?: StringFilter<"Post"> | string
-    content_en?: StringNullableFilter<"Post"> | string | null
-    slug_en?: StringFilter<"Post"> | string
+    title?: StringFilter<"Post"> | string
+    content?: StringNullableFilter<"Post"> | string | null
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
+    slug?: StringFilter<"Post"> | string
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -7351,32 +7255,26 @@ export namespace Prisma {
   }
 
   export type PostCreateWithoutCategoryInput = {
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
+    slug: string
     author: UserCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
   }
 
   export type PostUncheckedCreateWithoutCategoryInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     subcategoryId: number
+    slug: string
   }
 
   export type PostCreateOrConnectWithoutCategoryInput = {
@@ -7468,32 +7366,26 @@ export namespace Prisma {
   }
 
   export type PostCreateWithoutSubcategoryInput = {
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
+    slug: string
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
   }
 
   export type PostUncheckedCreateWithoutSubcategoryInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     categoryId: number
+    slug: string
   }
 
   export type PostCreateOrConnectWithoutSubcategoryInput = {
@@ -7546,76 +7438,61 @@ export namespace Prisma {
 
   export type PostCreateManyAuthorInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     image: string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    slug: string
   }
 
   export type PostUpdateWithoutAuthorInput = {
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
   }
 
   export type PostUncheckedUpdateWithoutAuthorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostUncheckedUpdateManyWithoutAuthorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostCreateManyCategoryInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     subcategoryId: number
+    slug: string
   }
 
   export type SubcategoryCreateManyCategoryInput = {
@@ -7624,47 +7501,38 @@ export namespace Prisma {
   }
 
   export type PostUpdateWithoutCategoryInput = {
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
   }
 
   export type PostUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostUncheckedUpdateManyWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type SubcategoryUpdateWithoutCategoryInput = {
@@ -7685,61 +7553,49 @@ export namespace Prisma {
 
   export type PostCreateManySubcategoryInput = {
     id?: number
-    title_es: string
-    content_es?: string | null
-    slug_es: string
-    title_en: string
-    content_en?: string | null
-    slug_en: string
+    title: string
+    content?: string | null
     published?: boolean
     authorId: string
     image: string
     updatedAt?: Date | string
     categoryId: number
+    slug: string
   }
 
   export type PostUpdateWithoutSubcategoryInput = {
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
   }
 
   export type PostUncheckedUpdateWithoutSubcategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type PostUncheckedUpdateManyWithoutSubcategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title_es?: StringFieldUpdateOperationsInput | string
-    content_es?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_es?: StringFieldUpdateOperationsInput | string
-    title_en?: StringFieldUpdateOperationsInput | string
-    content_en?: NullableStringFieldUpdateOperationsInput | string | null
-    slug_en?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
 

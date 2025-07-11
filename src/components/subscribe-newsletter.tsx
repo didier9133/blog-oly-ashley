@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
-import { subscribeToNewsletter } from "@/app/actions/newsletter";
+import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { useState } from "react";
 
 const subscribeSchema = z.object({
