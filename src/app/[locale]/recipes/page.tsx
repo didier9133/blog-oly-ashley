@@ -18,11 +18,13 @@ import DOMPurify from "isomorphic-dompurify"; // Assuming you have a DOMPurify s
 import ImageCardBlogDetail from "@/components/image-card-post";
 import NoPostsView from "@/components/empty-post";
 import { CategoryEnum } from "@/enums";
+import { getLocale, getTranslations } from "next-intl/server";
 
 type SearchParams = Promise<{ page?: string }>;
 const PATH = CategoryEnum.Recipes;
 
 export default async function Page(props: { searchParams?: SearchParams }) {
+  const currentLanguage = await getLocale();
   const searchParams = await props.searchParams;
   const page = parseInt(searchParams?.page ?? "1", 10);
   const total = await prisma.post.count({
@@ -35,6 +37,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
   });
   const PAGE_SIZE = page === 1 ? 7 : 6; // Cambia el tamaño de página según la página actual
   const totalPages = Math.ceil(total / PAGE_SIZE);
+  const t = await getTranslations("Blog");
 
   if (page < 1 || isNaN(page)) {
     console.error("Invalid page number:", page, "Total pages:", totalPages);
@@ -69,8 +72,22 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     include: { author: true },
   });
 
+  const firstPostTranslated = {
+    ...firstPost,
+    title: currentLanguage === "en" ? firstPost.title_en : firstPost.title_es,
+    content:
+      currentLanguage === "en" ? firstPost.content_en : firstPost.content_es,
+    slug: firstPost.slug_en,
+  };
+
   // Los posts menos el primero (más reciente)
   const postsWithoutFirst = posts.filter((post) => post.id !== firstPost?.id);
+  const postsWithoutFirstTranslated = postsWithoutFirst.map((post) => ({
+    ...post,
+    title: currentLanguage === "en" ? post.title_en : post.title_es,
+    content: currentLanguage === "en" ? post.content_en : post.content_es,
+    slug: post.slug_en,
+  }));
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center   font-[family-name:var(--font-cormorant-garamond)]">
@@ -86,19 +103,19 @@ export default async function Page(props: { searchParams?: SearchParams }) {
             className="w-full sm:w-[50%]"
           >
             <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl lg:text-6xl font-bold mb-4 hero-text">
-              {firstPost?.title}
+              {firstPostTranslated?.title}
             </h1>
 
             <p className=" text-sm mb-4 flex-1 line-clamp-4 text-ellipsis overflow-hidden hero-text">
-              {DOMPurify.sanitize(firstPost?.content ?? "", {
+              {DOMPurify.sanitize(firstPostTranslated?.content ?? "", {
                 ALLOWED_TAGS: [],
               })}
             </p>
 
             <div className="flex items-center justify-end text-xs text-white mt-auto hero-text">
-              <Link href={`/${PATH}/${firstPost?.slug}`}>
+              <Link href={`/${PATH}/${firstPostTranslated?.slug}`}>
                 <Button variant={"ghost"}>
-                  Read More <ChevronRight />
+                  {t("read-more")} <ChevronRight />
                 </Button>
               </Link>
             </div>
@@ -106,7 +123,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
 
           {/* Lista de posts */}
           <section className="w-full max-w-4xl grid grid-cols-1 xs sm:grid-cols-2 md:grid-cols-3 gap-6 my-10">
-            {postsWithoutFirst.map((post) => (
+            {postsWithoutFirstTranslated.map((post) => (
               <Link href={`/${PATH}/${post.slug}`} key={post.id}>
                 <Card
                   key={post.id}

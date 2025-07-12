@@ -13,8 +13,8 @@
       "letters": "Cartas"
     },
     "recipes": {
-      "comfort-food": "Comida Reconfortante",
-      "quick-easy": "Rápido y Fácil",
+      "comfort-food": "Comida reconfortante",
+      "quick-easy": "Rápido y fácil",
       "healthy": "Saludable",
       "vegan": "Vegano",
       "venezuelan": "Venezolano"
@@ -28,18 +28,25 @@
     "title": "Bienvenidos a",
     "subtitle": "Raíces & Returnings",
     "title-description": "Regresando a tus raíces",
-    "subtitle-description-one": " – una receta, ritual,",
-    "subtitle-description-two": "y reflexión a la vez",
-    "paragraph-description": "Un espacio para las historias que llevamos, las que aún estamos aprendiendo a contar, y las que finalmente estamos listos para vivir.",
-    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, queerness, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y portables—que hablan a las partes de ti que aún están convirtiéndose.",
+    "subtitle-description-one": " – una receta, un ritual,",
+    "subtitle-description-two": "y una reflexión a la vez",
+    "paragraph-description": "Un espacio para las historias que llevamos, aquellas que aún estamos aprendiendo a contar y aquellas que finalmente estamos listos para vivir.",
+    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, diversidad, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y para llevar—que hablan de las partes de ti que aún están creciendo.",
     "paragraph-description-three": " Esto no es una marca.",
     "paragraph-description-four": " Es nuestra vida—ofrecida con intención.",
     "pre-signature": "  Con amor,",
     "signature": "Oly & Ashley",
-    "fresh-title-one": "Fresco de:",
+    "fresh-title-one": "Novedades de:",
     "fresh-title-two": "Raíces & Returnings",
-    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. Mismo corazón. Descubre las últimas historias, momentos de cocina, y conversaciones reales—directamente de nosotros para ti. Navega, haz clic, quédate un rato.",
-    "btn-fresh": "Leer Más",
-    "btn-fresh-two": " Todas las Recetas"
+    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. El mismo corazón. Descubre las últimas historias, momentos de cocina y conversaciones sinceras—directamente de nosotros para ti. Navega, haz clic, quédate un rato.",
+    "btn-fresh": "Leer más",
+    "btn-fresh-two": " Todas las publicaciones de recetas"
+  },
+  "Blog": {
+    "breadcrumb": "Inicio",
+    "recent-posts": "Publicaciones recientes",
+    "no-posts": "No hay publicaciones disponibles.",
+    "read-more": "Leer más",
+    "breadcrumb-recipes": "Recetas"
   }
 }

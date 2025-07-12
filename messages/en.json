@@ -42,5 +42,12 @@
     "paragraph-fresh": "New reflections. New recipes. Same corazón. Catch the latest           stories, kitchen moments, and real talk—straight from us to you. Scroll through, click around, stay a while.",
     "btn-fresh": "Read More",
     "btn-fresh-two": " All Recipes Posts"
+  },
+  "Blog": {
+    "breadcrumb": "Home",
+    "recent-posts": "Recent Posts",
+    "no-posts": "No posts available.",
+    "read-more": "Read More",
+    "breadcrumb-recipes": "Recipes"
   }
 }

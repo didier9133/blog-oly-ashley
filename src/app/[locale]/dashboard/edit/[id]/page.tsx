@@ -48,7 +48,9 @@ const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 
 const formPostSchema = z.object({
-  title: z.string().min(1, "El título es obligatorio"),
+  title_en: z.string().min(1, "El título es obligatorio"),
+  title_es: z.string().min(1, "El título es obligatorio"),
+
   category: z.string().min(1, "La categoría es obligatoria"),
   subcategory: z.string().min(1, "La subcategoría es obligatoria"),
   isPublished: z.boolean(),
@@ -92,16 +94,18 @@ const formPostSchema = z.object({
           }
 
           // Verificar formato de archivo
-          const fileName = val[0].name.toLowerCase();
+          if (val instanceof FileList && val.length > 0) {
+            const fileName = val[0].name.toLowerCase();
 
-          const fileExtension = fileName.substring(fileName.lastIndexOf("."));
+            const fileExtension = fileName.substring(fileName.lastIndexOf("."));
 
-          if (!validExtensions.includes(fileExtension)) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: "Formato de imagen no compatible",
-            });
-            return;
+            if (!validExtensions.includes(fileExtension)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Formato de imagen no compatible",
+              });
+              return;
+            }
           }
         })
       : z.any()
@@ -110,7 +114,8 @@ const formPostSchema = z.object({
 
 type FormPost = z.infer<typeof formPostSchema>;
 type FormPostWithContent = FormPost & {
-  content: string;
+  content_en: string;
+  content_es: string;
 };
 
 interface CategoryWithSub extends Category {
@@ -129,15 +134,18 @@ export default function CreatePostPage() {
   const [subCategoriesAll, setSubCategoriesAll] = useState<Subcategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>("");
+  const [errorMessage_es, setErrorMessage_es] = useState<string | null>("");
+  const [errorMessage_en, setErrorMessage_en] = useState<string | null>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [content, setContent] = useState("");
+  const [content_es, setContent_es] = useState("");
+  const [content_en, setContent_en] = useState("");
 
   const formPost = useForm<FormPost>({
     resolver: zodResolver(formPostSchema),
     defaultValues: {
-      title: "",
+      title_en: "",
+      title_es: "",
       category: "",
       subcategory: "",
       isPublished: false,
@@ -157,17 +165,17 @@ export default function CreatePostPage() {
       toast.loading("Cargando post...");
       try {
         const postData = await getPostById(Number(params.id));
-        console.log("Post data:", postData);
-
         if (!postData) throw new Error("Post no encontrado");
 
         // Transform the response to match FormPost structure
         post.current = {
-          title: postData.title,
+          title_en: postData.title_en,
+          title_es: postData.title_es,
           category: postData.category.id.toString(),
           subcategory: postData.subcategory.id.toString(),
           isPublished: postData.published,
-          content: postData.content || "", // Ensure content is always a string
+          content_en: postData.content_en || "", // Ensure content is always a string
+          content_es: postData.content_es || "", // Ensure content is always a string
         };
 
         // Primero, filtra las subcategorías basadas en la categoría del post
@@ -182,7 +190,8 @@ export default function CreatePostPage() {
 
         setTimeout(() => {
           formPost.reset({
-            title: postData.title,
+            title_en: postData.title_en,
+            title_es: postData.title_es,
             category: postData.category.id.toString(),
             subcategory: postData.subcategory.id.toString(),
             isPublished: postData.published,
@@ -190,14 +199,15 @@ export default function CreatePostPage() {
           });
         }, 100); // Simula un pequeño retraso para la carga
 
-        if (postData.content) {
-          setContent(postData.content);
+        if (postData.content_en) {
+          setContent_en(postData.content_en);
         }
-
+        if (postData.content_es) {
+          setContent_es(postData.content_es);
+        }
         if (postData.image) {
           setImagePreview(postData.image);
         }
-
         toast.dismiss();
       } catch (error) {
         toast.dismiss();
@@ -264,22 +274,41 @@ export default function CreatePostPage() {
   }, []);
 
   const onSubmit = async (values: FormPost) => {
-    // Validar que el contenido no esté vacío
-    const contenSanitized = DOMPurify.sanitize(content, {
+    const contenSanitized_es = DOMPurify.sanitize(content_es, {
       ALLOWED_TAGS: [],
     });
-    if (!content || content.trim() === "" || contenSanitized.trim() === "") {
-      setErrorMessage("El contenido es obligatorio");
+
+    const contenSanitized_en = DOMPurify.sanitize(content_en, {
+      ALLOWED_TAGS: [],
+    });
+
+    if (
+      !content_en ||
+      content_en.trim() === "" ||
+      contenSanitized_en.trim() === ""
+    ) {
+      setErrorMessage_en("El contenido es obligatorio");
+      return;
+    }
+
+    if (
+      !content_es ||
+      content_es.trim() === "" ||
+      contenSanitized_es.trim() === ""
+    ) {
+      setErrorMessage_es("El contenido es obligatorio");
       return;
     }
 
     // Check if data has changed before updating
     if (post.current) {
       const hasChanged =
-        post.current.title !== values.title ||
+        post.current.title_en !== values.title_en ||
+        post.current.title_es !== values.title_es ||
         post.current.category !== values.category ||
         post.current.subcategory !== values.subcategory ||
-        post.current.content !== content ||
+        post.current.content_en !== content_en ||
+        post.current.content_es !== content_es ||
         post.current.isPublished !== values.isPublished ||
         isDeletedImage.current;
 
@@ -299,10 +328,12 @@ export default function CreatePostPage() {
         console.log("Imagen subida:", urlImage);
       }
       const data = {
-        title: values.title,
+        title_en: values.title_en,
+        title_es: values.title_es,
         categoryId: Number(values.category),
         subcategoryId: Number(values.subcategory),
-        content: content.trim(),
+        content_en: content_en.trim(),
+        content_es: content_es.trim(),
         published: values.isPublished,
         image: urlImage,
       };
@@ -351,10 +382,10 @@ export default function CreatePostPage() {
               <CardContent className="space-y-6">
                 <FormField
                   control={formPost.control}
-                  name="title"
+                  name="title_es"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Título</FormLabel>
+                      <FormLabel>Título (ES)</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Escribe un título atractivo"
@@ -366,7 +397,23 @@ export default function CreatePostPage() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={formPost.control}
+                  name="title_en"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Título (EN)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Escribe un título atractivo"
+                          {...field}
+                        />
+                      </FormControl>
 
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 {/* Categoría y Subcategoría */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -464,20 +511,47 @@ export default function CreatePostPage() {
                 {/* Editor de Contenido */}
 
                 <FormItem>
-                  <FormLabel className={errorMessage ? "text-destructive" : ""}>
-                    Contenido
+                  <FormLabel
+                    className={errorMessage_en ? "text-destructive" : ""}
+                  >
+                    Contenido (EN)
                   </FormLabel>
                   <FormControl>
                     <RichTextEditor
-                      key={`editor-${content ? "has-content" : "empty"}`}
-                      content={content}
+                      key={`editor-${content_en ? "has-content" : "empty"}`}
+                      content={content_en}
                       onChange={(val) => {
-                        setContent(val);
-                        if (errorMessage && val.trim()) setErrorMessage(null);
+                        setContent_en(val);
+                        if (errorMessage_en && val.trim())
+                          setErrorMessage_en(null);
                       }}
                     />
                   </FormControl>
-                  {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
+                  {errorMessage_en && (
+                    <FormMessage>{errorMessage_en}</FormMessage>
+                  )}
+                </FormItem>
+
+                <FormItem>
+                  <FormLabel
+                    className={errorMessage_es ? "text-destructive" : ""}
+                  >
+                    Contenido (ES)
+                  </FormLabel>
+                  <FormControl>
+                    <RichTextEditor
+                      key={`editor-${content_es ? "has-content" : "empty"}`}
+                      content={content_es}
+                      onChange={(val) => {
+                        setContent_es(val);
+                        if (errorMessage_es && val.trim())
+                          setErrorMessage_es(null);
+                      }}
+                    />
+                  </FormControl>
+                  {errorMessage_es && (
+                    <FormMessage>{errorMessage_es}</FormMessage>
+                  )}
                 </FormItem>
 
                 {/* Imagen del post  */}

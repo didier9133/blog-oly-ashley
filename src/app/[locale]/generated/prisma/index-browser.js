@@ -132,15 +132,18 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  content: 'content',
+  title_es: 'title_es',
+  content_es: 'content_es',
+  slug_es: 'slug_es',
+  title_en: 'title_en',
+  content_en: 'content_en',
+  slug_en: 'slug_en',
   published: 'published',
   authorId: 'authorId',
   image: 'image',
   updatedAt: 'updatedAt',
   categoryId: 'categoryId',
-  subcategoryId: 'subcategoryId',
-  slug: 'slug'
+  subcategoryId: 'subcategoryId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {

@@ -1,8 +1,8 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
+import prisma from "@/lib/prisma";
 
 type type = {
   categoryId: number;
@@ -77,8 +77,12 @@ export async function getPostById(id: number) {
 export async function updatePost(
   postId: number,
   data: {
-    title: string;
-    content: string;
+    title_es: string;
+    title_en: string;
+
+    content_es: string;
+    content_en: string;
+
     image: string;
     categoryId: number;
     subcategoryId: number;
@@ -102,8 +106,14 @@ export async function updatePost(
       );
     }
 
-    const newSlug = data
-      .title!.toLowerCase()
+    const newSlugEs = data
+      .title_es!.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 50);
+
+    const newSlugEn = data
+      .title_en!.toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
       .slice(0, 50);
@@ -112,7 +122,8 @@ export async function updatePost(
       where: { id: postId },
       data: {
         ...data,
-        slug: newSlug !== post.slug ? newSlug : post.slug, // Only update slug if it has changed
+        slug_es: newSlugEs !== post.slug_es ? newSlugEs : post.slug_es,
+        slug_en: newSlugEn !== post.slug_en ? newSlugEn : post.slug_en,
       },
     });
 
@@ -144,8 +155,11 @@ export async function getCategoriesWithSubcategories() {
 }
 
 export async function saveNewPost(data: {
-  title: string;
-  content: string;
+  title_es: string;
+  title_en: string;
+  content_es: string;
+  content_en: string;
+
   image: string;
   categoryId: number;
   subcategoryId: number;
@@ -153,7 +167,13 @@ export async function saveNewPost(data: {
 }) {
   try {
     const { userId } = await auth();
-    const slug = data.title
+    const slug_es = data.title_es
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 50);
+
+    const slug_en = data.title_en
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
@@ -164,20 +184,22 @@ export async function saveNewPost(data: {
     }
     const existingPost = await prisma.post.findFirst({
       where: {
-        slug,
+        OR: [{ slug_es: slug_es }, { slug_en: slug_en }],
       },
     });
     if (existingPost) {
-      throw new Error(`A post with the slug "${slug}" already exists.`);
+      throw new Error(`A post with the slug already exists.`);
     }
 
     const newPost = await prisma.post.create({
       data: {
         ...data,
         authorId: userId,
-        slug,
+        slug_es: slug_es,
+        slug_en: slug_en,
       },
     });
+
     revalidatePath("/dashboard");
     revalidatePath("/");
     revalidatePath(`/blog/`);

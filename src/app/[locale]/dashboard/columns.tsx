@@ -26,11 +26,16 @@ type Post = {
     name: string | null;
   };
   id: number;
-  title: string;
-  content: string | null;
+
+  title_es: string;
+  title_en: string;
+  content_es: string | null;
+  content_en: string | null;
+
   image: string;
   updatedAt: Date;
-  slug: string;
+  slug_es: string;
+  slug_en: string;
   subcategoryId: number;
   published: boolean;
   categoryId: number;
@@ -69,10 +74,10 @@ export const columns: ColumnDef<Post>[] = [
     header: "Título",
     cell: ({ row }) => (
       <div>
-        <div className="font-medium">{row.original.title}</div>
+        <div className="font-medium">{row.original.title_es}</div>
         <div className="text-sm text-gray-400 mt-1 overflow-hidden whitespace-nowrap text-ellipsis max-w-xs">
           {/* Sanitizing content to prevent XSS attacks */}
-          {DOMPurify.sanitize(row.original.content || "", {
+          {DOMPurify.sanitize(row.original.content_es || "", {
             ALLOWED_TAGS: [],
           })}
         </div>
@@ -141,7 +146,7 @@ export const columns: ColumnDef<Post>[] = [
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <Link
-            href={`/${row.original.category.name}/${row.original.slug}`}
+            href={`/${row.original.category.name}/${row.original.slug_en}`}
             className="flex items-center"
           >
             <DropdownMenuItem className="w-full cursor-pointer">

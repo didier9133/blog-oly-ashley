@@ -8,10 +8,12 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+const isProtectedRoute = createRouteMatcher([
+  "/dashboard(.*)",
+  "/(es|en)/dashboard(.*)",
+]);
 
 export default clerkMiddleware(async (auth, req) => {
-  console.log("🔍 Middleware ejecutándose para:", req.nextUrl.pathname);
   // Ejecutar middleware de internacionalización para todas las rutas
   const intlResponse = intlMiddleware(req);
 
@@ -19,18 +21,11 @@ export default clerkMiddleware(async (auth, req) => {
   if (intlResponse && intlResponse.status !== 200) {
     return intlResponse;
   }
-  console.log("🌐 Middleware de internacionalización completado");
-  console.log({
-    isProtectedRoute: isProtectedRoute(req),
-    req,
-  });
   // Continuar con la lógica de autenticación solo para rutas protegidas
   if (isProtectedRoute(req)) {
-    console.log("🔒 Ruta protegida detectada");
     const { userId, redirectToSignIn } = await auth();
 
     if (!userId) {
-      console.log("❌ Sin usuario, redirigiendo al login");
       return redirectToSignIn();
     }
 

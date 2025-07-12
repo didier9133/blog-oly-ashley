@@ -47,10 +47,15 @@ import Link from "next/link";
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 
 const formPostSchema = z.object({
-  title: z.string().min(1, "El título es obligatorio"),
+  title_en: z.string().min(1, "El título es obligatorio"),
+  title_es: z.string().min(1, "El título es obligatorio"),
+
   category: z.string().min(1, "La categoría es obligatoria"),
+
   subcategory: z.string().min(1, "La subcategoría es obligatoria"),
+
   isPublished: z.boolean(),
+
   image: z.lazy(() =>
     typeof window !== "undefined"
       ? z
@@ -97,15 +102,18 @@ export default function CreatePostPage() {
   const [subCategoriesAll, setSubCategoriesAll] = useState<Subcategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>("");
+  const [errorMessage_es, setErrorMessage_es] = useState<string | null>("");
+  const [errorMessage_en, setErrorMessage_en] = useState<string | null>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [content, setContent] = useState("");
+  const [content_es, setContent_es] = useState("");
+  const [content_en, setContent_en] = useState("");
 
   const formPost = useForm<FormPost>({
     resolver: zodResolver(formPostSchema),
     defaultValues: {
-      title: "",
+      title_es: "",
+      title_en: "",
       category: "",
       subcategory: "",
       isPublished: false,
@@ -165,14 +173,32 @@ export default function CreatePostPage() {
 
   const onSubmit = async (values: FormPost) => {
     // Validar que el contenido no esté vacío
-    const contenSanitized = DOMPurify.sanitize(content, {
+    const contenSanitized_es = DOMPurify.sanitize(content_es, {
       ALLOWED_TAGS: [],
     });
 
-    if (!content || content.trim() === "" || contenSanitized.trim() === "") {
-      setErrorMessage("El contenido es obligatorio");
+    const contenSanitized_en = DOMPurify.sanitize(content_en, {
+      ALLOWED_TAGS: [],
+    });
+
+    if (
+      !content_en ||
+      content_en.trim() === "" ||
+      contenSanitized_en.trim() === ""
+    ) {
+      setErrorMessage_en("El contenido es obligatorio");
       return;
     }
+
+    if (
+      !content_es ||
+      content_es.trim() === "" ||
+      contenSanitized_es.trim() === ""
+    ) {
+      setErrorMessage_es("El contenido es obligatorio");
+      return;
+    }
+
     toast.loading("Guardando post...");
 
     try {
@@ -183,10 +209,12 @@ export default function CreatePostPage() {
       );
       console.log("URL de la imagen:", urlImage);
       const data = {
-        title: values.title,
+        title_es: values.title_es.trim(),
+        title_en: values.title_en.trim(),
         categoryId: Number(values.category),
         subcategoryId: Number(values.subcategory),
-        content: content.trim(),
+        content_es: content_es.trim(),
+        content_en: content_en.trim(),
         published: values.isPublished,
         image: urlImage,
       };
@@ -205,8 +233,11 @@ export default function CreatePostPage() {
     } finally {
       setImagePreview("");
       formPost.reset();
-      setContent("");
-      setErrorMessage(null);
+
+      setContent_es("");
+      setContent_en("");
+      setErrorMessage_en(null);
+      setErrorMessage_es(null);
       setIsSubmitting(false);
     }
   };
@@ -236,10 +267,27 @@ export default function CreatePostPage() {
               <CardContent className="space-y-6">
                 <FormField
                   control={formPost.control}
-                  name="title"
+                  name="title_es"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Título</FormLabel>
+                      <FormLabel>Título (ES)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Escribe un título atractivo"
+                          {...field}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={formPost.control}
+                  name="title_en"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Título (EN)</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Escribe un título atractivo"
@@ -349,20 +397,47 @@ export default function CreatePostPage() {
                 {/* Editor de Contenido */}
 
                 <FormItem>
-                  <FormLabel className={errorMessage ? "text-destructive" : ""}>
-                    Contenido
+                  <FormLabel
+                    className={errorMessage_en ? "text-destructive" : ""}
+                  >
+                    Contenido (EN)
                   </FormLabel>
                   <FormControl>
                     <RichTextEditor
-                      key={`editor-${content ? "has-content" : "empty"}`}
-                      content={content}
+                      key={`editor-${content_en ? "has-content" : "empty"}`}
+                      content={content_en}
                       onChange={(val) => {
-                        setContent(val);
-                        if (errorMessage && val.trim()) setErrorMessage(null);
+                        setContent_en(val);
+                        if (errorMessage_en && val.trim())
+                          setErrorMessage_en(null);
                       }}
                     />
                   </FormControl>
-                  {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
+                  {errorMessage_en && (
+                    <FormMessage>{errorMessage_en}</FormMessage>
+                  )}
+                </FormItem>
+
+                <FormItem>
+                  <FormLabel
+                    className={errorMessage_es ? "text-destructive" : ""}
+                  >
+                    Contenido (ES)
+                  </FormLabel>
+                  <FormControl>
+                    <RichTextEditor
+                      key={`editor-${content_es ? "has-content" : "empty"}`}
+                      content={content_es}
+                      onChange={(val) => {
+                        setContent_es(val);
+                        if (errorMessage_es && val.trim())
+                          setErrorMessage_es(null);
+                      }}
+                    />
+                  </FormControl>
+                  {errorMessage_es && (
+                    <FormMessage>{errorMessage_es}</FormMessage>
+                  )}
                 </FormItem>
 
                 {/* Imagen del post  */}

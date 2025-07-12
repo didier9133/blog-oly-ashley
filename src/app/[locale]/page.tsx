@@ -2,14 +2,18 @@ import { ParallaxHero } from "@/components/parallax-hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { CategoryEnum } from "@/enums";
-import prisma from "@/lib/prisma";
+
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import NoPostsView from "@/components/empty-post";
-import { getTranslations } from "next-intl/server";
+
+import prisma from "@/lib/prisma";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function Home() {
+  const currentLanguage = await getLocale();
+
   const recentPostOfBlog = await prisma.post.findFirst({
     where: {
       published: true, // Ensure only published posts are included
@@ -21,6 +25,21 @@ export default async function Home() {
       updatedAt: "desc",
     },
   });
+
+  const recentPostOfBlogTranslated = recentPostOfBlog
+    ? {
+        ...recentPostOfBlog,
+        content:
+          currentLanguage === "en"
+            ? recentPostOfBlog.content_en
+            : recentPostOfBlog.content_es,
+        title:
+          currentLanguage === "en"
+            ? recentPostOfBlog.title_en
+            : recentPostOfBlog.title_es,
+        slug: recentPostOfBlog.slug_en,
+      }
+    : null;
 
   const recentPostOfRecipes = await prisma.post.findFirst({
     where: {
@@ -34,6 +53,21 @@ export default async function Home() {
       updatedAt: "desc",
     },
   });
+
+  const recentPostOfRecipesTranslated = recentPostOfRecipes
+    ? {
+        ...recentPostOfRecipes,
+        content:
+          currentLanguage === "en"
+            ? recentPostOfRecipes.content_en
+            : recentPostOfRecipes.content_es,
+        title:
+          currentLanguage === "en"
+            ? recentPostOfRecipes.title_en
+            : recentPostOfRecipes.title_es,
+        slug: recentPostOfRecipes.slug_en,
+      }
+    : null;
 
   const t = await getTranslations("Home");
 
@@ -105,7 +139,7 @@ export default async function Home() {
           </div>
         </div>
 
-        {!recentPostOfBlog || !recentPostOfRecipes ? (
+        {!recentPostOfBlogTranslated || !recentPostOfRecipesTranslated ? (
           <NoPostsView />
         ) : (
           <>
@@ -115,7 +149,9 @@ export default async function Home() {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                     <div className="relative h-80 overflow-hidden">
                       <Image
-                        src={recentPostOfBlog.image}
+                        src={
+                          recentPostOfBlogTranslated.image || "/placeholder.jpg"
+                        }
                         alt="Logo"
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
@@ -125,16 +161,19 @@ export default async function Home() {
                     </div>
                     <div className="lg:order-1 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
                       <CardTitle className="text-lg font-semibold mb-2 text-primary dark:text-primary/90 group-hover:underline transition-all duration-300">
-                        {recentPostOfBlog.title}
+                        {recentPostOfBlogTranslated.title}
                       </CardTitle>
                       <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden dark:text-gray-200">
-                        {DOMPurify.sanitize(recentPostOfBlog.content ?? "", {
-                          ALLOWED_TAGS: [],
-                        })}
+                        {DOMPurify.sanitize(
+                          recentPostOfBlogTranslated.content ?? "",
+                          {
+                            ALLOWED_TAGS: [],
+                          }
+                        )}
                       </div>
                       <div className="flex flex-row mt-6 gap-3">
                         <Link
-                          href={`/${CategoryEnum.Blog}/${recentPostOfBlog?.slug}`}
+                          href={`/${CategoryEnum.Blog}/${recentPostOfBlogTranslated?.slug}`}
                         >
                           <Button className="rounded-full">Read More</Button>
                         </Link>
@@ -159,16 +198,19 @@ export default async function Home() {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                     <div className="order-1 lg:order-0 p-8 lg:p-12 lg:pt-0 flex flex-col justify-center">
                       <CardTitle className="text-lg font-semibold mb-2 text-primary dark:text-primary/90 group-hover:underline transition-all duration-300">
-                        {recentPostOfRecipes.title}
+                        {recentPostOfRecipesTranslated.title}
                       </CardTitle>
                       <div className="text-sm mb-4 flex-1 line-clamp-8 text-ellipsis overflow-hidden dark:text-gray-200">
-                        {DOMPurify.sanitize(recentPostOfRecipes.content ?? "", {
-                          ALLOWED_TAGS: [],
-                        })}
+                        {DOMPurify.sanitize(
+                          recentPostOfRecipesTranslated.content ?? "",
+                          {
+                            ALLOWED_TAGS: [],
+                          }
+                        )}
                       </div>
                       <div className="flex flex-row mt-6 gap-3">
                         <Link
-                          href={`/${CategoryEnum.Recipes}/${recentPostOfRecipes?.slug}`}
+                          href={`/${CategoryEnum.Recipes}/${recentPostOfRecipesTranslated?.slug}`}
                         >
                           <Button className="rounded-full">Read More</Button>
                         </Link>
@@ -184,7 +226,7 @@ export default async function Home() {
                     </div>
                     <div className=" order-0 relative h-80 overflow-hidden">
                       <Image
-                        src={recentPostOfRecipes.image}
+                        src={recentPostOfRecipesTranslated.image}
                         alt="Logo"
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
