@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { currentUser } from "@clerk/nextjs/server";
 import { Plus, Sparkles, Coffee, Heart, NotebookPen } from "lucide-react";
 import Link from "next/link";
 
-export default function NoPostsView() {
+export default async function NoPostsView() {
+  const user = await currentUser();
+  const isAdmin = Boolean(user?.publicMetadata?.isAdmin);
   return (
     <div className="font-[family-name:var(--font-lora)]">
       {/* Main Content */}
@@ -28,10 +31,10 @@ export default function NoPostsView() {
 
           {/* Main Message */}
           <div className="space-y-4 mb-8">
-            <h1 className="text-4xl md:text-5xl font-light text-stone-700 tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
+            <h1 className="text-4xl md:text-5xl font-light  tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
               No hay posts
             </h1>
-            <p className="text-lg text-stone-500 font-light max-w-md mx-auto leading-relaxed">
+            <p className="text-lg   font-light max-w-md mx-auto leading-relaxed">
               El lienzo está en blanco, esperando las primeras pinceladas de tu
               creatividad
             </p>
@@ -39,20 +42,23 @@ export default function NoPostsView() {
 
           {/* Subtle Quote */}
           <div className="mb-12">
-            <blockquote className="text-stone-400 italic text-sm font-light">
+            <blockquote className=" italic text-sm font-light">
               &quot;Cada gran historia comienza con una página en blanco&quot;
             </blockquote>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-center items-center">
-            <Link href="/dashboard/create">
-              <Button size="lg">
-                <Plus className="h-5 w-5 mr-2 group-hover:rotate-90 transition-transform duration-200" />
-                Crear mi primer post
-              </Button>
-            </Link>
-          </div>
+
+          {isAdmin && (
+            <div className="flex justify-center items-center">
+              <Link href="/dashboard/create">
+                <Button size="lg">
+                  <Plus className="h-5 w-5 mr-2 group-hover:rotate-90 transition-transform duration-200" />
+                  Crear mi primer post
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </main>
 

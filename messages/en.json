@@ -1,0 +1,53 @@
+{
+  "categories": {
+    "blog": "Blog",
+    "recipes": "Recipes",
+    "select": "Select a category",
+    "search": "Search",
+    "empty": "No categories found."
+  },
+  "subcategories": {
+    "blog": {
+      "reflections": "Reflections",
+      "rituals": "Rituals",
+      "letters": "Letters"
+    },
+    "recipes": {
+      "comfort-food": "Comfort Food",
+      "quick-easy": "Quick & Easy",
+      "healthy": "Healthy",
+      "vegan": "Vegan",
+      "venezuelan": "Venezuelan"
+    }
+  },
+
+  "language-selector": {
+    "en": "English",
+    "es": "Spanish"
+  },
+  "Home": {
+    "title": "Welcome to",
+    "subtitle": "Raíces & Returnings",
+    "title-description": "Returning to your raíces",
+    "subtitle-description-one": " – one recipe, ritual,",
+    "subtitle-description-two": "and reflection at a time",
+    "paragraph-description": "A space for the stories we carry, the ones we&apos;re still learning how to tell, and the ones we&apos;re finally ready to live.",
+    "paragraph-description-two": "Here, you&apos;ll find reflections on identity, queerness, healing, spirituality, and home. You&apos;ll find recipes passed down and reimagined. You&apos;ll find reminders—written and wearable—that speak to the parts of you still becoming.",
+    "paragraph-description-three": " This isn&apos;t a brand.",
+    "paragraph-description-four": " It&apos;s our life—offered with intention.",
+    "pre-signature": "  With love,",
+    "signature": "Oly & Ashley",
+    "fresh-title-one": "Fresh from:",
+    "fresh-title-two": "Raíces & Returnings",
+    "paragraph-fresh": "New reflections. New recipes. Same corazón. Catch the latest           stories, kitchen moments, and real talk—straight from us to you. Scroll through, click around, stay a while.",
+    "btn-fresh": "Read More",
+    "btn-fresh-two": " All Recipes Posts"
+  },
+  "Blog": {
+    "breadcrumb": "Home",
+    "recent-posts": "Recent Posts",
+    "no-posts": "No posts available.",
+    "read-more": "Read More",
+    "breadcrumb-recipes": "Recipes"
+  }
+}

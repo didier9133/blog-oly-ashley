@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Base - Bone White */
+  --background: #f4efec;
+
+  /* Texto - Charcoal */
+  --foreground: #2b2b2b;
+
+  /* Card con base Bone White */
+  --card: #f9f8f6;
+  --card-foreground: #2b2b2b;
+
+  /* Popover con base Bone White */
+  --popover: #f9f8f6;
+  --popover-foreground: #2b2b2b;
+
+  /* Principal - Clay */
+  --primary: #c47456;
+  --primary-foreground: #f9f8f6;
+
+  /* Hover/Botones - Brass Gold */
+  --secondary: #b89e69;
+  --secondary-foreground: #f9f8f6;
+
+  /* Acento - Sage Green */
+  --accent: #a6a68c;
+  --accent-foreground: #f9f8f6;
+
+  /* Muted usando tono más claro de Sage Green */
+  --muted: #d1d1c2;
+  --muted-foreground: #6b6b6b;
+
+  /* Destructivo - Un tono rojizo que complementa la paleta */
+  --destructive: #d85c44;
+  --destructive-foreground: #f9f8f6;
+
+  /* Bordes con un tono suave de Sage Green */
+  --border: #c6c6b6;
+  --input: #c6c6b6;
+
+  /* Anillos de enfoque con Clay */
+  --ring: #c47456;
+
+  /* Colores para gráficos basados en la paleta */
+  --chart-1: #c47456;
+  --chart-2: #a6a68c;
+  --chart-3: #b89e69;
+  --chart-4: #d1a98b;
+  --chart-5: #8a8a78;
+
+  /* Sidebar con base Bone White */
+  --sidebar: #f9f8f6;
+  --sidebar-foreground: #2b2b2b;
+  --sidebar-primary: #c47456;
+  --sidebar-primary-foreground: #f9f8f6;
+  --sidebar-accent: #a6a68c;
+  --sidebar-accent-foreground: #f9f8f6;
+  --sidebar-border: #c6c6b6;
+  --sidebar-ring: #c47456;
+}
+
+.dark {
+  /* Base - Charcoal (invertido) */
+  --background: #2b2b2b;
+
+  /* Texto - Bone White (invertido) */
+  --foreground: #f9f8f6;
+
+  /* Card con base más oscura */
+  --card: #3b3b3b;
+  --card-foreground: #f9f8f6;
+
+  /* Popover con base más oscura */
+  --popover: #3b3b3b;
+  --popover-foreground: #f9f8f6;
+
+  /* Principal - Clay (mantenido) */
+  --primary: #c47456;
+  --primary-foreground: #f9f8f6;
+
+  /* Hover/Botones - Brass Gold (intensificado) */
+  --secondary: #c9b078;
+  --secondary-foreground: #2b2b2b;
+
+  /* Acento - Sage Green (intensificado) */
+  --accent: #b6b69c;
+  --accent-foreground: #2b2b2b;
+
+  /* Muted usando tono más oscuro */
+  --muted: #4b4b4b;
+  --muted-foreground: #d1d1d1;
+
+  /* Destructivo - Un tono rojizo intensificado */
+  --destructive: #e86a52;
+  --destructive-foreground: #f9f8f6;
+
+  /* Bordes con opacidad */
+  --border: #525249;
+  --input: #c9b078 / 20%;
+
+  /* Anillos de enfoque con Clay */
+  --ring: #c47456;
+
+  /* Colores para gráficos ajustados para modo oscuro */
+  --chart-1: #d48466;
+  --chart-2: #b6b69c;
+  --chart-3: #c9b078;
+  --chart-4: #e1b99b;
+  --chart-5: #9a9a88;
+
+  /* Sidebar con base oscura */
+  --sidebar: #3b3b3b;
+  --sidebar-foreground: #f9f8f6;
+  --sidebar-primary: #c47456;
+  --sidebar-primary-foreground: #f9f8f6;
+  --sidebar-accent: #b6b69c;
+  --sidebar-accent-foreground: #2b2b2b;
+  --sidebar-border: #f9f8f6 / 15%;
+  --sidebar-ring: #c47456;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .tiptap h1 {
+    @apply text-2xl;
+  }
+  .tiptap h2 {
+    @apply text-xl;
+  }
+  .tiptap h3 {
+    @apply text-lg;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-text {
+    animation: fadeInUp 1.5s ease-out forwards;
+  }
+
+  .text-important {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70;
+  }
+
+  .\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-4 {
+    & svg:not([class*="size-"]) {
+      height: 24px !important;
+      width: 24px !important;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "categories": {
+    "blog": "Blog",
+    "recipes": "Recetas",
+    "select": "Selecciona una categoría",
+    "search": "Buscar",
+    "empty": "No se encontraron categorías."
+  },
+  "subcategories": {
+    "blog": {
+      "reflections": "Reflexiones",
+      "rituals": "Rituales",
+      "letters": "Cartas"
+    },
+    "recipes": {
+      "comfort-food": "Comida reconfortante",
+      "quick-easy": "Rápido y fácil",
+      "healthy": "Saludable",
+      "vegan": "Vegano",
+      "venezuelan": "Venezolano"
+    }
+  },
+  "language-selector": {
+    "en": "Inglés",
+    "es": "Español"
+  },
+  "Home": {
+    "title": "Bienvenidos a",
+    "subtitle": "Raíces & Returnings",
+    "title-description": "Regresando a tus raíces",
+    "subtitle-description-one": " – una receta, un ritual,",
+    "subtitle-description-two": "y una reflexión a la vez",
+    "paragraph-description": "Un espacio para las historias que llevamos, aquellas que aún estamos aprendiendo a contar y aquellas que finalmente estamos listos para vivir.",
+    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, diversidad, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y para llevar—que hablan de las partes de ti que aún están creciendo.",
+    "paragraph-description-three": " Esto no es una marca.",
+    "paragraph-description-four": " Es nuestra vida—ofrecida con intención.",
+    "pre-signature": "  Con amor,",
+    "signature": "Oly & Ashley",
+    "fresh-title-one": "Novedades de:",
+    "fresh-title-two": "Raíces & Returnings",
+    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. El mismo corazón. Descubre las últimas historias, momentos de cocina y conversaciones sinceras—directamente de nosotros para ti. Navega, haz clic, quédate un rato.",
+    "btn-fresh": "Leer más",
+    "btn-fresh-two": " Todas las publicaciones de recetas"
+  },
+  "Blog": {
+    "breadcrumb": "Inicio",
+    "recent-posts": "Publicaciones recientes",
+    "no-posts": "No hay publicaciones disponibles.",
+    "read-more": "Leer más",
+    "breadcrumb-recipes": "Recetas"
+  }
+}

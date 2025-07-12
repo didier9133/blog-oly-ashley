@@ -18,9 +18,30 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getSubcategories } from "@/app/actions/posts";
+import { getSubcategories } from "@/app/[locale]/actions/posts";
+import { useTranslations } from "next-intl";
 
-export function ComboboxDemo({ categoryId }: { categoryId: number }) {
+const DICTIONARY = {
+  //recipes
+  "Comfort Food": "comfort-food",
+  "Quick and Easy": "quick-easy",
+  Healthy: "healthy",
+  Vegan: "vegan",
+  Venezuelan: "venezuelan",
+
+  //blog
+  Reflections: "reflections",
+  Rituals: "rituals",
+  Letters: "letters",
+};
+
+export function ComboboxDemo({
+  categoryId,
+  categoryName,
+}: {
+  categoryId: number;
+  categoryName: string;
+}) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [subCategories, setSubCategories] = React.useState<
@@ -28,6 +49,10 @@ export function ComboboxDemo({ categoryId }: { categoryId: number }) {
   >([]);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations("categories");
+  const t_subcategories = useTranslations(
+    `subcategories.${categoryName.toLowerCase()}`
+  );
 
   React.useEffect(() => {
     if (value) {
@@ -63,19 +88,27 @@ export function ComboboxDemo({ categoryId }: { categoryId: number }) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="max-w-[350px] w-full justify-between"
+          className="max-w-[350px] w-full justify-between dark:hover:text-white"
         >
           {value
             ? subCategories.find((sub) => sub.id.toString() === value)?.name
-            : "Select Category..."}
+              ? t_subcategories(
+                  DICTIONARY[
+                    subCategories
+                      .find((sub) => sub.id.toString() === value)
+                      ?.name.replace(/&/g, "and") as keyof typeof DICTIONARY
+                  ]
+                )
+              : t("select")
+            : `${t("select")}...`}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Command>
-          <CommandInput placeholder="Search category..." />
+          <CommandInput placeholder={`${t("search")}...`} />
           <CommandList>
-            <CommandEmpty>No categories found.</CommandEmpty>
+            <CommandEmpty>{t("empty")}</CommandEmpty>
             <CommandGroup>
               {subCategories.map((sub) => (
                 <CommandItem
@@ -87,7 +120,12 @@ export function ComboboxDemo({ categoryId }: { categoryId: number }) {
                   }}
                   className="cursor-pointer"
                 >
-                  {sub.name}
+                  {t_subcategories(
+                    DICTIONARY[
+                      sub.name.replace(/&/g, "and") as keyof typeof DICTIONARY
+                    ]
+                  )}
+
                   <Check
                     className={cn(
                       "ml-auto",
