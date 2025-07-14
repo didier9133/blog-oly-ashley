@@ -73,6 +73,10 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     include: { author: true },
   });
 
+  if (!firstPost) {
+    return <NoPostsView />;
+  }
+
   const firstPostTranslated = {
     ...firstPost,
     title: currentLanguage === "en" ? firstPost.title_en : firstPost.title_es,

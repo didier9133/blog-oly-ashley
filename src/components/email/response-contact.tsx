@@ -8,74 +8,64 @@ import {
   Hr,
   Section,
 } from "@react-email/components";
+import { getTranslations } from "next-intl/server";
 
 interface ContactEmailTemplateProps {
   customerName: string;
   message: string;
 }
 
-const ContactEmailTemplate = ({
+const ContactEmailTemplate = async ({
   customerName,
   message,
-}: ContactEmailTemplateProps) => (
-  <Html>
-    <Head />
-    <Body style={main}>
-      <Container style={container}>
-        <Section style={header}>
-          <Heading style={h1}>Hi {customerName}</Heading>
-        </Section>
+}: ContactEmailTemplateProps) => {
+  const t = await getTranslations("Email");
 
-        <Section style={content}>
-          <Text style={greeting}>Thank you for being here.</Text>
+  return (
+    <Html>
+      <Head />
+      <Body style={main}>
+        <Container style={container}>
+          <Section style={header}>
+            <Heading style={h1}> {`${t("greeting")} ${customerName}`}</Heading>
+          </Section>
 
-          <Section style={brandMessage}>
-            We’re Ashley & Oly, the voices and hearts behind Raíces &
-            Returnings. This space was born from our stories—stories of
-            migration, memory, queerness, healing, and home. It’s a space where
-            recipes carry history, reflections hold truth, and even the merch is
-            made with meaning. Here’s what you’ll find in our little corner of
-            the internet:
-            <Text>🥄 Recipes rooted in culture and love</Text>
-            <Text>
-              📝 Blogs that reflect on identity, spirituality, and growth
+          <Section style={content}>
+            <Text style={greeting}>{t("title")}</Text>
+
+            <Section style={brandMessage}>
+              {t("brandMessage")}
+              <Text>{t("list-one")}</Text>
+              <Text>{t("list-two")}</Text>
+              <Text>{t("list-three")}</Text>
+            </Section>
+
+            <Section style={messageSection}>
+              <Text style={messageLabel}>{t("your-message")}</Text>
+              <Text style={customerMessage}>{`"${message}"`}</Text>
+            </Section>
+
+            <Hr style={divider} />
+
+            <Text style={responseMessage}>{t("response-message")}</Text>
+
+            <Text style={closing}>
+              {t("gratitude")}
+              <br />
+              <strong>Raíces & Returnings</strong>
+              <br />
+              {t("signature")}
             </Text>
-            <Text>🛍 Merch designed with intention (and a lot of corazón)</Text>
           </Section>
 
-          <Section style={messageSection}>
-            <Text style={messageLabel}>Your message:</Text>
-            <Text style={customerMessage}>{`"${message}"`}</Text>
+          <Section style={footer}>
+            <Text style={footerText}>{t("footer-text")}</Text>
           </Section>
-
-          <Hr style={divider} />
-
-          <Text style={responseMessage}>
-            We’re so glad you reached out. Whether you had a question, an idea,
-            or just wanted to say hi—your presence here matters to us. We’re
-            building a community, not a following. Thanks for being part of it.
-            We’ll get back to you as soon as we can.
-          </Text>
-
-          <Text style={closing}>
-            With gratitude,
-            <br />
-            <strong>Raíces & Returnings</strong>
-            <br />
-            Ashley & Oly
-          </Text>
-        </Section>
-
-        <Section style={footer}>
-          <Text style={footerText}>
-            Este email fue enviado porque te pusiste en contacto con nosotras a
-            través de nuestro sitio web.
-          </Text>
-        </Section>
-      </Container>
-    </Body>
-  </Html>
-);
+        </Container>
+      </Body>
+    </Html>
+  );
+};
 
 export default ContactEmailTemplate;
 

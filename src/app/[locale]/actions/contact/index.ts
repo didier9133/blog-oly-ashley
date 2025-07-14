@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import ContactEmailTemplateProps from "@/components/email/response-contact";
 import OwnerNotificationTemplate from "@/components/email/notify-contact";
+import { getTranslations } from "next-intl/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DOMAIN = "decs.lat";
@@ -21,11 +22,13 @@ export async function sendContactEmail({
   content: string;
   subject: string;
 }) {
+  const t = await getTranslations("Email");
+
   try {
     const { error } = await resend.emails.send({
       from: `Raices & Returning <no-reply@${DOMAIN}>`,
       to: email,
-      subject: "Thanks for reaching out to Raíces & Returnings 🌿",
+      subject: t("subject"),
       react: ContactEmailTemplateProps({
         customerName: `${firstName} ${lastName}`.trim(),
         message: content,

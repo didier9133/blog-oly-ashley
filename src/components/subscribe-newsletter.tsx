@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const subscribeSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -25,6 +26,7 @@ const subscribeSchema = z.object({
 export type FormSubscribe = z.infer<typeof subscribeSchema>;
 
 export function FormSubscribeNewsletter() {
+  const t = useTranslations("footer");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSubscribe = useForm<FormSubscribe>({
@@ -36,15 +38,13 @@ export function FormSubscribeNewsletter() {
 
   const onSubmit = async (data: FormSubscribe) => {
     try {
-      toast.loading("Submitting your subscription...");
+      toast.loading(t("toast-loading"));
       setIsSubmitting(true);
       await subscribeToNewsletter(data.email);
-      toast.success("Successfully subscribed to the newsletter!");
+      toast.success(t("toast-success"));
     } catch (error) {
-      let errorMessage = "An error occurred while subscribing.";
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      }
+      console.error("Subscription error:", error);
+      const errorMessage = t("toast-error");
       toast.error(errorMessage);
     } finally {
       toast.dismiss();
@@ -68,7 +68,7 @@ export function FormSubscribeNewsletter() {
                 <Input
                   {...field}
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("placeholder")}
                   className=""
                 />
               </FormControl>
@@ -77,7 +77,7 @@ export function FormSubscribeNewsletter() {
           )}
         />
         <Button type="submit" disabled={isSubmitting}>
-          Subscribe
+          {t("subscribe-label")}
         </Button>
       </form>
     </Form>

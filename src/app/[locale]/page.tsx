@@ -94,28 +94,24 @@ export default async function Home() {
             {t("subtitle-description-two")}
           </h2>
           <p className="text-base md:text-lg lg:text-xl">
-            A space for the stories we carry, the ones we&apos;re still learning
-            how to tell, and the ones we&apos;re finally ready to live.
+            {t("paragraph-description")}
           </p>
 
           <p className="text-base md:text-lg lg:text-xl">
-            Here, you&apos;ll find reflections on identity, queerness, healing,
-            spirituality, and home. You&apos;ll find recipes passed down and
-            reimagined. You&apos;ll find reminders—written and wearable—that
-            speak to the parts of you still becoming.
+            {t("paragraph-description-two")}
           </p>
           <p className="text-base md:text-lg lg:text-xl">
-            This isn&apos;t a brand.
+            {t("paragraph-description-three")}
           </p>
           <p className="text-base md:text-lg lg:text-xl">
-            It&apos;s our life—offered with intention.
+            {t("paragraph-description-four")}
           </p>
 
           <div className="flex justify-start mt-8">
             <p className="text-left text-lg md:text-xl lg:text-2xl italic font-[family-name:var(--font-cormorant-garamond)]">
-              With love,
+              {t("pre-signature")}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-semibold">
-                Oly & Ash
+                {t("signature")}
               </span>
             </p>
           </div>
@@ -126,15 +122,13 @@ export default async function Home() {
         <div className="flex flex-1 flex-col conatiner max-w-3xl m-auto  p-4 pb-10 md:pt-20 font-[family-name:var(--font-lora)] ">
           <div className=" flex flex-col  justify-center gap-4 w-full ">
             <h2 className="text-3xl font-bold mb-4 text-center font-[family-name:var(--font-cormorant-garamond)]">
-              Fresh from: <br />
+              {t("fresh-title-one")} <br />
               <span className="text-important text-4xl font-extrabold">
                 Raíces & Returnings
               </span>{" "}
             </h2>{" "}
             <p className="text-base md:text-lg lg:text-xl">
-              New reflections. New recipes. Same corazón. Catch the latest
-              stories, kitchen moments, and real talk—straight from us to you.
-              Scroll through, click around, stay a while.
+              {t("paragraph-fresh")}
             </p>
           </div>
         </div>
@@ -175,14 +169,16 @@ export default async function Home() {
                         <Link
                           href={`/${CategoryEnum.Blog}/${recentPostOfBlogTranslated?.slug}`}
                         >
-                          <Button className="rounded-full">Read More</Button>
+                          <Button className="rounded-full">
+                            {t("btn-fresh")}
+                          </Button>
                         </Link>
                         <Link href={`/${CategoryEnum.Blog}`}>
                           <Button
                             variant="outline"
                             className="px-6 py-2 rounded-full transition-all duration-200 border-primary hover:bg-transparent hover:text-primary text-primary dark:text-primary-foreground dark:hover:text-primary"
                           >
-                            All Blog Posts
+                            {t("btn-all-posts")}
                           </Button>
                         </Link>
                       </div>
@@ -212,14 +208,16 @@ export default async function Home() {
                         <Link
                           href={`/${CategoryEnum.Recipes}/${recentPostOfRecipesTranslated?.slug}`}
                         >
-                          <Button className="rounded-full">Read More</Button>
+                          <Button className="rounded-full">
+                            {t("btn-fresh")}
+                          </Button>
                         </Link>
                         <Link href={`/${CategoryEnum.Recipes}`}>
                           <Button
                             variant="outline"
                             className="px-6 py-2 rounded-full transition-all duration-200 border-primary hover:bg-transparent hover:text-primary text-primary dark:text-primary-foreground dark:hover:text-primary"
                           >
-                            All Recipes Posts
+                            {t("btn-fresh-two")}
                           </Button>
                         </Link>
                       </div>

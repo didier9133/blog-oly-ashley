@@ -2,8 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Heart, Coffee, House } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function NotFound() {
+  const t = useTranslations("NotFound");
   return (
     <div className="font-[family-name:var(--font-lora)]">
       {/* Main Content */}
@@ -15,10 +17,10 @@ export default function NotFound() {
               <Sparkles className="h-6 w-6" />
             </div>
             <div className="absolute -top-2 -right-6 text-amber-200 animate-bounce">
-              <Heart className="h-4 w-4" />
+              <Heart className="h-6 w-6" />
             </div>
             <div className="absolute -bottom-2 left-8 text-stone-200 animate-pulse">
-              <Coffee className="h-5 w-5" />
+              <Coffee className="h-6 w-6" />
             </div>
             <Image
               src="/meditation.png"
@@ -32,19 +34,17 @@ export default function NotFound() {
           {/* Main Message */}
           <div className="space-y-4 mb-8">
             <h1 className="text-4xl md:text-5xl font-light text-stone-700 tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
-              Something&apos;s wrong here.
+              {t("title")}
             </h1>
             <p className="text-lg text-stone-500 font-light max-w-md mx-auto leading-relaxed">
-              This is a 404 error, which means you&apos;ve clicked on a bad link
-              or entered an invalid URL.
+              {t("message")}
             </p>
           </div>
 
           {/* Subtle Quote */}
           <div className="mb-12">
             <blockquote className="text-stone-400 italic text-sm font-light">
-              &quot;The page you are looking for does not exist, but the journey
-              continues.&quot;
+              {t("subtleQuote")}
             </blockquote>
           </div>
 
@@ -53,7 +53,7 @@ export default function NotFound() {
             <Link href="/">
               <Button size="lg">
                 <House className="h-5 w-5 mr-2" />
-                Home
+                {t("returnHome")}
               </Button>
             </Link>
           </div>

@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 import { Plus, Sparkles, Coffee, Heart, NotebookPen } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 export default async function NoPostsView() {
   const user = await currentUser();
   const isAdmin = Boolean(user?.publicMetadata?.isAdmin);
+  const t = await getTranslations("NotPostFound");
   return (
     <div className="font-[family-name:var(--font-lora)]">
       {/* Main Content */}
@@ -31,19 +33,18 @@ export default async function NoPostsView() {
 
           {/* Main Message */}
           <div className="space-y-4 mb-8">
-            <h1 className="text-4xl md:text-5xl font-light  tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
-              No hay posts
+            <h1 className="text-4xl md:text-5xl font-light tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
+              {t("title")}
             </h1>
-            <p className="text-lg   font-light max-w-md mx-auto leading-relaxed">
-              El lienzo está en blanco, esperando las primeras pinceladas de tu
-              creatividad
+            <p className="text-lg font-light max-w-md mx-auto leading-relaxed">
+              {t("message")}
             </p>
           </div>
 
           {/* Subtle Quote */}
           <div className="mb-12">
-            <blockquote className=" italic text-sm font-light">
-              &quot;Cada gran historia comienza con una página en blanco&quot;
+            <blockquote className="italic text-sm font-light">
+              {t("subtleQuote")}
             </blockquote>
           </div>
 
@@ -54,7 +55,7 @@ export default async function NoPostsView() {
               <Link href="/dashboard/create">
                 <Button size="lg">
                   <Plus className="h-5 w-5 mr-2 group-hover:rotate-90 transition-transform duration-200" />
-                  Crear mi primer post
+                  {t("create")}
                 </Button>
               </Link>
             </div>

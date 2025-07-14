@@ -1,4 +1,21 @@
 {
+  "navigation": {
+    "blog": "Blog",
+    "recipes": "Recetas",
+    "about": "Sobre Nosotras",
+    "contact": "Contacto",
+    "merch": "Tienda",
+    "dashboard": "Panel"
+  },
+
+  "footer": {
+    "subscribe-label": "Suscribirse",
+    "placeholder": "Ingresa tu correo electrónico",
+    "toast-loading": "Enviando tu suscripción...",
+    "toast-success": "¡Suscripción al boletín exitosa!",
+    "toast-error": "Hubo un error al suscribirse. Por favor, inténtalo de nuevo."
+  },
+
   "categories": {
     "blog": "Blog",
     "recipes": "Recetas",
@@ -13,8 +30,8 @@
       "letters": "Cartas"
     },
     "recipes": {
-      "comfort-food": "Comida reconfortante",
-      "quick-easy": "Rápido y fácil",
+      "comfort-food": "Comida Reconfortante",
+      "quick-easy": "Rápido y Fácil",
       "healthy": "Saludable",
       "vegan": "Vegano",
       "venezuelan": "Venezolano"
@@ -27,26 +44,96 @@
   "Home": {
     "title": "Bienvenidos a",
     "subtitle": "Raíces & Returnings",
-    "title-description": "Regresando a tus raíces",
-    "subtitle-description-one": " – una receta, un ritual,",
-    "subtitle-description-two": "y una reflexión a la vez",
-    "paragraph-description": "Un espacio para las historias que llevamos, aquellas que aún estamos aprendiendo a contar y aquellas que finalmente estamos listos para vivir.",
-    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, diversidad, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y para llevar—que hablan de las partes de ti que aún están creciendo.",
+    "title-description": "Volviendo a tus raíces",
+    "subtitle-description-one": " – una receta, ritual,",
+    "subtitle-description-two": "y reflexión a la vez",
+    "paragraph-description": "Un espacio para las historias que llevamos, las que todavía estamos aprendiendo a contar y las que finalmente estamos listos para vivir.",
+    "paragraph-description-two": "Aquí encontrarás reflexiones sobre identidad, diversidad sexual, sanación, espiritualidad y hogar. Encontrarás recetas transmitidas y reimaginadas. Encontrarás recordatorios—escritos y para llevar—que hablan a las partes de ti que aún están formándose.",
     "paragraph-description-three": " Esto no es una marca.",
     "paragraph-description-four": " Es nuestra vida—ofrecida con intención.",
     "pre-signature": "  Con amor,",
     "signature": "Oly & Ashley",
-    "fresh-title-one": "Novedades de:",
+    "fresh-title-one": "Lo más reciente de:",
     "fresh-title-two": "Raíces & Returnings",
-    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. El mismo corazón. Descubre las últimas historias, momentos de cocina y conversaciones sinceras—directamente de nosotros para ti. Navega, haz clic, quédate un rato.",
-    "btn-fresh": "Leer más",
-    "btn-fresh-two": " Todas las publicaciones de recetas"
+    "paragraph-fresh": "Nuevas reflexiones. Nuevas recetas. Mismo corazón. Descubre las últimas historias, momentos en la cocina y conversaciones reales—directamente de nosotros para ti. Desplázate, explora, quédate un rato.",
+    "btn-fresh": "Leer Más",
+    "btn-fresh-two": " Todas las Recetas",
+    "btn-all-posts": "Todos los Blogs"
+  },
+  "About": {
+    "introduction-paragraph": "Dos voces, un hogar. Arraigados en diferentes tierras, moldeados por la supervivencia, unidos por la sanación. Creamos Raíces & Returnings para albergar todo lo que nunca encajó perfectamente en categorías: amor que desafía guiones, comida que lleva memoria, diversidad sexual que se siente sagrada e historias que no terminan donde comenzaron. Es parte blog, parte mesa de cocina, parte altar. Un poco desordenado. Profundamente honesto. Y siempre real.",
+    "description-oly": "Contadora de Verdades y Creadora Arraigada",
+    "description-paragraph-oly": "Nací en Venezuela y fui criada por la vida real—no por un plan. He vivido a través del silencio, la migración, el desamor, la supervivencia. He perdido partes de mí misma y encontrado nuevas en lugares que nunca esperé. No estoy aquí para impresionar a nadie—estoy aquí porque sé lo que significa empezar de nuevo. Más de una vez. Me encontrarás principalmente en la sección de cocina de este sitio—donde la comida se convierte en lenguaje y memoria. Pero también soy parte de todo lo demás: la sanación, el humor, la verdad. Estoy aquí porque creo en lo que comparto.",
+    "description-ashley": "Creadora Consciente",
+    "description-paragraph-ashley": "Soy una creadora consciente—de palabras, de espacio, de significado. Fui moldeada en el intermedio. Entre idiomas. Entre culturas. He vivido cosas que me hicieron cuestionar todo—luego me ofrecieron una voz para hablar a través de ello. Ahora, vivo con intención. Escribo para recordar. Creo para reclamar. He vivido a través del caos, a través del encierro, a través del llamado. Ahora, vivo de una manera que honra todo eso. Mi voz aquí está arraigada en la reflexión—sobre identidad, espiritualidad, diversidad sexual, sanación y lo sagrado de regresar."
   },
   "Blog": {
     "breadcrumb": "Inicio",
-    "recent-posts": "Publicaciones recientes",
+    "recent-posts": "Publicaciones Recientes",
     "no-posts": "No hay publicaciones disponibles.",
-    "read-more": "Leer más",
+    "read-more": "Leer Más",
     "breadcrumb-recipes": "Recetas"
+  },
+  "Contact": {
+    "title": "¿Quieres contactarnos?",
+    "paragraph": "Nos encantaría saber de ti ya sea un pensamiento, una pregunta, una colaboración o simplemente algo que querías decir. Completa el formulario a continuación y haremos lo posible por responderte pronto.",
+    "title-form": "Formulario de Contacto",
+
+    "toast-loading": "Enviando tu mensaje...",
+    "toast-success": "¡Mensaje enviado con éxito!",
+    "toast-error": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+
+    "firstName": "Nombre",
+    "placeholder-firstName": "Ingresa tu nombre",
+    "lastName": "Apellido",
+    "placeholder-lastName": "Ingresa tu apellido",
+    "email": "Correo Electrónico",
+    "placeholder-email": "Ingresa tu dirección de correo electrónico",
+    "subject": "Asunto",
+    "placeholder-subject": "Ingresa el asunto de tu mensaje",
+    "content": "Mensaje",
+    "placeholder-content": "Escribe tu mensaje aquí",
+
+    "submit": "Enviar",
+    "cancel": "Volver al Inicio",
+    "submitting": "Enviando...",
+
+    "validation": {
+      "firstName-required": "El nombre es requerido",
+      "lastName-required": "El apellido es requerido",
+      "email-invalid": "Por favor, ingresa una dirección de correo electrónico válida",
+      "content-required": "El contenido del mensaje es requerido",
+      "content-max": "El mensaje no puede exceder los 5000 caracteres",
+      "subject-required": "El asunto es requerido",
+      "subject-max": "El asunto no puede exceder los 100 caracteres"
+    }
+  },
+  "Email": {
+    "subject": "Gracias por contactar a Raíces & Returnings 🌿",
+    "greeting": "Hola,",
+    "title": "Gracias por estar aquí.",
+    "brandMessage": "Somos Ashley y Oly, las voces y corazones detrás de Raíces & Returnings. Este espacio nació de nuestras historias—historias de migración, memoria, diversidad sexual, sanación y hogar. Es un espacio donde las recetas llevan historia, las reflexiones contienen verdad, y hasta la mercancía está hecha con significado. Esto es lo que encontrarás en nuestro pequeño rincón de internet:",
+    "list-one": "🥄 Recetas arraigadas en cultura y amor",
+    "list-two": "📝 Blogs que reflexionan sobre identidad, espiritualidad y crecimiento",
+    "list-three": "🛍 Mercancía diseñada con intención (y mucho corazón)",
+
+    "your-message": "Tu mensaje",
+    "response-message": "Estamos muy contentas de que te hayas puesto en contacto. Ya sea que tuvieras una pregunta, una idea o simplemente quisieras saludar—tu presencia aquí es importante para nosotras. Estamos construyendo una comunidad, no seguidores. Gracias por ser parte de ella. Te responderemos tan pronto como podamos.",
+    "gratitude": "Con gratitud,",
+    "signature": "Oly & Ashley",
+    "footer-text": "Este correo electrónico fue enviado porque nos contactaste a través de nuestro sitio web."
+  },
+  "NotFound": {
+    "title": "Algo está mal aquí.",
+    "message": "Este es un error 404, lo que significa que has hecho clic en un enlace incorrecto o ingresado una URL inválida.",
+    "subtleQuote": "&quot;La página que buscas no existe, pero el viaje continúa.&quot;",
+    "returnHome": "Volver al Inicio"
+  },
+
+  "NotPostFound": {
+    "title": "No hay publicaciones",
+    "message": "El lienzo está en blanco, esperando las primeras pinceladas de tu creatividad",
+    "subtleQuote": "\"Toda gran historia comienza con una página en blanco\"",
+    "create": "Crea tu primera publicación"
   }
 }

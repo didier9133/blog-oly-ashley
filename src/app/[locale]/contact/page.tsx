@@ -26,25 +26,33 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { sendContactEmail } from "../actions/contact";
+import { useTranslations } from "next-intl";
 
-const formContactSchema = z.object({
-  firstName: z.string().min(1, "El nombre es obligatorio"),
-  lastName: z.string().min(1, "El apellido es obligatorio"),
-  email: z.string().email("El correo electrónico no es válido"),
-  content: z
-    .string()
-    .min(1, "El contenido es obligatorio")
-    .max(5000, "El contenido no puede exceder los 5000 caracteres"),
-  subject: z
-    .string()
-    .min(1, "El asunto es obligatorio")
-    .max(100, "El asunto no puede exceder los 100 caracteres"),
-});
-
-type FormContact = z.infer<typeof formContactSchema>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createFormContactSchema = (t: any) =>
+  z.object({
+    firstName: z.string().min(1, t("firstName-required")),
+    lastName: z.string().min(1, t("lastName-required")),
+    email: z.string().email(t("email-invalid")),
+    content: z
+      .string()
+      .min(1, t("content-required"))
+      .max(5000, t("content-max")),
+    subject: z
+      .string()
+      .min(1, t("subject-required"))
+      .max(100, t("subject-max")),
+  });
 
 export default function ContactPage() {
+  const t_validation = useTranslations("Contact.validation");
+  const t = useTranslations("Contact");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Create the schema with the translation function
+  const formContactSchema = createFormContactSchema(t_validation);
+  type FormContact = z.infer<typeof formContactSchema>;
+
   const formContact = useForm<FormContact>({
     resolver: zodResolver(formContactSchema),
     defaultValues: {
@@ -57,7 +65,7 @@ export default function ContactPage() {
   });
 
   const onSubmit = async (values: FormContact) => {
-    toast.loading("Guardando post...");
+    toast.loading(t("toast-loading"));
     try {
       setIsSubmitting(true);
       await sendContactEmail({
@@ -68,15 +76,11 @@ export default function ContactPage() {
         subject: values.subject,
       });
       toast.dismiss();
-      toast.success("Post guardado exitosamente");
+      toast.success(t("toast-success"));
       formContact.reset();
     } catch (error) {
-      let errorMessage = "Lo sentimos, ocurrió un error al enviar el mensaje.";
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      } else if (typeof error === "string") {
-        errorMessage = error;
-      }
+      console.error("Error sending contact email:", error);
+      const errorMessage = t("toast-error");
       toast.dismiss();
       toast.error(errorMessage);
     } finally {
@@ -89,13 +93,9 @@ export default function ContactPage() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
-            Want to reach us?
+            {t("title")}
           </h1>
-          <p className="mt-1 text-sm text-gray-400">
-            We’d love to hear from you—whether it’s a thought, a question, a
-            collaboration, or just something you wanted to say. Fill out the
-            form below, and we’ll do our best to get back to you soon.
-          </p>
+          <p className="mt-1 text-sm text-gray-400">{t("paragraph")}</p>
         </div>
 
         <Form {...formContact}>
@@ -105,7 +105,7 @@ export default function ContactPage() {
           >
             <Card className=" shadow-sm">
               <CardHeader>
-                <CardTitle>Contact Form</CardTitle>
+                <CardTitle>{t("title-form")}</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -116,10 +116,10 @@ export default function ContactPage() {
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>First Name</FormLabel>
+                          <FormLabel>{t("firstName")}</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Enter your first name"
+                              placeholder={t("placeholder-firstName")}
                               {...field}
                             />
                           </FormControl>
@@ -136,10 +136,10 @@ export default function ContactPage() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Last Name</FormLabel>
+                          <FormLabel>{t("lastName")}</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Enter your last name"
+                              placeholder={t("placeholder-lastName")}
                               {...field}
                             />
                           </FormControl>
@@ -158,9 +158,12 @@ export default function ContactPage() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>{t("email")}</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter your email" {...field} />
+                            <Input
+                              placeholder={t("placeholder-email")}
+                              {...field}
+                            />
                           </FormControl>
 
                           <FormMessage />
@@ -175,10 +178,10 @@ export default function ContactPage() {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Subject</FormLabel>
+                          <FormLabel>{t("subject")}</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Enter your subject"
+                              placeholder={t("placeholder-subject")}
                               {...field}
                             />
                           </FormControl>
@@ -194,10 +197,10 @@ export default function ContactPage() {
                   name="content"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Comment</FormLabel>
+                      <FormLabel>{t("content")}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Tell us a little bit about yourself"
+                          placeholder={t("placeholder-content")}
                           className="resize-none"
                           {...field}
                         />
@@ -217,12 +220,12 @@ export default function ContactPage() {
                       variant="outline"
                       className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
                     >
-                      Back
+                      {t("cancel")}
                     </Button>
                   </Link>
 
                   <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending..." : "Send"}
+                    {isSubmitting ? t("submitting") : t("submit")}
                     <SendHorizontal className="h-2 w-2 mr-2" />
                   </Button>
                 </div>
