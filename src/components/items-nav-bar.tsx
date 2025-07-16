@@ -1,15 +1,36 @@
 import { data } from "@/const/navbar-options";
 import { ItemNavBar } from "./item-nav-bar";
 import { currentUser } from "@clerk/nextjs/server";
+import { getTranslations } from "next-intl/server";
 
 export async function ItemsNavBar() {
   const user = await currentUser();
   const items =
     user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain;
+  const t = await getTranslations("navigation");
+
+  const titleToPathMap = items.reduce(
+    (acc, item) => {
+      // For internal links, remove the leading slash
+      const path = item.external ? item.url : item.url.replace(/^\//, "");
+      if (item.external) {
+        acc[item.title] = "merch";
+        return acc;
+      }
+      // Add the mapping to the accumulator object
+      acc[item.title] = path;
+      return acc;
+    },
+    {} as Record<string, string>
+  );
+  const itemsTraslated = items.map((item) => ({
+    ...item,
+    title: t(titleToPathMap[item.title]),
+  }));
 
   return (
     <div className="hidden md:flex items-center gap-4">
-      {items.map((item) => (
+      {itemsTraslated.map((item) => (
         <ItemNavBar key={item.title} {...item} />
       ))}
     </div>

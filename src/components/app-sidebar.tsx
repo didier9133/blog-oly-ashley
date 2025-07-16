@@ -67,7 +67,9 @@ export async function AppSidebar({
               {itemsTraslated.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={item.isActive}>
-                    <Link className="px-4 py-3 pb-4" href={item.url}></Link>
+                    <Link className="px-4 py-3 pb-4" href={item.url}>
+                      {item.title}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
