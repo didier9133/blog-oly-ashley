@@ -6,7 +6,7 @@ import OwnerNotificationTemplate from "@/components/email/notify-contact";
 import { getTranslations } from "next-intl/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const DOMAIN = "decs.lat";
+const DOMAIN = "raicesreturnings.com";
 const NOTIFICATION_EMAIL = "raicesreturnings@gmail.com";
 
 export async function sendContactEmail({
