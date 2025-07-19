@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
   Form,
   FormControl,
@@ -48,8 +48,14 @@ const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 
 const formPostSchema = z.object({
-  title_en: z.string().min(1, "El título es obligatorio"),
-  title_es: z.string().min(1, "El título es obligatorio"),
+  title_en: z
+    .string()
+    .min(1, "El título es obligatorio")
+    .max(100, "El título no puede exceder los 100 caracteres"),
+  title_es: z
+    .string()
+    .min(1, "El título es obligatorio")
+    .max(100, "El título no puede exceder los 100 caracteres"),
 
   category: z.string().min(1, "La categoría es obligatoria"),
   subcategory: z.string().min(1, "La subcategoría es obligatoria"),
@@ -140,6 +146,34 @@ export default function CreatePostPage() {
 
   const [content_es, setContent_es] = useState("");
   const [content_en, setContent_en] = useState("");
+
+  const sanitizePastedText = useCallback((text: string) => {
+    // Remover HTML y mantener solo texto plano
+    const cleanText = DOMPurify.sanitize(text, {
+      ALLOWED_TAGS: [],
+      ALLOWED_ATTR: [],
+      KEEP_CONTENT: true,
+    });
+
+    // Remover saltos de línea y caracteres especiales problemáticos
+    return cleanText
+      .replace(/[\r\n]+/g, " ") // Reemplazar saltos de línea con espacios
+      .replace(/\s+/g, " ") // Reemplazar múltiples espacios con uno solo
+      .trim();
+  }, []);
+
+  const handleTitlePaste = useCallback(
+    (
+      e: React.ClipboardEvent<HTMLInputElement>,
+      fieldOnChange: (value: string) => void
+    ) => {
+      e.preventDefault();
+      const pastedText = e.clipboardData.getData("text/plain");
+      const sanitizedText = sanitizePastedText(pastedText);
+      fieldOnChange(sanitizedText.slice(0, 100));
+    },
+    [sanitizePastedText]
+  );
 
   const formPost = useForm<FormPost>({
     resolver: zodResolver(formPostSchema),
@@ -390,6 +424,7 @@ export default function CreatePostPage() {
                         <Input
                           placeholder="Escribe un título atractivo"
                           {...field}
+                          onPaste={(e) => handleTitlePaste(e, field.onChange)}
                         />
                       </FormControl>
 
@@ -407,6 +442,7 @@ export default function CreatePostPage() {
                         <Input
                           placeholder="Escribe un título atractivo"
                           {...field}
+                          onPaste={(e) => handleTitlePaste(e, field.onChange)}
                         />
                       </FormControl>
 
