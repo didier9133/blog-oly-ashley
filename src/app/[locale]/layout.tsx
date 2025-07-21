@@ -73,21 +73,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     alternateLocale: ["es_ES"],
-    url: "https://blog-oly-ashley.vercel.app",
+    url: "https://www.raicesreturnings.com",
     siteName: "Raíces & Returnings",
     title: "Raíces & Returnings - Ashley & Oly",
     description:
       "A space for the stories we carry, the ones we're still learning how to tell, and the ones we're finally ready to live. Reflections on identity, queerness, healing, spirituality, and home. Recipes passed down and reimagined.",
     images: [
       {
-        url: "https://blog-oly-ashley.vercel.app/og-image.jpeg",
+        url: "https://www.raicesreturnings.com/og-image.jpeg",
         width: 1200,
         height: 630,
         alt: "Raíces & Returnings - Ashley & Oly",
         type: "image/jpeg",
       },
       {
-        url: "https://blog-oly-ashley.vercel.app/og-image-square.jpg",
+        url: "https://www.raicesreturnings.com/og-image-square.jpg",
         width: 1080,
         height: 1080,
         alt: "Raíces & Returnings - Ashley & Oly",
