@@ -115,7 +115,7 @@ export default async function BlogPostPage(props: {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        {/* Imagen del post */}``
+        {/* Imagen del post */}
         <ImageBlogDetail
           post={{
             ...post,
