@@ -74,11 +74,11 @@ export default async function Home() {
   return (
     <main>
       <ParallaxHero imageSrc="/hero-image.jpeg" imageAlt="Hero image">
-        <div className="absolute md:top-1/3 md:left-8">
-          <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl lg:text-7xl font-bold mb-2 md:mb-4 hero-text">
+        <div className="absolute md:top-1/3 md:left-8 xl:left-14">
+          <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-2 md:mb-4 hero-text">
             {t("title")}
           </h1>
-          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-5xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-extrabold mb-2 md:mb-4 hero-text">
+          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70 font-extrabold mb-2 md:mb-4 hero-text">
             {t("subtitle")}
           </h2>
         </div>

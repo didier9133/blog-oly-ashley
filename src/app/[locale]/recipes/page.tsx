@@ -112,7 +112,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
               {firstPostTranslated?.title}
             </h1>
 
-            <p className=" text-sm mb-4 flex-1 line-clamp-4 text-ellipsis overflow-hidden hero-text">
+            <p className=" text-sm mb-4 flex-1 line-clamp-4 text-ellipsis overflow-hidden hero-text lg:text-2xl">
               {DOMPurify.sanitize(firstPostTranslated?.content ?? "", {
                 ALLOWED_TAGS: [],
               })}
@@ -120,7 +120,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
 
             <div className="flex items-center justify-end text-xs text-white mt-auto hero-text">
               <Link href={`/${PATH}/${firstPostTranslated?.slug}`}>
-                <Button variant={"ghost"}>
+                <Button variant={"ghost"} className="text-base">
                   {t("read-more")} <ChevronRight />
                 </Button>
               </Link>
@@ -144,10 +144,10 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     />
                   </CardHeader>
                   <CardContent className="flex-1 flex flex-col p-4">
-                    <CardTitle className="text-lg font-semibold mb-2 text-primary group-hover:underline transition-all duration-300">
+                    <CardTitle className="text-lg font-semibold mb-2 text-primary lg:text-xl group-hover:underline transition-all duration-300">
                       {post.title}
                     </CardTitle>
-                    <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-5 text-ellipsis overflow-hidden">
+                    <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-5 text-ellipsis overflow-hidden lg:text-base">
                       {DOMPurify.sanitize(post?.content ?? "", {
                         ALLOWED_TAGS: [],
                       })}
