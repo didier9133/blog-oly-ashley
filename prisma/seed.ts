@@ -528,7 +528,15 @@ const posts = [
 ];
 
 export async function main() {
-  await prisma.post.deleteMany({});
+  await prisma.subcategory.create({
+    data: {
+      name: "Thoughts", // Replace with your actual subcategory name
+      category: {
+        connect: { id: 36 },
+      },
+    },
+  });
+  // await prisma.post.deleteMany({});
   // await prisma.user.deleteMany({});
   // await prisma.subcategory.deleteMany({});
   // await prisma.category.deleteMany({});
