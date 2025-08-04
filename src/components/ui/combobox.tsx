@@ -33,6 +33,7 @@ const DICTIONARY = {
   Reflections: "reflections",
   Rituals: "rituals",
   Letters: "letters",
+  Thoughts: "thoughts",
 };
 
 export function ComboboxDemo({
