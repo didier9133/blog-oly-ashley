@@ -18,6 +18,7 @@ export default function RichTextEditor({
   isEditable = true,
 }: RichTextEditorProps) {
   const editor = useEditor({
+    editable: isEditable,
     extensions: [
       StarterKit.configure({
         bulletList: {
