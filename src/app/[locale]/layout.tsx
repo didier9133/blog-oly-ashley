@@ -17,6 +17,9 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
+//Analytics
+import { Analytics } from "@vercel/analytics/next";
+
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
@@ -147,6 +150,7 @@ export default async function RootLayout({
                 <SidebarInset>
                   <Header />
                   {children}
+                  <Analytics />
                   <Footer />
                 </SidebarInset>
               </SidebarProvider>
