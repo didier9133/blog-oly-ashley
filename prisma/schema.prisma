@@ -67,3 +67,65 @@ model Subcategory {
   categoryId Int
   posts      Post[]
 }
+
+model Purchase {
+  id                  String  @id @default(cuid())
+  stripeSessionId     String  @unique
+  stripePaymentIntent String? @unique
+  customerEmail       String
+  customerName        String?
+  amount              Int // Monto en centavos
+  currency            String  @default("usd")
+
+  // Información del producto
+  productName String
+  productType String // "ebook", "course", etc.
+  s3Key       String // Ubicación del archivo en S3
+
+  // Status
+  is_paid   Boolean @default(false)
+  emailSent Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([stripeSessionId])
+  @@index([customerEmail])
+}
+
+model Book {
+  id                 String   @id @default(cuid())
+  slug_en            String   @unique
+  slug_es            String   @unique
+  title_en           String
+  title_es           String
+  subtitle_en        String
+  subtitle_es        String
+  author             String
+  price              Int
+  originalPrice      Int?
+  discount           Int?
+  coverImage_en      String
+  coverImage_es      String
+  s3Key_en           String
+  s3Key_es           String
+  description_en     String
+  description_es     String
+  features_en        String[]
+  features_es        String[]
+  pages              Int
+  format_en          String
+  format_es          String
+  language_en        String
+  language_es        String
+  isbn               String?
+  rating             Float?
+  reviewCount        Int?
+  featured_review_en String?
+  featured_review_es String?
+  reviewerName       String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([author])
+}

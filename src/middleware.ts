@@ -14,22 +14,27 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // Ejecutar middleware de internacionalización para todas las rutas
-  const intlResponse = intlMiddleware(req);
+  const { pathname } = req.nextUrl;
 
-  // Si intlMiddleware retorna una respuesta (redirect), procesarla
-  if (intlResponse && intlResponse.status !== 200) {
-    return intlResponse;
+  if (pathname.startsWith("/api") || pathname.startsWith("/trpc")) {
+    if (isProtectedRoute(req)) {
+      const { userId, redirectToSignIn } = await auth();
+      if (!userId) return redirectToSignIn();
+      const client = await clerkClient();
+      const user = await client.users.getUser(userId);
+      if (!user.publicMetadata?.isAdmin) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+    }
+    return NextResponse.next();
   }
-  // Continuar con la lógica de autenticación solo para rutas protegidas
+
+  const intlResponse = intlMiddleware(req);
+  if (intlResponse && intlResponse.status !== 200) return intlResponse;
+
   if (isProtectedRoute(req)) {
     const { userId, redirectToSignIn } = await auth();
-
-    if (!userId) {
-      return redirectToSignIn();
-    }
-
-    // Verificar si el usuario es admin
+    if (!userId) return redirectToSignIn();
     const client = await clerkClient();
     const user = await client.users.getUser(userId);
     if (!user.publicMetadata?.isAdmin) {
@@ -37,7 +42,6 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Retornar la respuesta del middleware de i18n o continuar
   return intlResponse || NextResponse.next();
 });
 export const config = {

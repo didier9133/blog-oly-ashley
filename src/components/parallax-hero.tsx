@@ -16,7 +16,7 @@ interface ParallaxHeroProps {
 export function ParallaxHero({
   imageSrc,
   imageAlt,
-  height = "88vh",
+  height = "100vh",
   children,
   overlayOpacity = 0.3,
   className, // Clase adicional para el contenedor del contenido

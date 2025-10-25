@@ -1,11 +1,9 @@
-import { PrismaClient } from "../src/app/[locale]/generated/prisma";
+import prisma from "@/lib/prisma";
 import {
   CategoryEnum,
   SubBlogCategoryEnum,
   SubRecipesCategoryEnum,
 } from "@/enums";
-
-const prisma = new PrismaClient();
 
 const categories = [
   { name: CategoryEnum.Blog },
@@ -527,15 +525,126 @@ const posts = [
   },
 ];
 
+const books = [
+  {
+    s3Key_es: "ebooks/1761429904905_Queer_y_Llamados.pdf",
+    s3Key_en: "ebooks/1761429451534_Queer___Called.pdf",
+    slug_es: "queer-y-llamados",
+    slug_en: "queer-and-called",
+    title_en: "QUEER AND CALLED",
+    title_es: "QUEER Y LLAMADOS",
+    subtitle_en:
+      "A sacred invitation to reclaim your voice, reimagine your faith, and return to yourself — whole and holy",
+    subtitle_es:
+      "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
+    author: "Ashley Diana Leon - Raíces & Returning",
+    price: 1999,
+    originalPrice: 2499,
+    discount: 20,
+    coverImage_en: "/Queer_y_Called.jpeg",
+    coverImage_es: "/Queer_y_Llamados.jpeg",
+    description_en: `This journal was born from my own journey — one marked by exile and return, silence and rediscovery, unlearning lies and relearning the truth: that I was never too much, never too far, and was never supposed to choose between being queer and being called. I created this space for those who were told their faith and wholeness couldn't coexist. I no longer believe that, and I hope as you walk through these pages, you won't either.
+
+This 30-day guided journal invites you into sacred reflection, honest questions, and gentle practices that honor both your identity and your spirituality. Each day offers prompts, affirmations, and space to process, reclaim, and reimagine what it means to be whole.`,
+    description_es: `Este diario nació de mi propio viaje — uno marcado por el exilio y el regreso, por el silencio y el redescubrimiento, por desaprender las mentiras y volver a aprender la verdad: que nunca fui demasiado, nunca estuve muy lejos, y nunca se supuso que debía elegir entre ser queer y ser llamado. Creé este espacio para aquellos a quienes les dijeron que su fe y su plenitud no podían coexistir. Ya no creo eso, y espero que, a medida que recorras estas páginas, tú tampoco lo creas.
+
+Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas honestas y prácticas gentiles que honran tanto tu identidad como tu espiritualidad. Cada día ofrece prompts, afirmaciones y espacio para procesar, reclamar y reimaginar lo que significa ser íntegro.`,
+    features_en: [
+      "30 days of guided reflections and sacred prompts",
+      "Daily affirmations for identity and faith integration",
+      "Space for personal journaling and processing",
+      "Spiritual practices rooted in affirmation",
+      "Community connection guide included",
+      "Beautifully designed with intentional layouts",
+    ],
+    features_es: [
+      "30 días de reflexiones guiadas y prompts sagrados",
+      "Afirmaciones diarias para integración de identidad y fe",
+      "Espacio para escribir y procesar personalmente",
+      "Prácticas espirituales enraizadas en afirmación",
+      "Guía de conexión comunitaria incluida",
+      "Bellamente diseñado con layouts intencionales",
+    ],
+    pages: 76,
+    format_en: "Digital PDF",
+    format_es: "PDF Digital",
+    language_en: "English",
+    language_es: "Español",
+    isbn: "978-0-987654-32-1",
+    rating: 4.8,
+    reviewCount: 32,
+    featured_review_en:
+      "This journal gave me permission to be both queer and faithful without apology. It's tender, affirming, and deeply needed.",
+    featured_review_es:
+      "Este diario me dio permiso para ser tanto queer como fiel sin disculpas. Es tierno, afirmativo y profundamente necesario.",
+    reviewerName: "María G.",
+  },
+  {
+    slug_en: "rebuilding-reverence",
+    slug_es: "reconstruyendo-la-reverencia",
+    s3Key_es: "ebooks/1761430437440_Reconstruyendo_la_Reverencia.pdf",
+    s3Key_en: "ebooks/1761430103993_Rebuilding_Reverence.pdf",
+    title_en: "Rebuilding Reverence",
+    title_es: "Reconstruyendo la Reverencia",
+    subtitle_en: "A 30 DAY RETURN TO WONDER AFTER THE RUINS OF RELIGION",
+    subtitle_es:
+      "UN REGRESO DE 30 DÍAS A LA MARAVILLA TRAS LAS RUINAS DE LA RELIGIÓN",
+    author: "Ashley Diana Leon - Raíces & Returning",
+    price: 1999,
+    originalPrice: 2499,
+    discount: 20,
+    coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
+    coverImage_en: "/Rebuilding_Reverence.jpeg",
+    description_en: `This journal was born from my own unraveling—a journey through faith, loss,
+awakening, and return. I didn’t grow up religious, but when I found evangelical
+Christianity, I gave it everything. For a season, it saved me. But over time, it began
+to cost me things I didn’t know I was allowed to keep: my intuition, my voice, my joy`,
+    description_es: `Este diario nació de mi propio desmoronamiento —un viaje a través de la fe, la
+pérdida, el despertar y el regreso. No crecí siendo religiosa/o, pero cuando encontré
+el cristianismo evangélico, lo entregué todo. Por un tiempo, me salvó. Pero con el
+paso de los años, comenzó a costarme cosas que no sabía que tenía derecho a
+conservar: mi intuición, mi voz, mi alegría.`,
+    features_en: [
+      "30 days of guided reflections and exercises",
+      "Sacred practices for self-care and healing",
+      "Journal prompts for deep introspection",
+      "Affirmations and mantras for daily use",
+      "Beautifully designed pages with space for notes",
+      "Access to exclusive community support",
+    ],
+    features_es: [
+      "30 días de reflexiones y ejercicios guiados",
+      "Prácticas sagradas para el autocuidado y la sanación",
+      "Prompts de diario para introspección profunda",
+      "Afirmaciones y mantras para uso diario",
+      "Páginas bellamente diseñadas con espacio para notas",
+      "Acceso a comunidad de apoyo exclusiva",
+    ],
+    pages: 76,
+    format_en: "Digital PDF",
+    format_es: "PDF Digital",
+    language_en: "English",
+    language_es: "Español",
+    isbn: "978-0-987654-33-8",
+    rating: 4.7,
+    reviewCount: 28,
+    featured_review_en:
+      "This journal changed my life. The daily practices helped me find peace I didn't know I needed. Thank you for creating such a beautiful space for healing.",
+    featured_review_es:
+      "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar la paz que no sabía que necesitaba. Gracias por crear un espacio tan hermoso para sanar.",
+    reviewerName: "Charlotte G.",
+  },
+];
+
 export async function main() {
-  await prisma.subcategory.create({
-    data: {
-      name: "Thoughts", // Replace with your actual subcategory name
-      category: {
-        connect: { id: 36 },
-      },
-    },
-  });
+  // await prisma.subcategory.create({
+  //   data: {
+  //     name: "Thoughts", // Replace with your actual subcategory name
+  //     category: {
+  //       connect: { id: 36 },
+  //     },
+  //   },
+  // });
   // await prisma.post.deleteMany({});
   // await prisma.user.deleteMany({});
   // await prisma.subcategory.deleteMany({});
@@ -593,6 +702,16 @@ export async function main() {
   //     },
   //   });
   // }
+
+  await prisma.purchase.deleteMany({});
+  await prisma.book.deleteMany({});
+
+  for (const book of books) {
+    await prisma.book.create({
+      data: book,
+    });
+  }
+  //crear ebooks
 }
 
 main().catch((e) => {

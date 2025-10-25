@@ -157,6 +157,58 @@ exports.Prisma.SubcategoryScalarFieldEnum = {
   categoryId: 'categoryId'
 };
 
+exports.Prisma.PurchaseScalarFieldEnum = {
+  id: 'id',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentIntent: 'stripePaymentIntent',
+  customerEmail: 'customerEmail',
+  customerName: 'customerName',
+  amount: 'amount',
+  currency: 'currency',
+  productName: 'productName',
+  productType: 'productType',
+  s3Key: 's3Key',
+  is_paid: 'is_paid',
+  emailSent: 'emailSent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BookScalarFieldEnum = {
+  id: 'id',
+  slug_en: 'slug_en',
+  slug_es: 'slug_es',
+  title_en: 'title_en',
+  title_es: 'title_es',
+  subtitle_en: 'subtitle_en',
+  subtitle_es: 'subtitle_es',
+  author: 'author',
+  price: 'price',
+  originalPrice: 'originalPrice',
+  discount: 'discount',
+  coverImage_en: 'coverImage_en',
+  coverImage_es: 'coverImage_es',
+  s3Key_en: 's3Key_en',
+  s3Key_es: 's3Key_es',
+  description_en: 'description_en',
+  description_es: 'description_es',
+  features_en: 'features_en',
+  features_es: 'features_es',
+  pages: 'pages',
+  format_en: 'format_en',
+  format_es: 'format_es',
+  language_en: 'language_en',
+  language_es: 'language_es',
+  isbn: 'isbn',
+  rating: 'rating',
+  reviewCount: 'reviewCount',
+  featured_review_en: 'featured_review_en',
+  featured_review_es: 'featured_review_es',
+  reviewerName: 'reviewerName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -177,7 +229,9 @@ exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
   Category: 'Category',
-  Subcategory: 'Subcategory'
+  Subcategory: 'Subcategory',
+  Purchase: 'Purchase',
+  Book: 'Book'
 };
 
 /**

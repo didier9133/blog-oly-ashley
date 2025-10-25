@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: "5mb", // Set a limit for server actions body size
+      bodySizeLimit: "50mb", // Allow larger uploads for private S3 files
     },
   },
 };

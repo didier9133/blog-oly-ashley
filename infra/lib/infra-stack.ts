@@ -9,34 +9,35 @@ export class InfraStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Crear un bucket S3 para imágenes
-    const imagesBucket = new s3.Bucket(this, "ImagesBucket", {
-      versioned: true,
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      // Permitimos acceso público de lectura para mostrar las imágenes
-      publicReadAccess: true, // Solo lectura pública (mostrar imágenes)
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        blockPublicPolicy: false,
-        ignorePublicAcls: false,
-        restrictPublicBuckets: false,
-      }),
-      // Configuración CORS para permitir solicitudes desde tu frontend
-      cors: [
-        {
-          allowedHeaders: ["*"],
-          allowedMethods: [
-            s3.HttpMethods.GET,
-            s3.HttpMethods.PUT,
-            s3.HttpMethods.POST,
-            s3.HttpMethods.DELETE,
+    // Importar el bucket existente de imágenes (NO lo recrea)
+    const existingBucketName = process.env.AWS_S3_BUCKET_NAME || "";
+    const imagesBucket = existingBucketName
+      ? s3.Bucket.fromBucketName(this, "ImagesBucket", existingBucketName)
+      : new s3.Bucket(this, "ImagesBucket", {
+          versioned: true,
+          encryption: s3.BucketEncryption.S3_MANAGED,
+          publicReadAccess: true,
+          blockPublicAccess: new s3.BlockPublicAccess({
+            blockPublicAcls: false,
+            blockPublicPolicy: false,
+            ignorePublicAcls: false,
+            restrictPublicBuckets: false,
+          }),
+          cors: [
+            {
+              allowedHeaders: ["*"],
+              allowedMethods: [
+                s3.HttpMethods.GET,
+                s3.HttpMethods.PUT,
+                s3.HttpMethods.POST,
+                s3.HttpMethods.DELETE,
+              ],
+              allowedOrigins: ["*"],
+              maxAge: 3000,
+            },
           ],
-          allowedOrigins: ["*"], // Restringe esto a tu dominio en producción
-          maxAge: 3000,
-        },
-      ],
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
+          removalPolicy: cdk.RemovalPolicy.RETAIN,
+        });
 
     const oai = new cloudfront.OriginAccessIdentity(this, "ImagesOAI");
 
@@ -64,6 +65,29 @@ export class InfraStack extends cdk.Stack {
       }
     );
 
+    // ========================================
+    // BUCKET PRIVADO PARA ARCHIVOS DESCARGABLES
+    // ========================================
+    const privateFilesBucket = new s3.Bucket(this, "PrivateFilesBucket", {
+      versioned: true,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      publicReadAccess: false, // ❌ NO acceso público
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL, // ✅ Bloquear TODO acceso público
+      cors: [
+        {
+          allowedHeaders: ["*"],
+          allowedMethods: [
+            s3.HttpMethods.GET,
+            s3.HttpMethods.PUT,
+            s3.HttpMethods.POST,
+          ],
+          allowedOrigins: ["*"], // Restringe esto a tu dominio en producción
+          maxAge: 3000,
+        },
+      ],
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    });
+
     // Crear usuario IAM para manejar URLs prefirmadas
     const s3User = new iam.User(this, "S3ImageUploader", {
       userName: "s3-image-uploader",
@@ -82,8 +106,10 @@ export class InfraStack extends cdk.Stack {
       ],
       effect: iam.Effect.ALLOW,
       resources: [
-        `${imagesBucket.bucketArn}/*`, // Acceso a objetos
+        `${imagesBucket.bucketArn}/*`, // Acceso a objetos del bucket público
         imagesBucket.bucketArn, // Acceso al bucket (listar)
+        `${privateFilesBucket.bucketArn}/*`, // ✅ Acceso a objetos del bucket privado
+        privateFilesBucket.bucketArn, // ✅ Acceso al bucket privado (listar)
       ],
     });
 
@@ -121,6 +147,19 @@ export class InfraStack extends cdk.Stack {
     new cdk.CfnOutput(this, "BucketURL", {
       value: `https://${imagesBucket.bucketName}.s3.amazonaws.com`,
       description: "URL base del bucket",
+    });
+
+    // ========================================
+    // OUTPUTS DEL BUCKET PRIVADO
+    // ========================================
+    new cdk.CfnOutput(this, "PrivateBucketName", {
+      value: privateFilesBucket.bucketName,
+      description: "Nombre del bucket privado para archivos descargables",
+    });
+
+    new cdk.CfnOutput(this, "PrivateBucketArn", {
+      value: privateFilesBucket.bucketArn,
+      description: "ARN del bucket privado",
     });
   }
 }

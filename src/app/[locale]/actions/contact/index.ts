@@ -6,7 +6,7 @@ import OwnerNotificationTemplate from "@/components/email/notify-contact";
 import { getTranslations } from "next-intl/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const DOMAIN = "raicesreturnings.com";
+const emailDomain = process.env.EMAIL_DOMAIN;
 const NOTIFICATION_EMAIL = "raicesreturnings@gmail.com";
 
 export async function sendContactEmail({
@@ -26,7 +26,7 @@ export async function sendContactEmail({
 
   try {
     const { error } = await resend.emails.send({
-      from: `Raices & Returning <no-reply@${DOMAIN}>`,
+      from: `Raices & Returning <no-reply@${emailDomain}>`,
       to: email,
       subject: t("subject"),
       react: ContactEmailTemplateProps({
@@ -60,7 +60,7 @@ export async function notifyContactFormSubmission(params: {
   subject: string;
 }) {
   await resend.emails.send({
-    from: `Raices & Returning <notify@${DOMAIN}>`,
+    from: `Raices & Returning <notify@${emailDomain}>`,
     to: NOTIFICATION_EMAIL,
     subject: params.subject,
     react: OwnerNotificationTemplate({
