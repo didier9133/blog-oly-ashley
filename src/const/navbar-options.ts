@@ -27,6 +27,11 @@ export const data = {
       external: true,
     },
     {
+      title: "Ebooks",
+      url: "/ebook",
+      isActive: false,
+    },
+    {
       title: "Contact",
       url: "/contact",
       isActive: false,
@@ -58,6 +63,11 @@ export const data = {
       url: "https://raices-and-returnings.printify.me/",
       isActive: false,
       external: true,
+    },
+    {
+      title: "Ebooks",
+      url: "/ebook",
+      isActive: false,
     },
     {
       title: "Contact",
