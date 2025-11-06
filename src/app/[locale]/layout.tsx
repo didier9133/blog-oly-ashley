@@ -14,6 +14,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 // Internationalization
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -112,6 +113,8 @@ export default async function RootLayout({
     notFound();
   }
 
+  const messages = await getMessages({ locale });
+
   return (
     <ClerkProvider>
       <html lang={locale}>
@@ -134,7 +137,7 @@ export default async function RootLayout({
         <body
           className={`${cormorantGaramond.variable} ${lora.variable} antialiased `}
         >
-          <NextIntlClientProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"

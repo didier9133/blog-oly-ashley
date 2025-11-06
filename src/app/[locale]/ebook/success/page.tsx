@@ -5,6 +5,8 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { CheckCircle, Mail } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+
 import {
   Card,
   CardContent,
@@ -12,8 +14,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import PreloadSuccessPayment from "@/components/preload-succes-payment";
 
 interface SuccessPageProps {
+  params: Promise<{
+    locale: string;
+  }>;
   searchParams: Promise<{
     session_id?: string;
     payment_intent?: string;
@@ -23,15 +29,19 @@ interface SuccessPageProps {
 }
 
 async function SuccessContent({
+  locale,
   sessionId,
   paymentIntentId,
 }: {
+  locale: string;
   sessionId?: string;
   paymentIntentId?: string;
 }) {
   if (!sessionId && !paymentIntentId) {
-    redirect("/ebook");
+    redirect(`/${locale}/ebook`);
   }
+
+  const t = await getTranslations({ locale, namespace: "EbookSuccess" });
 
   try {
     const checkoutSession: Stripe.Checkout.Session | null = sessionId
@@ -113,19 +123,23 @@ async function SuccessContent({
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto border border-border/60 bg-card/90 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-secondary">Pago en proceso</CardTitle>
+              <CardTitle className="text-secondary">
+                {t("pending-title")}
+              </CardTitle>
               <CardDescription className="text-muted-foreground">
-                El pago aún no se ha completado
+                {t("pending-description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Por favor, espera unos momentos mientras procesamos tu pago.
+                {t("pending-body")}
               </p>
               {customerEmail ? (
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Notificaremos al correo <strong>{customerEmail}</strong>{" "}
-                  cuando el pago se confirme.
+                  {t.rich("pending-notify", {
+                    highlight: (chunks) => <strong>{chunks}</strong>,
+                    email: customerEmail,
+                  })}
                 </p>
               ) : null}
             </CardContent>
@@ -135,30 +149,7 @@ async function SuccessContent({
     }
 
     if (!purchase) {
-      return (
-        <div className="container mx-auto px-4 py-16">
-          <Card className="max-w-md mx-auto border border-border/60 bg-card/90 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-secondary">
-                Procesando tu compra...
-              </CardTitle>
-              <CardDescription className="text-muted-foreground">
-                Tu pago se ha recibido correctamente
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Estamos procesando tu compra. Recibirás un email con el enlace
-                de descarga en los próximos minutos.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Email de confirmación enviado a:{" "}
-                <strong>{customerEmail ?? "tu correo electrónico"}</strong>
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      );
+      return <PreloadSuccessPayment customerEmail={customerEmail} />;
     }
 
     // Compra encontrada y completada
@@ -176,11 +167,13 @@ async function SuccessContent({
               </div>
               <div className="space-y-2">
                 <CardTitle className="text-3xl font-semibold text-primary">
-                  ¡Compra completada exitosamente!
+                  {t("complete-title")}
                 </CardTitle>
                 <CardDescription className="text-base text-muted-foreground">
-                  Gracias por tu compra de{" "}
-                  <strong>{purchase.productName}</strong>
+                  {t.rich("complete-subtitle", {
+                    highlight: (chunks) => <strong>{chunks}</strong>,
+                    product: purchase.productName,
+                  })}
                 </CardDescription>
               </div>
             </CardHeader>
@@ -194,15 +187,18 @@ async function SuccessContent({
                   </div>
                   <div className="flex-1 space-y-2">
                     <h3 className="font-semibold text-secondary">
-                      Revisa tu correo electrónico
+                      {t("emailSection-title")}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Hemos enviado un enlace de descarga a{" "}
-                      <strong>{purchase.customerEmail}</strong>
+                      {t.rich("emailSection-body", {
+                        highlight: (chunks) => <strong>{chunks}</strong>,
+                        email:
+                          purchase.customerEmail ??
+                          t("processing-emailFallback"),
+                      })}
                     </p>
                     <p className="text-xs text-secondary/90">
-                      Si no lo encuentras en tu bandeja principal, revisa la
-                      carpeta de spam.
+                      {t("emailSection-note")}
                     </p>
                   </div>
                 </div>
@@ -211,17 +207,18 @@ async function SuccessContent({
               {/* Información importante */}
               <section className="rounded-xl border border-accent/25 bg-accent/10 p-5">
                 <h4 className="font-semibold text-sm text-accent">
-                  ℹ️ Información importante
+                  {t("infoSection-title")}
                 </h4>
                 <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="mt-1 size-2 rounded-full bg-primary" />
-                    Tu enlace de descarga es válido por{" "}
-                    <strong>48 horas</strong>
+                    {t.rich("infoSection-validity", {
+                      highlight: (chunks) => <strong>{chunks}</strong>,
+                    })}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1 size-2 rounded-full bg-primary" />
-                    El enlace es único y personal
+                    {t("infoSection-unique")}
                   </li>
                 </ul>
               </section>
@@ -229,27 +226,33 @@ async function SuccessContent({
               {/* Detalle de compra */}
               <section className="rounded-xl border border-border/50 bg-background/80 p-5 shadow-inner">
                 <h4 className="mb-4 font-semibold text-sm text-muted-foreground">
-                  Detalle de compra
+                  {t("detailsSection-title")}
                 </h4>
                 <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
                   <div className="space-y-1">
-                    <dt className="text-muted-foreground">Producto</dt>
+                    <dt className="text-muted-foreground">
+                      {t("detailsSection-product")}
+                    </dt>
                     <dd className="font-medium text-foreground">
                       {purchase.productName}
                     </dd>
                   </div>
                   <div className="space-y-1">
-                    <dt className="text-muted-foreground">Monto</dt>
+                    <dt className="text-muted-foreground">
+                      {t("detailsSection-amount")}
+                    </dt>
                     <dd className="font-medium text-foreground">
                       ${(purchase.amount / 100).toFixed(2)}{" "}
                       {purchase.currency.toUpperCase()}
                     </dd>
                   </div>
                   <div className="space-y-1 sm:col-span-2">
-                    <dt className="text-muted-foreground">Fecha</dt>
+                    <dt className="text-muted-foreground">
+                      {t("detailsSection-date")}
+                    </dt>
                     <dd className="font-medium text-foreground">
                       {new Date(purchase.createdAt).toLocaleDateString(
-                        "es-ES",
+                        locale === "es" ? "es-ES" : "en-US",
                         {
                           year: "numeric",
                           month: "long",
@@ -264,20 +267,20 @@ async function SuccessContent({
               {/* CTA */}
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm text-muted-foreground">
-                  ¿Problemas con la descarga?{" "}
+                  {t("supportSection-issue")}{" "}
                   <Link
-                    href="/contact"
+                    href={`/${locale}/contact`}
                     className="text-primary underline-offset-4 hover:underline"
                   >
-                    Contáctanos
+                    {t("supportSection-contact")}
                   </Link>
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <Link
-                    href="/"
+                    href={`/${locale}`}
                     className="inline-flex items-center justify-center rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-xs transition hover:bg-primary/90"
                   >
-                    Ir al inicio
+                    {t("supportSection-home")}
                   </Link>
                 </div>
               </div>
@@ -288,12 +291,19 @@ async function SuccessContent({
     );
   } catch (error) {
     console.error("Error en success page:", error);
-    redirect("/ebook");
+    redirect(`/${locale}/ebook`);
   }
 }
 
-export default async function SuccessPage({ searchParams }: SuccessPageProps) {
-  const params = await searchParams;
+export default async function SuccessPage({
+  params,
+  searchParams,
+}: SuccessPageProps) {
+  const [resolvedParams, resolvedSearchParams] = await Promise.all([
+    params,
+    searchParams,
+  ]);
+  const { locale } = resolvedParams;
 
   return (
     <Suspense
@@ -338,8 +348,9 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
       }
     >
       <SuccessContent
-        sessionId={params.session_id}
-        paymentIntentId={params.payment_intent}
+        locale={locale}
+        sessionId={resolvedSearchParams.session_id}
+        paymentIntentId={resolvedSearchParams.payment_intent}
       />
     </Suspense>
   );

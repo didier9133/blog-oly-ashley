@@ -7,6 +7,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs/server";
+import path from "path";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
@@ -18,6 +19,61 @@ const s3Client = new S3Client({
 
 const PRIVATE_BUCKET_NAME = process.env.AWS_S3_PRIVATE_BUCKET_NAME;
 const TWO_DAYS_IN_SECONDS = 60 * 60 * 24 * 2; // 2 días
+
+const MAX_FILENAME_LENGTH = 255;
+
+const ASCII_FILENAME_REGEX = /[^a-zA-Z0-9._-]+/g;
+
+function sanitizeFileName(raw: string, fallback: string): string {
+  if (!raw) {
+    return fallback;
+  }
+
+  const withoutDiacritics = raw
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const asciiOnly = withoutDiacritics.replace(ASCII_FILENAME_REGEX, "_");
+  const collapsedUnderscores = asciiOnly.replace(/_+/g, "_");
+  const trimmed = collapsedUnderscores.replace(/^_+|_+$/g, "");
+  const result = trimmed.slice(0, MAX_FILENAME_LENGTH) || fallback;
+
+  return result;
+}
+
+function resolveDownloadFileName(key: string, requestedName?: string): string {
+  const fallbackBase = path.basename(key) || "download";
+  const fallback = fallbackBase.slice(0, MAX_FILENAME_LENGTH) || "download";
+
+  const extFromKey = path.extname(fallbackBase);
+  const requestedExtMatch = requestedName?.match(/\.([^.]+)$/);
+  const extToUse =
+    extFromKey || (requestedExtMatch ? `.${requestedExtMatch[1]}` : "");
+
+  const baseNameWithoutExt = requestedName
+    ? requestedName.replace(/\.[^.]*$/, "")
+    : fallback.replace(/\.[^.]*$/, "");
+  const sanitizedBase = sanitizeFileName(
+    baseNameWithoutExt,
+    fallback.replace(/\.[^.]*$/, "")
+  );
+
+  const ensuresExtension = () => {
+    if (!extToUse) {
+      return sanitizedBase;
+    }
+    const hasExt = sanitizedBase.toLowerCase().endsWith(extToUse.toLowerCase());
+    if (hasExt) {
+      return sanitizedBase;
+    }
+
+    const maxBaseLength = Math.max(1, MAX_FILENAME_LENGTH - extToUse.length);
+    const trimmedBase = sanitizedBase.slice(0, maxBaseLength);
+
+    return `${trimmedBase}${extToUse}`;
+  };
+
+  return ensuresExtension();
+}
 
 /**
  * Sube un archivo privado a S3
@@ -92,12 +148,14 @@ export async function createDownloadUrl(
     throw new Error("La expiración máxima es de 7 días (604800 segundos)");
   }
 
+  const safeFileName = resolveDownloadFileName(key, downloadFileName);
+  const encodedFileName = encodeURIComponent(safeFileName);
+  const contentDisposition = `attachment; filename="${safeFileName}"; filename*=UTF-8''${encodedFileName}`;
+
   const command = new GetObjectCommand({
     Bucket: PRIVATE_BUCKET_NAME,
     Key: key,
-    ResponseContentDisposition: downloadFileName
-      ? `attachment; filename="${downloadFileName}"`
-      : undefined,
+    ResponseContentDisposition: contentDisposition,
   });
 
   const url = await getSignedUrl(s3Client, command, {

@@ -10,64 +10,54 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { getTranslations } from "next-intl/server";
 
 interface DownloadEmailTemplateProps {
   customerName: string;
   productName: string;
   downloadLink: string;
+  locale: "en" | "es";
 }
 
-export default function DownloadEmailTemplate({
+const SUPPORT_EMAIL = "raicesreturnings@gmail.com";
+
+export default async function DownloadEmailTemplate({
   customerName,
   productName,
   downloadLink,
+  locale,
 }: DownloadEmailTemplateProps) {
+  const t = await getTranslations({ namespace: "EmailDownload", locale });
+
   return (
     <Html>
       <Head />
-      <Preview>Tu descarga de {productName} está lista</Preview>
+      <Preview>{t("preview")}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={h1}>Tu {productName} ya está disponible ✨</Heading>
-
-          <Text style={intro}>Hola, {customerName}</Text>
-
+          <Heading style={h1}>{t("heading", { productName })}</Heading>
+          <Text style={intro}>{t("greeting", { customerName })}</Text>
           <Text style={bodyText}>
-            Gracias por confiar en este proceso. <strong>{productName}</strong>{" "}
-            ya es tuyo.
+            {t.rich("bodyThanks", {
+              product: (chunks) => <strong>{chunks}</strong>,
+              productName,
+            })}
           </Text>
-
           <Section style={buttonSection}>
             <Button style={primaryButton} href={downloadLink}>
-              👉 Descarga ahora
+              {t("buttonCta")}
             </Button>
           </Section>
-
-          <Text style={bodyTextSmall}>
-            Si prefieres, copia y pega este enlace en tu navegador:
-          </Text>
+          <Text style={bodyTextSmall}>{t("linkInstruction")}</Text>
           <Text style={linkBlock}>
             <a href={downloadLink} style={linkAnchor}>
               {downloadLink}
             </a>
           </Text>
-
-          <Text style={bodyText}>
-            Por favor, asegúrate de descargar tu PDF dentro de las próximas 48
-            horas, ya que el enlace estará activo por tiempo limitado.
-          </Text>
-
-          <Text style={bodyText}>
-            Antes de comenzar, únete a la comunidad virtual de {productName} —
-            un espacio seguro para compartir reflexiones, hacer preguntas y
-            caminar junto a otros.
-          </Text>
-
+          <Text style={bodyText}>{t("downloadWarning")}</Text>
+          <Text style={bodyText}>{t("communityInvite", { productName })}</Text>
           <Section style={ctaBox}>
-            <Text style={ctaBoxText}>
-              Puedes hacerlo desde Safari o tu computadora, o descargar la app
-              GoKollab para tener todo en un solo lugar.
-            </Text>
+            <Text style={ctaBoxText}>{t("ctaBoxIntro")}</Text>
             <Text style={ctaBoxLink}>
               🔗{" "}
               <a
@@ -77,33 +67,26 @@ export default function DownloadEmailTemplate({
                 https://gokollab.com/reconstruyendolareverencia-trcsrr
               </a>
             </Text>
-            <Text style={ctaBoxText}>
-              * Nota: Si el enlace no se abre, borra la caché de tu navegador o
-              copia y pega el enlace en una nueva pestaña.
-            </Text>
-            <Text style={ctaBoxText}>
-              Al registrarte, selecciona &quot;Continuar con Google&quot; para
-              una mejor experiencia.
-            </Text>
+            <Text style={ctaBoxText}>{t("ctaBoxNote")}</Text>
+            <Text style={ctaBoxText}>{t("ctaBoxGoogle")}</Text>
           </Section>
-
           <Text style={bodyText}>
-            No caminas solo/a. Si necesitas ayuda, responde a este correo o
-            escríbenos a{" "}
-            <a href="mailto:RaicesReturning@gmail.com" style={linkAnchor}>
-              RaicesReturning@gmail.com
-            </a>
-            .
+            {t.rich("supportLine", {
+              emailLink: (chunks) => (
+                <a href={`mailto:${SUPPORT_EMAIL}`} style={linkAnchor}>
+                  {chunks}
+                </a>
+              ),
+              email: SUPPORT_EMAIL,
+            })}
           </Text>
-
           <Hr style={divider} />
-
           <Text style={signature}>
-            Con gratitud y reverencia,
+            {t("closing")},
             <br />
-            Ashley
+            {t("signatureName")}
             <br />
-            Raíces &amp; Returning
+            {t("signatureOrg")}
           </Text>
         </Container>
       </Body>

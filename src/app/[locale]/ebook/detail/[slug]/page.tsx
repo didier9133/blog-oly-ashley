@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import Checkout from "@/components/checkout";
-import { getBookV2BySlug } from "@/data/books";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
@@ -21,10 +20,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const book = getBookV2BySlug(slug);
-
+  const book = await prisma.book.findFirst({
+    where: {
+      OR: [{ slug_en: slug }, { slug_es: slug }],
+    },
+  });
   if (!book) return notFound();
-
   return {
     title: locale === "en" ? book.title_en : book.title_es,
     description: locale === "en" ? book.subtitle_en : book.subtitle_es,

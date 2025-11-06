@@ -15,7 +15,8 @@ import CheckoutForm from "./checkout-form";
 import { Skeleton } from "./ui/skeleton";
 import { Loader2, AlertTriangle } from "lucide-react";
 import { Button } from "./ui/button";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+// import { useParams } from "next/navigation";
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
   throw new Error("Missing STRIPE_PUBLISHABLE_KEY env var");
@@ -38,8 +39,20 @@ export default function Checkout({
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isActiveRef = useRef(true);
+  const language = useLocale();
+  // const params = useParams<{ slug?: string }>();
+
+  // const productSlug = useMemo(() => {
+  //   const value = params?.slug;
+  //   if (!value) return null;
+  //   return Array.isArray(value) ? value[0] : value;
+  // }, [params]);
 
   const productName = useMemo(() => {
+    // console.log({ productSlug });
+    // if (productSlug) {
+    //   return productSlug;
+    // }
     const basename = ebook_s3key.split("/").pop() ?? ebook_s3key;
     if (!basename.includes("_")) {
       return basename;
@@ -52,6 +65,13 @@ export default function Checkout({
     setIsLoading(true);
     setClientSecret(null);
 
+    console.log({
+      language,
+      productName,
+      productType,
+      s3Key: ebook_s3key,
+    });
+
     try {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
@@ -63,6 +83,7 @@ export default function Checkout({
             productName,
             productType,
             s3Key: ebook_s3key,
+            language,
           },
         }),
       });
@@ -90,7 +111,7 @@ export default function Checkout({
         setIsLoading(false);
       }
     }
-  }, [ebook_price, ebook_s3key, productName, t]);
+  }, [ebook_price, ebook_s3key, productName, t, language]);
 
   useEffect(() => {
     initializePayment();

@@ -527,8 +527,8 @@ const posts = [
 
 const books = [
   {
-    s3Key_es: "ebooks/1761429904905_Queer_y_Llamados.pdf",
-    s3Key_en: "ebooks/1761429451534_Queer___Called.pdf",
+    s3Key_es: "ebooks/1762465492874_Queer_y_Llamados.pdf",
+    s3Key_en: "ebooks/1762465264669_Queer_Called.pdf",
     slug_es: "queer-y-llamados",
     slug_en: "queer-and-called",
     title_en: "QUEER AND CALLED",
@@ -538,17 +538,14 @@ const books = [
     subtitle_es:
       "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
     author: "Ashley Diana Leon - Raíces & Returning",
-    price: 1999,
-    originalPrice: 2499,
+    price: 2800,
+    originalPrice: 3500,
     discount: 20,
     coverImage_en: "/Queer_y_Called.jpeg",
     coverImage_es: "/Queer_y_Llamados.jpeg",
-    description_en: `This journal was born from my own journey — one marked by exile and return, silence and rediscovery, unlearning lies and relearning the truth: that I was never too much, never too far, and was never supposed to choose between being queer and being called. I created this space for those who were told their faith and wholeness couldn't coexist. I no longer believe that, and I hope as you walk through these pages, you won't either.
-
-This 30-day guided journal invites you into sacred reflection, honest questions, and gentle practices that honor both your identity and your spirituality. Each day offers prompts, affirmations, and space to process, reclaim, and reimagine what it means to be whole.`,
-    description_es: `Este diario nació de mi propio viaje — uno marcado por el exilio y el regreso, por el silencio y el redescubrimiento, por desaprender las mentiras y volver a aprender la verdad: que nunca fui demasiado, nunca estuve muy lejos, y nunca se supuso que debía elegir entre ser queer y ser llamado. Creé este espacio para aquellos a quienes les dijeron que su fe y su plenitud no podían coexistir. Ya no creo eso, y espero que, a medida que recorras estas páginas, tú tampoco lo creas.
-
-Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas honestas y prácticas gentiles que honran tanto tu identidad como tu espiritualidad. Cada día ofrece prompts, afirmaciones y espacio para procesar, reclamar y reimaginar lo que significa ser íntegro.`,
+    description_en: `A 30-Day Journey of Reclaiming Voice, Faith, and Worth
+For the one who thought they had to choose between being queer and being called — this is your return home. In 30 guided days, you’ll reimagine your faith, re-embody your truth, and reclaim the sacredness of who you are. Includes 76 pages of reflection and integration, plus lifetime community access (for the first 100) where you’ll never walk alone again.`,
+    description_es: `Para quien pensó que debía elegir entre ser queer y ser llamado: este es tu regreso a casa. En 30 días guiados, reimaginarás tu fe, encarnarás tu verdad y recuperarás lo sagrado que siempre ha vivido en ti. Incluye 76 páginas de reflexión e integración, y acceso vitalicio gratuito (para los primeros 100) a una comunidad virtual donde nunca caminarás solo`,
     features_en: [
       "30 days of guided reflections and sacred prompts",
       "Daily affirmations for identity and faith integration",
@@ -582,28 +579,23 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
   {
     slug_en: "rebuilding-reverence",
     slug_es: "reconstruyendo-la-reverencia",
-    s3Key_es: "ebooks/1761430437440_Reconstruyendo_la_Reverencia.pdf",
-    s3Key_en: "ebooks/1761430103993_Rebuilding_Reverence.pdf",
+    s3Key_es: "ebooks/1762468945355_Reconstruyendo_Reverencia.pdf",
+    s3Key_en: "ebooks/1762468919064_Rebuilding_Reverence.pdf",
     title_en: "Rebuilding Reverence",
     title_es: "Reconstruyendo la Reverencia",
     subtitle_en: "A 30 DAY RETURN TO WONDER AFTER THE RUINS OF RELIGION",
     subtitle_es:
       "UN REGRESO DE 30 DÍAS A LA MARAVILLA TRAS LAS RUINAS DE LA RELIGIÓN",
     author: "Ashley Diana Leon - Raíces & Returning",
-    price: 1999,
-    originalPrice: 2499,
+    price: 2800,
+    originalPrice: 3500,
     discount: 20,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
     coverImage_en: "/Rebuilding_Reverence.jpeg",
-    description_en: `This journal was born from my own unraveling—a journey through faith, loss,
-awakening, and return. I didn’t grow up religious, but when I found evangelical
-Christianity, I gave it everything. For a season, it saved me. But over time, it began
-to cost me things I didn’t know I was allowed to keep: my intuition, my voice, my joy`,
-    description_es: `Este diario nació de mi propio desmoronamiento —un viaje a través de la fe, la
-pérdida, el despertar y el regreso. No crecí siendo religiosa/o, pero cuando encontré
-el cristianismo evangélico, lo entregué todo. Por un tiempo, me salvó. Pero con el
-paso de los años, comenzó a costarme cosas que no sabía que tenía derecho a
-conservar: mi intuición, mi voz, mi alegría.`,
+    description_en: `A 30-Day Return to Wonder After the Ruins of Religion
+You’ve deconstructed. Now it’s time to rebuild — not the rules, but the reverence. This 76-page guided journey distills over a decade of inner work into 30 transformative days that help you reconnect with God, yourself, and your sacred wonder. The first 100 buyers also receive lifetime access to a private online community for continued support and reflection.`,
+    description_es: `Un retorno de 30 días a la maravilla después de las ruinas de la religión
+Has deconstruido. Ahora toca reconstruir — no las reglas, sino la reverencia. Este recorrido guiado de 76 páginas condensa más de una década de trabajo interior en 30 días transformadores para reconectarte con Dios, contigo mismo y con lo sagrado. Los primeros 100 recibirán acceso vitalicio gratuito a una comunidad virtual privada para acompañar su proceso.`,
     features_en: [
       "30 days of guided reflections and exercises",
       "Sacred practices for self-care and healing",
@@ -626,8 +618,8 @@ conservar: mi intuición, mi voz, mi alegría.`,
     language_en: "English",
     language_es: "Español",
     isbn: "978-0-987654-33-8",
-    rating: 4.7,
-    reviewCount: 28,
+    rating: 4.8,
+    reviewCount: 32,
     featured_review_en:
       "This journal changed my life. The daily practices helped me find peace I didn't know I needed. Thank you for creating such a beautiful space for healing.",
     featured_review_es:
