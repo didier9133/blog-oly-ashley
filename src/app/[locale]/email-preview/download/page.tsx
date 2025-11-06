@@ -4,7 +4,7 @@ import { renderDownloadEmailMarkup } from "@/lib/emails/render-download-email";
 type SearchParams = Record<string, string | string[] | undefined>;
 
 type PageProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 export default async function DownloadEmailPreviewPage({
