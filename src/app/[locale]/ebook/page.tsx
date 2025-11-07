@@ -37,7 +37,9 @@ export default async function EbookPage({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Ebook" });
 
-  const books = await prisma.book.findMany();
+  const books = await prisma.book.findMany({
+    orderBy: { createdAt: "desc" },
+  });
   if (books.length === 0) {
     return notFound();
   }
