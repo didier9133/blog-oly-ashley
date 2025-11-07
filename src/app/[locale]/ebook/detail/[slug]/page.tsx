@@ -111,7 +111,7 @@ export default async function PageDetail({
                     ? book.featured_review_en
                     : book.featured_review_es}
                 </blockquote>
-                <p className="text-sm  mt-2">- {"Charlotte M."}</p>
+                <p className="text-sm  mt-2">- {book.reviewerName}</p>
               </CardContent>
             </Card>
           </div>
