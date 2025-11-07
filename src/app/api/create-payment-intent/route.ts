@@ -11,6 +11,8 @@ interface CreatePaymentIntentParams {
   metadata: Record<string, string>;
 }
 
+const AMOUNT = 200; // $2.00 (Stripe uses amounts in cents)
+
 export async function POST(req: NextRequest) {
   const { amount, currency, metadata } =
     (await req.json()) as CreatePaymentIntentParams;
@@ -23,7 +25,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
+      amount: AMOUNT,
       currency,
       automatic_payment_methods: {
         enabled: true,
