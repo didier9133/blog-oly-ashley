@@ -539,20 +539,18 @@ const books = [
       "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
     author: "Ashley Diana Leon - Raíces & Returning",
     price: 2800,
-    originalPrice: 3500,
-    discount: 20,
+    originalPrice: 3999,
+    discount: 30,
     coverImage_en: "/Queer_y_Called.jpeg",
     coverImage_es: "/Queer_y_Llamados.jpeg",
-    description_en: `A 30-Day Journey of Reclaiming Voice, Faith, and Worth
-For the one who thought they had to choose between being queer and being called — this is your return home. In 30 guided days, you’ll reimagine your faith, re-embody your truth, and reclaim the sacredness of who you are. Includes 76 pages of reflection and integration, plus lifetime community access (for the first 100) where you’ll never walk alone again.`,
+    description_en: `The choice between your faith and your identity is a wound. What if you could begin to heal it? This 30-day journey creates a brave space to explore, feel, and weave together the threads of your spirit and truth. It's a dedicated container for reclaiming your voice and worth, one step at a time.`,
     description_es: `Para quien pensó que debía elegir entre ser queer y ser llamado: este es tu regreso a casa. En 30 días guiados, reimaginarás tu fe, encarnarás tu verdad y recuperarás lo sagrado que siempre ha vivido en ti. Incluye 76 páginas de reflexión e integración, y acceso vitalicio gratuito (para los primeros 100) a una comunidad virtual donde nunca caminarás solo`,
     features_en: [
-      "30 days of guided reflections and sacred prompts",
-      "Daily affirmations for identity and faith integration",
-      "Space for personal journaling and processing",
-      "Spiritual practices rooted in affirmation",
-      "Community connection guide included",
-      "Beautifully designed with intentional layouts",
+      "Peace from the internal war of 'having to choose'",
+      "Sacred affirmations to rewire deep-seated worthiness",
+      "A safe container for your full emotional truth",
+      "Spiritual practices that honor all of you",
+      "A chosen family community for the first 100—where you're fully known and celebrated",
     ],
     features_es: [
       "30 días de reflexiones guiadas y prompts sagrados",
@@ -588,21 +586,18 @@ For the one who thought they had to choose between being queer and being called 
       "UN REGRESO DE 30 DÍAS A LA MARAVILLA TRAS LAS RUINAS DE LA RELIGIÓN",
     author: "Ashley Diana Leon - Raíces & Returning",
     price: 2800,
-    originalPrice: 3500,
-    discount: 20,
+    originalPrice: 3999,
+    discount: 30,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
     coverImage_en: "/Rebuilding_Reverence.jpeg",
-    description_en: `A 30-Day Return to Wonder After the Ruins of Religion
-You’ve deconstructed. Now it’s time to rebuild — not the rules, but the reverence. This 76-page guided journey distills over a decade of inner work into 30 transformative days that help you reconnect with God, yourself, and your sacred wonder. The first 100 buyers also receive lifetime access to a private online community for continued support and reflection.`,
-    description_es: `Un retorno de 30 días a la maravilla después de las ruinas de la religión
-Has deconstruido. Ahora toca reconstruir — no las reglas, sino la reverencia. Este recorrido guiado de 76 páginas condensa más de una década de trabajo interior en 30 días transformadores para reconectarte con Dios, contigo mismo y con lo sagrado. Los primeros 100 recibirán acceso vitalicio gratuito a una comunidad virtual privada para acompañar su proceso.`,
+    description_en: `What if the path through deconstruction could lead you back to wonder, not just away from religion? This 76-page guide is your 30-day companion through the questions and uncertainty, helping you gently rebuild reverence on your own terms. Distilling a decade of spiritual work, it offers a compassionate framework to explore, process, and reconnect with the sacred.`,
+    description_es: `Un retorno de 30 días a la maravilla después de las ruinas de la religión has deconstruido. Ahora toca reconstruir — no las reglas, sino la reverencia. Este recorrido guiado de 76 páginas condensa más de una década de trabajo interior en 30 días transformadores para reconectarte con Dios, contigo mismo y con lo sagrado. Los primeros 100 recibirán acceso vitalicio gratuito a una comunidad virtual privada para acompañar su proceso.`,
     features_en: [
-      "30 days of guided reflections and exercises",
-      "Sacred practices for self-care and healing",
-      "Journal prompts for deep introspection",
-      "Affirmations and mantras for daily use",
-      "Beautifully designed pages with space for notes",
-      "Access to exclusive community support",
+      "Replacing spiritual confusion with authentic connection",
+      "Grounded daily practices to soften cynicism and reopen to awe",
+      "Guided prompts to recalibrate your inner compass",
+      "Healing rituals for religious burnout",
+      "Community access for the first 100—so you don't walk alone",
     ],
     features_es: [
       "30 días de reflexiones y ejercicios guiados",
@@ -624,7 +619,7 @@ Has deconstruido. Ahora toca reconstruir — no las reglas, sino la reverencia. 
       "This journal changed my life. The daily practices helped me find peace I didn't know I needed. Thank you for creating such a beautiful space for healing.",
     featured_review_es:
       "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar la paz que no sabía que necesitaba. Gracias por crear un espacio tan hermoso para sanar.",
-    reviewerName: "Charlotte G.",
+    reviewerName: "Angelica R.",
   },
 ];
 
