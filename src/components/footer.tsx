@@ -36,7 +36,7 @@ export function Footer() {
 
             {/* TikTok */}
             <Link
-              href="https://www.tiktok.com/@olyandash_?_t=ZT-8xmMz7SyMZb&_r=1"
+              href="https://www.tiktok.com/@raicesreturnings?_r=1&_t=ZP-91GXu9vLIMx"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground hover:text-primary"
