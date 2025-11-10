@@ -109,7 +109,7 @@ export default function CheckoutForm() {
             !isCheckoutReady ? "opacity-0" : "opacity-100"
           )}
         >
-          <Separator />
+          {/* <Separator /> */}
 
           <h3 className="font-semibold mb-3">{t("form-shipping-title")}</h3>
           <p className="text-sm text-muted-foreground">

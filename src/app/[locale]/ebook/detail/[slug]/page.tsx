@@ -144,7 +144,7 @@ export default async function PageDetail({
               <CardContent className="space-y-6">
                 <Separator />
                 <div>
-                  <h3 className="font-semibold mb-3">{t("payment-title")}</h3>
+                  {/* <h3 className="font-semibold mb-3">{t("payment-title")}</h3> */}
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4" />
@@ -167,19 +167,8 @@ export default async function PageDetail({
                     </div>
                   </div>
                 </div>
-
-                <Checkout
-                  ebook_price={book.price}
-                  ebook_s3key={locale === "en" ? book.s3Key_en : book.s3Key_es}
-                />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
+                <Separator />
                 <CardTitle>{t("about-title")}</CardTitle>
-              </CardHeader>
-              <CardContent>
                 <p className="leading-relaxed mb-6">
                   {locale === "en" ? book.description_en : book.description_es}
                 </p>
@@ -198,6 +187,15 @@ export default async function PageDetail({
                     ))}
                   </ul>
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent>
+                <Checkout
+                  ebook_price={book.price}
+                  ebook_s3key={locale === "en" ? book.s3Key_en : book.s3Key_es}
+                />
               </CardContent>
             </Card>
           </div>
