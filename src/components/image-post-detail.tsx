@@ -7,7 +7,7 @@ interface ImageBlogDetailProps {
   post: {
     image: string;
     title: string;
-    video?: string;
+    video?: string | null;
   };
 }
 
