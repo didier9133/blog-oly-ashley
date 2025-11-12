@@ -2556,6 +2556,7 @@ export namespace Prisma {
     published: boolean | null
     authorId: string | null
     image: string | null
+    video: string | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
@@ -2572,6 +2573,7 @@ export namespace Prisma {
     published: boolean | null
     authorId: string | null
     image: string | null
+    video: string | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
@@ -2588,6 +2590,7 @@ export namespace Prisma {
     published: number
     authorId: number
     image: number
+    video: number
     updatedAt: number
     categoryId: number
     subcategoryId: number
@@ -2618,6 +2621,7 @@ export namespace Prisma {
     published?: true
     authorId?: true
     image?: true
+    video?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
@@ -2634,6 +2638,7 @@ export namespace Prisma {
     published?: true
     authorId?: true
     image?: true
+    video?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
@@ -2650,6 +2655,7 @@ export namespace Prisma {
     published?: true
     authorId?: true
     image?: true
+    video?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
@@ -2753,6 +2759,7 @@ export namespace Prisma {
     published: boolean
     authorId: string
     image: string
+    video: string | null
     updatedAt: Date
     categoryId: number
     subcategoryId: number
@@ -2788,6 +2795,7 @@ export namespace Prisma {
     published?: boolean
     authorId?: boolean
     image?: boolean
+    video?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
@@ -2807,6 +2815,7 @@ export namespace Prisma {
     published?: boolean
     authorId?: boolean
     image?: boolean
+    video?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
@@ -2826,6 +2835,7 @@ export namespace Prisma {
     published?: boolean
     authorId?: boolean
     image?: boolean
+    video?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
@@ -2845,12 +2855,13 @@ export namespace Prisma {
     published?: boolean
     authorId?: boolean
     image?: boolean
+    video?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_es" | "content_es" | "slug_es" | "title_en" | "content_en" | "slug_en" | "published" | "authorId" | "image" | "updatedAt" | "categoryId" | "subcategoryId", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_es" | "content_es" | "slug_es" | "title_en" | "content_en" | "slug_en" | "published" | "authorId" | "image" | "video" | "updatedAt" | "categoryId" | "subcategoryId", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -2885,6 +2896,7 @@ export namespace Prisma {
       published: boolean
       authorId: string
       image: string
+      video: string | null
       updatedAt: Date
       categoryId: number
       subcategoryId: number
@@ -3324,6 +3336,7 @@ export namespace Prisma {
     readonly published: FieldRef<"Post", 'Boolean'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly image: FieldRef<"Post", 'String'>
+    readonly video: FieldRef<"Post", 'String'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly categoryId: FieldRef<"Post", 'Int'>
     readonly subcategoryId: FieldRef<"Post", 'Int'>
@@ -8510,6 +8523,7 @@ export namespace Prisma {
     published: 'published',
     authorId: 'authorId',
     image: 'image',
+    video: 'video',
     updatedAt: 'updatedAt',
     categoryId: 'categoryId',
     subcategoryId: 'subcategoryId'
@@ -8767,6 +8781,7 @@ export namespace Prisma {
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
+    video?: StringNullableFilter<"Post"> | string | null
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
@@ -8786,6 +8801,7 @@ export namespace Prisma {
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
+    video?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
@@ -8808,6 +8824,7 @@ export namespace Prisma {
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
+    video?: StringNullableFilter<"Post"> | string | null
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
@@ -8827,6 +8844,7 @@ export namespace Prisma {
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
+    video?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
@@ -8851,6 +8869,7 @@ export namespace Prisma {
     published?: BoolWithAggregatesFilter<"Post"> | boolean
     authorId?: StringWithAggregatesFilter<"Post"> | string
     image?: StringWithAggregatesFilter<"Post"> | string
+    video?: StringNullableWithAggregatesFilter<"Post"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     categoryId?: IntWithAggregatesFilter<"Post"> | number
     subcategoryId?: IntWithAggregatesFilter<"Post"> | number
@@ -9322,6 +9341,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
@@ -9339,6 +9359,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
@@ -9353,6 +9374,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -9370,6 +9392,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
@@ -9386,6 +9409,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
@@ -9400,6 +9424,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9414,6 +9439,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
@@ -10043,6 +10069,7 @@ export namespace Prisma {
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
+    video?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
@@ -10065,6 +10092,7 @@ export namespace Prisma {
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
+    video?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
@@ -10081,6 +10109,7 @@ export namespace Prisma {
     published?: SortOrder
     authorId?: SortOrder
     image?: SortOrder
+    video?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
@@ -10900,6 +10929,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
@@ -10915,6 +10945,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
@@ -10960,6 +10991,7 @@ export namespace Prisma {
     published?: BoolFilter<"Post"> | boolean
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
+    video?: StringNullableFilter<"Post"> | string | null
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
@@ -11106,6 +11138,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
@@ -11122,6 +11155,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     subcategoryId: number
   }
@@ -11223,6 +11257,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
@@ -11239,6 +11274,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
   }
@@ -11301,6 +11337,7 @@ export namespace Prisma {
     slug_en: string
     published?: boolean
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
@@ -11315,6 +11352,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -11330,6 +11368,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
@@ -11345,6 +11384,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
@@ -11361,6 +11401,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     subcategoryId: number
   }
@@ -11379,6 +11420,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -11395,6 +11437,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
   }
@@ -11410,6 +11453,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
   }
@@ -11441,6 +11485,7 @@ export namespace Prisma {
     published?: boolean
     authorId: string
     image: string
+    video?: string | null
     updatedAt?: Date | string
     categoryId: number
   }
@@ -11454,6 +11499,7 @@ export namespace Prisma {
     slug_en?: StringFieldUpdateOperationsInput | string
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -11470,6 +11516,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
   }
@@ -11485,6 +11532,7 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
+    video?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
   }

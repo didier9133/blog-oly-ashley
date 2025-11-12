@@ -48,10 +48,10 @@ function getPublicImageUrl(key: string): string {
   return `https://${CLOUDFRONT_DISTRIBUTION}/${key}`;
 }
 
-export async function uploadImageToS3(
+async function uploadFileToS3(
   file: File,
   contentType: string,
-  folder: string = "uploads"
+  folder: string
 ): Promise<string> {
   const { userId } = await auth();
 
@@ -76,6 +76,22 @@ export async function uploadImageToS3(
     return getPublicImageUrl(key);
   } catch (error) {
     console.error("Error detallado en la subida a S3:", error);
-    throw new Error("Error al subir la imagen: " + (error as Error).message);
+    throw new Error("Error al subir el archivo: " + (error as Error).message);
   }
+}
+
+export async function uploadImageToS3(
+  file: File,
+  contentType: string,
+  folder: string = "uploads"
+): Promise<string> {
+  return uploadFileToS3(file, contentType, folder);
+}
+
+export async function uploadVideoToS3(
+  file: File,
+  contentType: string,
+  folder: string = "uploads/videos"
+): Promise<string> {
+  return uploadFileToS3(file, contentType, folder);
 }

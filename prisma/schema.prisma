@@ -42,6 +42,7 @@ model Post {
   authorId      String
   author        User        @relation(fields: [authorId], references: [id])
   image         String
+  video         String?
   updatedAt     DateTime    @updatedAt
   categoryId    Int
   category      Category    @relation(fields: [categoryId], references: [id])

@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Save } from "lucide-react";
+import { Save, Video, Pause, Play } from "lucide-react";
 import { z } from "zod";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -39,13 +39,18 @@ import {
 } from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "../../../generated/prisma/index";
 import RichTextEditor from "@/components/rich-text-editor";
-import { uploadImageToS3 } from "@/app/[locale]/actions/images";
+import {
+  uploadImageToS3,
+  uploadVideoToS3,
+} from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
 
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
+const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
+const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 
 const formPostSchema = z.object({
   title_en: z
@@ -116,12 +121,57 @@ const formPostSchema = z.object({
         })
       : z.any()
   ),
+  video: z
+    .lazy(() =>
+      typeof window !== "undefined"
+        ? z.any().superRefine((val, ctx) => {
+            if (
+              val === undefined ||
+              val === null ||
+              val === "" ||
+              (val instanceof FileList && val.length === 0)
+            ) {
+              return;
+            }
+
+            if (typeof val === "string") {
+              return;
+            }
+
+            if (!(val instanceof FileList)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Archivo de video no válido",
+              });
+              return;
+            }
+
+            const file = val[0];
+
+            if (file.size > VIDEO_SIZE_LIMIT) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Tamaño máximo de video 100MB",
+              });
+            }
+
+            if (!ALLOWED_VIDEO_TYPES.includes(file.type)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Formato de video no válido (usa MP4, WEBM u OGG)",
+              });
+            }
+          })
+        : z.any()
+    )
+    .optional(),
 });
 
 type FormPost = z.infer<typeof formPostSchema>;
 type FormPostWithContent = FormPost & {
   content_en: string;
   content_es: string;
+  video: string | null;
 };
 
 interface CategoryWithSub extends Category {
@@ -140,6 +190,9 @@ export default function CreatePostPage() {
   const [subCategoriesAll, setSubCategoriesAll] = useState<Subcategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [videoPreview, setVideoPreview] = useState<string>("");
+  const videoPreviewRef = useRef<HTMLVideoElement | null>(null);
+  const [isVideoPreviewPlaying, setIsVideoPreviewPlaying] = useState(true);
   const [errorMessage_es, setErrorMessage_es] = useState<string | null>("");
   const [errorMessage_en, setErrorMessage_en] = useState<string | null>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -175,6 +228,30 @@ export default function CreatePostPage() {
     [sanitizePastedText]
   );
 
+  const toggleVideoPlayback = useCallback(() => {
+    const videoElement = videoPreviewRef.current;
+    if (!videoElement) return;
+
+    if (isVideoPreviewPlaying) {
+      videoElement.pause();
+      setIsVideoPreviewPlaying(false);
+      return;
+    }
+
+    const playPromise = videoElement.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsVideoPreviewPlaying(true);
+        })
+        .catch(() => {
+          setIsVideoPreviewPlaying(false);
+        });
+    } else {
+      setIsVideoPreviewPlaying(true);
+    }
+  }, [isVideoPreviewPlaying]);
+
   const formPost = useForm<FormPost>({
     resolver: zodResolver(formPostSchema),
     defaultValues: {
@@ -183,6 +260,7 @@ export default function CreatePostPage() {
       category: "",
       subcategory: "",
       isPublished: false,
+      video: "",
     },
   });
 
@@ -191,6 +269,7 @@ export default function CreatePostPage() {
 
   const post = useRef<FormPostWithContent | null>(null);
   const isDeletedImage = useRef(false);
+  const isDeletedVideo = useRef(false);
 
   const router = useRouter();
 
@@ -201,6 +280,10 @@ export default function CreatePostPage() {
         const postData = await getPostById(Number(params.id));
         if (!postData) throw new Error("Post no encontrado");
 
+        const videoValue =
+          (postData as typeof postData & { video?: string | null }).video ??
+          null;
+
         // Transform the response to match FormPost structure
         post.current = {
           title_en: postData.title_en,
@@ -210,6 +293,7 @@ export default function CreatePostPage() {
           isPublished: postData.published,
           content_en: postData.content_en || "", // Ensure content is always a string
           content_es: postData.content_es || "", // Ensure content is always a string
+          video: videoValue,
         };
 
         // Primero, filtra las subcategorías basadas en la categoría del post
@@ -230,6 +314,7 @@ export default function CreatePostPage() {
             subcategory: postData.subcategory.id.toString(),
             isPublished: postData.published,
             image: postData.image, // Set the image as a FileList
+            video: videoValue ?? "",
           });
         }, 100); // Simula un pequeño retraso para la carga
 
@@ -242,6 +327,9 @@ export default function CreatePostPage() {
         if (postData.image) {
           setImagePreview(postData.image);
         }
+        setVideoPreview(videoValue ?? "");
+        setIsVideoPreviewPlaying(Boolean(videoValue));
+        isDeletedVideo.current = false;
         toast.dismiss();
       } catch (error) {
         toast.dismiss();
@@ -276,6 +364,16 @@ export default function CreatePostPage() {
       subscription.unsubscribe();
     };
   }, [formPost, subCategoriesAll]);
+
+  useEffect(() => {
+    if (!videoPreview || !videoPreview.startsWith("blob:")) {
+      return;
+    }
+
+    return () => {
+      URL.revokeObjectURL(videoPreview);
+    };
+  }, [videoPreview]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -344,7 +442,12 @@ export default function CreatePostPage() {
         post.current.content_en !== content_en ||
         post.current.content_es !== content_es ||
         post.current.isPublished !== values.isPublished ||
-        isDeletedImage.current;
+        post.current.video !==
+          (typeof values.video === "string"
+            ? values.video || null
+            : post.current.video) ||
+        isDeletedImage.current ||
+        isDeletedVideo.current;
 
       if (!hasChanged) {
         toast.dismiss();
@@ -361,6 +464,18 @@ export default function CreatePostPage() {
         urlImage = await uploadImageToS3(values.image[0], values.image[0].type);
         console.log("Imagen subida:", urlImage);
       }
+      let videoUrl: string | null = post.current?.video ?? null;
+
+      if (values.video instanceof FileList && values.video.length > 0) {
+        videoUrl = await uploadVideoToS3(values.video[0], values.video[0].type);
+      } else if (isDeletedVideo.current) {
+        videoUrl = null;
+      } else if (
+        typeof values.video === "string" &&
+        values.video.trim() !== ""
+      ) {
+        videoUrl = values.video;
+      }
       const data = {
         title_en: values.title_en,
         title_es: values.title_es,
@@ -370,6 +485,7 @@ export default function CreatePostPage() {
         content_es: content_es.trim(),
         published: values.isPublished,
         image: urlImage,
+        video: videoUrl,
       };
       await updatePost(Number(params.id), data);
       toast.dismiss();
@@ -387,6 +503,7 @@ export default function CreatePostPage() {
     } finally {
       setIsSubmitting(false);
       isDeletedImage.current = false; // Reset after submission
+      isDeletedVideo.current = false;
     }
   };
 
@@ -682,6 +799,115 @@ export default function CreatePostPage() {
                         )}
                       </FormControl>
 
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Video opcional */}
+                <FormField
+                  control={formPost.control}
+                  name="video"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Video (opcional)</FormLabel>
+                      <FormControl>
+                        {!videoPreview ? (
+                          <div className="relative w-full aspect-video border-2 border-dashed border-border rounded-lg text-center hover:border-primary transition-colors">
+                            <Input
+                              type="file"
+                              accept={ALLOWED_VIDEO_TYPES.join(",")}
+                              id="video"
+                              aria-describedby="video-description"
+                              onChange={(e) => {
+                                const { files } = e.target;
+                                field.onChange(files);
+                                if (files && files[0]) {
+                                  isDeletedVideo.current = true;
+                                  setVideoPreview(
+                                    URL.createObjectURL(files[0])
+                                  );
+                                  setIsVideoPreviewPlaying(true);
+                                } else {
+                                  setVideoPreview("");
+                                  setIsVideoPreviewPlaying(true);
+                                }
+                              }}
+                              onBlur={field.onBlur}
+                              name={field.name}
+                              ref={field.ref}
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            />
+                            <div className="flex flex-col items-center justify-center gap-2 h-full w-full px-4">
+                              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
+                                <Video className="w-6 h-6 text-slate-400" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-slate-600">
+                                  Haz clic para subir un video
+                                </p>
+                                <p className="text-xs text-slate-400">
+                                  MP4, WEBM u OGG hasta 100MB
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="group relative w-full aspect-video rounded-lg overflow-hidden bg-black">
+                            <video
+                              className="absolute inset-0 h-full w-full object-cover"
+                              src={videoPreview}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                              ref={videoPreviewRef}
+                              onPlay={() => setIsVideoPreviewPlaying(true)}
+                              onPause={() => setIsVideoPreviewPlaying(false)}
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                className="pointer-events-auto rounded-full bg-black/60 text-white hover:bg-black/70"
+                                onClick={toggleVideoPlayback}
+                              >
+                                {isVideoPreviewPlaying ? (
+                                  <Pause className="h-5 w-5" />
+                                ) : (
+                                  <Play className="h-5 w-5" />
+                                )}
+                                <span className="sr-only">
+                                  {isVideoPreviewPlaying
+                                    ? "Pausar vista previa del video"
+                                    : "Reproducir vista previa del video"}
+                                </span>
+                              </Button>
+                            </div>
+                            <div className="absolute inset-0 z-10 pointer-events-none">
+                              <div className="absolute inset-0 bg-black/0 opacity-0 transition-all duration-200 group-hover:bg-black/40 group-hover:opacity-100" />
+                            </div>
+                            <div className="absolute top-3 right-3 z-30 hidden group-hover:flex">
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => {
+                                  isDeletedVideo.current = true;
+                                  setVideoPreview("");
+                                  formPost.setValue("video", undefined);
+                                  formPost.clearErrors("video");
+                                  setIsVideoPreviewPlaying(true);
+                                }}
+                              >
+                                Eliminar
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

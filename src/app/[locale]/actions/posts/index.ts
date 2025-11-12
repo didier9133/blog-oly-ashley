@@ -84,6 +84,7 @@ export async function updatePost(
     content_en: string;
 
     image: string;
+    video: string | null;
     categoryId: number;
     subcategoryId: number;
     published: boolean;
@@ -106,25 +107,30 @@ export async function updatePost(
       );
     }
 
-    const newSlugEs = data
-      .title_es!.toLowerCase()
+    const { video, ...rest } = data;
+
+    const newSlugEs = rest.title_es
+      .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
       .slice(0, 50);
 
-    const newSlugEn = data
-      .title_en!.toLowerCase()
+    const newSlugEn = rest.title_en
+      .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
       .slice(0, 50);
+
+    const updateData = {
+      ...rest,
+      video,
+      slug_es: newSlugEs !== post.slug_es ? newSlugEs : post.slug_es,
+      slug_en: newSlugEn !== post.slug_en ? newSlugEn : post.slug_en,
+    };
 
     await prisma.post.update({
       where: { id: postId },
-      data: {
-        ...data,
-        slug_es: newSlugEs !== post.slug_es ? newSlugEs : post.slug_es,
-        slug_en: newSlugEn !== post.slug_en ? newSlugEn : post.slug_en,
-      },
+      data: updateData,
     });
 
     revalidatePath("/dashboard");
@@ -161,27 +167,30 @@ export async function saveNewPost(data: {
   content_en: string;
 
   image: string;
+  video?: string | null;
   categoryId: number;
   subcategoryId: number;
   published: boolean;
 }) {
   try {
     const { userId } = await auth();
-    const slug_es = data.title_es
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
-
-    const slug_en = data.title_en
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
-
     if (!userId) {
       throw new Error("User not authenticated");
     }
+    const { video = null, ...rest } = data;
+
+    const slug_es = rest.title_es
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 50);
+
+    const slug_en = rest.title_en
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 50);
+
     const existingPost = await prisma.post.findFirst({
       where: {
         OR: [{ slug_es: slug_es }, { slug_en: slug_en }],
@@ -191,13 +200,16 @@ export async function saveNewPost(data: {
       throw new Error(`A post with the slug already exists.`);
     }
 
+    const createData = {
+      ...rest,
+      video,
+      authorId: userId,
+      slug_es: slug_es,
+      slug_en: slug_en,
+    };
+
     const newPost = await prisma.post.create({
-      data: {
-        ...data,
-        authorId: userId,
-        slug_es: slug_es,
-        slug_en: slug_en,
-      },
+      data: createData,
     });
 
     revalidatePath("/dashboard");
