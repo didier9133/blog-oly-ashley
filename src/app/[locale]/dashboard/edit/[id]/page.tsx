@@ -39,10 +39,7 @@ import {
 } from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "../../../generated/prisma/index";
 import RichTextEditor from "@/components/rich-text-editor";
-import {
-  uploadImageToS3,
-  uploadVideoToS3,
-} from "@/app/[locale]/actions/images";
+import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
@@ -51,6 +48,49 @@ const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
+
+interface PresignedVideoUploadResponse {
+  uploadUrl: string;
+  fileUrl: string;
+}
+
+async function uploadVideoViaPresignedUrl(file: File): Promise<string> {
+  const presignResponse = await fetch("/api/upload/video", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: file.name,
+      type: file.type || "application/octet-stream",
+    }),
+  });
+
+  if (!presignResponse.ok) {
+    throw new Error("No se pudo preparar la subida del video");
+  }
+
+  const { uploadUrl, fileUrl } =
+    (await presignResponse.json()) as PresignedVideoUploadResponse;
+
+  if (!uploadUrl || !fileUrl) {
+    throw new Error("Respuesta inválida al preparar la subida del video");
+  }
+
+  const uploadResponse = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: {
+      "Content-Type": file.type || "application/octet-stream",
+    },
+    body: file,
+  });
+
+  if (!uploadResponse.ok) {
+    throw new Error("Error al subir el video. Inténtalo nuevamente.");
+  }
+
+  return fileUrl;
+}
 
 const formPostSchema = z.object({
   title_en: z
@@ -269,7 +309,7 @@ export default function CreatePostPage() {
 
   const post = useRef<FormPostWithContent | null>(null);
   const isDeletedImage = useRef(false);
-  const isDeletedVideo = useRef(false);
+  const videoChangedRef = useRef(false); // Marca si el video fue reemplazado o eliminado
 
   const router = useRouter();
 
@@ -329,7 +369,7 @@ export default function CreatePostPage() {
         }
         setVideoPreview(videoValue ?? "");
         setIsVideoPreviewPlaying(Boolean(videoValue));
-        isDeletedVideo.current = false;
+        videoChangedRef.current = false;
         toast.dismiss();
       } catch (error) {
         toast.dismiss();
@@ -434,6 +474,15 @@ export default function CreatePostPage() {
 
     // Check if data has changed before updating
     if (post.current) {
+      const videoFieldValue = values.video;
+      const hasVideoChanged =
+        (videoFieldValue instanceof FileList && videoFieldValue.length > 0) ||
+        videoChangedRef.current ||
+        (typeof videoFieldValue === "string"
+          ? post.current.video !==
+            (videoFieldValue.trim() === "" ? null : videoFieldValue)
+          : false);
+
       const hasChanged =
         post.current.title_en !== values.title_en ||
         post.current.title_es !== values.title_es ||
@@ -442,12 +491,8 @@ export default function CreatePostPage() {
         post.current.content_en !== content_en ||
         post.current.content_es !== content_es ||
         post.current.isPublished !== values.isPublished ||
-        post.current.video !==
-          (typeof values.video === "string"
-            ? values.video || null
-            : post.current.video) ||
         isDeletedImage.current ||
-        isDeletedVideo.current;
+        hasVideoChanged;
 
       if (!hasChanged) {
         toast.dismiss();
@@ -465,16 +510,14 @@ export default function CreatePostPage() {
         console.log("Imagen subida:", urlImage);
       }
       let videoUrl: string | null = post.current?.video ?? null;
+      const videoValue = values.video;
 
-      if (values.video instanceof FileList && values.video.length > 0) {
-        videoUrl = await uploadVideoToS3(values.video[0], values.video[0].type);
-      } else if (isDeletedVideo.current) {
+      if (videoValue instanceof FileList && videoValue.length > 0) {
+        videoUrl = await uploadVideoViaPresignedUrl(videoValue[0]);
+      } else if (videoChangedRef.current) {
         videoUrl = null;
-      } else if (
-        typeof values.video === "string" &&
-        values.video.trim() !== ""
-      ) {
-        videoUrl = values.video;
+      } else if (typeof videoValue === "string" && videoValue.trim() !== "") {
+        videoUrl = videoValue;
       }
       const data = {
         title_en: values.title_en,
@@ -503,7 +546,7 @@ export default function CreatePostPage() {
     } finally {
       setIsSubmitting(false);
       isDeletedImage.current = false; // Reset after submission
-      isDeletedVideo.current = false;
+      videoChangedRef.current = false;
     }
   };
 
@@ -823,7 +866,7 @@ export default function CreatePostPage() {
                                 const { files } = e.target;
                                 field.onChange(files);
                                 if (files && files[0]) {
-                                  isDeletedVideo.current = true;
+                                  videoChangedRef.current = true;
                                   setVideoPreview(
                                     URL.createObjectURL(files[0])
                                   );
@@ -895,7 +938,7 @@ export default function CreatePostPage() {
                                 size="sm"
                                 variant="destructive"
                                 onClick={() => {
-                                  isDeletedVideo.current = true;
+                                  videoChangedRef.current = true;
                                   setVideoPreview("");
                                   formPost.setValue("video", undefined);
                                   formPost.clearErrors("video");

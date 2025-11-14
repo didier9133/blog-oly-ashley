@@ -18,7 +18,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -27,7 +26,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-// import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { toast } from "sonner";
 import { Save, Video, Pause, Play } from "lucide-react";
 import { z } from "zod";
@@ -40,16 +38,56 @@ import {
 } from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "../../generated/prisma/index";
 import RichTextEditor from "@/components/rich-text-editor";
-import {
-  uploadImageToS3,
-  uploadVideoToS3,
-} from "@/app/[locale]/actions/images";
+import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
+
+interface PresignedVideoUploadResponse {
+  uploadUrl: string;
+  fileUrl: string;
+}
+
+async function uploadVideoViaPresignedUrl(file: File): Promise<string> {
+  const presignResponse = await fetch("/api/upload/video", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: file.name,
+      type: file.type || "application/octet-stream",
+    }),
+  });
+
+  if (!presignResponse.ok) {
+    throw new Error("No se pudo preparar la subida del video");
+  }
+
+  const { uploadUrl, fileUrl } =
+    (await presignResponse.json()) as PresignedVideoUploadResponse;
+
+  if (!uploadUrl || !fileUrl) {
+    throw new Error("Respuesta inválida al preparar la subida del video");
+  }
+
+  const uploadResponse = await fetch(uploadUrl, {
+    method: "PUT",
+    headers: {
+      "Content-Type": file.type || "application/octet-stream",
+    },
+    body: file,
+  });
+
+  if (!uploadResponse.ok) {
+    throw new Error("Error al subir el video. Inténtalo nuevamente.");
+  }
+
+  return fileUrl;
+}
 
 const formPostSchema = z.object({
   title_en: z
@@ -330,7 +368,7 @@ export default function CreatePostPage() {
       let videoUrl: string | null = null;
 
       if (values.video instanceof FileList && values.video.length > 0) {
-        videoUrl = await uploadVideoToS3(values.video[0], values.video[0].type);
+        videoUrl = await uploadVideoViaPresignedUrl(values.video[0]);
       }
       console.log("URL de la imagen:", urlImage);
       const data = {

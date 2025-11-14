@@ -88,10 +88,10 @@ export async function uploadImageToS3(
   return uploadFileToS3(file, contentType, folder);
 }
 
-export async function uploadVideoToS3(
-  file: File,
-  contentType: string,
-  folder: string = "uploads/videos"
-): Promise<string> {
-  return uploadFileToS3(file, contentType, folder);
-}
+// export async function uploadVideoToS3(
+//   file: File,
+//   contentType: string,
+//   folder: string = "uploads/videos"
+// ): Promise<string> {
+//   return uploadFileToS3(file, contentType, folder);
+// }
