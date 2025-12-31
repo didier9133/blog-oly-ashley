@@ -11,6 +11,10 @@ export async function ItemsNavBar() {
 
   const titleToPathMap = items.reduce(
     (acc, item) => {
+      if (!item.external && item.url.includes("#newsletter")) {
+        acc[item.title] = "subscribe";
+        return acc;
+      }
       // For internal links, remove the leading slash
       const path = item.external ? item.url : item.url.replace(/^\//, "");
       if (item.external) {

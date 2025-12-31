@@ -6,16 +6,13 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { data } from "@/const/navbar-options";
 import { currentUser } from "@clerk/nextjs/server";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
 
 export async function AppSidebar({
   ...props
@@ -27,6 +24,10 @@ export async function AppSidebar({
 
   const titleToPathMap = items.reduce(
     (acc, item) => {
+      if (!item.external && item.url.includes("#newsletter")) {
+        acc[item.title] = "subscribe";
+        return acc;
+      }
       // For internal links, remove the leading slash
       const path = item.external ? item.url : item.url.replace(/^\//, "");
       if (item.external) {
@@ -63,17 +64,7 @@ export async function AppSidebar({
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {itemsTraslated.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
-                    <Link className="px-4 py-3 pb-4" href={item.url}>
-                      {item.title}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <SidebarNavMenu items={itemsTraslated} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

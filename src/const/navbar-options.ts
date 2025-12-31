@@ -32,6 +32,11 @@ export const data = {
       isActive: false,
     },
     {
+      title: "Subscribe",
+      url: "/#newsletter",
+      isActive: false,
+    },
+    {
       title: "Contact",
       url: "/contact",
       isActive: false,
@@ -67,6 +72,11 @@ export const data = {
     {
       title: "Ebooks",
       url: "/ebook",
+      isActive: false,
+    },
+    {
+      title: "Subscribe",
+      url: "/#newsletter",
       isActive: false,
     },
     {
