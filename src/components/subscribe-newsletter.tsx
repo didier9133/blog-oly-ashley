@@ -69,37 +69,46 @@ export function FormSubscribeNewsletter() {
 
   return (
     <div id="newsletter">
-      <Form {...formSubscribe}>
-        <form
-          onSubmit={formSubscribe.handleSubmit(onSubmit)}
-          className="flex w-full items-start max-w-sm  space-x-2"
+      <div className="w-full max-w-sm">
+        <label
+          htmlFor="newsletter-email"
+          className="block text-sm font-medium text-foreground mb-2"
         >
-          <FormField
-            control={formSubscribe.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    type="email"
-                    ref={(node) => {
-                      emailInputRef.current = node;
-                      field.ref(node);
-                    }}
-                    placeholder={t("placeholder")}
-                    className=""
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={isSubmitting}>
-            {t("subscribe-label")}
-          </Button>
-        </form>
-      </Form>
+          {t("newsletter-label")}
+        </label>
+        <Form {...formSubscribe}>
+          <form
+            onSubmit={formSubscribe.handleSubmit(onSubmit)}
+            className="flex w-full items-start space-x-2"
+          >
+            <FormField
+              control={formSubscribe.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="newsletter-email"
+                      type="email"
+                      ref={(node) => {
+                        emailInputRef.current = node;
+                        field.ref(node);
+                      }}
+                      placeholder={t("placeholder")}
+                      className=""
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" disabled={isSubmitting}>
+              {t("subscribe-label")}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

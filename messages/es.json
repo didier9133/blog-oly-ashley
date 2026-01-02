@@ -11,6 +11,7 @@
   },
 
   "footer": {
+    "newsletter-label": "Suscríbete al boletín",
     "subscribe-label": "Suscribirse",
     "placeholder": "Ingresa tu correo electrónico",
     "toast-loading": "Enviando tu suscripción...",

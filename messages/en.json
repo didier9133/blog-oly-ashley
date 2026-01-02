@@ -11,6 +11,7 @@
   },
 
   "footer": {
+    "newsletter-label": "Sign Up for Newsletter",
     "subscribe-label": "Subscribe",
     "placeholder": "Enter your email address",
     "toast-loading": "Submitting your subscription...",

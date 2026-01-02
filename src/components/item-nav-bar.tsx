@@ -15,10 +15,10 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { basePath, targetHash } = useMemo(() => {
-    if (!url.includes("#")) return { basePath: url, targetHash: "" };
-    const [pathPart, hashPart] = url.split("#");
-    return { basePath: pathPart || "/", targetHash: `#${hashPart}` };
+  const targetHash = useMemo(() => {
+    if (!url.includes("#")) return "";
+    const [, hashPart] = url.split("#");
+    return `#${hashPart}`;
   }, [url]);
 
   const [currentHash, setCurrentHash] = useState("");
