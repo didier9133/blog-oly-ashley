@@ -3,10 +3,18 @@ import { ItemNavBar } from "./item-nav-bar";
 import { currentUser } from "@clerk/nextjs/server";
 import { getTranslations } from "next-intl/server";
 
+type NavItem = {
+  title: string;
+  url: string;
+  isActive: boolean;
+  external?: boolean;
+};
+
 export async function ItemsNavBar() {
   const user = await currentUser();
-  const items =
-    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain;
+  const items = (user && user.publicMetadata.isAdmin
+    ? data.navAdmin
+    : data.navMain) as NavItem[];
   const t = await getTranslations("navigation");
 
   const titleToPathMap = items.reduce(
@@ -25,7 +33,7 @@ export async function ItemsNavBar() {
       acc[item.title] = path;
       return acc;
     },
-    {} as Record<string, string>
+    {} as Record<string, string>,
   );
   const itemsTraslated = items.map((item) => ({
     ...item,
@@ -33,7 +41,7 @@ export async function ItemsNavBar() {
   }));
 
   return (
-    <div className="hidden md:flex items-center gap-4">
+    <div className="hidden md:flex items-center gap-10">
       {itemsTraslated.map((item) => (
         <ItemNavBar key={item.title} {...item} />
       ))}

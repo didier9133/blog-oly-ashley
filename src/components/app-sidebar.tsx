@@ -14,13 +14,21 @@ import { currentUser } from "@clerk/nextjs/server";
 import { getTranslations } from "next-intl/server";
 import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
 
+type NavItem = {
+  title: string;
+  url: string;
+  isActive: boolean;
+  external?: boolean;
+};
+
 export async function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>): Promise<React.ReactElement> {
   const user = await currentUser();
   const t = await getTranslations("navigation");
-  const items =
-    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain;
+  const items = (user && user.publicMetadata.isAdmin
+    ? data.navAdmin
+    : data.navMain) as NavItem[];
 
   const titleToPathMap = items.reduce(
     (acc, item) => {

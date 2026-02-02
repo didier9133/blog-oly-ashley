@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import {
   Form,
   FormControl,
@@ -41,6 +41,7 @@ import RichTextEditor from "@/components/rich-text-editor";
 import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
@@ -51,7 +52,21 @@ interface PresignedVideoUploadResponse {
   fileUrl: string;
 }
 
-async function uploadVideoViaPresignedUrl(file: File): Promise<string> {
+type TFn = (
+  key: string,
+  values?: Record<string, string | number | Date>
+) => string;
+
+type PresignedVideoUploadErrors = {
+  prepareFailed: string;
+  invalidResponse: string;
+  uploadFailed: string;
+};
+
+async function uploadVideoViaPresignedUrl(
+  file: File,
+  errors: PresignedVideoUploadErrors
+): Promise<string> {
   const presignResponse = await fetch("/api/upload/video", {
     method: "POST",
     headers: {
@@ -64,14 +79,14 @@ async function uploadVideoViaPresignedUrl(file: File): Promise<string> {
   });
 
   if (!presignResponse.ok) {
-    throw new Error("No se pudo preparar la subida del video");
+    throw new Error(errors.prepareFailed);
   }
 
   const { uploadUrl, fileUrl } =
     (await presignResponse.json()) as PresignedVideoUploadResponse;
 
   if (!uploadUrl || !fileUrl) {
-    throw new Error("Respuesta inválida al preparar la subida del video");
+    throw new Error(errors.invalidResponse);
   }
 
   const uploadResponse = await fetch(uploadUrl, {
@@ -83,110 +98,125 @@ async function uploadVideoViaPresignedUrl(file: File): Promise<string> {
   });
 
   if (!uploadResponse.ok) {
-    throw new Error("Error al subir el video. Inténtalo nuevamente.");
+    throw new Error(errors.uploadFailed);
   }
 
   return fileUrl;
 }
 
-const formPostSchema = z.object({
-  title_en: z
-    .string()
-    .min(1, "El título es obligatorio")
-    .max(100, "El título no puede exceder los 100 caracteres"),
-  title_es: z
-    .string()
-    .min(1, "El título es obligatorio")
-    .max(100, "El título no puede exceder los 100 caracteres"),
+function buildFormPostSchema(t: TFn) {
+  return z.object({
+    title_en: z
+      .string()
+      .min(1, t("validation.titleRequired"))
+      .max(100, t("validation.titleMax", { max: 100 })),
+    title_es: z
+      .string()
+      .min(1, t("validation.titleRequired"))
+      .max(100, t("validation.titleMax", { max: 100 })),
 
-  category: z.string().min(1, "La categoría es obligatoria"),
+    category: z.string().min(1, t("validation.categoryRequired")),
 
-  subcategory: z.string().min(1, "La subcategoría es obligatoria"),
+    subcategory: z.string().min(1, t("validation.subcategoryRequired")),
 
-  isPublished: z.boolean(),
+    isPublished: z.boolean(),
 
-  image: z.lazy(() =>
-    typeof window !== "undefined"
-      ? z
-          .any()
-          .refine((files) => files instanceof FileList, {
-            message: "La imagen es obligatoria",
-          })
-          .refine((files) => !(files instanceof FileList) || files.length > 0, {
-            message: "La imagen es obligatoria",
-          })
-          .refine(
-            (files) =>
-              !(files instanceof FileList) ||
-              files.length === 0 ||
-              files[0].size <= FILE_SIZE_LIMIT,
-            {
-              message: "Tamaño máximo de imagen 5MB",
-            }
-          )
-          .refine(
-            (files) =>
-              !(files instanceof FileList) ||
-              files.length === 0 ||
-              /^image\/(jpeg|png|gif|webp|svg\+xml)$/.test(files[0].type),
-            {
-              message:
-                "Formato de imagen no válido. Usa JPG, PNG, GIF, WEBP o SVG",
-            }
-          )
-      : z.any()
-  ),
-  video: z
-    .lazy(() =>
+    image: z.lazy(() =>
       typeof window !== "undefined"
-        ? z.any().superRefine((files, ctx) => {
-            if (
-              files === undefined ||
-              files === null ||
-              (files instanceof FileList && files.length === 0)
-            ) {
-              return;
-            }
-
-            if (typeof files === "string") {
-              return;
-            }
-
-            if (!(files instanceof FileList)) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "Archivo de video no válido",
-              });
-              return;
-            }
-
-            const file = files[0];
-
-            if (file.size > VIDEO_SIZE_LIMIT) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "Tamaño máximo de video 100MB",
-              });
-            }
-
-            if (!ALLOWED_VIDEO_TYPES.includes(file.type)) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "Formato de video no válido (usa MP4, WEBM u OGG)",
-              });
-            }
-          })
+        ? z
+            .any()
+            .refine((files) => files instanceof FileList, {
+              message: t("validation.imageRequired"),
+            })
+            .refine(
+              (files) => !(files instanceof FileList) || files.length > 0,
+              {
+                message: t("validation.imageRequired"),
+              }
+            )
+            .refine(
+              (files) =>
+                !(files instanceof FileList) ||
+                files.length === 0 ||
+                files[0].size <= FILE_SIZE_LIMIT,
+              {
+                message: t("validation.imageMaxSize", { maxMb: 5 }),
+              }
+            )
+            .refine(
+              (files) =>
+                !(files instanceof FileList) ||
+                files.length === 0 ||
+                /^image\/(jpeg|png|gif|webp|svg\+xml)$/.test(files[0].type),
+              {
+                message: t("validation.imageInvalidFormat"),
+              }
+            )
         : z.any()
-    )
-    .optional(),
-});
+    ),
+    video: z
+      .lazy(() =>
+        typeof window !== "undefined"
+          ? z.any().superRefine((files, ctx) => {
+              if (
+                files === undefined ||
+                files === null ||
+                (files instanceof FileList && files.length === 0)
+              ) {
+                return;
+              }
 
-type FormPost = z.infer<typeof formPostSchema>;
+              if (typeof files === "string") {
+                return;
+              }
+
+              if (!(files instanceof FileList)) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: t("validation.videoInvalidFile"),
+                });
+                return;
+              }
+
+              const file = files[0];
+
+              if (file.size > VIDEO_SIZE_LIMIT) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: t("validation.videoMaxSize", { maxMb: 100 }),
+                });
+              }
+
+              if (!ALLOWED_VIDEO_TYPES.includes(file.type)) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: t("validation.videoInvalidFormat"),
+                });
+              }
+            })
+          : z.any()
+      )
+      .optional(),
+  });
+}
+
+type FormPost = z.infer<ReturnType<typeof buildFormPostSchema>>;
 interface CategoryWithSub extends Category {
   subcategories: Subcategory[];
 }
 
 export default function CreatePostPage() {
+  const t = useTranslations("dashboard.postForm");
+  const formPostSchema = useMemo(() => buildFormPostSchema(t), [t]);
+  const videoUploadErrors: PresignedVideoUploadErrors = useMemo(
+    () => ({
+      prepareFailed: t("video.errors.prepareFailed"),
+      invalidResponse: t("video.errors.invalidResponse"),
+      uploadFailed: t("video.errors.uploadFailed"),
+    }),
+    [t]
+  );
+
   const [subcategories, setSubcategories] = useState<
     { categoryId: number; name: string; id: number }[]
   >([]);
@@ -344,7 +374,7 @@ export default function CreatePostPage() {
       content_en.trim() === "" ||
       contenSanitized_en.trim() === ""
     ) {
-      setErrorMessage_en("El contenido es obligatorio");
+      setErrorMessage_en(t("validation.contentRequired"));
       return;
     }
 
@@ -353,11 +383,11 @@ export default function CreatePostPage() {
       content_es.trim() === "" ||
       contenSanitized_es.trim() === ""
     ) {
-      setErrorMessage_es("El contenido es obligatorio");
+      setErrorMessage_es(t("validation.contentRequired"));
       return;
     }
 
-    toast.loading("Guardando post...");
+    toast.loading(t("toast.create.loading"));
 
     try {
       setIsSubmitting(true);
@@ -368,7 +398,10 @@ export default function CreatePostPage() {
       let videoUrl: string | null = null;
 
       if (values.video instanceof FileList && values.video.length > 0) {
-        videoUrl = await uploadVideoViaPresignedUrl(values.video[0]);
+        videoUrl = await uploadVideoViaPresignedUrl(
+          values.video[0],
+          videoUploadErrors
+        );
       }
       console.log("URL de la imagen:", urlImage);
       const data = {
@@ -384,9 +417,9 @@ export default function CreatePostPage() {
       };
       await saveNewPost(data);
       toast.dismiss();
-      toast.success("Post guardado exitosamente");
+      toast.success(t("toast.create.success"));
     } catch (error) {
-      let errorMessage = "Error al guardar el post";
+      let errorMessage = t("toast.create.error");
       if (error instanceof Error) {
         errorMessage = error.message;
       } else if (typeof error === "string") {
@@ -412,10 +445,10 @@ export default function CreatePostPage() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
-            Crear Nuevo Post
+            {t("create.title")}
           </h1>
           <p className="mt-1 text-sm text-gray-400">
-            Comparte tus ideas con el mundo
+            {t("create.subtitle")}
           </p>
         </div>
 
@@ -426,7 +459,7 @@ export default function CreatePostPage() {
           >
             <Card className=" shadow-sm">
               <CardHeader>
-                <CardTitle>Información del Post</CardTitle>
+                <CardTitle>{t("card.postInfo")}</CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -435,10 +468,10 @@ export default function CreatePostPage() {
                   name="title_es"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Título (ES)</FormLabel>
+                      <FormLabel>{t("fields.titleEs.label")}</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Escribe un título atractivo"
+                          placeholder={t("fields.title.placeholder")}
                           {...field}
                           onPaste={(e) => handleTitlePaste(e, field.onChange)}
                         />
@@ -453,10 +486,10 @@ export default function CreatePostPage() {
                   name="title_en"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Título (EN)</FormLabel>
+                      <FormLabel>{t("fields.titleEn.label")}</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Escribe un título atractivo"
+                          placeholder={t("fields.title.placeholder")}
                           {...field}
                           onPaste={(e) => handleTitlePaste(e, field.onChange)}
                         />
@@ -475,7 +508,7 @@ export default function CreatePostPage() {
                       name="category"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Categoría</FormLabel>
+                          <FormLabel>{t("fields.category.label")}</FormLabel>
                           <Select
                             onValueChange={(value) => {
                               field.onChange(value);
@@ -488,8 +521,8 @@ export default function CreatePostPage() {
                                 <SelectValue
                                   placeholder={
                                     isLoading
-                                      ? "Cargando categorías..."
-                                      : "Selecciona una categoría"
+                                      ? t("fields.category.loading")
+                                      : t("fields.category.placeholder")
                                   }
                                 />
                               </SelectTrigger>
@@ -526,7 +559,7 @@ export default function CreatePostPage() {
                       name="subcategory"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Subcategoría</FormLabel>
+                          <FormLabel>{t("fields.subcategory.label")}</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
@@ -535,7 +568,11 @@ export default function CreatePostPage() {
                           >
                             <FormControl>
                               <SelectTrigger className="w-full">
-                                <SelectValue placeholder="Selecciona una subcategoría" />
+                                <SelectValue
+                                  placeholder={t(
+                                    "fields.subcategory.placeholder"
+                                  )}
+                                />
                               </SelectTrigger>
                             </FormControl>
 
@@ -567,7 +604,7 @@ export default function CreatePostPage() {
                   <FormLabel
                     className={errorMessage_en ? "text-destructive" : ""}
                   >
-                    Contenido (EN)
+                    {t("fields.contentEn.label")}
                   </FormLabel>
                   <FormControl>
                     <RichTextEditor
@@ -589,7 +626,7 @@ export default function CreatePostPage() {
                   <FormLabel
                     className={errorMessage_es ? "text-destructive" : ""}
                   >
-                    Contenido (ES)
+                    {t("fields.contentEs.label")}
                   </FormLabel>
                   <FormControl>
                     <RichTextEditor
@@ -613,7 +650,7 @@ export default function CreatePostPage() {
                   name="image"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel> Imagen destacada</FormLabel>
+                      <FormLabel>{t("fields.image.label")}</FormLabel>
                       <FormControl>
                         {!imagePreview ? (
                           <div className="border-2 flex flex-col justify-center min-h-[500px]  relative  border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
@@ -659,10 +696,10 @@ export default function CreatePostPage() {
 
                             <div>
                               <p className="text-sm font-medium text-slate-600">
-                                Haz clic para subir una imagen
+                                {t("fields.image.uploadPrompt")}
                               </p>
                               <p className="text-xs text-slate-400">
-                                PNG, JPG, GIF hasta 5MB
+                                {t("fields.image.uploadHelp")}
                               </p>
                             </div>
                           </div>
@@ -670,7 +707,7 @@ export default function CreatePostPage() {
                           <div className="relative w-full h-80  rounded-lg overflow-hidden">
                             <Image
                               src={imagePreview}
-                              alt="Vista previa"
+                              alt={t("fields.image.previewAlt")}
                               fill
                               style={{
                                 objectPosition: "49.1825% 67.865%",
@@ -689,7 +726,7 @@ export default function CreatePostPage() {
                                     formPost.resetField("image");
                                   }}
                                 >
-                                  Eliminar
+                                  {t("actions.delete")}
                                 </Button>
                               </div>
                             </div>
@@ -708,7 +745,7 @@ export default function CreatePostPage() {
                   name="video"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Video (opcional)</FormLabel>
+                      <FormLabel>{t("fields.video.label")}</FormLabel>
                       <FormControl>
                         {!videoPreview ? (
                           <div className="relative w-full aspect-video border-2 border-dashed border-border rounded-lg text-center hover:border-primary transition-colors">
@@ -741,10 +778,10 @@ export default function CreatePostPage() {
                               </div>
                               <div>
                                 <p className="text-sm font-medium text-slate-600">
-                                  Haz clic para subir un video
+                                  {t("fields.video.uploadPrompt")}
                                 </p>
                                 <p className="text-xs text-slate-400">
-                                  MP4, WEBM u OGG hasta 100MB
+                                  {t("fields.video.uploadHelp")}
                                 </p>
                               </div>
                             </div>
@@ -778,8 +815,8 @@ export default function CreatePostPage() {
                                 )}
                                 <span className="sr-only">
                                   {isVideoPreviewPlaying
-                                    ? "Pausar vista previa del video"
-                                    : "Reproducir vista previa del video"}
+                                    ? t("fields.video.preview.pause")
+                                    : t("fields.video.preview.play")}
                                 </span>
                               </Button>
                             </div>
@@ -798,7 +835,7 @@ export default function CreatePostPage() {
                                   setIsVideoPreviewPlaying(true);
                                 }}
                               >
-                                Eliminar
+                                {t("actions.delete")}
                               </Button>
                             </div>
                           </div>
@@ -813,12 +850,12 @@ export default function CreatePostPage() {
                 <div className="flex items-center justify-between rounded-lg border-slate-200 focus:border-teal-500">
                   <div>
                     <h3 className="font-medium text-muted-foreground">
-                      Estado de publicación
+                      {t("fields.published.sectionTitle")}
                     </h3>
                     <p className="text-sm text-gray-400">
                       {formPost.watch("isPublished")
-                        ? "Tu post será visible para todos"
-                        : "Tu post se guardará como borrador"}
+                        ? t("fields.published.helpPublished")
+                        : t("fields.published.helpDraft")}
                     </p>
                   </div>
 
@@ -829,7 +866,9 @@ export default function CreatePostPage() {
                       render={({ field }) => (
                         <FormItem className="flex items-center space-x-2">
                           <FormLabel htmlFor="isPublished">
-                            {field.value ? "Publicado" : "Borrador"}
+                            {field.value
+                              ? t("status.published")
+                              : t("status.draft")}
                           </FormLabel>
                           <FormControl>
                             <Switch
@@ -856,15 +895,15 @@ export default function CreatePostPage() {
                       variant="outline"
                       className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
                     >
-                      Cancelar
+                      {t("actions.cancel")}
                     </Button>
                   </Link>
 
                   <Button type="submit" disabled={isSubmitting}>
                     <Save className="h-4 w-4 mr-2" />
                     {formPost.watch("isPublished")
-                      ? "Publicar"
-                      : "Guardar borrador"}
+                      ? t("actions.publish")
+                      : t("actions.saveDraft")}
                   </Button>
                 </div>
               </CardFooter>

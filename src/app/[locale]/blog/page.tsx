@@ -28,6 +28,8 @@ export default async function Page(props: { searchParams?: SearchParams }) {
   const page = parseInt(searchParams?.page ?? "1", 10);
   const currentLanguage = await getLocale();
   const t = await getTranslations("Blog");
+  const tPagination = await getTranslations("ui.pagination");
+  const tPostMeta = await getTranslations("ui.postMeta");
 
   const total = await prisma.post.count({
     where: {
@@ -151,15 +153,18 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     </p>
                     <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto">
                       <span>
-                        By{" "}
+                        {tPostMeta("by")}{" "}
                         <span className="font-medium">{`${post.author.firstName} ${post.author.lastName}`}</span>
                       </span>
                       <span>
-                        {new Date(post.updatedAt).toLocaleDateString("es-ES", {
+                        {new Date(post.updatedAt).toLocaleDateString(
+                          currentLanguage,
+                          {
                           year: "numeric",
                           month: "short",
                           day: "numeric",
-                        })}
+                          }
+                        )}
                       </span>
                     </div>
                   </CardContent>
@@ -169,12 +174,14 @@ export default async function Page(props: { searchParams?: SearchParams }) {
           </section>
 
           {/* Paginación */}
-          <Pagination className="mb-10">
+          <Pagination className="mb-10" ariaLabel={tPagination("navLabel")}>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
                   href={`?page=${page - 1}`}
                   className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                  label={tPagination("previous")}
+                  ariaLabel={tPagination("previousAria")}
                 />
               </PaginationItem>
               {/* Pagination logic */}
@@ -206,7 +213,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationItem>
                       ))}
                       <PaginationItem>
-                        <PaginationEllipsis />
+                        <PaginationEllipsis srLabel={tPagination("morePages")} />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink
@@ -231,7 +238,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationItem>
                       ))}
                       <PaginationItem>
-                        <PaginationEllipsis />
+                        <PaginationEllipsis srLabel={tPagination("morePages")} />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink
@@ -261,7 +268,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationLink>
                       </PaginationItem>
                       <PaginationItem>
-                        <PaginationEllipsis />
+                        <PaginationEllipsis srLabel={tPagination("morePages")} />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink href={`?page=${totalPages}`}>
@@ -295,6 +302,8 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                   className={
                     page === totalPages ? "pointer-events-none opacity-50" : ""
                   }
+                  label={tPagination("next")}
+                  ariaLabel={tPagination("nextAria")}
                 />
               </PaginationItem>
             </PaginationContent>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -12,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { getCategoriesPosts } from "@/app/[locale]/actions/posts";
 
 export function SearchPost() {
+  const t = useTranslations("search");
   const [filters, setFilters] = useState({
     searchTerm: "",
     statusFilter: "",
@@ -39,7 +41,7 @@ export function SearchPost() {
     <div className="flex flex-col sm:flex-row gap-4">
       <div className="flex-1">
         <Input
-          placeholder="Buscar por título, autor o contenido..."
+          placeholder={t("postsPlaceholder")}
           value={filters.searchTerm}
           onChange={(e) =>
             setFilters((prev) => ({
@@ -60,12 +62,12 @@ export function SearchPost() {
         }
       >
         <SelectTrigger className="w-full sm:w-48">
-          <SelectValue placeholder="Estado" />
+          <SelectValue placeholder={t("statusPlaceholder")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todos los estados</SelectItem>
-          <SelectItem value="published">Publicado</SelectItem>
-          <SelectItem value="draft">Borrador</SelectItem>
+          <SelectItem value="all">{t("statusAll")}</SelectItem>
+          <SelectItem value="published">{t("statusPublished")}</SelectItem>
+          <SelectItem value="draft">{t("statusDraft")}</SelectItem>
         </SelectContent>
       </Select>
       <Select
@@ -78,9 +80,10 @@ export function SearchPost() {
         }
       >
         <SelectTrigger className="w-full sm:w-48">
-          <SelectValue placeholder="Categoría" />
+          <SelectValue placeholder={t("categoryPlaceholder")} />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="all">{t("categoryAll")}</SelectItem>
           {categories.map((category) => (
             <SelectItem
               key={category.id}

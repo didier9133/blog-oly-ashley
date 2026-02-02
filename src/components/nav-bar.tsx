@@ -10,16 +10,13 @@ import { LanguageSelector } from "./language-selector";
 export async function Header() {
   return (
     <header
-      className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b lg:justify-center"
+      className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b"
       style={{
         background: "var(--card)",
       }}
     >
       <nav
-        className="container flex  items-center justify-between mx-2 px-4 md:mx-20 md:p-0 gap-8 font-[family-name:var(--font-cormorant-garamond)]"
-        style={{
-          margin: "0 auto",
-        }}
+        className="container w-full flex items-center justify-between px-4 md:px-20 mx-auto gap-16 font-[family-name:var(--font-cormorant-garamond)]"
       >
         <Link href="/">
           <div className="relative w-[70px] h-[64px] md:w-[100px] cursor-pointer">
@@ -28,7 +25,8 @@ export async function Header() {
               alt="Logo"
               fill
               sizes="(max-width: 768px) 80px, (max-width: 1200px) 100px, 100px"
-              className="object-contain dark:[filter:brightness(0)_invert(1)]"
+              className="object-contain object-left dark:[filter:brightness(0)_invert(1)]"
+              priority
             />
           </div>
         </Link>

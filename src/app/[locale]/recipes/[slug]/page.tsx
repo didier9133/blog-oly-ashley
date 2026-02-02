@@ -99,7 +99,7 @@ export default async function BlogPostPage(props: {
         <Breadcrumb className="mb-8">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("breadcrumb")}</Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <Slash />
@@ -127,7 +127,7 @@ export default async function BlogPostPage(props: {
         </h1>
         <div className="text-muted-foreground text-sm mb-6 flex gap-4">
           <span>
-            {new Date(post.updatedAt).toLocaleDateString("es-ES", {
+            {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
               year: "numeric",
               month: "short",
               day: "numeric",
@@ -169,7 +169,7 @@ export default async function BlogPostPage(props: {
                       </div>
                       <div className="text-[10px] text-muted-foreground">
                         {new Date(recent.updatedAt).toLocaleDateString(
-                          "es-ES",
+                          currentLanguage,
                           {
                             month: "short",
                             day: "numeric",

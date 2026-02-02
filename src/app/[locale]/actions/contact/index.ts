@@ -4,10 +4,11 @@ import { Resend } from "resend";
 import ContactEmailTemplateProps from "@/components/email/response-contact";
 import OwnerNotificationTemplate from "@/components/email/notify-contact";
 import { getTranslations } from "next-intl/server";
+import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const emailDomain = process.env.EMAIL_DOMAIN;
-const NOTIFICATION_EMAIL = "raicesreturnings@gmail.com";
+const NOTIFICATION_EMAIL = CONTACT_NOTIFICATION_EMAIL;
 
 export async function sendContactEmail({
   firstName,

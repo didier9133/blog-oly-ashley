@@ -7,6 +7,7 @@ import {
   PaginationNext,
   Pagination,
 } from "@/components/ui/pagination";
+import { getTranslations } from "next-intl/server";
 
 export async function PaginationComponent({
   pageParam = "1",
@@ -17,16 +18,19 @@ export async function PaginationComponent({
   PAGE_SIZE?: number;
   total: number;
 }) {
+  const t = await getTranslations("ui.pagination");
   const page = parseInt(pageParam, 10);
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
-    <Pagination className="mb-10">
+    <Pagination className="mb-10" ariaLabel={t("navLabel")}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             href={`?page=${page - 1}`}
             className={page === 1 ? "pointer-events-none opacity-50" : ""}
+            label={t("previous")}
+            ariaLabel={t("previousAria")}
           />
         </PaginationItem>
         {/* Pagination logic */}
@@ -52,7 +56,7 @@ export async function PaginationComponent({
                   </PaginationItem>
                 ))}
                 <PaginationItem>
-                  <PaginationEllipsis />
+                  <PaginationEllipsis srLabel={t("morePages")} />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink
@@ -74,7 +78,7 @@ export async function PaginationComponent({
                   </PaginationItem>
                 ))}
                 <PaginationItem>
-                  <PaginationEllipsis />
+                  <PaginationEllipsis srLabel={t("morePages")} />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink
@@ -104,7 +108,7 @@ export async function PaginationComponent({
                   </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                  <PaginationEllipsis />
+                  <PaginationEllipsis srLabel={t("morePages")} />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink href={`?page=${totalPages}`}>
@@ -134,6 +138,8 @@ export async function PaginationComponent({
             className={
               page === totalPages ? "pointer-events-none opacity-50" : ""
             }
+            label={t("next")}
+            ariaLabel={t("nextAria")}
           />
         </PaginationItem>
       </PaginationContent>

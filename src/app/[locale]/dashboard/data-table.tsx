@@ -23,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { getCategoriesPosts } from "../actions/posts";
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -40,6 +41,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations("dashboard.postsTable");
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
     []
   );
@@ -77,14 +79,14 @@ export function DataTable<TData, TValue>({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Search className="h-5 w-5" />
-            Buscar y Filtrar Posts
+            {t("search-title")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <Input
-                placeholder="Buscar por título, autor o contenido..."
+                placeholder={t("search-placeholder")}
                 value={
                   (table.getColumn("title")?.getFilterValue() as string) ?? ""
                 }
@@ -118,12 +120,12 @@ export function DataTable<TData, TValue>({
               }}
             >
               <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Estado" />
+                <SelectValue placeholder={t("status-placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todos los estados</SelectItem>
-                <SelectItem value="published">Publicado</SelectItem>
-                <SelectItem value="draft">Borrador</SelectItem>
+                <SelectItem value="all">{t("status-all")}</SelectItem>
+                <SelectItem value="published">{t("status-published")}</SelectItem>
+                <SelectItem value="draft">{t("status-draft")}</SelectItem>
               </SelectContent>
             </Select>
 
@@ -140,10 +142,10 @@ export function DataTable<TData, TValue>({
               }}
             >
               <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Categoría" />
+                <SelectValue placeholder={t("category-placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todas las categorías</SelectItem>
+                <SelectItem value="all">{t("category-all")}</SelectItem>
                 {categories.map((category) => (
                   <SelectItem
                     key={category.id}
@@ -163,8 +165,11 @@ export function DataTable<TData, TValue>({
       <Card>
         <CardHeader>
           <CardTitle>
-            Posts ({data.length}{" "}
-            {data.length === 1 ? "resultado" : "resultados"})
+            {t("posts-title", {
+              count: data.length,
+              resultsLabel:
+                data.length === 1 ? t("result-singular") : t("result-plural"),
+            })}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -212,7 +217,7 @@ export function DataTable<TData, TValue>({
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("no-results")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -227,7 +232,7 @@ export function DataTable<TData, TValue>({
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
-              Previous
+              {t("previous")}
             </Button>
             <Button
               variant="outline"
@@ -235,7 +240,7 @@ export function DataTable<TData, TValue>({
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
-              Next
+              {t("next")}
             </Button>
           </div>
         </CardContent>

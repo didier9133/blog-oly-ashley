@@ -7,7 +7,13 @@
     "merch": "Merch",
     "dashboard": "Dashboard",
     "ebook": "Ebooks",
-    "subscribe": "Subscribe for weekly writing"
+    "subscribe": "Subscribe"
+  },
+
+  "metadata": {
+    "title": "Raíces & Returnings - Ashley & Oly",
+    "description": "A space for the stories we carry, the ones we're still learning how to tell, and the ones we're finally ready to live. Reflections on identity, queerness, healing, spirituality, and home. Recipes passed down and reimagined.",
+    "keywords": "Ashley & Oly, Raíces & Returnings, queerness, identity, healing, spirituality, recipes, migration, Venezuelan food, LGBTQ+, blog, reflections, culture, home, storytelling"
   },
 
   "footer": {
@@ -15,8 +21,249 @@
     "subscribe-label": "Subscribe",
     "placeholder": "Enter your email address",
     "toast-loading": "Submitting your subscription...",
-    "toast-success": "Successfully subscribed to the newsletter!",
-    "toast-error": "There was an error subscribing. Please try again."
+    "toast-success": "Welcome—happy you're here. See you in your inbox soon.",
+    "toast-error": "There was an error subscribing. Please try again.",
+    "stay-in-loop": "Stay in the loop",
+    "newsletter-desc": "Join our community to receive stories, recipes, and reflections on returning to our roots directly in your inbox.",
+    "brand-desc": "A digital space for the stories we carry and the ones we are still learning how to tell. Celebrating identity, queerness, healing, and the recipes that bring us home.",
+    "explore": "Explore",
+    "company": "Company",
+    "connect": "Connect",
+    "based-in": "Based in Canada/USA",
+    "designed-by": "Designed & Built by",
+    "rights-reserved": "All rights reserved.",
+    "social": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "shop": "Shop",
+      "substack": "Substack"
+    }
+  },
+
+  "subscribeHero": {
+    "toast-loading": "Submitting your subscription...",
+    "toast-success": "Welcome—happy you're here. See you in your inbox soon.",
+    "toast-error": "We couldn't register your subscription. Please try again.",
+    "placeholder": "Your email address...",
+    "cta": "Subscribe"
+  },
+
+  "search": {
+    "postsPlaceholder": "Search by title, author, or content...",
+    "statusPlaceholder": "Status",
+    "statusAll": "All statuses",
+    "statusPublished": "Published",
+    "statusDraft": "Draft",
+    "categoryPlaceholder": "Category",
+    "categoryAll": "All categories"
+  },
+
+  "dashboard": {
+    "page": {
+      "title": "Dashboard",
+      "subtitle": "Welcome back",
+      "subscribers": "Subscribers",
+      "newPost": "New Post",
+      "welcomeTitle": "Hi, Admin!",
+      "welcomeSummary": "You have {total} posts total. {drafts} drafts pending publication."
+    },
+    "postsColumns": {
+      "th": {
+        "title": "Title",
+        "author": "Author",
+        "category": "Category",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      },
+      "menuLabel": "Open actions menu",
+      "preview": "View post",
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "toast": {
+        "delete": {
+          "loading": "Deleting post...",
+          "success": "Post deleted successfully",
+          "error": "Couldn't delete the post"
+        }
+      }
+    },
+    "postForm": {
+      "create": {
+        "title": "Create New Post",
+        "subtitle": "Share your ideas with the world"
+      },
+      "edit": {
+        "title": "Edit Post",
+        "subtitle": "Share your ideas with the world"
+      },
+      "card": {
+        "postInfo": "Post information"
+      },
+      "fields": {
+        "title": {
+          "placeholder": "Write a compelling title"
+        },
+        "titleEs": {
+          "label": "Title (ES)"
+        },
+        "titleEn": {
+          "label": "Title (EN)"
+        },
+        "category": {
+          "label": "Category",
+          "loading": "Loading categories...",
+          "placeholder": "Select a category"
+        },
+        "subcategory": {
+          "label": "Subcategory",
+          "placeholder": "Select a subcategory"
+        },
+        "contentEn": {
+          "label": "Content (EN)"
+        },
+        "contentEs": {
+          "label": "Content (ES)"
+        },
+        "image": {
+          "label": "Featured image",
+          "uploadPrompt": "Click to upload an image",
+          "uploadHelp": "Max size: 5MB. Allowed formats: JPG, PNG, GIF, WebP, or SVG.",
+          "previewAlt": "Preview"
+        },
+        "video": {
+          "label": "Video (optional)",
+          "uploadPrompt": "Click to upload a video",
+          "uploadHelp": "MP4, WEBM, or OGG up to 100MB",
+          "preview": {
+            "pause": "Pause video preview",
+            "play": "Play video preview"
+          }
+        },
+        "published": {
+          "sectionTitle": "Publication status",
+          "helpPublished": "Your post will be visible to everyone",
+          "helpDraft": "Your post will be saved as a draft"
+        }
+      },
+      "actions": {
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "publish": "Publish",
+        "saveDraft": "Save draft",
+        "save": "Save"
+      },
+      "status": {
+        "published": "Published",
+        "draft": "Draft"
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "titleMax": "Title cannot exceed {max} characters",
+        "categoryRequired": "Category is required",
+        "subcategoryRequired": "Subcategory is required",
+        "contentRequired": "Content is required",
+        "imageRequired": "Image is required",
+        "imageMaxSize": "Max image size is {maxMb}MB",
+        "imageInvalidFormat": "Invalid image format. Use JPG, PNG, GIF, WEBP, or SVG",
+        "imageInvalidUrl": "Invalid image URL",
+        "videoInvalidFile": "Invalid video file",
+        "videoMaxSize": "Max video size is {maxMb}MB",
+        "videoInvalidFormat": "Invalid video format (use MP4, WEBM, or OGG)"
+      },
+      "video": {
+        "errors": {
+          "prepareFailed": "Couldn't prepare the video upload",
+          "invalidResponse": "Invalid response while preparing video upload",
+          "uploadFailed": "Video upload failed. Please try again."
+        }
+      },
+      "toast": {
+        "create": {
+          "loading": "Saving post...",
+          "success": "Post saved successfully",
+          "error": "Couldn't save the post"
+        },
+        "edit": {
+          "loading": "Loading post...",
+          "notFound": "Post not found",
+          "loadError": "Couldn't load the post",
+          "noChanges": "No changes to save",
+          "updating": "Updating post...",
+          "success": "Post updated successfully",
+          "error": "Couldn't save the post"
+        }
+      }
+    },
+    "newsletter": {
+      "toast-mark-loading": "Marking as handled...",
+      "toast-mark-success": "Marked as handled.",
+      "toast-mark-error": "Couldn't mark as handled.",
+      "toast-copy-success": "Email copied.",
+      "toast-copy-error": "Couldn't copy.",
+      "th-email": "Email",
+      "th-status": "Status",
+      "th-source": "Source",
+      "th-locale": "Locale",
+      "th-date": "Date",
+      "th-actions": "Actions",
+      "status-handled": "Handled",
+      "status-pending": "Pending",
+      "copy": "Copy",
+      "mark": "Mark",
+      "empty": "—",
+      "empty-state": "No subscriptions yet.",
+      "updating": "Updating…"
+    },
+    "newsletterPage": {
+      "restricted-title": "Restricted access",
+      "restricted-body": "You must sign in to view this page.",
+      "title": "Newsletter subscribers",
+      "summary": "{pending} pending · {total} total",
+      "back": "Back",
+      "latest": "Latest signups"
+    },
+    "postsTable": {
+      "search-title": "Search and filter posts",
+      "search-placeholder": "Search by title, author, or content...",
+      "status-placeholder": "Status",
+      "status-all": "All statuses",
+      "status-published": "Published",
+      "status-draft": "Draft",
+      "category-placeholder": "Category",
+      "category-all": "All categories",
+      "posts-title": "Posts ({count} {resultsLabel})",
+      "result-singular": "result",
+      "result-plural": "results",
+      "no-results": "No results.",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+
+  "ui": {
+    "pagination": {
+      "navLabel": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "previousAria": "Go to previous page",
+      "nextAria": "Go to next page",
+      "morePages": "More pages"
+    },
+    "searchForm": {
+      "label": "Search",
+      "placeholder": "Search the site..."
+    },
+    "postMeta": {
+      "by": "By"
+    }
   },
 
   "categories": {
@@ -76,7 +323,8 @@
     "recent-posts": "Recent Posts",
     "no-posts": "No posts available.",
     "read-more": "Read More",
-    "breadcrumb-recipes": "Recipes"
+    "breadcrumb-recipes": "Recipes",
+    "breadcrumb-blog": "Blog"
   },
   "Contact": {
     "title": "Want to reach us?",

@@ -1,35 +1,27 @@
 "use client";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { z } from "zod";
-import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { scrollToNewsletter as scrollToNewsletterUtil } from "@/lib/newsletter-scroll";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const subscribeSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 
-export type FormSubscribe = z.infer<typeof subscribeSchema>;
+interface FormSubscribeNewsletterProps {
+  className?: string;
+  showLabel?: boolean;
+}
 
-export function FormSubscribeNewsletter() {
+export function FormSubscribeNewsletter({
+  className,
+  showLabel = true,
+}: FormSubscribeNewsletterProps) {
   const t = useTranslations("footer");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const [email, setEmail] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const handleNewsletterHash = () => {
@@ -43,71 +35,61 @@ export function FormSubscribeNewsletter() {
     return () => window.removeEventListener("hashchange", handleNewsletterHash);
   }, []);
 
-  const formSubscribe = useForm<FormSubscribe>({
-    resolver: zodResolver(subscribeSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const onSubmit = async (data: FormSubscribe) => {
+    if (inputRef.current && !inputRef.current.checkValidity()) {
+      inputRef.current.reportValidity();
+      return;
+    }
+
+    const toastId = toast.loading(t("toast-loading"));
+
     try {
-      toast.loading(t("toast-loading"));
-      setIsSubmitting(true);
-      await subscribeToNewsletter(data.email);
-      toast.success(t("toast-success"));
-    } catch (error) {
-      console.error("Subscription error:", error);
-      const errorMessage = t("toast-error");
-      toast.error(errorMessage);
-    } finally {
-      toast.dismiss();
-      formSubscribe.reset();
-      setIsSubmitting(false);
+      await subscribeToNewsletter(email, { source: "footer" });
+      toast.success(t("toast-success"), { id: toastId });
+      setEmail("");
+    } catch (err) {
+      console.error(err);
+      toast.error(t("toast-error"), { id: toastId });
     }
   };
 
   return (
-    <div id="newsletter">
-      <div className="w-full max-w-sm">
+    <div id="newsletter" className={cn("w-full", className)}>
+      {showLabel && (
         <label
           htmlFor="newsletter-email"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="block uppercase tracking-widest text-xs font-bold text-muted-foreground mb-4 text-center"
         >
           {t("newsletter-label")}
         </label>
-        <Form {...formSubscribe}>
-          <form
-            onSubmit={formSubscribe.handleSubmit(onSubmit)}
-            className="flex w-full items-start space-x-2"
+      )}
+
+      <div className="w-full max-w-md mx-auto">
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col sm:flex-row w-full gap-3 items-center sm:items-stretch"
+        >
+          <Input
+            ref={inputRef}
+            id="newsletter-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t("placeholder")}
+            required
+            autoComplete="email"
+            inputMode="email"
+            className="w-full sm:flex-1 bg-white border-orange-900/10 focus:border-[#c47456] focus:ring-[#c47456]/20 transition-all h-14 text-base shadow-sm placeholder:text-muted-foreground/60 px-6"
+          />
+          <Button
+            type="submit"
+            className="h-14 w-full sm:w-auto px-8 uppercase tracking-widest text-xs font-bold transition-all shadow-sm bg-[#c47456] hover:bg-[#a86045] text-white"
           >
-            <FormField
-              control={formSubscribe.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      id="newsletter-email"
-                      type="email"
-                      ref={(node) => {
-                        emailInputRef.current = node;
-                        field.ref(node);
-                      }}
-                      placeholder={t("placeholder")}
-                      className=""
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={isSubmitting}>
-              {t("subscribe-label")}
-            </Button>
-          </form>
-        </Form>
+            {t("subscribe-label")}
+          </Button>
+        </form>
       </div>
     </div>
   );

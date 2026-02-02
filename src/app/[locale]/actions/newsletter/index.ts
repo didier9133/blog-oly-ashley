@@ -1,53 +1,88 @@
 "use server";
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const mailchimp = require("@mailchimp/mailchimp_marketing");
+import prisma from "@/lib/prisma";
+import { z } from "zod";
+import OwnerNewsletterNotificationTemplate from "@/components/email/notify-newsletter";
+import { Resend } from "resend";
+import { NEWSLETTER_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 
-const apiKey = process.env.MAILCHIMP_API_KEY;
-const server = process.env.MAILCHIMP_SERVER_PREFIX;
+const emailDomain = process.env.EMAIL_DOMAIN;
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-if (!apiKey || !server) {
-  throw new Error(
-    "Configuración de Mailchimp incompleta. Verifica las variables de entorno."
-  );
-}
+const NOTIFICATION_EMAIL = NEWSLETTER_NOTIFICATION_EMAIL;
 
-mailchimp.setConfig({
-  apiKey,
-  server,
+const subscribeSchema = z.object({
+  email: z.string().email(),
+  locale: z.string().optional(),
+  source: z.string().optional(),
 });
 
-export async function run() {
-  const response = await mailchimp.ping.get();
-  return response;
+export async function subscribeToNewsletter(
+  email: string,
+  options?: { locale?: string; source?: string }
+) {
+  const parsed = subscribeSchema.safeParse({
+    email,
+    locale: options?.locale,
+    source: options?.source,
+  });
+
+  if (!parsed.success) {
+    throw new Error("El correo electrónico no es válido.");
+  }
+
+  const normalizedEmail = parsed.data.email.trim().toLowerCase();
+
+  // Guardar en DB (idempotente)
+  const signup = await prisma.newsletterSignup.upsert({
+    where: { email: normalizedEmail },
+    update: {
+      locale: parsed.data.locale ?? undefined,
+      source: parsed.data.source ?? undefined,
+    },
+    create: {
+      email: normalizedEmail,
+      locale: parsed.data.locale,
+      source: parsed.data.source,
+    },
+  });
+
+  // Notificar al dueño (si hay configuración)
+  if (!resend || !emailDomain) {
+    return { success: true, saved: true, notified: false, signupId: signup.id };
+  }
+
+  await resend.emails.send({
+    from: `Raices & Returning <notify@${emailDomain}>`,
+    to: NOTIFICATION_EMAIL,
+    subject: `📰 Nueva suscripción pendiente: ${normalizedEmail}`,
+    react: OwnerNewsletterNotificationTemplate({
+      email: normalizedEmail,
+      source: parsed.data.source,
+      locale: parsed.data.locale,
+    }),
+  });
+
+  return { success: true, saved: true, notified: true, signupId: signup.id };
 }
 
-export async function subscribeToNewsletter(email: string) {
-  if (!email) {
-    throw new Error(
-      "El correo electrónico es obligatorio para la suscripción."
-    );
-  }
+export async function markNewsletterSignupHandled(params: {
+  email: string;
+  notes?: string;
+}) {
+  const emailParsed = z.string().email().safeParse(params.email);
+  if (!emailParsed.success) throw new Error("El correo electrónico no es válido.");
 
-  const list_id = process.env.MAILCHIMP_LIST_ID;
-  if (!list_id) {
-    throw new Error("El ID de lista de Mailchimp no está configurado.");
-  }
-  try {
-    const response = await mailchimp.lists.addListMember(list_id, {
-      email_address: email,
-      status: "subscribed",
-    });
-    return response;
-  } catch (error: unknown) {
-    // Manejo de errores específico de Mailchimp
-    const mailchimpError = error as { response: { body: { title: string } } };
-    if (mailchimpError.response && mailchimpError.response.body) {
-      if (mailchimpError.response.body.title === "Member Exists") {
-        throw new Error("This email is already subscribed to the newsletter.");
-      }
-    }
-    console.error("Error al suscribirse al boletín:", error);
-    throw new Error("Failed to subscribe to the newsletter. Please try again.");
-  }
+  const normalizedEmail = emailParsed.data.trim().toLowerCase();
+
+  await prisma.newsletterSignup.update({
+    where: { email: normalizedEmail },
+    data: {
+      handledAt: new Date(),
+      notes: params.notes,
+    },
+  });
+
+  return { success: true };
 }
