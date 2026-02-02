@@ -26,9 +26,9 @@ export async function AppSidebar({
 }: React.ComponentProps<typeof Sidebar>): Promise<React.ReactElement> {
   const user = await currentUser();
   const t = await getTranslations("navigation");
-  const items = (user && user.publicMetadata.isAdmin
-    ? data.navAdmin
-    : data.navMain) as NavItem[];
+  const items = (
+    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain
+  ) as NavItem[];
 
   const titleToPathMap = items.reduce(
     (acc, item) => {
@@ -46,7 +46,7 @@ export async function AppSidebar({
       acc[item.title] = path;
       return acc;
     },
-    {} as Record<string, string>
+    {} as Record<string, string>,
   );
   const itemsTraslated = items.map((item) => ({
     ...item,

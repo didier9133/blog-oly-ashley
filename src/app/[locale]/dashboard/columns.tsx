@@ -45,7 +45,7 @@ type Post = {
 
 type TFn = (
   key: string,
-  values?: Record<string, string | number | Date>
+  values?: Record<string, string | number | Date>,
 ) => string;
 
 const statusColors = {

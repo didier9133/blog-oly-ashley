@@ -57,7 +57,7 @@ interface PresignedVideoUploadResponse {
 
 type TFn = (
   key: string,
-  values?: Record<string, string | number | Date>
+  values?: Record<string, string | number | Date>,
 ) => string;
 
 type PresignedVideoUploadErrors = {
@@ -68,7 +68,7 @@ type PresignedVideoUploadErrors = {
 
 async function uploadVideoViaPresignedUrl(
   file: File,
-  errors: PresignedVideoUploadErrors
+  errors: PresignedVideoUploadErrors,
 ): Promise<string> {
   const presignResponse = await fetch("/api/upload/video", {
     method: "POST",
@@ -165,7 +165,7 @@ function buildFormPostSchema(t: TFn) {
               const fileName = val[0].name.toLowerCase();
 
               const fileExtension = fileName.substring(
-                fileName.lastIndexOf(".")
+                fileName.lastIndexOf("."),
               );
 
               if (!validExtensions.includes(fileExtension)) {
@@ -177,7 +177,7 @@ function buildFormPostSchema(t: TFn) {
               }
             }
           })
-        : z.any()
+        : z.any(),
     ),
     video: z
       .lazy(() =>
@@ -220,7 +220,7 @@ function buildFormPostSchema(t: TFn) {
                 });
               }
             })
-          : z.any()
+          : z.any(),
       )
       .optional(),
   });
@@ -246,7 +246,7 @@ export default function CreatePostPage() {
       invalidResponse: t("video.errors.invalidResponse"),
       uploadFailed: t("video.errors.uploadFailed"),
     }),
-    [t]
+    [t],
   );
 
   const params = useParams<{ id: string }>();
@@ -288,14 +288,14 @@ export default function CreatePostPage() {
   const handleTitlePaste = useCallback(
     (
       e: React.ClipboardEvent<HTMLInputElement>,
-      fieldOnChange: (value: string) => void
+      fieldOnChange: (value: string) => void,
     ) => {
       e.preventDefault();
       const pastedText = e.clipboardData.getData("text/plain");
       const sanitizedText = sanitizePastedText(pastedText);
       fieldOnChange(sanitizedText.slice(0, 100));
     },
-    [sanitizePastedText]
+    [sanitizePastedText],
   );
 
   const toggleVideoPlayback = useCallback(() => {
@@ -368,7 +368,7 @@ export default function CreatePostPage() {
 
         // Primero, filtra las subcategorías basadas en la categoría del post
         const filteredSubcategories = subCategoriesAll.filter(
-          (sub) => sub.categoryId === postData.category.id
+          (sub) => sub.categoryId === postData.category.id,
         );
 
         // Actualiza el estado de subcategorías
@@ -423,8 +423,8 @@ export default function CreatePostPage() {
       if (name === "category" && value.category !== prevCategoryRef.current) {
         setSubcategories(() =>
           subCategoriesAll.filter(
-            (sub) => sub.categoryId === Number(value.category)
-          )
+            (sub) => sub.categoryId === Number(value.category),
+          ),
         );
         prevCategoryRef.current = value.category ?? "";
         formPost.setValue("subcategory", ""); // Limpiar subcategoría
@@ -459,7 +459,7 @@ export default function CreatePostPage() {
           // Recorre todas las categorías y junta todas las subcategorías en un solo array
           const allSubcategories = categoriesWithSubcategories.flatMap(
             (cat: { subcategories: Subcategory[] }) =>
-              cat.subcategories.map((sub: Subcategory) => sub)
+              cat.subcategories.map((sub: Subcategory) => sub),
           );
           setSubCategoriesAll(allSubcategories);
         } else {
@@ -545,7 +545,7 @@ export default function CreatePostPage() {
       if (videoValue instanceof FileList && videoValue.length > 0) {
         videoUrl = await uploadVideoViaPresignedUrl(
           videoValue[0],
-          videoUploadErrors
+          videoUploadErrors,
         );
       } else if (videoChangedRef.current) {
         videoUrl = null;
@@ -591,9 +591,7 @@ export default function CreatePostPage() {
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
             {t("edit.title")}
           </h1>
-          <p className="mt-1 text-sm text-gray-400">
-            {t("edit.subtitle")}
-          </p>
+          <p className="mt-1 text-sm text-gray-400">{t("edit.subtitle")}</p>
         </div>
 
         <Form {...formPost}>
@@ -713,7 +711,7 @@ export default function CreatePostPage() {
                               <SelectTrigger className="w-full">
                                 <SelectValue
                                   placeholder={t(
-                                    "fields.subcategory.placeholder"
+                                    "fields.subcategory.placeholder",
                                   )}
                                 />
                               </SelectTrigger>
@@ -904,7 +902,7 @@ export default function CreatePostPage() {
                                 if (files && files[0]) {
                                   videoChangedRef.current = true;
                                   setVideoPreview(
-                                    URL.createObjectURL(files[0])
+                                    URL.createObjectURL(files[0]),
                                   );
                                   setIsVideoPreviewPlaying(true);
                                 } else {

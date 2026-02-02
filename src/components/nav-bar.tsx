@@ -15,9 +15,7 @@ export async function Header() {
         background: "var(--card)",
       }}
     >
-      <nav
-        className="container w-full flex items-center justify-between px-4 md:px-20 mx-auto gap-16 font-[family-name:var(--font-cormorant-garamond)]"
-      >
+      <nav className="container w-full flex items-center justify-between px-4 md:px-20 mx-auto gap-16 font-[family-name:var(--font-cormorant-garamond)]">
         <Link href="/">
           <div className="relative w-[70px] h-[64px] md:w-[100px] cursor-pointer">
             <Image

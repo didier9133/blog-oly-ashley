@@ -20,7 +20,7 @@ const subscribeSchema = z.object({
 
 export async function subscribeToNewsletter(
   email: string,
-  options?: { locale?: string; source?: string }
+  options?: { locale?: string; source?: string },
 ) {
   const parsed = subscribeSchema.safeParse({
     email,
@@ -72,7 +72,8 @@ export async function markNewsletterSignupHandled(params: {
   notes?: string;
 }) {
   const emailParsed = z.string().email().safeParse(params.email);
-  if (!emailParsed.success) throw new Error("El correo electrónico no es válido.");
+  if (!emailParsed.success)
+    throw new Error("El correo electrónico no es válido.");
 
   const normalizedEmail = emailParsed.data.trim().toLowerCase();
 

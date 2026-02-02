@@ -160,10 +160,10 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         {new Date(post.updatedAt).toLocaleDateString(
                           currentLanguage,
                           {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          }
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          },
                         )}
                       </span>
                     </div>
@@ -213,7 +213,9 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationItem>
                       ))}
                       <PaginationItem>
-                        <PaginationEllipsis srLabel={tPagination("morePages")} />
+                        <PaginationEllipsis
+                          srLabel={tPagination("morePages")}
+                        />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink
@@ -238,7 +240,9 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationItem>
                       ))}
                       <PaginationItem>
-                        <PaginationEllipsis srLabel={tPagination("morePages")} />
+                        <PaginationEllipsis
+                          srLabel={tPagination("morePages")}
+                        />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink
@@ -268,7 +272,9 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                         </PaginationLink>
                       </PaginationItem>
                       <PaginationItem>
-                        <PaginationEllipsis srLabel={tPagination("morePages")} />
+                        <PaginationEllipsis
+                          srLabel={tPagination("morePages")}
+                        />
                       </PaginationItem>
                       <PaginationItem>
                         <PaginationLink href={`?page=${totalPages}`}>
@@ -281,7 +287,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     <>
                       {Array.from(
                         { length: 4 },
-                        (_, i) => totalPages - 3 + i
+                        (_, i) => totalPages - 3 + i,
                       ).map((p) => (
                         <PaginationItem key={p}>
                           <PaginationLink

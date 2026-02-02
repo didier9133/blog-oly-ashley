@@ -12,9 +12,9 @@ type NavItem = {
 
 export async function ItemsNavBar() {
   const user = await currentUser();
-  const items = (user && user.publicMetadata.isAdmin
-    ? data.navAdmin
-    : data.navMain) as NavItem[];
+  const items = (
+    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain
+  ) as NavItem[];
   const t = await getTranslations("navigation");
 
   const titleToPathMap = items.reduce(

@@ -178,7 +178,7 @@ export default async function BlogPostPage(props: {
                           {
                             month: "short",
                             day: "numeric",
-                          }
+                          },
                         )}
                       </div>
                     </div>

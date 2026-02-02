@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { Search } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/ui/label";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarInput,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export function SearchForm({ ...props }: React.ComponentProps<"form">) {
-  const t = useTranslations("ui.searchForm")
+  const t = useTranslations("ui.searchForm");
 
   return (
     <form {...props}>
@@ -29,5 +29,5 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
         </SidebarGroupContent>
       </SidebarGroup>
     </form>
-  )
+  );
 }

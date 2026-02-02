@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const t = useTranslations("dashboard.postsTable");
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    []
+    [],
   );
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({
                       ? undefined
                       : value === "published"
                         ? true
-                        : false
+                        : false,
                   );
               }}
             >
@@ -124,7 +124,9 @@ export function DataTable<TData, TValue>({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t("status-all")}</SelectItem>
-                <SelectItem value="published">{t("status-published")}</SelectItem>
+                <SelectItem value="published">
+                  {t("status-published")}
+                </SelectItem>
                 <SelectItem value="draft">{t("status-draft")}</SelectItem>
               </SelectContent>
             </Select>
@@ -185,7 +187,7 @@ export function DataTable<TData, TValue>({
                             ? null
                             : flexRender(
                                 header.column.columnDef.header,
-                                header.getContext()
+                                header.getContext(),
                               )}
                         </TableHead>
                       );
@@ -205,7 +207,7 @@ export function DataTable<TData, TValue>({
                         <TableCell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext()
+                            cell.getContext(),
                           )}
                         </TableCell>
                       ))}

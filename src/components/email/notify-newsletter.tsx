@@ -62,8 +62,12 @@ const OwnerNewsletterNotificationTemplate = ({
 
           <Section style={actionSection}>
             <Text style={sectionTitle}>Acciones</Text>
-            <Text style={actionItem}>• Agregar este email como suscriptor/a en Substack</Text>
-            <Text style={actionItem}>• Marcarlo como “handled” en el dashboard (si aplica)</Text>
+            <Text style={actionItem}>
+              • Agregar este email como suscriptor/a en Substack
+            </Text>
+            <Text style={actionItem}>
+              • Marcarlo como “handled” en el dashboard (si aplica)
+            </Text>
             <Text style={actionItem}>• Si ya existe, ignorar este aviso</Text>
           </Section>
 

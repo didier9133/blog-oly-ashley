@@ -126,7 +126,7 @@ export async function PaginationComponent({
                         {p}
                       </PaginationLink>
                     </PaginationItem>
-                  )
+                  ),
                 )}
               </>
             )}

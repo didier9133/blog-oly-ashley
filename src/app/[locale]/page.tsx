@@ -50,43 +50,43 @@ export default async function Home() {
       <div className="block lg:hidden bg-[#F9F8F6]">
         {/* 1. IMAGE BLOCK (Shorter Viewport Height) */}
         <div className="relative w-full h-[55vh] overflow-hidden">
-             <Image
-                src="/hero-image.jpeg"
-                alt="Oly & Ashley"
-                fill
-                className="object-cover object-top"
-                priority
-              />
+          <Image
+            src="/hero-image.jpeg"
+            alt="Oly & Ashley"
+            fill
+            className="object-cover object-top"
+            priority
+          />
         </div>
 
         {/* 2. CONTENT BLOCK (Beige Background) */}
         <div className="px-6 py-10 text-left bg-[#f5f0eb] relative">
-             <FadeIn delay={0.2} duration={0.8}>
-                {/* "Lifestyle & Food" Label - Left */}
-                <span className="block font-sans text-[10px] tracking-[0.35em] font-bold text-foreground/80 mb-2 uppercase text-left">
-                    Lifestyle & Food
-                </span>
+          <FadeIn delay={0.2} duration={0.8}>
+            {/* "Lifestyle & Food" Label - Left */}
+            <span className="block font-sans text-[10px] tracking-[0.35em] font-bold text-foreground/80 mb-2 uppercase text-left">
+              Lifestyle & Food
+            </span>
 
-                <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl text-foreground leading-[0.85] mb-8 relative block w-full">
-                  {/* Step 1: Raíces */}
-                  <span className="block font-light tracking-tight text-left">
-                    Raíces
-                  </span>
-                  
-                  {/* Step 2: Returnings (Indented Left, Relaxed Vertical) */}
-                  <span className="block font-light tracking-tight text-left ml-14 -mt-1">
-                    Returnings
-                  </span>
-                </h1>
-                
-                {/* Paragraph - Left Aligned */}
-                <p className="text-xs font-sans text-muted-foreground uppercase tracking-[0.15em] mb-10 text-balance text-left">
-                  Conscious recipes, life stories & cultural connection.
-                </p>
+            <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl text-foreground leading-[0.85] mb-8 relative block w-full">
+              {/* Step 1: Raíces */}
+              <span className="block font-light tracking-tight text-left">
+                Raíces
+              </span>
 
-                {/* Email Subscription Bar (Substack) */}
-                <SubstackHeroSubscribe />
-             </FadeIn>
+              {/* Step 2: Returnings (Indented Left, Relaxed Vertical) */}
+              <span className="block font-light tracking-tight text-left ml-14 -mt-1">
+                Returnings
+              </span>
+            </h1>
+
+            {/* Paragraph - Left Aligned */}
+            <p className="text-xs font-sans text-muted-foreground uppercase tracking-[0.15em] mb-10 text-balance text-left">
+              Conscious recipes, life stories & cultural connection.
+            </p>
+
+            {/* Email Subscription Bar (Substack) */}
+            <SubstackHeroSubscribe />
+          </FadeIn>
         </div>
       </div>
 
@@ -145,12 +145,12 @@ export default async function Home() {
                   <span className="block font-sans text-xs tracking-[0.35em] font-bold text-foreground/80 mb-6 uppercase">
                     Lifestyle & Food
                   </span>
-                  
+
                   {/* Step 1: Left Aligned */}
                   <span className="block text-[5.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-light tracking-tight text-foreground drop-shadow-sm whitespace-nowrap">
                     Raíces
                   </span>
-                  
+
                   {/* Step 2: Indented "Walking" towards image */}
                   <span className="block text-[5.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-light tracking-tight text-foreground ml-20 xl:ml-32 drop-shadow-sm whitespace-nowrap relative z-30">
                     Returnings
@@ -160,9 +160,9 @@ export default async function Home() {
 
               {/* ENHANCED DESCRIPTION BLOCK - Aligned with "Raíces" for anchor */}
               <div className="max-w-md relative mt-8 ml-2">
-                
                 <p className="font-[family-name:var(--font-lora)] text-xl text-foreground/80 leading-relaxed relative z-10 font-medium mb-10 w-full max-w-md">
-                  Recetas conscientes, historias de vida y conexión cultural. Únete a nuestra mesa y recibe una nueva historia cada semana.
+                  Recetas conscientes, historias de vida y conexión cultural.
+                  Únete a nuestra mesa y recibe una nueva historia cada semana.
                 </p>
 
                 <div className="relative z-10 w-full">
@@ -223,65 +223,63 @@ export default async function Home() {
       {/* --- INTRO SECTION --- */}
       <section className="relative py-24 md:py-32 bg-white">
         <div className="container max-w-4xl mx-auto px-6 md:px-12 text-center">
-          
           {/* 1. LEAD PARAGRAPH (Combined & Flowing) */}
           <FadeIn>
             <div className="mb-16">
               {/* Decorative separator */}
               <div className="mx-auto h-12 w-[1px] bg-[#de9e86] mb-8 opacity-60"></div>
-              
+
               <div className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-5xl leading-tight text-foreground/90">
-                 <span className="block mb-2 italic text-[#de9e86]">
-                   Una receta, ritual, y reflexión a la vez.
-                 </span>
-                 <p className="font-light text-2xl md:text-4xl text-foreground/80 mt-6 leading-relaxed">
-                   {t("paragraph-description")}
-                 </p>
+                <span className="block mb-2 italic text-[#de9e86]">
+                  Una receta, ritual, y reflexión a la vez.
+                </span>
+                <p className="font-light text-2xl md:text-4xl text-foreground/80 mt-6 leading-relaxed">
+                  {t("paragraph-description")}
+                </p>
               </div>
             </div>
           </FadeIn>
 
           <div className="font-[family-name:var(--font-lora)] text-lg text-foreground/70 leading-relaxed md:leading-loose space-y-12">
-            
             {/* 2. CORE VALUE (Highlighted "Heart" of the message) */}
             <FadeIn delay={0.2}>
-               <div className="relative py-16 md:py-20 px-10 md:px-24 bg-[#faf9f8] border border-[#de9e86]/10 rounded-sm mx-auto max-w-3xl">
-                  {/* Decorative corners */}
-                  <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#de9e86]/40"></div>
-                  <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#de9e86]/40"></div>
-                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#de9e86]/40"></div>
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#de9e86]/40"></div>
-                  
-                  <p className="font-[family-name:var(--font-cormorant-garamond)] text-xl md:text-2xl text-foreground font-normal italic text-balance">
-                     {t("paragraph-description-two")}
-                  </p>
-               </div>
+              <div className="relative py-16 md:py-20 px-10 md:px-24 bg-[#faf9f8] border border-[#de9e86]/10 rounded-sm mx-auto max-w-3xl">
+                {/* Decorative corners */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#de9e86]/40"></div>
+                <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#de9e86]/40"></div>
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#de9e86]/40"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#de9e86]/40"></div>
+
+                <p className="font-[family-name:var(--font-cormorant-garamond)] text-xl md:text-2xl text-foreground font-normal italic text-balance">
+                  {t("paragraph-description-two")}
+                </p>
+              </div>
             </FadeIn>
 
             {/* 3. CONCLUSIONS (Distinct statements) */}
             <FadeIn delay={0.4}>
               <div className="space-y-8 mt-16">
-                 <p className="font-bold text-xs uppercase tracking-[0.25em] text-[#de9e86] mb-4">
-                    — {t("paragraph-description-three").replace(".", "")} —
-                 </p>
-                 <p className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-4xl italic text-foreground">
-                    {t("paragraph-description-four")}
-                 </p>
+                <p className="font-bold text-xs uppercase tracking-[0.25em] text-[#de9e86] mb-4">
+                  — {t("paragraph-description-three").replace(".", "")} —
+                </p>
+                <p className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-4xl italic text-foreground">
+                  {t("paragraph-description-four")}
+                </p>
               </div>
             </FadeIn>
           </div>
 
           {/* 4. SIGNATURE (Centered & Spaced) */}
           <FadeIn delay={0.5} className="mt-24 md:mt-32">
-             <div className="flex flex-col items-center justify-center gap-6">
-               <span className="font-[family-name:var(--font-lora)] text-sm italic text-muted-foreground tracking-widest relative">
-                  <span className="absolute -left-8 top-1/2 w-6 h-[1px] bg-[#de9e86]/40"></span>
-                  {t("pre-signature")}
-                  <span className="absolute -right-8 top-1/2 w-6 h-[1px] bg-[#de9e86]/40"></span>
-               </span>
-               <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl text-[#de9e86] font-light tracking-wide">
-                 {t("signature")}
-               </h3>
+            <div className="flex flex-col items-center justify-center gap-6">
+              <span className="font-[family-name:var(--font-lora)] text-sm italic text-muted-foreground tracking-widest relative">
+                <span className="absolute -left-8 top-1/2 w-6 h-[1px] bg-[#de9e86]/40"></span>
+                {t("pre-signature")}
+                <span className="absolute -right-8 top-1/2 w-6 h-[1px] bg-[#de9e86]/40"></span>
+              </span>
+              <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-6xl text-[#de9e86] font-light tracking-wide">
+                {t("signature")}
+              </h3>
             </div>
           </FadeIn>
         </div>
@@ -290,7 +288,6 @@ export default async function Home() {
       {/* --- FRESH FROM SECTION --- */}
       <section className="py-24 md:py-32 bg-[#F9F7F2]">
         <div className="container mx-auto px-4 md:px-20">
-          
           {/* HEADER: Aligned & Clean */}
           <FadeIn className="flex flex-col md:flex-row justify-between items-end mb-24 gap-6 border-b border-[#de9e86]/20 pb-8">
             <div>
@@ -301,12 +298,12 @@ export default async function Home() {
                 Raíces & Returnings
               </h2>
             </div>
-            
+
             {/* Right text aligned with User Icon (far right) but text-left for readability */}
             <div className="max-w-sm text-left hidden md:block -mr-3">
-               <p className="font-[family-name:var(--font-lora)] text-muted-foreground text-sm leading-relaxed">
-                 {t("paragraph-fresh")}
-               </p>
+              <p className="font-[family-name:var(--font-lora)] text-muted-foreground text-sm leading-relaxed">
+                {t("paragraph-fresh")}
+              </p>
             </div>
           </FadeIn>
 
@@ -314,14 +311,13 @@ export default async function Home() {
             <NoPostsView />
           ) : (
             <div className="space-y-40">
-              
               {/* 1. BLOG ARTICLE (Image Left / Text Right) - STICKY TEXT */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 group">
                 {/* Image */}
                 <FadeIn className="lg:col-span-7 relative">
-                  <div 
+                  <div
                     className="relative w-full overflow-hidden bg-[#faf9f8] shadow-sm rounded-sm"
-                    style={{ aspectRatio: '4/5' }}
+                    style={{ aspectRatio: "4/5" }}
                   >
                     <Image
                       src={blogPost.image || "/placeholder.jpg"}
@@ -358,7 +354,9 @@ export default async function Home() {
                         className="group/btn inline-flex items-center gap-3 uppercase text-xs font-bold tracking-widest text-foreground hover:text-[#de9e86] transition-colors mt-2"
                       >
                         {t("btn-fresh")}
-                        <span className="transform group-hover/btn:translate-x-1 transition-transform">→</span>
+                        <span className="transform group-hover/btn:translate-x-1 transition-transform">
+                          →
+                        </span>
                       </Link>
                     </FadeIn>
                   </div>
@@ -374,7 +372,7 @@ export default async function Home() {
                       <span className="uppercase tracking-[0.2em] text-xs font-bold text-[#de9e86] mb-5 block">
                         Latest Kitchen Creation
                       </span>
-                      
+
                       <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-5xl font-medium mb-5 leading-[1.1] text-foreground">
                         <Link
                           href={`/${CategoryEnum.Recipes}/${recipePost.slug}`}
@@ -395,7 +393,9 @@ export default async function Home() {
                         className="group/btn inline-flex items-center gap-3 uppercase text-xs font-bold tracking-widest text-foreground hover:text-[#de9e86] transition-colors mt-2"
                       >
                         {t("btn-fresh")}
-                        <span className="transform group-hover/btn:translate-x-1 transition-transform">→</span>
+                        <span className="transform group-hover/btn:translate-x-1 transition-transform">
+                          →
+                        </span>
                       </Link>
                     </FadeIn>
                   </div>
@@ -403,11 +403,11 @@ export default async function Home() {
 
                 {/* Image */}
                 <FadeIn className="lg:col-span-7 lg:order-2 relative">
-                  <div 
+                  <div
                     className="relative w-full overflow-hidden bg-[#faf9f8] shadow-sm rounded-sm"
-                    style={{ aspectRatio: '4/5' }}
+                    style={{ aspectRatio: "4/5" }}
                   >
-                     <Image
+                    <Image
                       src={recipePost.image || "/placeholder.jpg"}
                       alt={recipePost.title}
                       fill

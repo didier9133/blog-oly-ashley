@@ -20,7 +20,7 @@ export function SearchPost() {
     categoryFilter: "",
   });
   const [categories, setCategories] = useState<{ id: number; name: string }[]>(
-    []
+    [],
   );
 
   useEffect(() => {

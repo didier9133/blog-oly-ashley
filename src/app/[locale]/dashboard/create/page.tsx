@@ -54,7 +54,7 @@ interface PresignedVideoUploadResponse {
 
 type TFn = (
   key: string,
-  values?: Record<string, string | number | Date>
+  values?: Record<string, string | number | Date>,
 ) => string;
 
 type PresignedVideoUploadErrors = {
@@ -65,7 +65,7 @@ type PresignedVideoUploadErrors = {
 
 async function uploadVideoViaPresignedUrl(
   file: File,
-  errors: PresignedVideoUploadErrors
+  errors: PresignedVideoUploadErrors,
 ): Promise<string> {
   const presignResponse = await fetch("/api/upload/video", {
     method: "POST",
@@ -132,7 +132,7 @@ function buildFormPostSchema(t: TFn) {
               (files) => !(files instanceof FileList) || files.length > 0,
               {
                 message: t("validation.imageRequired"),
-              }
+              },
             )
             .refine(
               (files) =>
@@ -141,7 +141,7 @@ function buildFormPostSchema(t: TFn) {
                 files[0].size <= FILE_SIZE_LIMIT,
               {
                 message: t("validation.imageMaxSize", { maxMb: 5 }),
-              }
+              },
             )
             .refine(
               (files) =>
@@ -150,9 +150,9 @@ function buildFormPostSchema(t: TFn) {
                 /^image\/(jpeg|png|gif|webp|svg\+xml)$/.test(files[0].type),
               {
                 message: t("validation.imageInvalidFormat"),
-              }
+              },
             )
-        : z.any()
+        : z.any(),
     ),
     video: z
       .lazy(() =>
@@ -194,7 +194,7 @@ function buildFormPostSchema(t: TFn) {
                 });
               }
             })
-          : z.any()
+          : z.any(),
       )
       .optional(),
   });
@@ -214,7 +214,7 @@ export default function CreatePostPage() {
       invalidResponse: t("video.errors.invalidResponse"),
       uploadFailed: t("video.errors.uploadFailed"),
     }),
-    [t]
+    [t],
   );
 
   const [subcategories, setSubcategories] = useState<
@@ -252,14 +252,14 @@ export default function CreatePostPage() {
   const handleTitlePaste = useCallback(
     (
       e: React.ClipboardEvent<HTMLInputElement>,
-      fieldOnChange: (value: string) => void
+      fieldOnChange: (value: string) => void,
     ) => {
       e.preventDefault();
       const pastedText = e.clipboardData.getData("text/plain");
       const sanitizedText = sanitizePastedText(pastedText);
       fieldOnChange(sanitizedText.slice(0, 100));
     },
-    [sanitizePastedText]
+    [sanitizePastedText],
   );
 
   const toggleVideoPlayback = useCallback(() => {
@@ -307,8 +307,8 @@ export default function CreatePostPage() {
       if (name === "category" && value.category !== prevCategoryRef.current) {
         setSubcategories(() =>
           subCategoriesAll.filter(
-            (sub) => sub.categoryId === Number(value.category)
-          )
+            (sub) => sub.categoryId === Number(value.category),
+          ),
         );
         prevCategoryRef.current = value.category ?? "";
         formPost.resetField("subcategory");
@@ -343,7 +343,7 @@ export default function CreatePostPage() {
           // Recorre todas las categorías y junta todas las subcategorías en un solo array
           const allSubcategories = categoriesWithSubcategories.flatMap(
             (cat: { subcategories: Subcategory[] }) =>
-              cat.subcategories.map((sub: Subcategory) => sub)
+              cat.subcategories.map((sub: Subcategory) => sub),
           );
           setSubCategoriesAll(allSubcategories);
         } else {
@@ -393,14 +393,14 @@ export default function CreatePostPage() {
       setIsSubmitting(true);
       const urlImage = await uploadImageToS3(
         values.image[0],
-        values.image[0].type
+        values.image[0].type,
       );
       let videoUrl: string | null = null;
 
       if (values.video instanceof FileList && values.video.length > 0) {
         videoUrl = await uploadVideoViaPresignedUrl(
           values.video[0],
-          videoUploadErrors
+          videoUploadErrors,
         );
       }
       console.log("URL de la imagen:", urlImage);
@@ -447,9 +447,7 @@ export default function CreatePostPage() {
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
             {t("create.title")}
           </h1>
-          <p className="mt-1 text-sm text-gray-400">
-            {t("create.subtitle")}
-          </p>
+          <p className="mt-1 text-sm text-gray-400">{t("create.subtitle")}</p>
         </div>
 
         <Form {...formPost}>
@@ -570,7 +568,7 @@ export default function CreatePostPage() {
                               <SelectTrigger className="w-full">
                                 <SelectValue
                                   placeholder={t(
-                                    "fields.subcategory.placeholder"
+                                    "fields.subcategory.placeholder",
                                   )}
                                 />
                               </SelectTrigger>
@@ -759,7 +757,7 @@ export default function CreatePostPage() {
                                 field.onChange(files);
                                 if (files && files[0]) {
                                   setVideoPreview(
-                                    URL.createObjectURL(files[0])
+                                    URL.createObjectURL(files[0]),
                                   );
                                   setIsVideoPreviewPlaying(true);
                                 } else {
