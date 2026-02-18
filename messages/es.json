@@ -29,6 +29,8 @@
     "explore": "Explorar",
     "company": "Compañía",
     "connect": "Conectar",
+    "privacy": "Privacidad",
+    "terms": "Términos",
     "based-in": "Basado en Canadá/EE.UU.",
     "designed-by": "Diseñado y construido por",
     "rights-reserved": "Todos los derechos reservados.",
@@ -475,5 +477,115 @@
     "billing-phone-placeholder": "Ej. +34 600 000 000",
     "billing-phone-required": "Ingresa tu número de teléfono",
     "billing-phone-invalid": "Ingresa un número con código internacional"
+  },
+  "Privacy": {
+    "title": "Política de Privacidad",
+    "lastUpdatedLabel": "Última actualización:",
+    "lastUpdatedDate": "17 de febrero de 2026",
+    "intro": "En Raíces & Returnings valoramos tu privacidad. Esta política explica qué información recopilamos, cómo la usamos y qué opciones tienes sobre tus datos cuando visitas nuestro sitio o utilizas nuestros servicios.",
+    "backHome": "Volver al inicio",
+    "sections": {
+      "informationCollected": {
+        "title": "1. Información que recopilamos",
+        "body": "Podemos recopilar información que tú nos proporcionas directamente, como nombre, correo electrónico y contenido de mensajes cuando te contactas con nosotras o te suscribes al boletín.\n\nTambién podemos recopilar datos técnicos básicos, como tipo de navegador, páginas visitadas y fecha/hora de acceso, para mejorar la experiencia del sitio."
+      },
+      "howWeUse": {
+        "title": "2. Cómo usamos tu información",
+        "body": "Usamos tu información para: (a) responder consultas, (b) enviar comunicaciones que solicitaste, (c) operar compras o entregas digitales cuando aplique y (d) mejorar el contenido, rendimiento y seguridad del sitio."
+      },
+      "sharing": {
+        "title": "3. Compartición de datos",
+        "body": "No vendemos tu información personal. Podemos compartir datos con proveedores que nos ayudan a operar el sitio (por ejemplo, servicios de pago, hosting, analítica o correo) bajo obligaciones de confidencialidad y solo para prestar esos servicios."
+      },
+      "cookies": {
+        "title": "4. Cookies y tecnologías similares",
+        "body": "Podemos usar cookies o tecnologías similares para recordar preferencias, medir tráfico y mejorar funcionalidades. Puedes ajustar la configuración de cookies en tu navegador, aunque algunas funciones del sitio podrían verse afectadas."
+      },
+      "security": {
+        "title": "5. Seguridad de la información",
+        "body": "Aplicamos medidas razonables administrativas, técnicas y organizativas para proteger tu información. Aun así, ningún método de transmisión o almacenamiento es 100% seguro, por lo que no podemos garantizar seguridad absoluta."
+      },
+      "rights": {
+        "title": "6. Tus derechos y opciones",
+        "body": "Según tu jurisdicción, puedes tener derecho a solicitar acceso, corrección, actualización o eliminación de tus datos personales, así como retirar consentimientos. Para ejercer estos derechos, contáctanos al correo indicado en esta política."
+      },
+      "children": {
+        "title": "7. Privacidad de menores",
+        "body": "Este sitio no está dirigido intencionalmente a menores de edad según la legislación aplicable. Si crees que una persona menor nos compartió datos personales, escríbenos para revisarlo y tomar las medidas correspondientes."
+      },
+      "intlTransfers": {
+        "title": "8. Transferencias internacionales",
+        "body": "Tus datos pueden procesarse en países distintos al de tu residencia, donde pueden aplicarse normas de protección diferentes. Cuando corresponda, implementamos salvaguardas razonables para proteger la información transferida."
+      },
+      "changes": {
+        "title": "9. Cambios a esta política",
+        "body": "Podemos actualizar esta política ocasionalmente para reflejar cambios legales, técnicos o de operación. Publicaremos la versión vigente en esta página e indicaremos la fecha de última actualización."
+      },
+      "contact": {
+        "title": "10. Contacto",
+        "body": "Si tienes preguntas sobre esta Política de Privacidad o el tratamiento de tus datos, puedes escribirnos a:"
+      }
+    }
+  },
+  "Terms": {
+    "title": "Términos y Condiciones",
+    "lastUpdatedLabel": "Última actualización:",
+    "lastUpdatedDate": "17 de febrero de 2026",
+    "intro": "Al acceder y utilizar este sitio web aceptas estos Términos y Condiciones. Si no estás de acuerdo con ellos, por favor no utilices el sitio.",
+    "backHome": "Volver al inicio",
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceptación de los términos",
+        "body": "Estos términos regulan el uso del sitio y de los servicios ofrecidos por Raíces & Returnings. Al navegar, registrarte, suscribirte o comprar, confirmas que has leído y aceptado estas condiciones."
+      },
+      "useOfSite": {
+        "title": "2. Uso permitido del sitio",
+        "body": "Te comprometes a utilizar el sitio de forma lícita y respetuosa. No debes realizar actividades que afecten la seguridad, disponibilidad o funcionamiento del sitio ni intentar acceder sin autorización a sistemas o datos."
+      },
+      "intellectualProperty": {
+        "title": "3. Propiedad intelectual",
+        "body": "Salvo que se indique lo contrario, los contenidos del sitio (textos, imágenes, marca, diseño y recursos) pertenecen a Raíces & Returnings o a sus titulares. No está permitido copiar, distribuir o explotar comercialmente este contenido sin autorización previa por escrito."
+      },
+      "userConduct": {
+        "title": "4. Conducta del usuario",
+        "body": "No puedes publicar ni enviar contenido ilegal, ofensivo, difamatorio, fraudulento o que viole derechos de terceros. Nos reservamos el derecho de restringir acceso o eliminar contenido que incumpla estos términos."
+      },
+      "purchases": {
+        "title": "5. Compras y pagos",
+        "body": "Cuando realices compras, aceptas proporcionar información veraz y completa. Los pagos se procesan mediante proveedores externos. Los tiempos de entrega, acceso y uso de productos digitales pueden estar sujetos a condiciones específicas informadas durante la compra."
+      },
+      "thirdParty": {
+        "title": "6. Enlaces y servicios de terceros",
+        "body": "El sitio puede contener enlaces a plataformas o servicios de terceros. No controlamos esos sitios ni somos responsables por su contenido, políticas o prácticas. Te recomendamos revisar sus términos y políticas antes de usarlos."
+      },
+      "disclaimers": {
+        "title": "7. Exenciones",
+        "body": "El contenido del sitio se ofrece con fines informativos y educativos generales. No constituye asesoría legal, médica, psicológica, financiera ni profesional de ningún tipo."
+      },
+      "liability": {
+        "title": "8. Limitación de responsabilidad",
+        "body": "En la medida permitida por la ley aplicable, Raíces & Returnings no será responsable por daños indirectos, incidentales, especiales o consecuenciales derivados del uso o imposibilidad de uso del sitio."
+      },
+      "indemnification": {
+        "title": "9. Indemnización",
+        "body": "Aceptas defender e indemnizar a Raíces & Returnings frente a reclamaciones, pérdidas o gastos que surjan de tu incumplimiento de estos términos o de un uso indebido del sitio."
+      },
+      "termination": {
+        "title": "10. Terminación",
+        "body": "Podemos suspender o terminar el acceso al sitio, en todo o en parte, si detectamos uso indebido, incumplimiento de estos términos o por razones operativas justificadas."
+      },
+      "governingLaw": {
+        "title": "11. Ley aplicable",
+        "body": "Estos términos se interpretan conforme a la legislación aplicable según la jurisdicción correspondiente al titular del sitio, salvo disposición imperativa en contrario."
+      },
+      "changes": {
+        "title": "12. Cambios en los términos",
+        "body": "Podemos modificar estos términos cuando sea necesario. La versión actualizada se publicará en esta página con su fecha de vigencia. El uso continuado del sitio implica aceptación de los cambios."
+      },
+      "contact": {
+        "title": "13. Contacto",
+        "body": "Si tienes dudas sobre estos Términos y Condiciones, puedes escribirnos a:"
+      }
+    }
   }
 }

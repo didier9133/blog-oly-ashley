@@ -116,6 +116,8 @@ export function Footer() {
               <ul className="space-y-3 text-sm text-foreground/80 font-sans">
                 <FooterLink href="/about">{navT("about")}</FooterLink>
                 <FooterLink href="/contact">{navT("contact")}</FooterLink>
+                <FooterLink href="/privacy">{t("privacy")}</FooterLink>
+                <FooterLink href="/terms">{t("terms")}</FooterLink>
               </ul>
             </div>
 

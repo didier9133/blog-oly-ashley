@@ -29,6 +29,8 @@
     "explore": "Explore",
     "company": "Company",
     "connect": "Connect",
+    "privacy": "Privacy",
+    "terms": "Terms",
     "based-in": "Based in Canada/USA",
     "designed-by": "Designed & Built by",
     "rights-reserved": "All rights reserved.",
@@ -474,5 +476,115 @@
     "billing-phone-placeholder": "E.g. +1 555 123 4567",
     "billing-phone-required": "Please enter your phone number",
     "billing-phone-invalid": "Enter a phone number with country code"
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "lastUpdatedLabel": "Last updated:",
+    "lastUpdatedDate": "February 17, 2026",
+    "intro": "At Raíces & Returnings, we value your privacy. This policy explains what information we collect, how we use it, and the choices you have regarding your data when you visit our site or use our services.",
+    "backHome": "Back to home",
+    "sections": {
+      "informationCollected": {
+        "title": "1. Information we collect",
+        "body": "We may collect information you provide directly, such as your name, email address, and message content when you contact us or subscribe to our newsletter.\n\nWe may also collect basic technical data such as browser type, visited pages, and date/time of access to improve the site experience."
+      },
+      "howWeUse": {
+        "title": "2. How we use your information",
+        "body": "We use your information to: (a) respond to inquiries, (b) send communications you requested, (c) process purchases or digital deliveries when applicable, and (d) improve the site's content, performance, and security."
+      },
+      "sharing": {
+        "title": "3. Data sharing",
+        "body": "We do not sell your personal information. We may share data with service providers that help us operate the site (for example payment, hosting, analytics, or email services) under confidentiality obligations and only to provide those services."
+      },
+      "cookies": {
+        "title": "4. Cookies and similar technologies",
+        "body": "We may use cookies or similar technologies to remember preferences, measure traffic, and improve functionality. You can manage cookie settings in your browser, though some site features may be affected."
+      },
+      "security": {
+        "title": "5. Information security",
+        "body": "We apply reasonable administrative, technical, and organizational safeguards to protect your information. However, no method of transmission or storage is 100% secure, so we cannot guarantee absolute security."
+      },
+      "rights": {
+        "title": "6. Your rights and choices",
+        "body": "Depending on your jurisdiction, you may have rights to request access, correction, update, or deletion of your personal data, and to withdraw consent where applicable. To exercise these rights, contact us using the email listed in this policy."
+      },
+      "children": {
+        "title": "7. Children's privacy",
+        "body": "This site is not intentionally directed to children under the age defined by applicable law. If you believe a minor has provided personal data to us, contact us so we can review and take appropriate action."
+      },
+      "intlTransfers": {
+        "title": "8. International transfers",
+        "body": "Your data may be processed in countries other than your own, where data protection laws may differ. Where appropriate, we implement reasonable safeguards to protect transferred information."
+      },
+      "changes": {
+        "title": "9. Changes to this policy",
+        "body": "We may update this policy from time to time to reflect legal, technical, or operational changes. We will post the current version on this page and indicate the latest update date."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "body": "If you have questions about this Privacy Policy or how your data is handled, you can contact us at:"
+      }
+    }
+  },
+  "Terms": {
+    "title": "Terms and Conditions",
+    "lastUpdatedLabel": "Last updated:",
+    "lastUpdatedDate": "February 17, 2026",
+    "intro": "By accessing and using this website, you agree to these Terms and Conditions. If you do not agree, please do not use the site.",
+    "backHome": "Back to home",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of terms",
+        "body": "These terms govern your use of the site and services offered by Raíces & Returnings. By browsing, signing up, subscribing, or purchasing, you confirm that you have read and accepted these terms."
+      },
+      "useOfSite": {
+        "title": "2. Permitted use of the site",
+        "body": "You agree to use the site lawfully and respectfully. You must not engage in activities that impact the site's security, availability, or operation, or attempt unauthorized access to systems or data."
+      },
+      "intellectualProperty": {
+        "title": "3. Intellectual property",
+        "body": "Unless otherwise stated, site content (text, images, brand assets, design, and resources) belongs to Raíces & Returnings or their respective owners. You may not copy, distribute, or commercially exploit this content without prior written authorization."
+      },
+      "userConduct": {
+        "title": "4. User conduct",
+        "body": "You may not post or send unlawful, offensive, defamatory, fraudulent content, or content that infringes third-party rights. We reserve the right to restrict access or remove content that violates these terms."
+      },
+      "purchases": {
+        "title": "5. Purchases and payments",
+        "body": "When making purchases, you agree to provide accurate and complete information. Payments are processed through third-party providers. Delivery times, access, and use of digital products may be subject to specific conditions shown during checkout."
+      },
+      "thirdParty": {
+        "title": "6. Third-party links and services",
+        "body": "The site may include links to third-party platforms or services. We do not control those sites and are not responsible for their content, policies, or practices. We recommend reviewing their terms and policies before use."
+      },
+      "disclaimers": {
+        "title": "7. Disclaimers",
+        "body": "Site content is provided for general informational and educational purposes. It does not constitute legal, medical, psychological, financial, or other professional advice."
+      },
+      "liability": {
+        "title": "8. Limitation of liability",
+        "body": "To the fullest extent permitted by applicable law, Raíces & Returnings is not liable for indirect, incidental, special, or consequential damages arising from use of, or inability to use, the site."
+      },
+      "indemnification": {
+        "title": "9. Indemnification",
+        "body": "You agree to defend and indemnify Raíces & Returnings against claims, losses, or expenses arising from your breach of these terms or misuse of the site."
+      },
+      "termination": {
+        "title": "10. Termination",
+        "body": "We may suspend or terminate access to the site, in whole or in part, if we detect misuse, breach of these terms, or for justified operational reasons."
+      },
+      "governingLaw": {
+        "title": "11. Governing law",
+        "body": "These terms are interpreted under the applicable law of the jurisdiction corresponding to the site owner, unless mandatory legal provisions state otherwise."
+      },
+      "changes": {
+        "title": "12. Changes to the terms",
+        "body": "We may update these terms when necessary. The updated version will be published on this page with its effective date. Continued use of the site means acceptance of the changes."
+      },
+      "contact": {
+        "title": "13. Contact",
+        "body": "If you have questions about these Terms and Conditions, you can contact us at:"
+      }
+    }
   }
 }

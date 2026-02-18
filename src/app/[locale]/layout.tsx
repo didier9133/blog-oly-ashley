@@ -4,12 +4,11 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Header } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 import { Lora, Cormorant_Garamond } from "next/font/google";
 
 import "./globals.css";
-import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
 
 // Internationalization
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -106,6 +105,10 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang={locale}>
         <head>
+          <meta
+            name="google-site-verification"
+            content="google4ff5fb217dd7438f"
+          />
           <link
             rel="icon"
             href="/favicon.svg"
