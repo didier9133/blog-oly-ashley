@@ -10,7 +10,7 @@ import React, {
 import { Elements } from "@stripe/react-stripe-js";
 import { toast } from "sonner";
 import { Card, CardContent } from "./ui/card";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, type Appearance } from "@stripe/stripe-js";
 import CheckoutForm from "./checkout-form";
 import { Skeleton } from "./ui/skeleton";
 import { Loader2, AlertTriangle } from "lucide-react";
@@ -22,7 +22,7 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
   throw new Error("Missing STRIPE_PUBLISHABLE_KEY env var");
 }
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
 
 const CURRENCY = "usd";
@@ -176,10 +176,64 @@ export default function Checkout({
     );
   }
 
+  const appearance: Appearance = {
+    theme: "stripe",
+    variables: {
+      colorPrimary: "#c47456",
+      colorBackground: "transparent",
+      colorText: "#2b2b2b",
+      colorDanger: "#d85c44",
+      fontFamily: "system-ui, sans-serif",
+      spacingUnit: "4px",
+      borderRadius: "6px",
+      colorTextPlaceholder: "#6b6b6b",
+      colorIcon: "#6b6b6b",
+    },
+    rules: {
+      ".Input": {
+        border: "1px solid #c6c6b6",
+        boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        padding: "0.5rem 0.75rem",
+        fontSize: "1rem",
+        lineHeight: "1.5rem",
+        backgroundColor: "transparent",
+      },
+      ".Input:focus": {
+        border: "1px solid #c47456",
+        boxShadow: "0 0 0 3px rgba(196, 116, 86, 0.5)",
+        outline: "none",
+      },
+      ".Label": {
+        fontSize: "0.875rem",
+        fontWeight: "500",
+        color: "#2b2b2b",
+        marginBottom: "0.5rem",
+        fontFamily: "var(--font-lora), system-ui, sans-serif",
+      },
+      ".Tab": {
+        border: "1px solid #c6c6b6",
+        boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        backgroundColor: "transparent",
+      },
+      ".Tab--selected": {
+        border: "1px solid #c47456",
+        boxShadow: "0 0 0 3px rgba(196, 116, 86, 0.5)",
+      },
+      ".Block": {
+        border: "1px solid #c6c6b6",
+        boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        backgroundColor: "transparent",
+      },
+      ".BlockDivider": {
+        backgroundColor: "#c6c6b6",
+      },
+    },
+  };
+
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret }}
+      options={{ clientSecret, appearance }}
       key={clientSecret}
     >
       <CheckoutForm />

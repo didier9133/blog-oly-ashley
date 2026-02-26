@@ -26,7 +26,7 @@ export default function CheckoutForm() {
   const [isPaymentElementReady, setIsPaymentElementReady] = useState(false);
   const billingDetailsSchema = useMemo(
     () => createBillingDetailsSchema(t),
-    [t]
+    [t],
   );
   const form = useForm<BillingDetailsFormValues>({
     resolver: zodResolver(billingDetailsSchema),
@@ -52,7 +52,7 @@ export default function CheckoutForm() {
         },
       },
     }),
-    []
+    [],
   );
 
   const handleSubmit = async (values: BillingDetailsFormValues) => {
@@ -106,13 +106,15 @@ export default function CheckoutForm() {
           aria-busy={!isCheckoutReady}
           className={cn(
             "space-y-4 transition-opacity duration-300",
-            !isCheckoutReady ? "opacity-0" : "opacity-100"
+            !isCheckoutReady ? "opacity-0" : "opacity-100",
           )}
         >
           {/* <Separator /> */}
 
-          <h3 className="font-semibold mb-3">{t("form-shipping-title")}</h3>
-          <p className="text-sm text-muted-foreground">
+          <h3 className="font-semibold text-2xl mb-1 font-[family-name:var(--font-cormorant-garamond)] text-foreground">
+            {t("form-shipping-title")}
+          </h3>
+          <p className="text-sm text-muted-foreground mb-6 font-[family-name:var(--font-lora)]">
             {t("form-shipping-description")}
           </p>
           <BillingDetailsForm
@@ -120,27 +122,23 @@ export default function CheckoutForm() {
             disabled={isSubmitting || !isCheckoutReady}
           />
 
-          <Separator />
-          <div className="rounded-2xl  bg-card/80 p-0 shadow-sm md:p-6 md:border md:border-border/60 ">
-            <div className="mb-4 space-y-1">
-              <h3 className="font-semibold text-foreground ">
-                {t("form-payment-title")}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {t("form-payment-description")}
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/40 bg-background/90 p-4">
-              <PaymentElement
-                options={paymentElementOptions}
-                onReady={() => setIsPaymentElementReady(true)}
-              />
-            </div>
-          </div>
-          <ButtonPay
-            isSubmitting={isSubmitting}
-            isDisabled={!isCheckoutReady || isSubmitting}
+          <Separator className="my-8" />
+          <h3 className="font-semibold text-2xl mb-1 font-[family-name:var(--font-cormorant-garamond)] text-foreground">
+            {t("form-payment-title")}
+          </h3>
+          <p className="text-sm text-muted-foreground mb-6 font-[family-name:var(--font-lora)]">
+            {t("form-payment-description")}
+          </p>
+          <PaymentElement
+            options={paymentElementOptions}
+            onReady={() => setIsPaymentElementReady(true)}
           />
+          <div className="mt-8">
+            <ButtonPay
+              isSubmitting={isSubmitting}
+              isDisabled={!isCheckoutReady || isSubmitting}
+            />
+          </div>
         </form>
       </Form>
     </div>

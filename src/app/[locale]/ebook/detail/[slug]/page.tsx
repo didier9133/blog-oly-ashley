@@ -211,16 +211,12 @@ export default async function PageDetail({
               </CardContent>
             </Card>
 
-            <Card className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden">
-              <CardContent className="p-0">
-                <div className="p-8 bg-[#f5f0eb]/50">
-                  <Checkout
-                    ebook_price={book.price}
-                    ebook_s3key={
-                      locale === "en" ? book.s3Key_en : book.s3Key_es
-                    }
-                  />
-                </div>
+            <Card className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden p-0">
+              <CardContent className="p-8 bg-[#f5f0eb]/50 h-full">
+                <Checkout
+                  ebook_price={book.price}
+                  ebook_s3key={locale === "en" ? book.s3Key_en : book.s3Key_es}
+                />
               </CardContent>
             </Card>
           </div>

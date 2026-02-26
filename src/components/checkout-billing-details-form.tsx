@@ -53,7 +53,9 @@ export function BillingDetailsForm({
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t("billing-name-label")}</FormLabel>
+            <FormLabel className="font-[family-name:var(--font-lora)] text-sm font-medium">
+              {t("billing-name-label")}
+            </FormLabel>
             <FormControl>
               <Input
                 placeholder={t("billing-name-placeholder")}
@@ -71,7 +73,9 @@ export function BillingDetailsForm({
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t("billing-email-label")}</FormLabel>
+            <FormLabel className="font-[family-name:var(--font-lora)] text-sm font-medium">
+              {t("billing-email-label")}
+            </FormLabel>
             <FormControl>
               <Input
                 type="email"
@@ -90,7 +94,9 @@ export function BillingDetailsForm({
         name="phone"
         render={({ field }) => (
           <FormItem className="md:col-span-2">
-            <FormLabel>{t("billing-phone-label")}</FormLabel>
+            <FormLabel className="font-[family-name:var(--font-lora)] text-sm font-medium">
+              {t("billing-phone-label")}
+            </FormLabel>
             <FormControl>
               <Input
                 type="tel"
