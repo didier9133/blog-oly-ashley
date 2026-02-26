@@ -152,7 +152,9 @@ export default async function EbookPage({
                           />
                         ))}
                       </div>
-                      <span className="font-semibold text-foreground">{book.rating}</span>
+                      <span className="font-semibold text-foreground">
+                        {book.rating}
+                      </span>
                       <span className="text-muted-foreground">
                         ({book.reviewCount})
                       </span>

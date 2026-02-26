@@ -101,17 +101,23 @@ export default async function PageDetail({
                       />
                     ))}
                   </div>
-                  <span className="font-semibold text-foreground">{book.rating}</span>
+                  <span className="font-semibold text-foreground">
+                    {book.rating}
+                  </span>
                   <span className="text-muted-foreground">
                     ({book.reviewCount} {"reseñas"})
                   </span>
                 </div>
                 <blockquote className="italic text-lg font-[family-name:var(--font-lora)] text-foreground/90 leading-relaxed border-l-2 border-[#de9e86] pl-4">
-                  "{locale === "en"
+                  "
+                  {locale === "en"
                     ? book.featured_review_en
-                    : book.featured_review_es}"
+                    : book.featured_review_es}
+                  "
                 </blockquote>
-                <p className="text-sm font-sans text-muted-foreground mt-4 font-medium">- {book.reviewerName}</p>
+                <p className="text-sm font-sans text-muted-foreground mt-4 font-medium">
+                  - {book.reviewerName}
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -122,7 +128,9 @@ export default async function PageDetail({
               <CardHeader className="pb-4 pt-8 px-8">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-3xl font-light text-foreground italic mb-2">{book.author}</CardTitle>
+                    <CardTitle className="text-3xl font-light text-foreground italic mb-2">
+                      {book.author}
+                    </CardTitle>
                     <CardDescription className="flex items-center text-lg mt-2 font-sans">
                       <span className="text-3xl font-bold text-foreground">
                         ${(book.price / 100).toFixed(2)}
@@ -147,7 +155,9 @@ export default async function PageDetail({
                   <div className="grid grid-cols-2 gap-6 text-sm font-sans text-foreground/80">
                     <div className="flex items-center gap-3">
                       <BookOpen className="h-5 w-5 text-[#de9e86]" />
-                      <span className="font-medium">{book.pages} {locale === "en" ? "pages" : "páginas"}</span>
+                      <span className="font-medium">
+                        {book.pages} {locale === "en" ? "pages" : "páginas"}
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Users className="h-5 w-5 text-[#de9e86]" />
@@ -162,22 +172,30 @@ export default async function PageDetail({
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-muted-foreground">ISBN:</span>
+                      <span className="font-medium text-muted-foreground">
+                        ISBN:
+                      </span>
                       <span className="font-medium">{book.isbn}</span>
                     </div>
                   </div>
                 </div>
                 <Separator className="bg-border/50" />
-                
+
                 <div>
-                  <CardTitle className="text-2xl font-light text-foreground italic mb-4">{t("about-title")}</CardTitle>
+                  <CardTitle className="text-2xl font-light text-foreground italic mb-4">
+                    {t("about-title")}
+                  </CardTitle>
                   <p className="leading-relaxed font-[family-name:var(--font-lora)] text-foreground/80 text-base">
-                    {locale === "en" ? book.description_en : book.description_es}
+                    {locale === "en"
+                      ? book.description_en
+                      : book.description_es}
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-xl font-light text-foreground italic mb-4">{t("features-title")}</h4>
+                  <h4 className="text-xl font-light text-foreground italic mb-4">
+                    {t("features-title")}
+                  </h4>
                   <ul className="space-y-3 font-[family-name:var(--font-lora)] text-foreground/80">
                     {(locale === "en"
                       ? book.features_en
@@ -198,7 +216,9 @@ export default async function PageDetail({
                 <div className="p-8 bg-[#f5f0eb]/50">
                   <Checkout
                     ebook_price={book.price}
-                    ebook_s3key={locale === "en" ? book.s3Key_en : book.s3Key_es}
+                    ebook_s3key={
+                      locale === "en" ? book.s3Key_en : book.s3Key_es
+                    }
                   />
                 </div>
               </CardContent>

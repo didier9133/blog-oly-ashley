@@ -87,7 +87,7 @@ export function FormSubscribeNewsletter({
               "w-full sm:flex-1 transition-all h-14 text-base shadow-sm px-6 rounded-sm border",
               variant === "default"
                 ? "bg-white border-orange-900/10 focus:border-[#c47456] focus:ring-[#c47456]/20 placeholder:text-muted-foreground/60"
-                : "bg-transparent border-white/40 text-white placeholder:text-white/60 focus:border-white focus:ring-white/20"
+                : "bg-transparent border-white/40 text-white placeholder:text-white/60 focus:border-white focus:ring-white/20",
             )}
           />
           <Button
@@ -96,7 +96,7 @@ export function FormSubscribeNewsletter({
               "h-14 w-full sm:w-auto px-8 uppercase tracking-widest text-xs font-bold transition-all shadow-sm rounded-sm",
               variant === "default"
                 ? "bg-[#c47456] hover:bg-[#a86045] text-white"
-                : "bg-[#e8e3dd] hover:bg-white text-[#4a4f3d]"
+                : "bg-[#e8e3dd] hover:bg-white text-[#4a4f3d]",
             )}
           >
             {t("subscribe-label")}

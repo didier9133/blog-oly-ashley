@@ -110,7 +110,10 @@ export default async function Page(props: { searchParams?: SearchParams }) {
             <div className="flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">
               {/* Image Side */}
               <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
-                <Link href={`/${PATH}/${firstPostTranslated?.slug}`} className="block w-full relative aspect-[4/3] overflow-hidden rounded-sm shadow-sm">
+                <Link
+                  href={`/${PATH}/${firstPostTranslated?.slug}`}
+                  className="block w-full relative aspect-[4/3] overflow-hidden rounded-sm shadow-sm"
+                >
                   <Image
                     src={firstPostTranslated?.image || "/blog-hero.jpeg"}
                     alt={firstPostTranslated?.title || "Featured post"}
@@ -120,14 +123,17 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                   />
                 </Link>
               </div>
-              
+
               {/* Text Side */}
               <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-between py-2">
                 <div>
                   <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                     {t("featured-post")}
                   </span>
-                  <Link href={`/${PATH}/${firstPostTranslated?.slug}`} className="group">
+                  <Link
+                    href={`/${PATH}/${firstPostTranslated?.slug}`}
+                    className="group"
+                  >
                     <h1 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#de9e86] transition-colors duration-300">
                       {firstPostTranslated?.title}
                     </h1>
@@ -138,26 +144,40 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     })}
                   </p>
                 </div>
-                
+
                 <div>
                   <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground font-sans mb-8">
                     <span className="font-medium">{`${firstPostTranslated?.author.firstName} ${firstPostTranslated?.author.lastName}`}</span>
                     <span>•</span>
                     <span>
-                      {new Date(firstPostTranslated?.updatedAt).toLocaleDateString(
-                        currentLanguage,
-                        { year: "numeric", month: "long", day: "numeric" }
-                      )}
+                      {new Date(
+                        firstPostTranslated?.updatedAt,
+                      ).toLocaleDateString(currentLanguage, {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-                    <Link href={`/${PATH}/${firstPostTranslated?.slug}`} className="w-full sm:w-auto">
+                    <Link
+                      href={`/${PATH}/${firstPostTranslated?.slug}`}
+                      className="w-full sm:w-auto"
+                    >
                       <Button className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm">
                         {t("read-more")}
                       </Button>
                     </Link>
-                    <Link href="https://substack.com/@ashleyleon?utm_campaign=profile&utm_medium=profile-page" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-                      <Button variant="outline" className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base border-foreground/20 text-foreground/80 hover:bg-foreground/5 hover:text-foreground transition-all duration-300">
+                    <Link
+                      href="https://substack.com/@ashleyleon?utm_campaign=profile&utm_medium=profile-page"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto"
+                    >
+                      <Button
+                        variant="outline"
+                        className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base border-foreground/20 text-foreground/80 hover:bg-foreground/5 hover:text-foreground transition-all duration-300"
+                      >
                         {t("visit-substack")}
                       </Button>
                     </Link>

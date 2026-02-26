@@ -13,7 +13,10 @@ export function Footer() {
   return (
     <footer className="mt-auto flex flex-col w-full">
       {/* Top Section: Newsletter with Background Image */}
-      <div id="newsletter" className="relative w-full py-24 md:py-32 overflow-hidden">
+      <div
+        id="newsletter"
+        className="relative w-full py-24 md:py-32 overflow-hidden"
+      >
         <Image
           src="/background-image.jpg"
           alt="Background"
@@ -23,7 +26,7 @@ export function Footer() {
         />
         {/* Olive green overlay */}
         <div className="absolute inset-0 bg-[#6b705c]/85"></div>
-        
+
         <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center text-white">
           <span className="text-xs font-bold tracking-[0.2em] uppercase mb-4 opacity-90 font-sans">
             {t("join-community")}
@@ -34,7 +37,7 @@ export function Footer() {
           <p className="max-w-xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line text-left sm:text-center">
             {t("newsletter-desc")}
           </p>
-          
+
           <div className="w-full max-w-md mx-auto">
             <FormSubscribeNewsletter
               showLabel={false}
@@ -42,7 +45,7 @@ export function Footer() {
               className="w-full"
             />
           </div>
-          
+
           <p className="text-xs text-white/70 mt-6 font-sans">
             {t("respect-inbox")}
           </p>
@@ -118,17 +121,26 @@ export function Footer() {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href="/blog" className="hover:text-white transition-colors">
+                    <Link
+                      href="/blog"
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("blog")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/recipes" className="hover:text-white transition-colors">
+                    <Link
+                      href="/recipes"
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("recipes")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/ebook" className="hover:text-white transition-colors">
+                    <Link
+                      href="/ebook"
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("ebook")}
                     </Link>
                   </li>
@@ -142,22 +154,34 @@ export function Footer() {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href="/about" className="hover:text-white transition-colors">
+                    <Link
+                      href="/about"
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("about")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact" className="hover:text-white transition-colors">
+                    <Link
+                      href="/contact"
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("contact")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/privacy" className="hover:text-white transition-colors">
+                    <Link
+                      href="/privacy"
+                      className="hover:text-white transition-colors"
+                    >
                       {t("privacy")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/terms" className="hover:text-white transition-colors">
+                    <Link
+                      href="/terms"
+                      className="hover:text-white transition-colors"
+                    >
                       {t("terms")}
                     </Link>
                   </li>

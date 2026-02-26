@@ -9,9 +9,7 @@ import { LanguageSelector } from "./language-selector";
 
 export async function Header() {
   return (
-    <header
-      className="sticky top-0 z-50 flex h-20 shrink-0 items-center gap-2 border-b border-foreground/10 bg-[#F9F8F6]"
-    >
+    <header className="sticky top-0 z-50 flex h-20 shrink-0 items-center gap-2 border-b border-foreground/10 bg-[#F9F8F6]">
       <nav className="container w-full flex items-center justify-between px-6 md:px-12 mx-auto gap-8">
         <Link href="/" className="flex-shrink-0">
           <span className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-4xl font-medium text-foreground tracking-tight">
@@ -23,9 +21,7 @@ export async function Header() {
           <ItemsNavBar />
         </div>
 
-        <div
-          className="flex items-center justify-end gap-4"
-        >
+        <div className="flex items-center justify-end gap-4">
           <LanguageSelector />
           <SignedOut>
             <SignInButton>

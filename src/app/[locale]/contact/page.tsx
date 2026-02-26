@@ -127,7 +127,9 @@ export default function ContactPage() {
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-foreground/80">{t("firstName")}</FormLabel>
+                          <FormLabel className="text-foreground/80">
+                            {t("firstName")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-firstName")}
@@ -148,7 +150,9 @@ export default function ContactPage() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-foreground/80">{t("lastName")}</FormLabel>
+                          <FormLabel className="text-foreground/80">
+                            {t("lastName")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-lastName")}
@@ -171,7 +175,9 @@ export default function ContactPage() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-foreground/80">{t("email")}</FormLabel>
+                          <FormLabel className="text-foreground/80">
+                            {t("email")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-email")}
@@ -192,7 +198,9 @@ export default function ContactPage() {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-foreground/80">{t("subject")}</FormLabel>
+                          <FormLabel className="text-foreground/80">
+                            {t("subject")}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-subject")}
@@ -212,7 +220,9 @@ export default function ContactPage() {
                   name="content"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground/80">{t("content")}</FormLabel>
+                      <FormLabel className="text-foreground/80">
+                        {t("content")}
+                      </FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder={t("placeholder-content")}
@@ -239,8 +249,8 @@ export default function ContactPage() {
                     </Button>
                   </Link>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     disabled={isSubmitting}
                     className="rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm"
                   >
