@@ -42,14 +42,14 @@ export function SubstackHeroSubscribe() {
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         placeholder={t("placeholder")}
-        className="flex-1 min-w-0 bg-transparent px-4 py-4 text-xs font-sans text-foreground placeholder:text-muted-foreground/60 outline-none"
+        className="flex-1 min-w-0 bg-transparent px-3 sm:px-4 py-4 text-xs font-sans text-foreground placeholder:text-muted-foreground/60 outline-none"
         required
         autoComplete="email"
         inputMode="email"
       />
       <button
         type="submit"
-        className="bg-[#de9e86] text-white px-6 uppercase tracking-[0.15em] text-[10px] font-bold hover:bg-[#c98a72] transition-colors whitespace-nowrap"
+        className="bg-[#de9e86] text-white px-4 sm:px-6 uppercase tracking-widest sm:tracking-[0.15em] text-[10px] font-bold hover:bg-[#c98a72] transition-colors whitespace-nowrap shrink-0"
         aria-label={t("cta")}
       >
         {t("cta")}

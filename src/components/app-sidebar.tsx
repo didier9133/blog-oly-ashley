@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 
 import {
   Sidebar,
@@ -8,7 +9,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
 import { data } from "@/const/navbar-options";
 import { currentUser } from "@clerk/nextjs/server";
 import { getTranslations } from "next-intl/server";
@@ -54,23 +54,22 @@ export async function AppSidebar({
   }));
 
   return (
-    <Sidebar {...props}>
-      <SidebarHeader className="h-[64px]">
-        <div className="flex justify-center items-center h-full">
-          <div className="relative w-[160px] h-[64px]">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-              className="object-contain dark:[filter:brightness(0)_invert(1)]"
-            />
-          </div>
+    <Sidebar {...props} className="border-l-0 shadow-2xl">
+      <SidebarHeader className="h-20 border-b border-border/50 bg-[#F9F8F6] px-6">
+        <div className="flex justify-start items-center h-full w-full">
+          <Link href="/" className="flex-shrink-0">
+            <span className="font-[family-name:var(--font-great-vibes)] text-3xl font-medium text-foreground tracking-tight">
+              Raíces <span className="italic">&amp;</span> Returnings
+            </span>
+          </Link>
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
+      <SidebarContent className="bg-[#F9F8F6] pt-8 relative overflow-hidden">
+        {/* Decorative background element */}
+        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#de9e86]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-20 -left-20 w-48 h-48 bg-[#b5c4a6]/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <SidebarGroup className="relative z-10">
           <SidebarGroupContent>
             <SidebarNavMenu items={itemsTraslated} />
           </SidebarGroupContent>

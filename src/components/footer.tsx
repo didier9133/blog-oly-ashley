@@ -58,8 +58,8 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 mb-16">
             {/* Brand Column */}
             <div className="md:col-span-12 lg:col-span-6 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-3xl text-white">
-                Raíces & Returnings
+              <h3 className="font-[family-name:var(--font-great-vibes)] text-4xl text-white">
+                Raíces <span className="italic">&amp;</span> Returnings
               </h3>
               <p className="text-sm leading-relaxed font-sans max-w-md text-white/70">
                 {t("brand-desc")}

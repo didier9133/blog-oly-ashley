@@ -62,7 +62,7 @@ export default async function Home() {
         {/* 2. CONTENT BLOCK (Beige Background) */}
         <div className="px-6 py-10 text-left bg-[#f5f0eb] relative">
           <FadeIn delay={0.2} duration={0.8}>
-            <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl sm:text-5xl font-light tracking-tight text-foreground leading-[1.05] mb-4">
+            <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-foreground leading-[1.05] mb-4 break-words">
               {t("hero-title-one")}{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 italic text-[#de9e86] drop-shadow-sm">

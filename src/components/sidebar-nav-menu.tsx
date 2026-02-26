@@ -80,19 +80,27 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
   };
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="gap-4 px-6">
       {items.map((item) => {
         const isActive = activeMap.get(item.url) ?? false;
 
         return (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild isActive={isActive}>
+            <SidebarMenuButton 
+              asChild 
+              isActive={isActive}
+              className={`h-auto py-3 px-6 text-2xl font-[family-name:var(--font-cormorant-garamond)] transition-all duration-300 rounded-sm ${
+                isActive 
+                  ? "bg-[#de9e86]/10 text-[#c47456] font-medium italic" 
+                  : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
+              }`}
+            >
               <Link
-                className="px-4 py-3 pb-4"
                 href={resolvedHref(item)}
                 onClick={(e) => handleClick(e, item)}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noopener noreferrer" : undefined}
+                className="w-full flex items-center"
               >
                 {item.title}
               </Link>

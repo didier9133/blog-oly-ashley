@@ -6,7 +6,7 @@ import { Header } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
 
-import { Lora, Cormorant_Garamond } from "next/font/google";
+import { Lora, Cormorant_Garamond, Great_Vibes } from "next/font/google";
 
 import "./globals.css";
 
@@ -31,6 +31,13 @@ const lora = Lora({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700"],
+});
+
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
 });
 
 export async function generateMetadata({
@@ -125,7 +132,7 @@ export default async function RootLayout({
           <link rel="manifest" href="/site.webmanifest" />
         </head>
         <body
-          className={`${cormorantGaramond.variable} ${lora.variable} antialiased `}
+          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Toaster position="top-right" richColors />

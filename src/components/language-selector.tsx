@@ -1,24 +1,16 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Globe, ChevronDown } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-
+import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
 export const LanguageSelector = () => {
   const currentLanguage = useLocale();
-  const t = useTranslations("language-selector");
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLanguageChange = (lang: string) => {
+    if (lang === currentLanguage) return;
     router.replace(pathname, {
       locale: lang,
       scroll: false, // Prevent scrolling to the top
@@ -26,24 +18,26 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
-          <Globe className="h-4 w-4 mr-2" />
-          {t(currentLanguage)}
-          <ChevronDown className="h-3 w-3 ml-1" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => handleLanguageChange("en")}>
-          <span className="mr-2">🇺🇸</span>
-          {t("en")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleLanguageChange("es")}>
-          <span className="mr-2">🇪🇸</span>
-          {t("es")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex items-center gap-2 text-sm font-medium text-foreground/70 px-2">
+      <button
+        onClick={() => handleLanguageChange("es")}
+        className={cn(
+          "hover:text-foreground transition-colors",
+          currentLanguage === "es" && "text-foreground font-semibold",
+        )}
+      >
+        ES
+      </button>
+      <span className="text-foreground/30 font-light">|</span>
+      <button
+        onClick={() => handleLanguageChange("en")}
+        className={cn(
+          "hover:text-foreground transition-colors",
+          currentLanguage === "en" && "text-foreground font-semibold",
+        )}
+      >
+        EN
+      </button>
+    </div>
   );
 };
