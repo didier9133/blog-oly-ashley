@@ -68,7 +68,7 @@ export async function AppSidebar({
         {/* Decorative background element */}
         <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#de9e86]/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute top-20 -left-20 w-48 h-48 bg-[#b5c4a6]/10 rounded-full blur-3xl pointer-events-none"></div>
-        
+
         <SidebarGroup className="relative z-10">
           <SidebarGroupContent>
             <SidebarNavMenu items={itemsTraslated} />
