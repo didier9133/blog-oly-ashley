@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ItemsNavBar } from "./items-nav-bar";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
@@ -17,7 +16,7 @@ export async function Header() {
           </span>
         </Link>
 
-        <div className="flex-1 flex justify-center hidden md:flex">
+        <div className="flex-1 flex justify-center md:flex">
           <ItemsNavBar />
         </div>
 
