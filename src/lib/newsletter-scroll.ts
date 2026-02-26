@@ -3,19 +3,33 @@ export function scrollToNewsletter(options?: { behavior?: "auto" | "smooth" }) {
 
   const behavior = options?.behavior ?? "smooth";
 
-  const anchor = document.getElementById("newsletter");
-  if (!anchor) return;
+  const focusNewsletterInput = () => {
+    const input = document.getElementById("newsletter-email");
+    if (!(input instanceof HTMLInputElement)) return;
+
+    try {
+      input.focus({ preventScroll: true });
+    } catch {
+      input.focus();
+    }
+  };
+
+  const targetElement =
+    document.getElementById("newsletter") ??
+    document.getElementById("newsletter-email");
+  if (!targetElement) return;
 
   const prefersReduced =
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
-  const rect = anchor.getBoundingClientRect();
+  const rect = targetElement.getBoundingClientRect();
   const targetTop = rect.top + window.scrollY;
   const maxTop = document.documentElement.scrollHeight - window.innerHeight;
   const clampedTop = Math.max(0, Math.min(targetTop, maxTop));
 
   if (behavior === "auto" || prefersReduced) {
     window.scrollTo(0, clampedTop);
+    focusNewsletterInput();
     return;
   }
 
@@ -35,7 +49,12 @@ export function scrollToNewsletter(options?: { behavior?: "auto" | "smooth" }) {
     const t = Math.min(1, Math.max(0, elapsed / durationMs));
     const eased = easeInOutCubic(t);
     window.scrollTo(0, startTop + delta * eased);
-    if (t < 1) window.requestAnimationFrame(step);
+    if (t < 1) {
+      window.requestAnimationFrame(step);
+      return;
+    }
+
+    focusNewsletterInput();
   };
 
   // Wait for layout to settle (especially after route transitions).

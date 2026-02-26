@@ -26,13 +26,13 @@ export const data = {
       isActive: false,
     },
     {
-      title: "Subscribe",
-      url: "/#newsletter",
+      title: "Contact",
+      url: "/contact",
       isActive: false,
     },
     {
-      title: "Contact",
-      url: "/contact",
+      title: "Subscribe",
+      url: "/#newsletter",
       isActive: false,
     },
   ],
@@ -63,13 +63,13 @@ export const data = {
       isActive: false,
     },
     {
-      title: "Subscribe",
-      url: "/#newsletter",
+      title: "Contact",
+      url: "/contact",
       isActive: false,
     },
     {
-      title: "Contact",
-      url: "/contact",
+      title: "Subscribe",
+      url: "/#newsletter",
       isActive: false,
     },
     {

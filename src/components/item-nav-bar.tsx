@@ -61,10 +61,10 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
       onClick={handleClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={`text-base font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-primary after:transition-all ${
+      className={`text-base font-medium transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground after:transition-all ${
         isActive
-          ? "text-primary after:w-full"
-          : "text-foreground hover:text-primary after:w-0 hover:after:w-full"
+          ? "text-foreground after:w-full"
+          : "text-foreground/80 hover:text-foreground after:w-0 hover:after:w-full"
       }`}
     >
       {title}

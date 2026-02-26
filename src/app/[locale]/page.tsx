@@ -52,7 +52,7 @@ export default async function Home() {
         <div className="relative w-full h-[55vh] overflow-hidden">
           <Image
             src="/hero-image.jpeg"
-            alt="Oly & Ashley"
+            alt={t("alt-hero")}
             fill
             className="object-cover object-top"
             priority
@@ -62,26 +62,21 @@ export default async function Home() {
         {/* 2. CONTENT BLOCK (Beige Background) */}
         <div className="px-6 py-10 text-left bg-[#f5f0eb] relative">
           <FadeIn delay={0.2} duration={0.8}>
-            {/* "Lifestyle & Food" Label - Left */}
-            <span className="block font-sans text-[10px] tracking-[0.35em] font-bold text-foreground/80 mb-2 uppercase text-left">
-              Lifestyle & Food
-            </span>
-
-            <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl text-foreground leading-[0.85] mb-8 relative block w-full">
-              {/* Step 1: Raíces */}
-              <span className="block font-light tracking-tight text-left">
-                Raíces
-              </span>
-
-              {/* Step 2: Returnings (Indented Left, Relaxed Vertical) */}
-              <span className="block font-light tracking-tight text-left ml-14 -mt-1">
-                Returnings
-              </span>
+            <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl sm:text-5xl font-light tracking-tight text-foreground leading-[1.05] mb-4">
+              {t("hero-title-one")}{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 italic text-[#de9e86] drop-shadow-sm">
+                  {t("hero-title-highlight")}
+                </span>
+                {/* Decorative underline/highlight effect */}
+                <span className="absolute bottom-1 left-0 w-full h-2 bg-[#de9e86]/20 -rotate-2 -z-10 rounded-full blur-[1px]"></span>
+              </span>{" "}
+              {t("hero-title-two")}
             </h1>
 
             {/* Paragraph - Left Aligned */}
-            <p className="text-xs font-sans text-muted-foreground uppercase tracking-[0.15em] mb-10 text-balance text-left">
-              Conscious recipes, life stories & cultural connection.
+            <p className="text-sm font-[family-name:var(--font-lora)] text-foreground/70 leading-relaxed mb-8 text-left">
+              {t("hero-description")}
             </p>
 
             {/* Email Subscription Bar (Substack) */}
@@ -127,42 +122,27 @@ export default async function Home() {
 
         {/* Main Container matching Header alignment */}
         <div className="container mx-auto px-4 md:px-20 h-full flex flex-row items-stretch gap-8 py-12 relative z-10 w-full">
-          {/* Left Column: Typography - Stepped Layout */}
-          <div className="w-[55%] flex flex-col justify-center relative -mt-10 z-20">
-            {/* Decorative Top Label */}
-            <div className="absolute top-0 left-0 font-[family-name:var(--font-lora)] text-xs tracking-[0.2em] uppercase text-[#de9e86] font-bold opacity-80">
-              Est. 2025 — Vol. 01
-            </div>
-
+          {/* Left Column: Typography */}
+          <div className="w-[55%] flex flex-col justify-center relative z-20 pr-8">
             <FadeIn delay={0.2} duration={0.8} className="w-full">
-              <div className="mb-10 relative">
-                {/* & Symbol - Re-aligned, Colored & Faded as per specific feedback */}
-                <span className="absolute -left-12 -top-12 text-[12rem] xl:text-[14rem] font-[family-name:var(--font-cormorant-garamond)] italic text-[#d4a373] -z-10 select-none opacity-10">
-                  &
-                </span>
-
-                <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-foreground leading-[0.85] relative">
-                  <span className="block font-sans text-xs tracking-[0.35em] font-bold text-foreground/80 mb-6 uppercase">
-                    Lifestyle & Food
-                  </span>
-
-                  {/* Step 1: Left Aligned */}
-                  <span className="block text-[5.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-light tracking-tight text-foreground drop-shadow-sm whitespace-nowrap">
-                    Raíces
-                  </span>
-
-                  {/* Step 2: Indented "Walking" towards image */}
-                  <span className="block text-[5.5rem] xl:text-[7.5rem] 2xl:text-[9rem] font-light tracking-tight text-foreground ml-20 xl:ml-32 drop-shadow-sm whitespace-nowrap relative z-30">
-                    Returnings
-                  </span>
+              <div className="mb-6 relative max-w-3xl">
+                <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-[3rem] lg:text-[4rem] xl:text-[5rem] font-light tracking-tight text-foreground leading-[1.05] drop-shadow-sm">
+                  {t("hero-title-one")}{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-10 italic text-[#de9e86] drop-shadow-md">
+                      {t("hero-title-highlight")}
+                    </span>
+                    {/* Decorative underline/highlight effect */}
+                    <span className="absolute bottom-2 left-0 w-full h-3 bg-[#de9e86]/20 -rotate-2 -z-10 rounded-full blur-[1px]"></span>
+                  </span>{" "}
+                  {t("hero-title-two")}
                 </h1>
               </div>
 
-              {/* ENHANCED DESCRIPTION BLOCK - Aligned with "Raíces" for anchor */}
-              <div className="max-w-md relative mt-8 ml-2">
-                <p className="font-[family-name:var(--font-lora)] text-xl text-foreground/80 leading-relaxed relative z-10 font-medium mb-10 w-full max-w-md">
-                  Recetas conscientes, historias de vida y conexión cultural.
-                  Únete a nuestra mesa y recibe una nueva historia cada semana.
+              {/* ENHANCED DESCRIPTION BLOCK */}
+              <div className="max-w-md relative mt-4">
+                <p className="font-[family-name:var(--font-lora)] text-base lg:text-lg text-foreground/80 leading-relaxed relative z-10 font-medium mb-6 w-full">
+                  {t("hero-description")}
                 </p>
 
                 <div className="relative z-10 w-full">
@@ -172,48 +152,18 @@ export default async function Home() {
             </FadeIn>
           </div>
 
-          {/* Right Column: Image Grid/Collage - Clean separation */}
+          {/* Right Column: Single Image */}
           <div className="flex-1 h-full relative z-0">
             <FadeIn delay={0.4} className="w-full h-full">
-              {/* Using Flex with precise gaps instead of Grid to guarantee visual equality */}
-              <div className="flex flex-row h-full w-full gap-5">
-                {/* Main Large Image (2/3 width) */}
-                <div className="flex-[2] relative rounded-sm overflow-hidden shadow-sm h-full">
-                  <Image
-                    src="/hero-image.jpeg"
-                    alt="Oly & Ashley Main"
-                    fill
-                    className="object-cover transition-transform duration-[20s] ease-linear hover:scale-105"
-                    sizes="33vw"
-                    priority
-                  />
-                </div>
-
-                {/* Right Column Stack (1/3 width) */}
-                <div className="flex-1 flex flex-col gap-5 h-full">
-                  {/* Top Detail Image */}
-                  <div className="flex-1 relative rounded-sm overflow-hidden shadow-sm">
-                    <Image
-                      src="/blog-hero.jpeg"
-                      alt="Detail"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-700"
-                      sizes="20vw"
-                    />
-                  </div>
-
-                  {/* Bottom Texture Image */}
-                  <div className="flex-1 relative rounded-sm overflow-hidden shadow-sm">
-                    <div className="absolute inset-0 bg-secondary/10 z-10 mix-blend-multiply"></div>
-                    <Image
-                      src="/recipes-hero.jpeg"
-                      alt="Texture"
-                      fill
-                      className="object-cover hover:scale-110 transition-transform duration-700"
-                      sizes="20vw"
-                    />
-                  </div>
-                </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-md h-full w-full">
+                <Image
+                  src="/hero-image.jpeg"
+                  alt={t("alt-hero-main")}
+                  fill
+                  className="object-cover transition-transform duration-[20s] ease-linear hover:scale-105"
+                  sizes="50vw"
+                  priority
+                />
               </div>
             </FadeIn>
           </div>
@@ -231,7 +181,7 @@ export default async function Home() {
 
               <div className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-5xl leading-tight text-foreground/90">
                 <span className="block mb-2 italic text-[#de9e86]">
-                  Una receta, ritual, y reflexión a la vez.
+                  {t("intro-lead")}
                 </span>
                 <p className="font-light text-2xl md:text-4xl text-foreground/80 mt-6 leading-relaxed">
                   {t("paragraph-description")}
@@ -285,23 +235,91 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* --- WHAT YOU'LL FIND HERE SECTION --- */}
+      <section className="py-24 md:py-32 bg-[#f5f0eb]">
+        <div className="container max-w-4xl mx-auto px-6 md:px-12">
+          <FadeIn>
+            <div className="text-center mb-16 md:mb-20">
+              <span className="block font-sans text-[10px] tracking-[0.4em] font-bold text-foreground/50 mb-6 uppercase">
+                {t("find-label")}
+              </span>
+              <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-6xl font-light text-foreground italic">
+                {t("find-title")}
+              </h2>
+              <div className="mx-auto h-[1px] w-16 bg-[#de9e86] mt-8 opacity-60"></div>
+            </div>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-2 gap-x-20 gap-y-5 mb-16 md:mb-20 max-w-3xl mx-auto">
+            {[
+              t("find-item-1"),
+              t("find-item-2"),
+              t("find-item-3"),
+              t("find-item-4"),
+              t("find-item-5"),
+            ].map((item, i) => (
+              <FadeIn key={i} delay={0.1 * i}>
+                <div className="flex items-center gap-4">
+                  <span className="w-4 h-[1px] bg-[#de9e86] shrink-0"></span>
+                  <p className="font-[family-name:var(--font-lora)] text-base md:text-lg text-foreground/80 leading-relaxed">
+                    {item}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={0.5}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
+              <a
+                href="https://substack.com/@ashleyleon?utm_campaign=profile&utm_medium=profile-page"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/20 uppercase tracking-[0.25em] text-xs font-bold hover:bg-foreground hover:text-background transition-all duration-500 rounded-sm"
+              >
+                {t("cta-explore")}
+                <span className="transform transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+              <Link
+                href="/ebook"
+                className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/20 uppercase tracking-[0.25em] text-xs font-bold hover:bg-foreground hover:text-background transition-all duration-500 rounded-sm"
+              >
+                {t("cta-journals")}
+                <span>→</span>
+              </Link>
+              <a
+                href="https://www.youtube.com/@WhispersfortheInBetween"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/20 uppercase tracking-[0.25em] text-xs font-bold hover:bg-foreground hover:text-background transition-all duration-500 rounded-sm"
+              >
+                {t("cta-youtube")}
+                <span>→</span>
+              </a>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* --- FRESH FROM SECTION --- */}
       <section className="py-24 md:py-32 bg-[#F9F7F2]">
         <div className="container mx-auto px-4 md:px-20">
-          {/* HEADER: Aligned & Clean */}
-          <FadeIn className="flex flex-col md:flex-row justify-between items-end mb-24 gap-6 border-b border-[#de9e86]/20 pb-8">
-            <div>
-              <span className="font-[family-name:var(--font-lora)] text-lg text-muted-foreground block mb-2">
-                Lo más reciente de:
+          {/* HEADER: Aligned to Grid */}
+          <FadeIn className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-end mb-24 border-b border-[#de9e86]/20 pb-8">
+            <div className="lg:col-span-7">
+              <span className="font-[family-name:var(--font-lora)] text-lg text-muted-foreground block mb-4 ml-1">
+                {t("fresh-title-one")}
               </span>
-              <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-7xl font-light text-foreground italic">
-                Raíces & Returnings
+              <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-7xl font-light text-foreground italic leading-[0.9]">
+                {t("fresh-title-two")}
               </h2>
             </div>
 
-            {/* Right text aligned with User Icon (far right) but text-left for readability */}
-            <div className="max-w-sm text-left hidden md:block -mr-3">
-              <p className="font-[family-name:var(--font-lora)] text-muted-foreground text-sm leading-relaxed">
+            {/* Right text aligned with Content below */}
+            <div className="lg:col-span-5 hidden md:block pb-2">
+              <p className="font-[family-name:var(--font-lora)] text-muted-foreground text-sm leading-relaxed max-w-sm">
                 {t("paragraph-fresh")}
               </p>
             </div>
@@ -333,7 +351,7 @@ export default async function Home() {
                   <div className="sticky top-16 h-fit flex flex-col text-left items-start transition-all duration-500">
                     <FadeIn>
                       <span className="uppercase tracking-[0.2em] text-xs font-bold text-[#de9e86] mb-5 block">
-                        Blog Story
+                        {t("fresh-blog-label")}
                       </span>
                       <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-5xl font-medium mb-5 leading-[1.1] text-foreground">
                         <Link
@@ -370,7 +388,7 @@ export default async function Home() {
                   <div className="sticky top-16 h-fit flex flex-col text-left items-start transition-all duration-500">
                     <FadeIn>
                       <span className="uppercase tracking-[0.2em] text-xs font-bold text-[#de9e86] mb-5 block">
-                        Latest Kitchen Creation
+                        {t("fresh-recipe-label")}
                       </span>
 
                       <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-5xl font-medium mb-5 leading-[1.1] text-foreground">
@@ -425,7 +443,7 @@ export default async function Home() {
               href={`/${CategoryEnum.Blog}`}
               className="inline-block px-12 py-4 border border-foreground/10 uppercase tracking-[0.3em] text-xs font-bold hover:bg-foreground hover:text-background transition-all duration-500 rounded-sm"
             >
-              View All Stories
+              {t("fresh-view-all")}
             </Link>
           </FadeIn>
         </div>

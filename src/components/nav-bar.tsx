@@ -10,35 +10,21 @@ import { LanguageSelector } from "./language-selector";
 export async function Header() {
   return (
     <header
-      className="sticky top-0 z-50 flex h-16 shrink-0 items-center gap-2 border-b"
-      style={{
-        background: "var(--card)",
-      }}
+      className="sticky top-0 z-50 flex h-20 shrink-0 items-center gap-2 border-b border-foreground/10 bg-[#F9F8F6]"
     >
-      <nav className="container w-full flex items-center justify-between px-4 md:px-20 mx-auto gap-16 font-[family-name:var(--font-cormorant-garamond)]">
-        <Link href="/">
-          <div className="relative w-[70px] h-[64px] md:w-[100px] cursor-pointer">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              fill
-              sizes="(max-width: 768px) 80px, (max-width: 1200px) 100px, 100px"
-              className="object-contain object-left dark:[filter:brightness(0)_invert(1)]"
-              priority
-            />
-          </div>
+      <nav className="container w-full flex items-center justify-between px-6 md:px-12 mx-auto gap-8">
+        <Link href="/" className="flex-shrink-0">
+          <span className="font-[family-name:var(--font-cormorant-garamond)] text-3xl md:text-4xl font-medium text-foreground tracking-tight">
+            Raíces <span className="italic">&amp;</span> Returnings
+          </span>
         </Link>
 
-        <ItemsNavBar />
+        <div className="flex-1 flex justify-center">
+          <ItemsNavBar />
+        </div>
 
         <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            gap: "0.5rem",
-          }}
+          className="flex items-center justify-end gap-4"
         >
           <LanguageSelector />
           <SignedOut>
@@ -46,9 +32,9 @@ export async function Header() {
               <Button
                 variant={"ghost"}
                 size="icon"
-                className="rounded-full hover:bg-primary"
+                className="rounded-full hover:bg-foreground/5"
               >
-                <User />
+                <User className="w-5 h-5 text-foreground/80" />
               </Button>
             </SignInButton>
           </SignedOut>
@@ -57,7 +43,7 @@ export async function Header() {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
+                  avatarBox: "w-9 h-9",
                 },
               }}
             />

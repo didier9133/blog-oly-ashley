@@ -88,38 +88,50 @@ export default function ContactPage() {
     }
   };
   return (
-    <div className="min-h-screen  p-4 sm:p-6 md:p-8">
-      <div className="conatainer  max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
-            {t("title")}
-          </h1>
-          <p className="mt-1 text-sm text-gray-400">{t("paragraph")}</p>
+    <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
+      {/* Header */}
+      <div className="bg-[#f5f0eb] py-16 lg:py-24">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center">
+            <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+              {t("title-form")}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide mb-6">
+              {t("title")}
+            </h1>
+            <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] max-w-2xl mx-auto">
+              {t("paragraph")}
+            </p>
+          </div>
         </div>
+      </div>
 
+      <div className="max-w-4xl mx-auto px-4 py-12 lg:py-16">
         <Form {...formContact}>
           <form
             onSubmit={formContact.handleSubmit(onSubmit)}
-            className="space-y-6"
+            className="space-y-6 font-sans"
           >
-            <Card className=" shadow-sm">
-              <CardHeader>
-                <CardTitle>{t("title-form")}</CardTitle>
+            <Card className="border-border/50 shadow-md rounded-sm bg-card">
+              <CardHeader className="pb-4 pt-8 px-8">
+                <CardTitle className="text-2xl font-light text-foreground italic font-[family-name:var(--font-cormorant-garamond)]">
+                  {t("title-form")}
+                </CardTitle>
               </CardHeader>
 
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <CardContent className="space-y-6 px-8 pb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <FormField
                       control={formContact.control}
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("firstName")}</FormLabel>
+                          <FormLabel className="text-foreground/80">{t("firstName")}</FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-firstName")}
+                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
                               {...field}
                             />
                           </FormControl>
@@ -136,10 +148,11 @@ export default function ContactPage() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("lastName")}</FormLabel>
+                          <FormLabel className="text-foreground/80">{t("lastName")}</FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-lastName")}
+                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
                               {...field}
                             />
                           </FormControl>
@@ -151,17 +164,18 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <FormField
                       control={formContact.control}
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("email")}</FormLabel>
+                          <FormLabel className="text-foreground/80">{t("email")}</FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-email")}
+                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
                               {...field}
                             />
                           </FormControl>
@@ -178,10 +192,11 @@ export default function ContactPage() {
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("subject")}</FormLabel>
+                          <FormLabel className="text-foreground/80">{t("subject")}</FormLabel>
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-subject")}
+                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
                               {...field}
                             />
                           </FormControl>
@@ -197,11 +212,11 @@ export default function ContactPage() {
                   name="content"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t("content")}</FormLabel>
+                      <FormLabel className="text-foreground/80">{t("content")}</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder={t("placeholder-content")}
-                          className="resize-none"
+                          className="resize-none min-h-[150px] rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
                           {...field}
                         />
                       </FormControl>
@@ -212,21 +227,25 @@ export default function ContactPage() {
                 />
               </CardContent>
 
-              <CardFooter className="flex justify-end border-t border-border pt-6">
-                <div className="flex space-x-2">
+              <CardFooter className="flex justify-end border-t border-border/50 p-8 bg-[#f5f0eb]/30">
+                <div className="flex space-x-4">
                   <Link href="/">
                     <Button
                       type="button"
                       variant="outline"
-                      className="border-primary hover:border-primary hover:bg-transparent hover:text-slate-800 dark:hover:text-slate-200 dark:border-primary/70 dark:hover:bg-primary/20"
+                      className="rounded-sm px-6 py-6 font-[family-name:var(--font-lora)] text-base border-foreground/20 text-foreground/80 hover:bg-foreground/5 hover:text-foreground transition-all duration-300"
                     >
                       {t("cancel")}
                     </Button>
                   </Link>
 
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm"
+                  >
                     {isSubmitting ? t("submitting") : t("submit")}
-                    <SendHorizontal className="h-2 w-2 mr-2" />
+                    <SendHorizontal className="h-4 w-4 ml-2" />
                   </Button>
                 </div>
               </CardFooter>

@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, ArrowRight } from "lucide-react";
 import prisma from "@/lib/prisma";
@@ -76,22 +75,18 @@ export default async function EbookPage({
           </noscript>
         </>
       )}
-      <div className="min-h-screen">
+      <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
         {/* Hero Section */}
-        <div className="relative">
-          <div
-            className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-accent/5"
-            aria-hidden
-          />
-          <div className="container mx-auto px-4 p-16 lg:pb-0">
+        <div className="relative bg-[#f5f0eb] py-16 lg:py-24">
+          <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center space-y-6">
-              <Badge variant="secondary" className="mb-4">
+              <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                 {t("breadcrumb")}
-              </Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary transition-all duration-700 ease-out hover:tracking-wide">
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide">
                 {t("title")}
               </h1>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] max-w-2xl mx-auto">
                 {t("subtitle")}
               </p>
             </div>
@@ -112,10 +107,10 @@ export default async function EbookPage({
               return (
                 <Card
                   key={book.id}
-                  className="group overflow-hidden border-border/60 bg-card/90 shadow-sm hover:shadow-lg transition-all duration-300 hover:border-primary/40"
+                  className="group flex flex-col h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-card border border-border rounded-sm overflow-hidden"
                 >
                   <CardHeader className="p-0">
-                    <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-primary/10 to-accent/10">
+                    <div className="relative aspect-[3/4] overflow-hidden bg-[#f5f0eb]">
                       <Image
                         src={
                           locale === "en"
@@ -125,45 +120,45 @@ export default async function EbookPage({
                         alt={title}
                         fill
                         sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                       />
                     </div>
                   </CardHeader>
 
-                  <CardContent className="p-6 space-y-4">
+                  <CardContent className="p-6 space-y-4 flex-1 flex flex-col">
                     <div className="space-y-2">
-                      <CardTitle className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      <CardTitle className="text-2xl font-semibold text-foreground lg:text-3xl group-hover:text-[#de9e86] transition-colors duration-300 line-clamp-2">
                         {title}
                       </CardTitle>
-                      <CardDescription className="text-sm line-clamp-2">
+                      <CardDescription className="text-sm font-[family-name:var(--font-lora)] text-muted-foreground line-clamp-2">
                         {subtitle}
                       </CardDescription>
                     </div>
 
-                    <p className="text-sm text-muted-foreground line-clamp-3">
+                    <p className="text-base font-[family-name:var(--font-lora)] text-muted-foreground line-clamp-3 flex-1">
                       {description}
                     </p>
 
-                    <div className="flex items-center gap-2 text-sm">
+                    <div className="flex items-center gap-2 text-sm font-sans mt-auto pt-4">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
                             className={`h-4 w-4 ${
                               i < Math.floor(book.rating!)
-                                ? "fill-yellow-400 text-yellow-400"
+                                ? "fill-[#de9e86] text-[#de9e86]"
                                 : "text-gray-300"
                             }`}
                           />
                         ))}
                       </div>
-                      <span className="font-semibold">{book.rating}</span>
+                      <span className="font-semibold text-foreground">{book.rating}</span>
                       <span className="text-muted-foreground">
                         ({book.reviewCount})
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 font-sans">
                       <BookOpen className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">
                         {book.pages} {locale === "en" ? "pages" : "páginas"}
@@ -171,10 +166,10 @@ export default async function EbookPage({
                     </div>
                   </CardContent>
 
-                  <CardFooter className="p-6 pt-0 flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-bold text-primary">
+                  <CardFooter className="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
+                    <div className="space-y-1 pt-4">
+                      <div className="flex items-baseline gap-2 font-sans">
+                        <span className="text-2xl font-bold text-foreground">
                           ${(book.price / 100).toFixed(2)}
                         </span>
                         {book.originalPrice! > book.price && (
@@ -183,15 +178,16 @@ export default async function EbookPage({
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground font-sans">
                         {locale === "en" ? "Digital format" : "Formato digital"}
                       </p>
                     </div>
 
                     <Link
                       href={`/${locale}/ebook/detail/${locale === "en" ? book.slug_en : book.slug_es}`}
+                      className="pt-4"
                     >
-                      <Button className="group/btn">
+                      <Button className="group/btn rounded-sm px-6 py-4 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm">
                         {t("details-button")}
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                       </Button>
