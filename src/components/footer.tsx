@@ -37,7 +37,9 @@ export function Footer() {
           <p className="max-w-xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line text-left sm:text-center">
             {t.rich("newsletter-desc", {
               highlight: (chunks) => (
-                <strong className="font-semibold text-[#e9c46a]">{chunks}</strong>
+                <strong className="font-semibold text-[#e9c46a]">
+                  {chunks}
+                </strong>
               ),
             })}
           </p>
