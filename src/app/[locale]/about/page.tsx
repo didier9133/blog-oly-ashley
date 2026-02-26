@@ -81,8 +81,10 @@ export default async function Page() {
 
       {/* SECCIÓN 4: Conclusión */}
       <section className="w-full max-w-3xl mx-auto text-center mt-12 mb-24 px-4">
-        <p className="text-xl sm:text-2xl text-foreground/90 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line italic">
-          {t("conclusion")}
+        <p className="text-xl sm:text-2xl text-foreground/90 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line italic [&>span]:whitespace-nowrap">
+          {t.rich("conclusion", {
+            nowrap: (chunks) => <span>{chunks}</span>,
+          })}
         </p>
       </section>
     </div>

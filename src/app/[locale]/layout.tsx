@@ -132,7 +132,7 @@ export default async function RootLayout({
           <link rel="manifest" href="/site.webmanifest" />
         </head>
         <body
-          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
+          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased`}
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Toaster position="top-right" richColors />
@@ -141,7 +141,7 @@ export default async function RootLayout({
                 side="right"
                 className="font-[family-name:var(--font-cormorant-garamond)]"
               />
-              <SidebarInset>
+              <SidebarInset className="overflow-x-clip">
                 <Header />
                 {children}
                 <Analytics />

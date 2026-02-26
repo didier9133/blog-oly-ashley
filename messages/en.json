@@ -25,7 +25,7 @@
     "toast-error": "There was an error subscribing. Please try again.",
     "join-community": "You don’t have to walk this alone.",
     "stay-in-loop": "Join when you’re ready.",
-    "newsletter-desc": "Beyond writing, Raíces & Returnings offers optional community spaces for those wanting deeper connection, shared language, and guided integration.\n\nCommunity offerings include:\n• Ongoing reflective prompts\n• Scripture reframed through love\n• Monthly live gatherings\n• Shared space with others rebuilding faith honestly",
+    "newsletter-desc": "Beyond writing, Raíces & Returnings offers optional community spaces for those wanting deeper connection, shared language, and guided integration.\n\n<highlight>Community offerings include:</highlight>\n• Ongoing reflective prompts\n• Scripture reframed through love\n• Monthly live gatherings\n• Shared space with others rebuilding faith honestly",
     "respect-inbox": "We respect your inbox. No spam, just stories.",
     "brand-desc": "A digital space for the stories we carry and the ones we are still learning how to tell. Celebrating identity, queerness, healing, and the recipes that bring us home.",
     "explore": "Explore",
@@ -349,7 +349,7 @@
     "description-paragraph-oly": "Oly is part of the heart behind Raíces & Returnings.\n\nBorn in Venezuela and shaped by migration, resilience, and lived wisdom, she brings grounding, humor, and perspective into this space. While she isn’t the primary content creator, her presence influences the tone, the truth-telling, and the way this platform understands home, memory, and survival.\n\nAt times, she may share reflections or recipes rooted in culture and memory—but always as part of the larger story we’re living.",
     "description-ashley": "Writer & Conscious Digital Creator",
     "description-paragraph-ashley": "I’m Ashley—writer, conscious digital creator, and facilitator of reflective space. My life has been shaped in the in-between: between cultures, between belief systems, between certainty and doubt.\n\nI’ve lived deeply inside religion—and then had to learn how to leave it without losing my reverence for God, self, or meaning. My work now exists at that intersection: spirituality beyond dogma, faith without fear, and integration instead of erasure.\n\nThrough essays, affirmations, guided journals, and community spaces, I create language for people learning how to live whole—without self-abandonment. Most of what you’ll encounter here is my voice, my writing, and my lived experience, shared with honesty and care.",
-    "conclusion": "Together, Raíces & Returnings is a space built from real life, not aspiration.\nIt holds grief and reverence.\nUnlearning and returning.\nHumanity and divinity, side by side.\nWe’re glad you’re here."
+    "conclusion": "Together, Raíces & Returnings is a space built from real life, <nowrap>not aspiration.</nowrap>\nIt holds grief and reverence.\nUnlearning and returning.\nHumanity and divinity, side by side.\nWe’re glad you’re here."
   },
   "Blog": {
     "breadcrumb": "Home",

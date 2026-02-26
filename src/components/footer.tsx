@@ -35,7 +35,11 @@ export function Footer() {
             {t("stay-in-loop")}
           </h2>
           <p className="max-w-xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line text-left sm:text-center">
-            {t("newsletter-desc")}
+            {t.rich("newsletter-desc", {
+              highlight: (chunks) => (
+                <strong className="font-semibold text-[#e9c46a]">{chunks}</strong>
+              ),
+            })}
           </p>
 
           <div className="w-full max-w-md mx-auto">

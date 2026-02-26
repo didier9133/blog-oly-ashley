@@ -25,7 +25,7 @@
     "toast-error": "Hubo un error al suscribirse. Por favor, inténtalo de nuevo.",
     "join-community": "No tienes que caminar esto sola.",
     "stay-in-loop": "Únete cuando estés lista.",
-    "newsletter-desc": "Más allá de la escritura, Raíces & Returnings ofrece espacios comunitarios opcionales para quienes desean una conexión más profunda, un lenguaje compartido y una integración guiada.\n\nLas ofertas de la comunidad incluyen:\n• Reflexiones continuas\n• Escrituras replanteadas a través del amor\n• Encuentros mensuales en vivo\n• Espacio compartido con otras personas reconstruyendo su fe honestamente",
+    "newsletter-desc": "Más allá de la escritura, Raíces & Returnings ofrece espacios comunitarios opcionales para quienes desean una conexión más profunda, un lenguaje compartido y una integración guiada.\n\n<highlight>Las ofertas de la comunidad incluyen:</highlight>\n• Reflexiones continuas\n• Escrituras replanteadas a través del amor\n• Encuentros mensuales en vivo\n• Espacio compartido con otras personas reconstruyendo su fe honestamente",
     "respect-inbox": "Respetamos tu bandeja de entrada. Sin spam, solo historias.",
     "brand-desc": "Un espacio digital para las historias que llevamos y las que aún estamos aprendiendo a contar. Celebrando la identidad, lo queer, la sanación y las recetas que nos traen a casa.",
     "explore": "Explorar",
@@ -349,7 +349,7 @@
     "description-paragraph-oly": "Oly es parte del corazón detrás de Raíces & Returnings.\n\nNacida en Venezuela y moldeada por la migración, la resiliencia y la sabiduría vivida, ella aporta arraigo, humor y perspectiva a este espacio. Aunque no es la creadora principal de contenido, su presencia influye en el tono, en la forma de decir la verdad y en cómo esta plataforma entiende el hogar, la memoria y la supervivencia.\n\nA veces, puede compartir reflexiones o recetas arraigadas en la cultura y la memoria—pero siempre como parte de la historia más grande que estamos viviendo.",
     "description-ashley": "Escritora y Creadora Digital Consciente",
     "description-paragraph-ashley": "Soy Ashley—escritora, creadora digital consciente y facilitadora de espacios de reflexión. Mi vida ha sido moldeada en el intermedio: entre culturas, entre sistemas de creencias, entre la certeza y la duda.\n\nHe vivido profundamente dentro de la religión—y luego tuve que aprender a dejarla sin perder mi reverencia por Dios, por mí misma o por el significado. Mi trabajo ahora existe en esa intersección: espiritualidad más allá del dogma, fe sin miedo e integración en lugar de borrado.\n\nA través de ensayos, afirmaciones, diarios guiados y espacios comunitarios, creo un lenguaje para las personas que están aprendiendo a vivir plenas—sin abandonarse a sí mismas. La mayor parte de lo que encontrarás aquí es mi voz, mi escritura y mi experiencia vivida, compartida con honestidad y cuidado.",
-    "conclusion": "Juntas, Raíces & Returnings es un espacio construido desde la vida real, no desde la aspiración.\nSostiene el duelo y la reverencia.\nEl desaprender y el regresar.\nLa humanidad y la divinidad, lado a lado.\nNos alegra que estés aquí."
+    "conclusion": "Juntas, Raíces & Returnings es un espacio construido desde la vida real, <nowrap>no desde la aspiración.</nowrap>\nSostiene el duelo y la reverencia.\nEl desaprender y el regresar.\nLa humanidad y la divinidad, lado a lado.\nNos alegra que estés aquí."
   },
   "Blog": {
     "breadcrumb": "Inicio",
