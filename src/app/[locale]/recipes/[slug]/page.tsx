@@ -168,14 +168,12 @@ export default async function BlogPostPage(props: {
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: postTraslated.title,
+    "@type": "Recipe",
+    name: postTraslated.title,
     description: htmlExcerpt(postTraslated.content),
-    articleSection: "Recipe",
-    image: post.image,
+    image: [post.image],
     url: pageUrl,
     datePublished: post.updatedAt.toISOString(),
-    dateModified: post.updatedAt.toISOString(),
     author: {
       "@type": "Person",
       name: authorName,
@@ -186,6 +184,8 @@ export default async function BlogPostPage(props: {
       name: "Raíces & Returnings",
       logo: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpeg` },
     },
+    recipeCategory: "Latin American",
+    recipeCuisine: "Venezuelan",
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   };
 

@@ -7,7 +7,6 @@ import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 export const metadata: Metadata = {
   title: "Terms of Service | Raíces & Returnings",
   description: "Terms of service for Raíces & Returnings.",
-  robots: { index: false, follow: false },
 };
 
 const SECTION_KEYS = [

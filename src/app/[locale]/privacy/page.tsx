@@ -7,7 +7,6 @@ import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 export const metadata: Metadata = {
   title: "Privacy Policy | Raíces & Returnings",
   description: "Privacy policy for Raíces & Returnings.",
-  robots: { index: false, follow: false },
 };
 
 const SECTION_KEYS = [

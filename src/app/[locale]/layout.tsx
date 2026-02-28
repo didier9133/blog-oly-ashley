@@ -55,17 +55,6 @@ export async function generateMetadata({
     authors: [{ name: "Ashley León" }, { name: "Oly Contreras" }],
     creator: "Ashley León & Oly Contreras",
     publisher: "Raíces & Returnings",
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
