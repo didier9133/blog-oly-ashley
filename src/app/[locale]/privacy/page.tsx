@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Raíces & Returnings",
+  description: "Privacy policy for Raíces & Returnings.",
+  robots: { index: false, follow: false },
+};
 
 const SECTION_KEYS = [
   "informationCollected",

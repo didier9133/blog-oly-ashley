@@ -12,12 +12,16 @@ import Checkout from "@/components/checkout";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+
+const BASE_URL = "https://www.raicesreturnings.com";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { locale, slug } = await params;
   const book = await prisma.book.findFirst({
     where: {
@@ -25,9 +29,35 @@ export async function generateMetadata({
     },
   });
   if (!book) return notFound();
+
+  const title = locale === "en" ? book.title_en : book.title_es;
+  const description = locale === "en" ? book.subtitle_en : book.subtitle_es;
+  const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
+  const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
+
   return {
-    title: locale === "en" ? book.title_en : book.title_es,
-    description: locale === "en" ? book.subtitle_en : book.subtitle_es,
+    title: `${title} | Raíces & Returnings`,
+    description,
+    openGraph: {
+      title: `${title} | Raíces & Returnings`,
+      description,
+      url: `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`,
+      images: [{ url: coverImage, width: 800, height: 1067, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Raíces & Returnings`,
+      description,
+      images: [coverImage],
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`,
+      languages: {
+        en: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
+        es: `${BASE_URL}/es/ebook/detail/${book.slug_es}`,
+        "x-default": `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
+      },
+    },
   };
 }
 
@@ -46,8 +76,42 @@ export default async function PageDetail({
   if (!book) return notFound();
   const t = await getTranslations({ locale, namespace: "Ebook" });
 
+  const bookTitle = locale === "en" ? book.title_en : book.title_es;
+  const bookDescription = locale === "en" ? book.description_en : book.description_es;
+  const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
+  const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
+  const pageUrl = `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`;
+
+  const bookSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: bookTitle,
+    description: bookDescription,
+    author: { "@type": "Person", name: book.author },
+    bookFormat: "EBook",
+    numberOfPages: book.pages,
+    image: coverImage,
+    isbn: book.isbn,
+    url: pageUrl,
+    offers: {
+      "@type": "Offer",
+      price: (book.price / 100).toFixed(2),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
+  if (book.rating && book.reviewCount) {
+    bookSchema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: book.rating,
+      reviewCount: book.reviewCount,
+    };
+  }
+
   return (
-    <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
+    <>
+      <JsonLd data={bookSchema} />
+      <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
       {/* Header */}
       <div className="bg-[#f5f0eb] py-16 lg:py-24">
         <div className="max-w-6xl mx-auto px-4">
@@ -223,5 +287,6 @@ export default async function PageDetail({
         </div>
       </div>
     </div>
+    </>
   );
 }

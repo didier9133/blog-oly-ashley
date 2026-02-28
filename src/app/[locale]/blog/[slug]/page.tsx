@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 import { Separator } from "@/components/ui/separator";
 import { ComboboxDemo } from "@/components/ui/combobox";
@@ -19,11 +20,77 @@ import { Slash } from "lucide-react";
 import ImageRecentBlog from "@/components/image-recent-post";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
+import { JsonLd } from "@/components/json-ld";
 
-type Params = Promise<{ slug: string }>;
+const BASE_URL = "https://www.raicesreturnings.com";
+type Params = Promise<{ locale: string; slug: string }>;
 type SearchParams = Promise<{ category?: string }>;
 
 const PATH = CategoryEnum.Blog;
+
+/** Strip HTML tags and return plain text excerpt (max 160 chars) */
+function htmlExcerpt(html: string | null | undefined, max = 160): string {
+  if (!html) return "";
+  const plain = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  return plain.length <= max ? plain : plain.slice(0, max - 1).trimEnd() + "…";
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+
+  const post = await prisma.post.findFirst({
+    where: { slug_en: slug, published: true },
+    select: {
+      title_en: true,
+      title_es: true,
+      content_en: true,
+      content_es: true,
+      image: true,
+      updatedAt: true,
+      slug_en: true,
+      slug_es: true,
+    },
+  });
+
+  if (!post) return {};
+
+  const title = locale === "en" ? post.title_en : post.title_es;
+  const content = locale === "en" ? post.content_en : post.content_es;
+  const description = htmlExcerpt(content);
+  const pageTitle = `${title} | Raíces & Returnings`;
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      type: "article",
+      title: pageTitle,
+      description,
+      url: `${BASE_URL}/${locale}/blog/${slug}`,
+      images: [{ url: post.image, width: 1200, height: 630, alt: title }],
+      publishedTime: post.updatedAt.toISOString(),
+      authors: ["https://www.raicesreturnings.com/about"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description,
+      images: [post.image],
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/blog/${slug}`,
+      languages: {
+        en: `${BASE_URL}/en/blog/${post.slug_en}`,
+        es: `${BASE_URL}/es/blog/${post.slug_en}`,
+        "x-default": `${BASE_URL}/en/blog/${post.slug_en}`,
+      },
+    },
+  };
+}
 
 export default async function BlogPostPage(props: {
   params: Params;
@@ -42,6 +109,7 @@ export default async function BlogPostPage(props: {
       slug_en: slug,
       published: true, // Ensure only published posts are included
     },
+    include: { author: true },
   });
   if (!post || !category) return notFound();
 
@@ -94,8 +162,47 @@ export default async function BlogPostPage(props: {
 
   const t = await getTranslations("Blog");
 
+  const { locale } = await props.params;
+  const authorName = `${post.author.firstName} ${post.author.lastName}`;
+  const pageUrl = `${BASE_URL}/${locale}/blog/${slug}`;
+
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: postTraslated.title,
+    description: htmlExcerpt(postTraslated.content),
+    image: post.image,
+    url: pageUrl,
+    datePublished: post.updatedAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    author: {
+      "@type": "Person",
+      name: authorName,
+      url: `${BASE_URL}/${locale}/about`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Raíces & Returnings",
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpeg` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/${locale}` },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/${locale}/blog` },
+      { "@type": "ListItem", position: 3, name: postTraslated.title },
+    ],
+  };
+
   return (
-    <div className="container w-full max-w-4xl flex flex-col md:flex-row gap-4 lg:gap-8 mx-auto py-10 px-4">
+    <>
+      <JsonLd data={blogPostingSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <div className="container w-full max-w-4xl flex flex-col md:flex-row gap-4 lg:gap-8 mx-auto py-10 px-4">
       {/* Contenido principal */}
       <div className="w-full md:w-[75%]">
         {/* breadcrumbs */}
@@ -138,6 +245,8 @@ export default async function BlogPostPage(props: {
               day: "numeric",
             })}
           </span>
+          <span>·</span>
+          <span>{authorName}</span>
         </div>
         <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
           <RichTextEditor content={postTraslated.content!} isEditable={false} />
@@ -196,5 +305,6 @@ export default async function BlogPostPage(props: {
         </div>
       </aside>
     </div>
+    </>
   );
 }

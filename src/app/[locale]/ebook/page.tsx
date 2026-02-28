@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
+import type { Metadata } from "next";
 import {
   Card,
   CardContent,
@@ -14,18 +15,40 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, Star, ArrowRight } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
+
+const BASE_URL = "https://www.raicesreturnings.com";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Ebook" });
 
   return {
     title: t("metadata-title"),
     description: t("metadata-description"),
+    openGraph: {
+      title: t("metadata-title"),
+      description: t("metadata-description"),
+      url: `${BASE_URL}/${locale}/ebook`,
+      images: [`${BASE_URL}/og-image.jpeg`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("metadata-title"),
+      description: t("metadata-description"),
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/ebook`,
+      languages: {
+        en: `${BASE_URL}/en/ebook`,
+        es: `${BASE_URL}/es/ebook`,
+        "x-default": `${BASE_URL}/en/ebook`,
+      },
+    },
   };
 }
 
@@ -47,6 +70,28 @@ export default async function EbookPage({
 
   return (
     <>
+      {books.map((book) => (
+        <JsonLd
+          key={book.id}
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Book",
+            name: book.title_en,
+            author: { "@type": "Person", name: book.author },
+            bookFormat: "EBook",
+            numberOfPages: book.pages,
+            image: book.coverImage_en,
+            isbn: book.isbn,
+            url: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
+            offers: {
+              "@type": "Offer",
+              price: (book.price / 100).toFixed(2),
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+            },
+          }}
+        />
+      ))}
       {metaPixelId && (
         <>
           <Script id="meta-pixel" strategy="afterInteractive">

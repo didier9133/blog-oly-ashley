@@ -11,6 +11,7 @@ import { FadeIn } from "@/components/fade-in";
 import { SubstackHeroSubscribe } from "@/components/substack-hero-subscribe";
 import { cn } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
 
 export default async function Home() {
   const currentLanguage = await getLocale();
@@ -42,8 +43,42 @@ export default async function Home() {
 
   const t = await getTranslations("Home");
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Raíces & Returnings",
+    url: "https://www.raicesreturnings.com",
+    logo: "https://www.raicesreturnings.com/og-image.jpeg",
+    sameAs: [
+      "https://www.instagram.com/raicesreturnings",
+      "https://www.tiktok.com/@raicesreturnings",
+      "https://www.youtube.com/@raicesreturnings",
+      "https://raicesreturnings.substack.com",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "support@raicesreturnings.com",
+      contactType: "customer support",
+    },
+  };
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Raíces & Returnings",
+    url: "https://www.raicesreturnings.com",
+    inLanguage: ["en", "es"],
+    publisher: {
+      "@type": "Organization",
+      name: "Raíces & Returnings",
+    },
+  };
+
   return (
-    <main className="bg-[#F9F8F6]">
+    <>
+      <JsonLd data={organizationSchema} />
+      <JsonLd data={webSiteSchema} />
+      <main className="bg-[#F9F8F6]">
       {/* ------------------------------------------------------------- */}
       {/* MOBILE HERO (Split Design: Image Top / Content Bottom)        */}
       {/* ------------------------------------------------------------- */}
@@ -449,5 +484,6 @@ export default async function Home() {
         </div>
       </section>
     </main>
+    </>
   );
 }

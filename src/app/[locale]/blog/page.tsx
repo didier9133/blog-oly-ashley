@@ -20,9 +20,44 @@ import NoPostsView from "@/components/empty-post";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
+import type { Metadata } from "next";
 
+const BASE_URL = "https://www.raicesreturnings.com";
 type SearchParams = Promise<{ page?: string }>;
 const PATH = CategoryEnum.Blog;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Blog.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}/blog`,
+      images: [`${BASE_URL}/blog-hero.jpeg`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/blog`,
+      languages: {
+        en: `${BASE_URL}/en/blog`,
+        es: `${BASE_URL}/es/blog`,
+        "x-default": `${BASE_URL}/en/blog`,
+      },
+    },
+  };
+}
 
 export default async function Page(props: { searchParams?: SearchParams }) {
   const searchParams = await props.searchParams;

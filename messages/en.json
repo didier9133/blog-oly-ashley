@@ -340,7 +340,17 @@
     "btn-fresh-two": " All Recipes Posts",
     "btn-all-posts": "All Blog Posts"
   },
+  "Recipes": {
+    "metadata": {
+      "title": "Recipes | Raíces & Returnings",
+      "description": "Heritage recipes from Latin American and diaspora kitchens — Venezuelan hot chocolate, arepas, and family-table classics curated by Oly."
+    }
+  },
   "About": {
+    "metadata": {
+      "title": "About Ashley & Oly | Raíces & Returnings",
+      "description": "Meet Ashley & Oly, the writers behind Raíces & Returnings — a space for diaspora stories, heritage cooking, and the meaning of home."
+    },
     "title": "About Raíces & Returnings",
     "intro": "Raíces & Returnings was created to hold what doesn’t fit neatly into categories—faith that’s been fractured, identity that’s been fragmented, spirituality that refuses fear.\n\nThis space exists for people learning how to return to themselves without abandoning their questions, bodies, or stories. It is writing-led, reflection-based, and rooted in lived experience—not performance or perfection.",
     "image-alt": "Our team",
@@ -352,6 +362,10 @@
     "conclusion": "Together, Raíces & Returnings is a space built from real life, <nowrap>not aspiration.</nowrap>\nIt holds grief and reverence.\nUnlearning and returning.\nHumanity and divinity, side by side.\nWe’re glad you’re here."
   },
   "Blog": {
+    "metadata": {
+      "title": "Blog | Raíces & Returnings",
+      "description": "Essays and reflections on identity, belonging, queerness, and healing. The Raíces & Returnings blog by Ashley & Oly."
+    },
     "breadcrumb": "Home",
     "recent-posts": "Recent Posts",
     "no-posts": "No posts available.",
@@ -362,6 +376,10 @@
     "breadcrumb-blog": "Blog"
   },
   "Contact": {
+    "metadata": {
+      "title": "Contact | Raíces & Returnings",
+      "description": "Get in touch with Ashley & Oly at Raíces & Returnings. We'd love to hear from you."
+    },
     "title": "Want to reach out?",
     "paragraph": "Whether you have a question, a collaboration idea, or something you need to say—we’d love to hear from you. This is a living, breathing platform. Your voice matters here.",
     "title-form": "Contact Form",

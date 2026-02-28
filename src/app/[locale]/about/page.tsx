@@ -1,11 +1,72 @@
 import { getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import Image from "next/image";
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+
+const BASE_URL = "https://www.raicesreturnings.com";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "About.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}/about`,
+      images: [`${BASE_URL}/og-image.jpeg`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/about`,
+      languages: {
+        en: `${BASE_URL}/en/about`,
+        es: `${BASE_URL}/es/about`,
+        "x-default": `${BASE_URL}/en/about`,
+      },
+    },
+  };
+}
 
 export default async function Page() {
   const t = await getTranslations("About");
+  const locale = await getLocale();
+  const pageUrl = `${BASE_URL}/${locale}/about`;
+
+  const ashleySchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ashley León",
+    url: `${pageUrl}#ashley`,
+    jobTitle: "Writer & Spiritual Guide",
+    worksFor: { "@type": "Organization", name: "Raíces & Returnings", url: BASE_URL },
+    sameAs: [BASE_URL],
+  };
+
+  const olySchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Oly Contreras",
+    url: `${pageUrl}#oly`,
+    jobTitle: "Recipe Developer & Co-founder",
+    worksFor: { "@type": "Organization", name: "Raíces & Returnings", url: BASE_URL },
+    sameAs: [BASE_URL],
+  };
 
   return (
-    <div className="container max-w-6xl mx-auto flex flex-col items-center min-h-screen px-6 py-16 sm:py-24 font-[family-name:var(--font-cormorant-garamond)]">
+    <>
+      <JsonLd data={ashleySchema} />
+      <JsonLd data={olySchema} />
+      <div className="container max-w-6xl mx-auto flex flex-col items-center min-h-screen px-6 py-16 sm:py-24 font-[family-name:var(--font-cormorant-garamond)]">
       {/* SECCIÓN 1: About Raíces & Returnings */}
       <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20 mb-24">
         <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
@@ -88,5 +149,6 @@ export default async function Page() {
         </p>
       </section>
     </div>
+    </>
   );
 }

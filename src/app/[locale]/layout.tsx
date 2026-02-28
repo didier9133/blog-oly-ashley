@@ -70,7 +70,7 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
       alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
-      url: "https://www.raicesreturnings.com",
+      url: `https://www.raicesreturnings.com/${locale}`,
       siteName: "Raíces & Returnings",
       title: t("title"),
       description: t("description"),
@@ -90,6 +90,21 @@ export async function generateMetadata({
           type: "image/jpeg",
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@raicesreturnings",
+      title: t("title"),
+      description: t("description"),
+      images: ["https://www.raicesreturnings.com/og-image.jpeg"],
+    },
+    alternates: {
+      canonical: `https://www.raicesreturnings.com/${locale}`,
+      languages: {
+        en: "https://www.raicesreturnings.com/en",
+        es: "https://www.raicesreturnings.com/es",
+        "x-default": "https://www.raicesreturnings.com/en",
+      },
     },
   };
 }
