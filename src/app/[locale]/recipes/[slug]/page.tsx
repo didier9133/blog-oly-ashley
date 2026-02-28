@@ -27,7 +27,10 @@ const PATH = CategoryEnum.Recipes;
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {
   if (!html) return "";
-  const plain = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const plain = html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   return plain.length <= max ? plain : plain.slice(0, max - 1).trimEnd() + "…";
 }
 
@@ -190,8 +193,18 @@ export default async function BlogPostPage(props: {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/${locale}` },
-      { "@type": "ListItem", position: 2, name: "Recipes", item: `${BASE_URL}/${locale}/recipes` },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${BASE_URL}/${locale}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Recipes",
+        item: `${BASE_URL}/${locale}/recipes`,
+      },
       { "@type": "ListItem", position: 3, name: postTraslated.title },
     ],
   };
@@ -201,105 +214,111 @@ export default async function BlogPostPage(props: {
       <JsonLd data={blogPostingSchema} />
       <JsonLd data={breadcrumbSchema} />
       <div className="container  w-full max-w-4xl flex flex-col md:flex-row gap-4 lg:gap-8  mx-auto py-10 px-4">
-      {/* Contenido principal */}
-      <div className="w-full md:w-[75%]">
-        {/* breadcrumbs */}
-        <Breadcrumb className="mb-8">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <Link href="/">{t("breadcrumb")}</Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <Link href={`/${PATH}`}>{t("breadcrumb-recipes")}</Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              {currentLanguage === "en" ? slug : postTraslated.slug_es}
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        {/* Imagen del post */}
-        <ImageBlogDetail
-          post={{
-            ...post,
-            title: postTraslated.title,
-          }}
-        />
-        <h1 className="text-3xl font-bold mb-4 text-primary font-[family-name:var(--font-cormorant-garamond)]">
-          {postTraslated.title}
-        </h1>
-        <div className="text-muted-foreground text-sm mb-6 flex gap-4">
-          <span>
-            {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
-          </span>
-          <span>·</span>
-          <span>{authorName}</span>
-        </div>
-        <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
-          <RichTextEditor content={postTraslated.content!} isEditable={false} />
-        </article>
-      </div>
-
-      <Separator orientation="vertical" className="hidden md:flex" />
-
-      {/* Sidebar de posts recientes */}
-      <aside className="w-full md:w-[25%] mt-10 md:mt-0 lg:pl-6">
-        <div className="max-w-sm w-full mx-auto md:mx-0">
-          <ComboboxDemo categoryId={category.id} categoryName={category.name} />
-          <Separator className="flex my-4" />
-          <div>
-            <h3 className="text-base font-semibold mb-2 transition-colors duration-700">
-              {t("recent-posts")}
-            </h3>
-            <ul className="space-y-4">
-              {recentPostsTranslated.map((recent) => (
-                <li key={recent.id}>
-                  <Link
-                    href={`/${PATH}/${recent.slug}`}
-                    className="flex items-center gap-2"
-                  >
-                    <ImageRecentBlog
-                      post={{
-                        title: recent.title,
-                        image: recent.image,
-                      }}
-                    />
-                    <div>
-                      <div className="font-medium text-xs text-primary line-clamp-2">
-                        {recent.title}
-                      </div>
-                      <div className="text-[10px] text-muted-foreground">
-                        {new Date(recent.updatedAt).toLocaleDateString(
-                          currentLanguage,
-                          {
-                            month: "short",
-                            day: "numeric",
-                          },
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            {recentPostsTranslated.length === 0 && (
-              <p className="text-sm text-muted-foreground mt-2">
-                {t("no-posts")}
-              </p>
-            )}
+        {/* Contenido principal */}
+        <div className="w-full md:w-[75%]">
+          {/* breadcrumbs */}
+          <Breadcrumb className="mb-8">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <Link href="/">{t("breadcrumb")}</Link>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <Slash />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <Link href={`/${PATH}`}>{t("breadcrumb-recipes")}</Link>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <Slash />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                {currentLanguage === "en" ? slug : postTraslated.slug_es}
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          {/* Imagen del post */}
+          <ImageBlogDetail
+            post={{
+              ...post,
+              title: postTraslated.title,
+            }}
+          />
+          <h1 className="text-3xl font-bold mb-4 text-primary font-[family-name:var(--font-cormorant-garamond)]">
+            {postTraslated.title}
+          </h1>
+          <div className="text-muted-foreground text-sm mb-6 flex gap-4">
+            <span>
+              {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+            <span>·</span>
+            <span>{authorName}</span>
           </div>
+          <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
+            <RichTextEditor
+              content={postTraslated.content!}
+              isEditable={false}
+            />
+          </article>
         </div>
-      </aside>
-    </div>
-  </>
+
+        <Separator orientation="vertical" className="hidden md:flex" />
+
+        {/* Sidebar de posts recientes */}
+        <aside className="w-full md:w-[25%] mt-10 md:mt-0 lg:pl-6">
+          <div className="max-w-sm w-full mx-auto md:mx-0">
+            <ComboboxDemo
+              categoryId={category.id}
+              categoryName={category.name}
+            />
+            <Separator className="flex my-4" />
+            <div>
+              <h3 className="text-base font-semibold mb-2 transition-colors duration-700">
+                {t("recent-posts")}
+              </h3>
+              <ul className="space-y-4">
+                {recentPostsTranslated.map((recent) => (
+                  <li key={recent.id}>
+                    <Link
+                      href={`/${PATH}/${recent.slug}`}
+                      className="flex items-center gap-2"
+                    >
+                      <ImageRecentBlog
+                        post={{
+                          title: recent.title,
+                          image: recent.image,
+                        }}
+                      />
+                      <div>
+                        <div className="font-medium text-xs text-primary line-clamp-2">
+                          {recent.title}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">
+                          {new Date(recent.updatedAt).toLocaleDateString(
+                            currentLanguage,
+                            {
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              {recentPostsTranslated.length === 0 && (
+                <p className="text-sm text-muted-foreground mt-2">
+                  {t("no-posts")}
+                </p>
+              )}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </>
   );
 }
