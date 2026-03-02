@@ -55,11 +55,22 @@ export async function generateMetadata({
     authors: [{ name: "Ashley León" }, { name: "Oly Contreras" }],
     creator: "Ashley León & Oly Contreras",
     publisher: "Raíces & Returnings",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
       alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
-      url: `https://www.raicesreturnings.com/${locale}`,
+      url: "https://www.raicesreturnings.com",
       siteName: "Raíces & Returnings",
       title: t("title"),
       description: t("description"),
@@ -79,21 +90,6 @@ export async function generateMetadata({
           type: "image/jpeg",
         },
       ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      site: "@raicesreturnings",
-      title: t("title"),
-      description: t("description"),
-      images: ["https://www.raicesreturnings.com/og-image.jpeg"],
-    },
-    alternates: {
-      canonical: `https://www.raicesreturnings.com/${locale}`,
-      languages: {
-        en: "https://www.raicesreturnings.com/en",
-        es: "https://www.raicesreturnings.com/es",
-        "x-default": "https://www.raicesreturnings.com/en",
-      },
     },
   };
 }
@@ -136,7 +132,7 @@ export default async function RootLayout({
           <link rel="manifest" href="/site.webmanifest" />
         </head>
         <body
-          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased`}
+          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Toaster position="top-right" richColors />
@@ -145,7 +141,7 @@ export default async function RootLayout({
                 side="right"
                 className="font-[family-name:var(--font-cormorant-garamond)]"
               />
-              <SidebarInset className="overflow-x-clip">
+              <SidebarInset>
                 <Header />
                 {children}
                 <Analytics />

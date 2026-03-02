@@ -35,13 +35,7 @@ export function Footer() {
             {t("stay-in-loop")}
           </h2>
           <p className="max-w-xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line text-left sm:text-center">
-            {t.rich("newsletter-desc", {
-              highlight: (chunks) => (
-                <strong className="font-semibold text-[#e9c46a]">
-                  {chunks}
-                </strong>
-              ),
-            })}
+            {t("newsletter-desc")}
           </p>
 
           <div className="w-full max-w-md mx-auto">
@@ -216,6 +210,34 @@ export function Footer() {
     </footer>
   );
 }
+
+function FooterHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h4 className="font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold text-[#2b2b2b]">
+      {children}
+    </h4>
+  );
+}
+
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="hover:text-[#c47456] transition-colors duration-200"
+      >
+        {children}
+      </Link>
+    </li>
+  );
+}
+
 function SocialLink({
   href,
   children,

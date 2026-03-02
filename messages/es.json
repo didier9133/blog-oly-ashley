@@ -340,17 +340,7 @@
     "btn-fresh-two": " Todas las Recetas",
     "btn-all-posts": "Todos los Blogs"
   },
-  "Recipes": {
-    "metadata": {
-      "title": "Recetas | Raíces & Returnings",
-      "description": "Recetas de herencia latinoamericana y de la diáspora — chocolate caliente venezolano, arepas y clásicos de mesa familiar, de la mano de Oly."
-    }
-  },
   "About": {
-    "metadata": {
-      "title": "Conoce a Ashley y Oly | Raíces & Returnings",
-      "description": "Conoce a Ashley y Oly, las creadoras detrás de Raíces & Returnings — un espacio para historias de la diáspora, cocina de herencia y el significado del hogar."
-    },
     "title": "Sobre Raíces & Returnings",
     "intro": "Raíces & Returnings fue creado para sostener lo que no encaja del todo en categorías—una fe fracturada, una identidad fragmentada, una espiritualidad que se niega al miedo.\n\nEste espacio existe para personas que están aprendiendo a regresar a sí mismas sin abandonar sus preguntas, sus cuerpos o sus historias. Está guiado por la escritura, basado en la reflexión y arraigado en la experiencia vivida—no en la performance ni en la perfección.",
     "image-alt": "Nuestro equipo",
@@ -362,10 +352,6 @@
     "conclusion": "Juntas, Raíces & Returnings es un espacio construido desde la vida real, <nowrap>no desde la aspiración.</nowrap>\nSostiene el duelo y la reverencia.\nEl desaprender y el regresar.\nLa humanidad y la divinidad, lado a lado.\nNos alegra que estés aquí."
   },
   "Blog": {
-    "metadata": {
-      "title": "Blog | Raíces & Returnings",
-      "description": "Ensayos y reflexiones sobre identidad, pertenencia, diversidad sexual y sanación. El blog de Raíces & Returnings por Ashley y Oly."
-    },
     "breadcrumb": "Inicio",
     "recent-posts": "Publicaciones Recientes",
     "no-posts": "No hay publicaciones disponibles.",
@@ -376,10 +362,6 @@
     "breadcrumb-blog": "Blog"
   },
   "Contact": {
-    "metadata": {
-      "title": "Contacto | Raíces & Returnings",
-      "description": "Ponte en contacto con Ashley y Oly en Raíces & Returnings. Nos encantaría saber de ti."
-    },
     "title": "¿Quieres contactarnos?",
     "paragraph": "Ya sea que tengas una pregunta, una idea de colaboración o algo que necesites decir, nos encantaría escucharte. Esta es una plataforma viva y en constante evolución. Tu voz importa aquí.",
     "title-form": "Formulario de Contacto",
