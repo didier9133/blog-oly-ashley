@@ -4,28 +4,26 @@ import prisma from "@/lib/prisma";
 const BASE_URL = "https://www.raicesreturnings.com";
 const LOCALES = ["es", "en"] as const;
 
-const STATIC_ROUTES = [
-  { path: "", priority: 1.0, changeFrequency: "weekly" as const },
-  { path: "/about", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/blog", priority: 0.9, changeFrequency: "daily" as const },
-  { path: "/recipes", priority: 0.9, changeFrequency: "daily" as const },
-  { path: "/ebook", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/our-love", priority: 0.5, changeFrequency: "monthly" as const },
-  { path: "/contact", priority: 0.4, changeFrequency: "yearly" as const },
-  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const },
-  { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const },
+// Fechas reales de última modificación por ruta.
+// Actualizar manualmente cuando cambie contenido estático significativo.
+const STATIC_ROUTES: { path: string; lastModified: string }[] = [
+  { path: "", lastModified: "2026-02-11" },
+  { path: "/about", lastModified: "2025-11-07" },
+  { path: "/blog", lastModified: "2026-02-11" },
+  { path: "/recipes", lastModified: "2025-11-17" },
+  { path: "/ebook", lastModified: "2025-11-07" },
+  { path: "/our-love", lastModified: "2025-09-01" },
+  { path: "/contact", lastModified: "2025-07-31" },
+  { path: "/privacy", lastModified: "2025-07-31" },
+  { path: "/terms", lastModified: "2025-07-31" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
-  // Static routes for each locale
+  // Static routes — lastModified real, sin priority/changeFrequency (ignorados por Google)
   const staticEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
-    STATIC_ROUTES.map(({ path, priority, changeFrequency }) => ({
+    STATIC_ROUTES.map(({ path, lastModified }) => ({
       url: `${BASE_URL}/${locale}${path}`,
-      lastModified: now,
-      changeFrequency,
-      priority,
+      lastModified: new Date(lastModified),
     })),
   );
 
@@ -43,8 +41,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     blogPosts.map((post) => ({
       url: `${BASE_URL}/${locale}/blog/${post.slug_en}`,
       lastModified: post.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
     })),
   );
 
@@ -62,8 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     recipePosts.map((post) => ({
       url: `${BASE_URL}/${locale}/recipes/${post.slug_en}`,
       lastModified: post.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
     })),
   );
 
@@ -77,14 +71,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
       lastModified: book.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
     },
     {
       url: `${BASE_URL}/es/ebook/detail/${book.slug_es}`,
       lastModified: book.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
     },
   ]);
 

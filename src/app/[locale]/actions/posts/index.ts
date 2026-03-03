@@ -88,7 +88,13 @@ export async function updatePost(
     categoryId: number;
     subcategoryId: number;
     published: boolean;
-  }
+
+    recipeIngredients?: string[];
+    recipeInstructions?: string[];
+    recipeYield?: string | null;
+    recipePrepTime?: string | null;
+    recipeCookTime?: string | null;
+  },
 ) {
   try {
     const { userId } = await auth();
@@ -103,7 +109,7 @@ export async function updatePost(
 
     if (!post || post.authorId !== userId) {
       throw new Error(
-        "Post not found or you don't have permission to update it"
+        "Post not found or you don't have permission to update it",
       );
     }
 
@@ -171,6 +177,12 @@ export async function saveNewPost(data: {
   categoryId: number;
   subcategoryId: number;
   published: boolean;
+
+  recipeIngredients?: string[];
+  recipeInstructions?: string[];
+  recipeYield?: string | null;
+  recipePrepTime?: string | null;
+  recipeCookTime?: string | null;
 }) {
   try {
     const { userId } = await auth();

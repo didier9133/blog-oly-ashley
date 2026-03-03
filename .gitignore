@@ -46,3 +46,4 @@ next-env.d.ts
 
 # ebooks PDFs (stored in S3)
 /public/ebooks/
+SEO-SPEC.md

@@ -53,6 +53,7 @@ export async function generateMetadata({
       content_en: true,
       content_es: true,
       image: true,
+      createdAt: true,
       updatedAt: true,
       slug_en: true,
       slug_es: true,
@@ -75,7 +76,7 @@ export async function generateMetadata({
       description,
       url: `${BASE_URL}/${locale}/blog/${slug}`,
       images: [{ url: post.image, width: 1200, height: 630, alt: title }],
-      publishedTime: post.updatedAt.toISOString(),
+      publishedTime: post.createdAt.toISOString(),
       authors: ["https://www.raicesreturnings.com/about"],
     },
     twitter: {
@@ -176,7 +177,7 @@ export default async function BlogPostPage(props: {
     description: htmlExcerpt(postTraslated.content),
     image: post.image,
     url: pageUrl,
-    datePublished: post.updatedAt.toISOString(),
+    datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
     author: {
       "@type": "Person",
@@ -207,7 +208,12 @@ export default async function BlogPostPage(props: {
         name: "Blog",
         item: `${BASE_URL}/${locale}/blog`,
       },
-      { "@type": "ListItem", position: 3, name: postTraslated.title },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: postTraslated.title,
+        item: pageUrl,
+      },
     ],
   };
 

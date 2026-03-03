@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -234,6 +235,13 @@ export default function CreatePostPage() {
   const [content_es, setContent_es] = useState("");
   const [content_en, setContent_en] = useState("");
 
+  // Recipe SEO fields (shown only when "recipes" category is selected)
+  const [recipeIngredients, setRecipeIngredients] = useState("");
+  const [recipeInstructions, setRecipeInstructions] = useState("");
+  const [recipeYield, setRecipeYield] = useState("");
+  const [recipePrepTime, setRecipePrepTime] = useState("");
+  const [recipeCookTime, setRecipeCookTime] = useState("");
+
   const sanitizePastedText = useCallback((text: string) => {
     // Remover HTML y mantener solo texto plano
     const cleanText = DOMPurify.sanitize(text, {
@@ -360,6 +368,10 @@ export default function CreatePostPage() {
   }, []);
 
   const onSubmit = async (values: FormPost) => {
+    const isRecipePost =
+      categories.find((c) => c.id.toString() === values.category)?.name ===
+      "recipes";
+
     // Validar que el contenido no esté vacío
     const contenSanitized_es = DOMPurify.sanitize(content_es, {
       ALLOWED_TAGS: [],
@@ -414,6 +426,19 @@ export default function CreatePostPage() {
         published: values.isPublished,
         image: urlImage,
         video: videoUrl,
+        ...(isRecipePost && {
+          recipeIngredients: recipeIngredients
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          recipeInstructions: recipeInstructions
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          recipeYield: recipeYield.trim() || null,
+          recipePrepTime: recipePrepTime.trim() || null,
+          recipeCookTime: recipeCookTime.trim() || null,
+        }),
       };
       await saveNewPost(data);
       toast.dismiss();
@@ -434,11 +459,21 @@ export default function CreatePostPage() {
 
       setContent_es("");
       setContent_en("");
+      setRecipeIngredients("");
+      setRecipeInstructions("");
+      setRecipeYield("");
+      setRecipePrepTime("");
+      setRecipeCookTime("");
       setErrorMessage_en(null);
       setErrorMessage_es(null);
       setIsSubmitting(false);
     }
   };
+  const watchedCategoryId = formPost.watch("category");
+  const isRecipePostVisible =
+    categories.find((c) => c.id.toString() === watchedCategoryId)?.name ===
+    "recipes";
+
   return (
     <div className="min-h-screen  p-4 sm:p-6 md:p-8">
       <div className="conatainer  max-w-4xl mx-auto">
@@ -906,6 +941,67 @@ export default function CreatePostPage() {
                 </div>
               </CardFooter>
             </Card>
+
+            {/* Recipe SEO fields — only shown when "recipes" category is selected */}
+            {isRecipePostVisible && (
+              <Card className="shadow-sm">
+                <CardHeader>
+                  <CardTitle>Recipe Details (SEO Rich Results)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      Ingredients (one per line)
+                    </label>
+                    <Textarea
+                      value={recipeIngredients}
+                      onChange={(e) => setRecipeIngredients(e.target.value)}
+                      placeholder={"1 cup flour\n2 eggs\n1 tsp salt"}
+                      rows={6}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      Instructions (one step per line)
+                    </label>
+                    <Textarea
+                      value={recipeInstructions}
+                      onChange={(e) => setRecipeInstructions(e.target.value)}
+                      placeholder={
+                        "Mix dry ingredients\nAdd eggs and stir\nBake at 180°C for 30 min"
+                      }
+                      rows={6}
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Yield</label>
+                      <Input
+                        value={recipeYield}
+                        onChange={(e) => setRecipeYield(e.target.value)}
+                        placeholder="4 servings"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Prep Time</label>
+                      <Input
+                        value={recipePrepTime}
+                        onChange={(e) => setRecipePrepTime(e.target.value)}
+                        placeholder="PT15M"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Cook Time</label>
+                      <Input
+                        value={recipeCookTime}
+                        onChange={(e) => setRecipeCookTime(e.target.value)}
+                        placeholder="PT30M"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </form>
         </Form>
       </div>

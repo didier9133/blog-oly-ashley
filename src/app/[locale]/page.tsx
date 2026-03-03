@@ -48,7 +48,12 @@ export default async function Home() {
     "@type": "Organization",
     name: "Raíces & Returnings",
     url: "https://www.raicesreturnings.com",
-    logo: "https://www.raicesreturnings.com/og-image.jpeg",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.raicesreturnings.com/og-image.jpeg",
+      width: 1200,
+      height: 630,
+    },
     sameAs: [
       "https://www.instagram.com/raicesreturnings",
       "https://www.tiktok.com/@raicesreturnings",

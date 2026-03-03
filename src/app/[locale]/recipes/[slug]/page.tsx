@@ -49,6 +49,7 @@ export async function generateMetadata({
       content_en: true,
       content_es: true,
       image: true,
+      createdAt: true,
       updatedAt: true,
       slug_en: true,
       slug_es: true,
@@ -71,7 +72,7 @@ export async function generateMetadata({
       description,
       url: `${BASE_URL}/${locale}/recipes/${slug}`,
       images: [{ url: post.image, width: 1200, height: 630, alt: title }],
-      publishedTime: post.updatedAt.toISOString(),
+      publishedTime: post.createdAt.toISOString(),
       authors: ["https://www.raicesreturnings.com/about"],
     },
     twitter: {
@@ -173,7 +174,8 @@ export default async function BlogPostPage(props: {
     description: htmlExcerpt(postTraslated.content),
     image: [post.image],
     url: pageUrl,
-    datePublished: post.updatedAt.toISOString(),
+    datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
     author: {
       "@type": "Person",
       name: authorName,
@@ -187,6 +189,19 @@ export default async function BlogPostPage(props: {
     recipeCategory: "Latin American",
     recipeCuisine: "Venezuelan",
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+    ...(post.recipeIngredients.length > 0 && {
+      recipeIngredient: post.recipeIngredients,
+    }),
+    ...(post.recipeInstructions.length > 0 && {
+      recipeInstructions: post.recipeInstructions.map((step, i) => ({
+        "@type": "HowToStep",
+        position: i + 1,
+        text: step,
+      })),
+    }),
+    ...(post.recipeYield && { recipeYield: post.recipeYield }),
+    ...(post.recipePrepTime && { prepTime: post.recipePrepTime }),
+    ...(post.recipeCookTime && { cookTime: post.recipeCookTime }),
   };
 
   const breadcrumbSchema = {
@@ -205,7 +220,12 @@ export default async function BlogPostPage(props: {
         name: "Recipes",
         item: `${BASE_URL}/${locale}/recipes`,
       },
-      { "@type": "ListItem", position: 3, name: postTraslated.title },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: postTraslated.title,
+        item: pageUrl,
+      },
     ],
   };
 

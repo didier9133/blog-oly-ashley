@@ -2648,9 +2648,13 @@ export namespace Prisma {
     authorId: string | null
     image: string | null
     video: string | null
+    createdAt: Date | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
+    recipeYield: string | null
+    recipePrepTime: string | null
+    recipeCookTime: string | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -2665,9 +2669,13 @@ export namespace Prisma {
     authorId: string | null
     image: string | null
     video: string | null
+    createdAt: Date | null
     updatedAt: Date | null
     categoryId: number | null
     subcategoryId: number | null
+    recipeYield: string | null
+    recipePrepTime: string | null
+    recipeCookTime: string | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -2682,9 +2690,15 @@ export namespace Prisma {
     authorId: number
     image: number
     video: number
+    createdAt: number
     updatedAt: number
     categoryId: number
     subcategoryId: number
+    recipeIngredients: number
+    recipeInstructions: number
+    recipeYield: number
+    recipePrepTime: number
+    recipeCookTime: number
     _all: number
   }
 
@@ -2713,9 +2727,13 @@ export namespace Prisma {
     authorId?: true
     image?: true
     video?: true
+    createdAt?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    recipeYield?: true
+    recipePrepTime?: true
+    recipeCookTime?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -2730,9 +2748,13 @@ export namespace Prisma {
     authorId?: true
     image?: true
     video?: true
+    createdAt?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    recipeYield?: true
+    recipePrepTime?: true
+    recipeCookTime?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -2747,9 +2769,15 @@ export namespace Prisma {
     authorId?: true
     image?: true
     video?: true
+    createdAt?: true
     updatedAt?: true
     categoryId?: true
     subcategoryId?: true
+    recipeIngredients?: true
+    recipeInstructions?: true
+    recipeYield?: true
+    recipePrepTime?: true
+    recipeCookTime?: true
     _all?: true
   }
 
@@ -2851,9 +2879,15 @@ export namespace Prisma {
     authorId: string
     image: string
     video: string | null
+    createdAt: Date
     updatedAt: Date
     categoryId: number
     subcategoryId: number
+    recipeIngredients: string[]
+    recipeInstructions: string[]
+    recipeYield: string | null
+    recipePrepTime: string | null
+    recipeCookTime: string | null
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -2887,9 +2921,15 @@ export namespace Prisma {
     authorId?: boolean
     image?: boolean
     video?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    recipeIngredients?: boolean
+    recipeInstructions?: boolean
+    recipeYield?: boolean
+    recipePrepTime?: boolean
+    recipeCookTime?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2907,9 +2947,15 @@ export namespace Prisma {
     authorId?: boolean
     image?: boolean
     video?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    recipeIngredients?: boolean
+    recipeInstructions?: boolean
+    recipeYield?: boolean
+    recipePrepTime?: boolean
+    recipeCookTime?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2927,9 +2973,15 @@ export namespace Prisma {
     authorId?: boolean
     image?: boolean
     video?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    recipeIngredients?: boolean
+    recipeInstructions?: boolean
+    recipeYield?: boolean
+    recipePrepTime?: boolean
+    recipeCookTime?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     subcategory?: boolean | SubcategoryDefaultArgs<ExtArgs>
@@ -2947,12 +2999,18 @@ export namespace Prisma {
     authorId?: boolean
     image?: boolean
     video?: boolean
+    createdAt?: boolean
     updatedAt?: boolean
     categoryId?: boolean
     subcategoryId?: boolean
+    recipeIngredients?: boolean
+    recipeInstructions?: boolean
+    recipeYield?: boolean
+    recipePrepTime?: boolean
+    recipeCookTime?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_es" | "content_es" | "slug_es" | "title_en" | "content_en" | "slug_en" | "published" | "authorId" | "image" | "video" | "updatedAt" | "categoryId" | "subcategoryId", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_es" | "content_es" | "slug_es" | "title_en" | "content_en" | "slug_en" | "published" | "authorId" | "image" | "video" | "createdAt" | "updatedAt" | "categoryId" | "subcategoryId" | "recipeIngredients" | "recipeInstructions" | "recipeYield" | "recipePrepTime" | "recipeCookTime", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -2988,9 +3046,15 @@ export namespace Prisma {
       authorId: string
       image: string
       video: string | null
+      createdAt: Date
       updatedAt: Date
       categoryId: number
       subcategoryId: number
+      recipeIngredients: string[]
+      recipeInstructions: string[]
+      recipeYield: string | null
+      recipePrepTime: string | null
+      recipeCookTime: string | null
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -3428,9 +3492,15 @@ export namespace Prisma {
     readonly authorId: FieldRef<"Post", 'String'>
     readonly image: FieldRef<"Post", 'String'>
     readonly video: FieldRef<"Post", 'String'>
+    readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly categoryId: FieldRef<"Post", 'Int'>
     readonly subcategoryId: FieldRef<"Post", 'Int'>
+    readonly recipeIngredients: FieldRef<"Post", 'String[]'>
+    readonly recipeInstructions: FieldRef<"Post", 'String[]'>
+    readonly recipeYield: FieldRef<"Post", 'String'>
+    readonly recipePrepTime: FieldRef<"Post", 'String'>
+    readonly recipeCookTime: FieldRef<"Post", 'String'>
   }
     
 
@@ -9649,9 +9719,15 @@ export namespace Prisma {
     authorId: 'authorId',
     image: 'image',
     video: 'video',
+    createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     categoryId: 'categoryId',
-    subcategoryId: 'subcategoryId'
+    subcategoryId: 'subcategoryId',
+    recipeIngredients: 'recipeIngredients',
+    recipeInstructions: 'recipeInstructions',
+    recipeYield: 'recipeYield',
+    recipePrepTime: 'recipePrepTime',
+    recipeCookTime: 'recipeCookTime'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -9921,9 +9997,15 @@ export namespace Prisma {
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
     video?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
+    recipeIngredients?: StringNullableListFilter<"Post">
+    recipeInstructions?: StringNullableListFilter<"Post">
+    recipeYield?: StringNullableFilter<"Post"> | string | null
+    recipePrepTime?: StringNullableFilter<"Post"> | string | null
+    recipeCookTime?: StringNullableFilter<"Post"> | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     subcategory?: XOR<SubcategoryScalarRelationFilter, SubcategoryWhereInput>
@@ -9941,9 +10023,15 @@ export namespace Prisma {
     authorId?: SortOrder
     image?: SortOrder
     video?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    recipeIngredients?: SortOrder
+    recipeInstructions?: SortOrder
+    recipeYield?: SortOrderInput | SortOrder
+    recipePrepTime?: SortOrderInput | SortOrder
+    recipeCookTime?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
     subcategory?: SubcategoryOrderByWithRelationInput
@@ -9964,9 +10052,15 @@ export namespace Prisma {
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
     video?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
+    recipeIngredients?: StringNullableListFilter<"Post">
+    recipeInstructions?: StringNullableListFilter<"Post">
+    recipeYield?: StringNullableFilter<"Post"> | string | null
+    recipePrepTime?: StringNullableFilter<"Post"> | string | null
+    recipeCookTime?: StringNullableFilter<"Post"> | string | null
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     subcategory?: XOR<SubcategoryScalarRelationFilter, SubcategoryWhereInput>
@@ -9984,9 +10078,15 @@ export namespace Prisma {
     authorId?: SortOrder
     image?: SortOrder
     video?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    recipeIngredients?: SortOrder
+    recipeInstructions?: SortOrder
+    recipeYield?: SortOrderInput | SortOrder
+    recipePrepTime?: SortOrderInput | SortOrder
+    recipeCookTime?: SortOrderInput | SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -10009,9 +10109,15 @@ export namespace Prisma {
     authorId?: StringWithAggregatesFilter<"Post"> | string
     image?: StringWithAggregatesFilter<"Post"> | string
     video?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     categoryId?: IntWithAggregatesFilter<"Post"> | number
     subcategoryId?: IntWithAggregatesFilter<"Post"> | number
+    recipeIngredients?: StringNullableListFilter<"Post">
+    recipeInstructions?: StringNullableListFilter<"Post">
+    recipeYield?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    recipePrepTime?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    recipeCookTime?: StringNullableWithAggregatesFilter<"Post"> | string | null
   }
 
   export type CategoryWhereInput = {
@@ -10548,7 +10654,13 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
@@ -10566,9 +10678,15 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostUpdateInput = {
@@ -10581,7 +10699,13 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
@@ -10599,9 +10723,15 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostCreateManyInput = {
@@ -10616,9 +10746,15 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostUpdateManyMutationInput = {
@@ -10631,7 +10767,13 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -10646,9 +10788,15 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryCreateInput = {
@@ -11326,6 +11474,14 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -11353,9 +11509,15 @@ export namespace Prisma {
     authorId?: SortOrder
     image?: SortOrder
     video?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    recipeIngredients?: SortOrder
+    recipeInstructions?: SortOrder
+    recipeYield?: SortOrder
+    recipePrepTime?: SortOrder
+    recipeCookTime?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
@@ -11376,9 +11538,13 @@ export namespace Prisma {
     authorId?: SortOrder
     image?: SortOrder
     video?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    recipeYield?: SortOrder
+    recipePrepTime?: SortOrder
+    recipeCookTime?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -11393,9 +11559,13 @@ export namespace Prisma {
     authorId?: SortOrder
     image?: SortOrder
     video?: SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
     categoryId?: SortOrder
     subcategoryId?: SortOrder
+    recipeYield?: SortOrder
+    recipePrepTime?: SortOrder
+    recipeCookTime?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
@@ -11557,14 +11727,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -11841,6 +12003,14 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
+  export type PostCreaterecipeIngredientsInput = {
+    set: string[]
+  }
+
+  export type PostCreaterecipeInstructionsInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutPostsInput = {
     create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostsInput
@@ -11861,6 +12031,16 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type PostUpdaterecipeIngredientsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type PostUpdaterecipeInstructionsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutPostsNestedInput = {
@@ -12300,7 +12480,13 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
     category: CategoryCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
   }
@@ -12316,9 +12502,15 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostCreateOrConnectWithoutAuthorInput = {
@@ -12362,9 +12554,15 @@ export namespace Prisma {
     authorId?: StringFilter<"Post"> | string
     image?: StringFilter<"Post"> | string
     video?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     categoryId?: IntFilter<"Post"> | number
     subcategoryId?: IntFilter<"Post"> | number
+    recipeIngredients?: StringNullableListFilter<"Post">
+    recipeInstructions?: StringNullableListFilter<"Post">
+    recipeYield?: StringNullableFilter<"Post"> | string | null
+    recipePrepTime?: StringNullableFilter<"Post"> | string | null
+    recipeCookTime?: StringNullableFilter<"Post"> | string | null
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -12509,7 +12707,13 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
     author: UserCreateNestedOneWithoutPostsInput
     subcategory: SubcategoryCreateNestedOneWithoutPostsInput
   }
@@ -12526,8 +12730,14 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostCreateOrConnectWithoutCategoryInput = {
@@ -12628,7 +12838,13 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
     author: UserCreateNestedOneWithoutPostsInput
     category: CategoryCreateNestedOneWithoutPostsInput
   }
@@ -12645,8 +12861,14 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostCreateOrConnectWithoutSubcategoryInput = {
@@ -12708,9 +12930,15 @@ export namespace Prisma {
     published?: boolean
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostUpdateWithoutAuthorInput = {
@@ -12723,7 +12951,13 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
   }
@@ -12739,9 +12973,15 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostUncheckedUpdateManyWithoutAuthorInput = {
@@ -12755,9 +12995,15 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostCreateManyCategoryInput = {
@@ -12772,8 +13018,14 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     subcategoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type SubcategoryCreateManyCategoryInput = {
@@ -12791,7 +13043,13 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     subcategory?: SubcategoryUpdateOneRequiredWithoutPostsNestedInput
   }
@@ -12808,8 +13066,14 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostUncheckedUpdateManyWithoutCategoryInput = {
@@ -12824,8 +13088,14 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subcategoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SubcategoryUpdateWithoutCategoryInput = {
@@ -12856,8 +13126,14 @@ export namespace Prisma {
     authorId: string
     image: string
     video?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
+    recipeIngredients?: PostCreaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostCreaterecipeInstructionsInput | string[]
+    recipeYield?: string | null
+    recipePrepTime?: string | null
+    recipeCookTime?: string | null
   }
 
   export type PostUpdateWithoutSubcategoryInput = {
@@ -12870,7 +13146,13 @@ export namespace Prisma {
     published?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     category?: CategoryUpdateOneRequiredWithoutPostsNestedInput
   }
@@ -12887,8 +13169,14 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostUncheckedUpdateManyWithoutSubcategoryInput = {
@@ -12903,8 +13191,14 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     video?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
+    recipeIngredients?: PostUpdaterecipeIngredientsInput | string[]
+    recipeInstructions?: PostUpdaterecipeInstructionsInput | string[]
+    recipeYield?: NullableStringFieldUpdateOperationsInput | string | null
+    recipePrepTime?: NullableStringFieldUpdateOperationsInput | string | null
+    recipeCookTime?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

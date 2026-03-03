@@ -89,7 +89,7 @@ export default async function PageDetail({
     name: bookTitle,
     description: bookDescription,
     author: { "@type": "Person", name: book.author },
-    bookFormat: "EBook",
+    bookFormat: "https://schema.org/EBook",
     numberOfPages: book.pages,
     image: coverImage,
     isbn: book.isbn,

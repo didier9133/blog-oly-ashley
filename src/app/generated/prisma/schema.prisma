@@ -43,11 +43,19 @@ model Post {
   author        User        @relation(fields: [authorId], references: [id])
   image         String
   video         String?
+  createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   categoryId    Int
   category      Category    @relation(fields: [categoryId], references: [id])
   subcategoryId Int
   subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+
+  // Recipe structured data (SEO rich results)
+  recipeIngredients  String[]
+  recipeInstructions String[]
+  recipeYield        String?
+  recipePrepTime     String?
+  recipeCookTime     String?
 
   // Índices para mejorar el rendimiento
   @@index([slug_es])

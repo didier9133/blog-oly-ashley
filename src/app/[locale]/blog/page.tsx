@@ -21,6 +21,7 @@ import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 
 const BASE_URL = "https://www.raicesreturnings.com";
 type SearchParams = Promise<{ page?: string }>;
@@ -132,8 +133,23 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     slug: post.slug_en,
   }));
 
+  const allPagePosts = [firstPostTranslated, ...postsWithoutFirstTranslated];
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: currentLanguage === "en" ? "Blog" : "Blog",
+    url: `${BASE_URL}/${currentLanguage}/blog`,
+    itemListElement: allPagePosts.map((p, i) => ({
+      "@type": "ListItem",
+      position: (page - 1) * PAGE_SIZE + i + 1,
+      url: `${BASE_URL}/${currentLanguage}/blog/${p.slug}`,
+      name: p.title,
+    })),
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center   font-[family-name:var(--font-cormorant-garamond)]">
+      <JsonLd data={itemListSchema} />
       {/* HERO */}
 
       {!totalPages ? (
