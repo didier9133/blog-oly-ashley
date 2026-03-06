@@ -34,9 +34,26 @@ export function Footer() {
           <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-6xl mb-6 font-medium">
             {t("stay-in-loop")}
           </h2>
-          <p className="max-w-xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed whitespace-pre-line text-left sm:text-center">
-            {t("newsletter-desc")}
-          </p>
+          <div className="max-w-2xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed text-center">
+            {t.rich("newsletter-desc", {
+              title: (chunks) => (
+                <p className="font-semibold text-[#de9e86] mt-8 mb-4 text-lg tracking-wide">
+                  {chunks}
+                </p>
+              ),
+              list: (chunks) => (
+                <ul className="flex flex-col items-start w-max mx-auto space-y-2 text-left">
+                  {chunks}
+                </ul>
+              ),
+              item: (chunks) => (
+                <li className="flex items-start text-white/80">
+                  <span className="mr-2 text-[#de9e86]">•</span>
+                  <span>{chunks}</span>
+                </li>
+              ),
+            })}
+          </div>
 
           <div className="w-full max-w-md mx-auto">
             <FormSubscribeNewsletter
