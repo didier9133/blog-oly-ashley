@@ -341,6 +341,10 @@
     "btn-all-posts": "Todos los Blogs"
   },
   "About": {
+    "metadata": {
+      "title": "Sobre Ashley & Oly | Raíces & Returnings",
+      "description": "Conoce a Ashley León y Oly Contreras — las voces queer y venezolano-americanas detrás de Raíces & Returnings. Historias de identidad, fe, migración y hogar."
+    },
     "title": "Sobre Raíces & Returnings",
     "intro": "Raíces & Returnings fue creado para sostener lo que no encaja del todo en categorías—una fe fracturada, una identidad fragmentada, una espiritualidad que se niega al miedo.\n\nEste espacio existe para personas que están aprendiendo a regresar a sí mismas sin abandonar sus preguntas, sus cuerpos o sus historias. Está guiado por la escritura, basado en la reflexión y arraigado en la experiencia vivida—no en la performance ni en la perfección.",
     "image-alt": "Nuestro equipo",
@@ -351,8 +355,20 @@
     "description-paragraph-ashley": "Soy Ashley—escritora, creadora digital consciente y facilitadora de espacios de reflexión. Mi vida ha sido moldeada en el intermedio: entre culturas, entre sistemas de creencias, entre la certeza y la duda.\n\nHe vivido profundamente dentro de la religión—y luego tuve que aprender a dejarla sin perder mi reverencia por Dios, por mí misma o por el significado. Mi trabajo ahora existe en esa intersección: espiritualidad más allá del dogma, fe sin miedo e integración en lugar de borrado.\n\nA través de ensayos, afirmaciones, diarios guiados y espacios comunitarios, creo un lenguaje para las personas que están aprendiendo a vivir plenas—sin abandonarse a sí mismas. La mayor parte de lo que encontrarás aquí es mi voz, mi escritura y mi experiencia vivida, compartida con honestidad y cuidado.",
     "conclusion": "Juntas, Raíces & Returnings es un espacio construido desde la vida real, <nowrap>no desde la aspiración.</nowrap>\nSostiene el duelo y la reverencia.\nEl desaprender y el regresar.\nLa humanidad y la divinidad, lado a lado.\nNos alegra que estés aquí."
   },
+  "Recipes": {
+    "metadata": {
+      "title": "Recetas — Cocina Venezolana y Latinoamericana | Raíces & Returnings",
+      "description": "Recetas de herencia venezolana y latinoamericana por Oly Contreras. Platos tradicionales transmitidos y reinventados con amor, memoria y orgullo cultural."
+    }
+  },
   "Blog": {
+    "metadata": {
+      "title": "Blog — Reflexiones sobre Identidad, Fe y Sanación | Raíces & Returnings",
+      "description": "Ensayos y reflexiones sobre deconstrucción de la fe, diversidad sexual, identidad cultural y el lento trabajo de volverse entera. Por Ashley León & Oly Contreras."
+    },
     "breadcrumb": "Inicio",
+    "page-title": "Blog",
+    "recipes-page-title": "Recetas",
     "recent-posts": "Publicaciones Recientes",
     "no-posts": "No hay publicaciones disponibles.",
     "read-more": "Leer Más",
@@ -362,6 +378,10 @@
     "breadcrumb-blog": "Blog"
   },
   "Contact": {
+    "metadata": {
+      "title": "Contáctanos | Raíces & Returnings",
+      "description": "¿Tienes una pregunta, idea de colaboración o algo que compartir? Escríbenos a Raíces & Returnings. Nos encantaría escucharte."
+    },
     "title": "¿Quieres contactarnos?",
     "paragraph": "Ya sea que tengas una pregunta, una idea de colaboración o algo que necesites decir, nos encantaría escucharte. Esta es una plataforma viva y en constante evolución. Tu voz importa aquí.",
     "title-form": "Formulario de Contacto",

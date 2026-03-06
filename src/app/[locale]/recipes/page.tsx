@@ -157,6 +157,9 @@ export default async function Page(props: { searchParams?: SearchParams }) {
         <NoPostsView />
       ) : (
         <>
+          {/* Page H1 */}
+          <h1 className="sr-only">{t("recipes-page-title")}</h1>
+
           {/* FEATURED POST HERO */}
           <section className="w-full max-w-6xl mx-auto px-6 pt-12 pb-16">
             <div className="flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">
@@ -186,9 +189,9 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     href={`/${PATH}/${firstPostTranslated?.slug}`}
                     className="group"
                   >
-                    <h1 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#de9e86] transition-colors duration-300">
+                    <h2 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#de9e86] transition-colors duration-300">
                       {firstPostTranslated?.title}
-                    </h1>
+                    </h2>
                   </Link>
                   <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] mb-8 line-clamp-4 text-ellipsis overflow-hidden">
                     {DOMPurify.sanitize(firstPostTranslated?.content ?? "", {

@@ -46,4 +46,17 @@ next-env.d.ts
 
 # ebooks PDFs (stored in S3)
 /public/ebooks/
+
+# SEO audit artifacts
 SEO-SPEC.md
+FULL-AUDIT-REPORT.md
+ACTION-PLAN.md
+CONTENT-ANALYSIS.md
+PERFORMANCE-ANALYSIS.md
+PRIVATE_FILES_SETUP.md
+SCHEMA-ANALYSIS.md
+SECURE_DOWNLOADS_GUIDE.md
+SITEMAP-ANALYSIS.md
+TECHNICAL-SEO.md
+/screenshots/
+/scripts/

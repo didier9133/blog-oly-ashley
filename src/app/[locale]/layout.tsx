@@ -66,11 +66,19 @@ export async function generateMetadata({
         "max-snippet": -1,
       },
     },
+    alternates: {
+      canonical: `https://www.raicesreturnings.com/${locale}`,
+      languages: {
+        en: "https://www.raicesreturnings.com/en",
+        es: "https://www.raicesreturnings.com/es",
+        "x-default": "https://www.raicesreturnings.com/en",
+      },
+    },
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
       alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
-      url: "https://www.raicesreturnings.com",
+      url: `https://www.raicesreturnings.com/${locale}`,
       siteName: "Raíces & Returnings",
       title: t("title"),
       description: t("description"),

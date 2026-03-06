@@ -4,10 +4,33 @@ import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Raíces & Returnings",
-  description: "Terms of service for Raíces & Returnings.",
-};
+const BASE_URL = "https://www.raicesreturnings.com";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title:
+      locale === "es"
+        ? "Términos y Condiciones | Raíces & Returnings"
+        : "Terms of Service | Raíces & Returnings",
+    description:
+      locale === "es"
+        ? "Términos y condiciones de Raíces & Returnings."
+        : "Terms of service for Raíces & Returnings.",
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/terms`,
+      languages: {
+        en: `${BASE_URL}/en/terms`,
+        es: `${BASE_URL}/es/terms`,
+        "x-default": `${BASE_URL}/en/terms`,
+      },
+    },
+  };
+}
 
 const SECTION_KEYS = [
   "acceptance",

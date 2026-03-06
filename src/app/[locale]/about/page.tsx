@@ -1,8 +1,42 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import Image from "next/image";
 import { JsonLd } from "@/components/json-ld";
+import type { Metadata } from "next";
 
 const BASE_URL = "https://www.raicesreturnings.com";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "About.metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: `${BASE_URL}/${locale}/about`,
+      images: [`${BASE_URL}/og-image.jpeg`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/about`,
+      languages: {
+        en: `${BASE_URL}/en/about`,
+        es: `${BASE_URL}/es/about`,
+        "x-default": `${BASE_URL}/en/about`,
+      },
+    },
+  };
+}
 
 export default async function Page() {
   const t = await getTranslations("About");

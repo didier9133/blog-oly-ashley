@@ -341,6 +341,10 @@
     "btn-all-posts": "All Blog Posts"
   },
   "About": {
+    "metadata": {
+      "title": "About Ashley & Oly | Raíces & Returnings",
+      "description": "Meet Ashley León & Oly Contreras — the queer, Venezuelan-American voices behind Raíces & Returnings. Stories of identity, faith, migration, and home."
+    },
     "title": "About Raíces & Returnings",
     "intro": "Raíces & Returnings was created to hold what doesn’t fit neatly into categories—faith that’s been fractured, identity that’s been fragmented, spirituality that refuses fear.\n\nThis space exists for people learning how to return to themselves without abandoning their questions, bodies, or stories. It is writing-led, reflection-based, and rooted in lived experience—not performance or perfection.",
     "image-alt": "Our team",
@@ -351,8 +355,20 @@
     "description-paragraph-ashley": "I’m Ashley—writer, conscious digital creator, and facilitator of reflective space. My life has been shaped in the in-between: between cultures, between belief systems, between certainty and doubt.\n\nI’ve lived deeply inside religion—and then had to learn how to leave it without losing my reverence for God, self, or meaning. My work now exists at that intersection: spirituality beyond dogma, faith without fear, and integration instead of erasure.\n\nThrough essays, affirmations, guided journals, and community spaces, I create language for people learning how to live whole—without self-abandonment. Most of what you’ll encounter here is my voice, my writing, and my lived experience, shared with honesty and care.",
     "conclusion": "Together, Raíces & Returnings is a space built from real life, <nowrap>not aspiration.</nowrap>\nIt holds grief and reverence.\nUnlearning and returning.\nHumanity and divinity, side by side.\nWe’re glad you’re here."
   },
+  "Recipes": {
+    "metadata": {
+      "title": "Heritage Recipes — Venezuelan & Latin American Cooking | Raíces & Returnings",
+      "description": "Venezuelan and Latin American heritage recipes by Oly Contreras. Traditional dishes passed down and reimagined with love, memory, and cultural pride."
+    }
+  },
   "Blog": {
+    "metadata": {
+      "title": "Blog — Reflections on Identity, Faith & Healing | Raíces & Returnings",
+      "description": "Essays and reflections on faith deconstruction, queerness, cultural identity, and the slow work of becoming whole. By Ashley León & Oly Contreras."
+    },
     "breadcrumb": "Home",
+    "page-title": "Blog",
+    "recipes-page-title": "Recipes",
     "recent-posts": "Recent Posts",
     "no-posts": "No posts available.",
     "read-more": "Read More",
@@ -362,6 +378,10 @@
     "breadcrumb-blog": "Blog"
   },
   "Contact": {
+    "metadata": {
+      "title": "Contact Us | Raíces & Returnings",
+      "description": "Have a question, collaboration idea, or something to share? Reach out to Ashley & Oly at Raíces & Returnings. We'd love to hear from you."
+    },
     "title": "Want to reach out?",
     "paragraph": "Whether you have a question, a collaboration idea, or something you need to say—we’d love to hear from you. This is a living, breathing platform. Your voice matters here.",
     "title-form": "Contact Form",

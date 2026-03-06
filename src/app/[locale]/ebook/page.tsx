@@ -70,28 +70,44 @@ export default async function EbookPage({
 
   return (
     <>
-      {books.map((book) => (
-        <JsonLd
-          key={book.id}
-          data={{
-            "@context": "https://schema.org",
-            "@type": "Book",
-            name: book.title_en,
-            author: { "@type": "Person", name: book.author },
-            bookFormat: "EBook",
-            numberOfPages: book.pages,
-            image: book.coverImage_en,
-            isbn: book.isbn,
-            url: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
-            offers: {
-              "@type": "Offer",
-              price: (book.price / 100).toFixed(2),
-              priceCurrency: "USD",
-              availability: "https://schema.org/InStock",
-            },
-          }}
-        />
-      ))}
+      {books.map((book) => {
+        const bookTitle =
+          locale === "en" ? book.title_en : book.title_es;
+        const bookImage =
+          locale === "en" ? book.coverImage_en : book.coverImage_es;
+        const bookSlug =
+          locale === "en" ? book.slug_en : book.slug_es;
+        const imageUrl = bookImage.startsWith("http")
+          ? bookImage
+          : `${BASE_URL}${bookImage}`;
+
+        return (
+          <JsonLd
+            key={book.id}
+            data={{
+              "@context": "https://schema.org",
+              "@type": "Book",
+              name: bookTitle,
+              author: { "@type": "Person", name: "Ashley Diana León" },
+              publisher: {
+                "@type": "Organization",
+                name: "Raíces & Returnings",
+              },
+              bookFormat: "EBook",
+              numberOfPages: book.pages,
+              image: imageUrl,
+              isbn: book.isbn,
+              url: `${BASE_URL}/${locale}/ebook/detail/${bookSlug}`,
+              offers: {
+                "@type": "Offer",
+                price: (book.price / 100).toFixed(2),
+                priceCurrency: "USD",
+                availability: "https://schema.org/InStock",
+              },
+            }}
+          />
+        );
+      })}
       {metaPixelId && (
         <>
           <Script id="meta-pixel" strategy="afterInteractive">
