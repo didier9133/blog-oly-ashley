@@ -258,14 +258,16 @@ export default async function BlogPostPage(props: {
           </h1>
           <div className="text-muted-foreground text-sm mb-6 flex gap-4">
             <span>
-              {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
+              {new Date(post.createdAt).toLocaleDateString(currentLanguage, {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               })}
             </span>
             <span>·</span>
-            <span>{authorName}</span>
+            <Link href={`/${locale}/about`} className="hover:underline">
+              {authorName}
+            </Link>
           </div>
           <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
             <RichTextEditor

@@ -111,7 +111,7 @@ export default async function BlogPostPage(props: {
       slug_en: slug,
       published: true, // Ensure only published posts are included
     },
-    include: { author: true },
+    include: { author: true, subcategory: true },
   });
 
   if (!post || !category) return notFound();
@@ -167,6 +167,18 @@ export default async function BlogPostPage(props: {
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
   const pageUrl = `${BASE_URL}/${locale}/recipes/${slug}`;
 
+  const CUISINE_MAP: Record<string, string> = {
+    venezuelan: "Venezuelan",
+    mexican: "Mexican",
+    "quick-easy": "Latin American",
+    vegan: "Latin American",
+    healthy: "Latin American",
+    "comfort-food": "Latin American",
+  };
+
+  const cuisineName =
+    CUISINE_MAP[post.subcategory.name.toLowerCase()] ?? "Latin American";
+
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "Recipe",
@@ -187,7 +199,7 @@ export default async function BlogPostPage(props: {
       logo: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpeg` },
     },
     recipeCategory: "Latin American",
-    recipeCuisine: "Venezuelan",
+    recipeCuisine: cuisineName,
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
     ...(post.recipeIngredients.length > 0 && {
       recipeIngredient: post.recipeIngredients,
@@ -268,14 +280,16 @@ export default async function BlogPostPage(props: {
           </h1>
           <div className="text-muted-foreground text-sm mb-6 flex gap-4">
             <span>
-              {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
+              {new Date(post.createdAt).toLocaleDateString(currentLanguage, {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               })}
             </span>
             <span>·</span>
-            <span>{authorName}</span>
+            <Link href={`/${locale}/about`} className="hover:underline">
+              {authorName}
+            </Link>
           </div>
           <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
             <RichTextEditor

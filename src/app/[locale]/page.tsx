@@ -93,9 +93,11 @@ export default async function Home() {
             <Image
               src="/hero-image.jpeg"
               alt={t("alt-hero")}
-              fill
-              className="object-cover object-top"
+              width={800}
+              height={600}
+              className="object-cover object-top w-full h-full"
               priority
+              sizes="100vw"
             />
           </div>
 
