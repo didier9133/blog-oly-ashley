@@ -71,12 +71,10 @@ export default async function EbookPage({
   return (
     <>
       {books.map((book) => {
-        const bookTitle =
-          locale === "en" ? book.title_en : book.title_es;
+        const bookTitle = locale === "en" ? book.title_en : book.title_es;
         const bookImage =
           locale === "en" ? book.coverImage_en : book.coverImage_es;
-        const bookSlug =
-          locale === "en" ? book.slug_en : book.slug_es;
+        const bookSlug = locale === "en" ? book.slug_en : book.slug_es;
         const imageUrl = bookImage.startsWith("http")
           ? bookImage
           : `${BASE_URL}${bookImage}`;
