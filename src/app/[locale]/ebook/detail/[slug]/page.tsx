@@ -248,8 +248,22 @@ export default async function PageDetail({
                       </div>
                     </div>
                   </div>
-                  <Separator className="bg-border/50" />
+                </CardContent>
+              </Card>
 
+              <Card className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden p-0">
+                <CardContent className="p-8 bg-[#f5f0eb]/50 h-full">
+                  <Checkout
+                    ebook_price={book.price}
+                    ebook_s3key={
+                      locale === "en" ? book.s3Key_en : book.s3Key_es
+                    }
+                  />
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50 shadow-sm rounded-sm bg-card">
+                <CardContent className="space-y-8 px-8 py-8">
                   <div>
                     <CardTitle className="text-2xl font-light text-foreground italic mb-4">
                       {t("about-title")}
@@ -277,17 +291,6 @@ export default async function PageDetail({
                       ))}
                     </ul>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden p-0">
-                <CardContent className="p-8 bg-[#f5f0eb]/50 h-full">
-                  <Checkout
-                    ebook_price={book.price}
-                    ebook_s3key={
-                      locale === "en" ? book.s3Key_en : book.s3Key_es
-                    }
-                  />
                 </CardContent>
               </Card>
             </div>
