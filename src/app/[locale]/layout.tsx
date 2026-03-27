@@ -18,6 +18,7 @@ import { routing } from "@/i18n/routing";
 
 //Analytics
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -153,6 +154,7 @@ export default async function RootLayout({
                 <Header />
                 {children}
                 <Analytics />
+                <SpeedInsights />
                 <Footer />
               </SidebarInset>
             </SidebarProvider>
