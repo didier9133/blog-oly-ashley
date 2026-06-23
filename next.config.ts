@@ -116,6 +116,11 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  outputFileTracingIncludes: {
+    "/**": [
+      "./.next/browser/default-stylesheet.css",
+    ],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "50mb", // Allow larger uploads for private S3 files
