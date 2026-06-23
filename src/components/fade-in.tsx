@@ -56,7 +56,7 @@ export function FadeIn({
     <div
       ref={ref}
       className={cn(
-        "transition-[opacity,transform] motion-reduce:transition-none",
+        "transition-[opacity,transform] motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-x-0 motion-reduce:translate-y-0",
         visible ? "opacity-100 translate-x-0 translate-y-0" : "opacity-[0.001]",
         className
       )}
