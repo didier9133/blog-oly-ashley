@@ -16,6 +16,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { BASE_URL } from "@/lib/url";
 
 //Analytics
 import { Analytics } from "@vercel/analytics/next";
@@ -72,18 +73,19 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `https://www.raicesreturnings.com/${locale}`,
+      // Homepage: as-needed → EN en raíz (sin /en), ES en /es.
+      canonical: locale === "es" ? `${BASE_URL}/es` : BASE_URL,
       languages: {
-        en: "https://www.raicesreturnings.com/en",
-        es: "https://www.raicesreturnings.com/es",
-        "x-default": "https://www.raicesreturnings.com/en",
+        en: BASE_URL,
+        es: `${BASE_URL}/es`,
+        "x-default": BASE_URL,
       },
     },
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
       alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
-      url: `https://www.raicesreturnings.com/${locale}`,
+      url: locale === "es" ? `${BASE_URL}/es` : BASE_URL,
       siteName: "Raíces & Returnings",
       title: t("title"),
       description: t("description"),

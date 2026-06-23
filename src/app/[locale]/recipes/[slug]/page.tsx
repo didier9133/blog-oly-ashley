@@ -17,6 +17,7 @@ import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL } from "@/lib/url";
+import { sumDurationsToISO } from "@/lib/duration";
 import type { Metadata } from "next";
 type Params = Promise<{ locale: string; slug: string }>;
 type SearchParams = Promise<{ category?: string }>;
@@ -100,7 +101,7 @@ export default async function BlogPostPage(props: {
   const { slug } = await props.params;
   const searchParams = await props.searchParams;
   const currentLanguage = await getLocale();
-  const t = await getTranslations("Blog");
+  const t = await getTranslations("Recipes");
 
   const category = await prisma.category.findFirst({
     where: {
@@ -211,6 +212,8 @@ export default async function BlogPostPage(props: {
   const cuisineName =
     CUISINE_MAP[post.subcategory.name.toLowerCase()] ?? "Latin American";
 
+  const totalTime = sumDurationsToISO(post.recipePrepTime, post.recipeCookTime);
+
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "Recipe",
@@ -218,6 +221,7 @@ export default async function BlogPostPage(props: {
     description: htmlExcerpt(postTraslated.content),
     image: [post.image],
     url: pageUrl,
+    inLanguage: locale,
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
     author: {
@@ -246,6 +250,7 @@ export default async function BlogPostPage(props: {
     ...(post.recipeYield && { recipeYield: post.recipeYield }),
     ...(post.recipePrepTime && { prepTime: post.recipePrepTime }),
     ...(post.recipeCookTime && { cookTime: post.recipeCookTime }),
+    ...(totalTime && { totalTime }),
   };
 
   const breadcrumbSchema = {

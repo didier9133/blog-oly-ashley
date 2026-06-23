@@ -16,6 +16,21 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
   },
+  {
+    key: "Content-Security-Policy-Report-Only",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https://dgw9atod1ju2x.cloudfront.net https://cdn.pixabay.com https://*.clerk.dev",
+      "connect-src 'self' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+      "frame-src 'self' https://*.clerk.dev",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; "),
+  },
 ];
 
 /**

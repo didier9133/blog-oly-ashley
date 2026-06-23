@@ -391,7 +391,15 @@
     "metadata": {
       "title": "Heritage Recipes — Venezuelan & Latin American Cooking | Raíces & Returnings",
       "description": "Venezuelan and Latin American heritage recipes by Oly Contreras. Traditional dishes passed down and reimagined with love, memory, and cultural pride."
-    }
+    },
+    "breadcrumb": "Home",
+    "recipes-page-title": "Recipes",
+    "recent-posts": "Recent Posts",
+    "no-posts": "No posts available.",
+    "read-more": "Read More",
+    "featured-post": "Featured Post",
+    "visit-substack": "Visit Substack",
+    "breadcrumb-recipes": "Recipes"
   },
   "Blog": {
     "metadata": {

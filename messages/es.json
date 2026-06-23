@@ -390,8 +390,16 @@
   "Recipes": {
     "metadata": {
       "title": "Recetas — Cocina Venezolana y Latinoamericana | Raíces & Returnings",
-      "description": "Recetas de herencia venezolana y latinoamericana por Oly Contreras. Platos tradicionales transmitidos y reinventados con amor, memoria y orgullo cultural."
-    }
+      "description": "Recetas de herencia venezolana y latinoamericana por Oly Contreras. Platos tradales transmitidos y reinventados con amor, memoria y orgullo cultural."
+    },
+    "breadcrumb": "Inicio",
+    "recipes-page-title": "Recetas",
+    "recent-posts": "Publicaciones Recientes",
+    "no-posts": "No hay publicaciones disponibles.",
+    "read-more": "Leer Más",
+    "featured-post": "Publicación Destacada",
+    "visit-substack": "Visitar Substack",
+    "breadcrumb-recipes": "Recetas"
   },
   "Blog": {
     "metadata": {

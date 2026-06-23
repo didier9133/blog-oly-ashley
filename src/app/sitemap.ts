@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
+import { BASE_URL, fullUrl } from "@/lib/url";
 
-const BASE_URL = "https://www.raicesreturnings.com";
 const LOCALES = ["es", "en"] as const;
 
 // Fechas reales de última modificación por ruta.
@@ -19,10 +19,11 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Static routes — lastModified real, sin priority/changeFrequency (ignorados por Google)
+  // Static routes — lastModified real, sin priority/changeFrequency (ignorados por Google).
+  // fullUrl() respeta `localePrefix: "as-needed"`: EN sin prefijo, ES con /es.
   const staticEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     STATIC_ROUTES.map(({ path, lastModified }) => ({
-      url: `${BASE_URL}/${locale}${path}`,
+      url: fullUrl(locale, path),
       lastModified: new Date(lastModified),
     })),
   );
@@ -39,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     blogPosts.map((post) => ({
-      url: `${BASE_URL}/${locale}/blog/${post.slug_en}`,
+      url: fullUrl(locale, `/blog/${post.slug_en}`),
       lastModified: post.updatedAt,
     })),
   );
@@ -56,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const recipeEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     recipePosts.map((post) => ({
-      url: `${BASE_URL}/${locale}/recipes/${post.slug_en}`,
+      url: fullUrl(locale, `/recipes/${post.slug_en}`),
       lastModified: post.updatedAt,
     })),
   );
@@ -69,11 +70,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const ebookEntries: MetadataRoute.Sitemap = books.flatMap((book) => [
     {
-      url: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
+      url: fullUrl("en", `/ebook/detail/${book.slug_en}`),
       lastModified: book.updatedAt,
     },
     {
-      url: `${BASE_URL}/es/ebook/detail/${book.slug_es}`,
+      url: fullUrl("es", `/ebook/detail/${book.slug_es}`),
       lastModified: book.updatedAt,
     },
   ]);

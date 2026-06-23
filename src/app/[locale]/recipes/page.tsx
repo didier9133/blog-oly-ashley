@@ -128,7 +128,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
   });
   const PAGE_SIZE = page === 1 ? 7 : 6;
   const totalPages = Math.ceil(total / PAGE_SIZE);
-  const t = await getTranslations("Blog");
+  const t = await getTranslations("Recipes");
   const tPagination = await getTranslations("ui.pagination");
   const tPostMeta = await getTranslations("ui.postMeta");
 

@@ -203,6 +203,7 @@ export default async function BlogPostPage(props: {
     description: htmlExcerpt(postTraslated.content),
     image: post.image,
     url: pageUrl,
+    inLanguage: locale,
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
     author: {
