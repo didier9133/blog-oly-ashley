@@ -27,7 +27,7 @@ export function HeroImage({
             alt={alt}
             fill
             priority={priority}
-            quality={82}
+            quality={75}
             sizes={sizes}
             className={`object-cover ${objectPosition}`}
           />
