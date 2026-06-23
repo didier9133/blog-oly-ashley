@@ -6,4 +6,7 @@ export const routing = defineRouting({
 
   // Used when no locale matches
   defaultLocale: "en",
+
+  // Don't prefix default locale URLs (avoids 500ms redirect from / → /en)
+  localePrefix: "as-needed",
 });

@@ -179,7 +179,7 @@ export default function Checkout({
   const appearance: Appearance = {
     theme: "stripe",
     variables: {
-      colorPrimary: "#c47456",
+      colorPrimary: "#bd775c",
       colorBackground: "transparent",
       colorText: "#2b2b2b",
       colorDanger: "#d85c44",
@@ -199,8 +199,8 @@ export default function Checkout({
         backgroundColor: "transparent",
       },
       ".Input:focus": {
-        border: "1px solid #c47456",
-        boxShadow: "0 0 0 3px rgba(196, 116, 86, 0.5)",
+        border: "1px solid #bd775c",
+        boxShadow: "0 0 0 3px rgba(189, 119, 92, 0.5)",
         outline: "none",
       },
       ".Label": {
@@ -216,8 +216,8 @@ export default function Checkout({
         backgroundColor: "transparent",
       },
       ".Tab--selected": {
-        border: "1px solid #c47456",
-        boxShadow: "0 0 0 3px rgba(196, 116, 86, 0.5)",
+        border: "1px solid #bd775c",
+        boxShadow: "0 0 0 3px rgba(189, 119, 92, 0.5)",
       },
       ".Block": {
         border: "1px solid #c6c6b6",

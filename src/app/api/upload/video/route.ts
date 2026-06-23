@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const key = `uploads/videos/${userId}/${Date.now()}${fileExtension}`;
 
   const uploadUrl = await getSignedUrl(
-    s3,
+    s3 as any,
     new PutObjectCommand({
       Bucket: BUCKET_NAME,
       Key: key,

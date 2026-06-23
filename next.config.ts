@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import path from "node:path";
+import fs from "node:fs";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -16,9 +18,55 @@ const securityHeaders = [
   },
 ];
 
+/**
+ * Webpack plugin: copies a file into the build output at a fixed relative path.
+ * Used to work around Next.js 15.5.19 + jsdom 26.x bug where a bundled chunk
+ * does `readFileSync(path.resolve(__dirname, "../../browser/default-stylesheet.css"))`
+ * but the file is never created in the build output. We read the source CSS
+ * from the .pnpm-resolved jsdom 28.x and emit it under .next/browser/.
+ */
+class CopyToOutputPlugin {
+  constructor(private src: string, private destRel: string) {}
+  apply(compiler: {
+    options: { output: { path?: string } };
+    hooks: {
+      afterEmit: {
+        tapAsync: (
+          name: string,
+          fn: (
+            compilation: unknown,
+            callback: (err?: Error) => void,
+          ) => void,
+        ) => void;
+      };
+    };
+  }) {
+    compiler.hooks.afterEmit.tapAsync(
+      "CopyToOutputPlugin",
+      (_compilation, callback) => {
+        const outDir = compiler.options.output.path ?? "";
+        // The bundled chunk's __dirname is outDir/chunks/, and it does
+        // `path.resolve(__dirname, "../../browser/default-stylesheet.css")`,
+        // which resolves to outDir/../browser/ — i.e. one level above outDir.
+        const parent = path.resolve(outDir, "..");
+        const dest = path.join(parent, this.destRel);
+        try {
+          fs.mkdirSync(path.dirname(dest), { recursive: true });
+          fs.copyFileSync(this.src, dest);
+          callback();
+        } catch (err) {
+          callback(err as Error);
+        }
+      },
+    );
+  }
+}
+
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [25, 50, 75, 92],
     remotePatterns: [
       {
         protocol: "https",
@@ -32,6 +80,28 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
     ],
+  },
+
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Find jsdom's default-stylesheet in the pnpm store
+      const pnpmJsdom = fs
+        .readdirSync(path.resolve(__dirname, "node_modules/.pnpm"))
+        .find((d) => d.startsWith("jsdom@"));
+      if (pnpmJsdom) {
+        const cssSrc = path.resolve(
+          __dirname,
+          `node_modules/.pnpm/${pnpmJsdom}/node_modules/jsdom/lib/jsdom/browser/default-stylesheet.css`,
+        );
+        if (fs.existsSync(cssSrc)) {
+          config.plugins = [
+            ...(config.plugins ?? []),
+            new CopyToOutputPlugin(cssSrc, "browser/default-stylesheet.css"),
+          ];
+        }
+      }
+    }
+    return config;
   },
 
   async headers() {
@@ -55,3 +125,4 @@ const nextConfig: NextConfig = {
 
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);
+

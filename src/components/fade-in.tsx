@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useInView, type Variants } from "framer-motion";
-import { useRef } from "react";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface FadeInProps {
@@ -19,12 +18,9 @@ export function FadeIn({
   duration = 0.5,
   direction = "up",
 }: FadeInProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-
   const variants: Variants = {
     hidden: {
-      opacity: 0,
+      opacity: 0.001,
       y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
       x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
     },
@@ -35,16 +31,16 @@ export function FadeIn({
       transition: {
         duration,
         delay,
-        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number], // Ease-out suave
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
       },
     },
   };
 
   return (
     <motion.div
-      ref={ref}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.05 }}
       variants={variants}
       className={cn(className)}
     >

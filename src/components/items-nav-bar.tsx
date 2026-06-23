@@ -19,6 +19,10 @@ export async function ItemsNavBar() {
 
   const titleToPathMap = items.reduce(
     (acc, item) => {
+      if (!item.external && item.url === "/") {
+        acc[item.title] = "home";
+        return acc;
+      }
       if (!item.external && item.url.includes("#newsletter")) {
         acc[item.title] = "subscribe";
         return acc;

@@ -93,7 +93,7 @@ export default function ContactPage() {
       <div className="bg-[#f5f0eb] py-16 lg:py-24">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center">
-            <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+            <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
               {t("title-form")}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide mb-6">
@@ -133,7 +133,7 @@ export default function ContactPage() {
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-firstName")}
-                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
+                              className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                               {...field}
                             />
                           </FormControl>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-lastName")}
-                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
+                              className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                               {...field}
                             />
                           </FormControl>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-email")}
-                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
+                              className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                               {...field}
                             />
                           </FormControl>
@@ -204,7 +204,7 @@ export default function ContactPage() {
                           <FormControl>
                             <Input
                               placeholder={t("placeholder-subject")}
-                              className="rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
+                              className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                               {...field}
                             />
                           </FormControl>
@@ -226,7 +226,7 @@ export default function ContactPage() {
                       <FormControl>
                         <Textarea
                           placeholder={t("placeholder-content")}
-                          className="resize-none min-h-[150px] rounded-sm border-border/50 focus-visible:ring-[#de9e86]"
+                          className="resize-none min-h-[150px] rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                           {...field}
                         />
                       </FormControl>
@@ -252,7 +252,7 @@ export default function ContactPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm"
+                    className="rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#d8a08b] text-white hover:bg-[#c28c77] transition-all duration-300 shadow-sm"
                   >
                     {isSubmitting ? t("submitting") : t("submit")}
                     <SendHorizontal className="h-4 w-4 ml-2" />

@@ -13,7 +13,6 @@ export function SubstackHeroSubscribe() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Use native validation messages when possible.
     if (inputRef.current && !inputRef.current.checkValidity()) {
       inputRef.current.reportValidity();
       return;
@@ -34,25 +33,35 @@ export function SubstackHeroSubscribe() {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex w-full items-stretch border border-[#de9e86]/20 rounded-sm overflow-hidden bg-white/40 shadow-sm focus-within:border-[#de9e86] transition-colors"
+      className="group flex items-end gap-3 max-w-md"
     >
+      <label htmlFor="hero-email" className="sr-only">
+        {t("placeholder")}
+      </label>
       <input
+        id="hero-email"
         ref={inputRef}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         placeholder={t("placeholder")}
-        className="flex-1 min-w-0 bg-transparent px-3 sm:px-4 py-4 text-xs font-sans text-foreground placeholder:text-muted-foreground/60 outline-none"
-        required
         autoComplete="email"
         inputMode="email"
+        required
+        className="flex-1 min-w-0 bg-transparent border-0 border-b border-foreground/25 pb-2 outline-none font-[family-name:var(--font-lora)] text-base sm:text-lg text-foreground placeholder:text-foreground/35 placeholder:font-light py-1 transition-colors duration-500 focus:border-primary"
       />
       <button
         type="submit"
-        className="bg-[#de9e86] text-white px-4 sm:px-6 uppercase tracking-widest sm:tracking-[0.15em] text-[10px] font-bold hover:bg-[#c98a72] transition-colors whitespace-nowrap shrink-0"
         aria-label={t("cta")}
+        className="shrink-0 inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-white bg-[#d8a08b] hover:bg-[#c28c77] px-5 py-3 rounded-sm transition-colors duration-500 ease-out shadow-sm"
       >
-        {t("cta")}
+        <span>{t("cta")}</span>
+        <span
+          aria-hidden
+          className="inline-block transition-transform duration-500 ease-[var(--ease-breath)] group-hover:translate-x-1"
+        >
+          →
+        </span>
       </button>
     </form>
   );

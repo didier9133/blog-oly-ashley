@@ -15,41 +15,46 @@ export function Footer() {
       {/* Top Section: Newsletter with Background Image */}
       <div
         id="newsletter"
-        className="relative w-full py-24 md:py-32 overflow-hidden"
+        className="relative w-full py-24 md:py-32 overflow-hidden bg-[#6b705c]"
       >
         <Image
-          src="/background-image.jpg"
+          src="/new_logo.png"
           alt="Background"
           fill
-          className="object-cover"
-          priority
+          className="object-cover opacity-15"
+          loading="lazy"
         />
         {/* Olive green overlay */}
-        <div className="absolute inset-0 bg-[#6b705c]/85"></div>
+        <div className="absolute inset-0 bg-[#6b705c]/90"></div>
 
         <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center text-white">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase mb-4 opacity-90 font-sans">
-            {t("join-community")}
-          </span>
-          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-6xl mb-6 font-medium">
+          <div className="mb-8 flex flex-col items-center">
+            <span className="font-[family-name:var(--font-cormorant-garamond)] text-5xl md:text-7xl font-medium text-white leading-none">
+              10,000+
+            </span>
+            <span className="mt-3 text-xs md:text-sm tracking-[0.15em] uppercase text-white font-sans">
+              {t("testimonial")}
+            </span>
+          </div>
+          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl md:text-6xl mb-6 font-medium text-white">
             {t("stay-in-loop")}
           </h2>
-          <div className="max-w-2xl mx-auto text-white/90 mb-8 font-sans text-sm md:text-base leading-relaxed text-center">
+          <div className="max-w-2xl mx-auto text-white mb-8 font-sans text-sm md:text-base leading-relaxed text-center">
             {t.rich("newsletter-desc", {
               title: (chunks) => (
-                <p className="font-semibold text-[#de9e86] mt-8 mb-4 text-lg tracking-wide">
+                <p className="font-semibold text-white mt-8 mb-4 text-lg tracking-wide">
                   {chunks}
                 </p>
               ),
               list: (chunks) => (
-                <ul className="flex flex-col items-start w-max mx-auto space-y-2 text-left">
+                <ul className="flex flex-col items-start w-full max-w-md mx-auto space-y-2 text-left">
                   {chunks}
                 </ul>
               ),
               item: (chunks) => (
-                <li className="flex items-start text-white/80">
-                  <span className="mr-2 text-[#de9e86]">•</span>
-                  <span>{chunks}</span>
+                <li className="flex items-start text-white w-full">
+                  <span className="mr-2 text-white shrink-0">•</span>
+                  <span className="break-words">{chunks}</span>
                 </li>
               ),
             })}
@@ -63,9 +68,6 @@ export function Footer() {
             />
           </div>
 
-          <p className="text-xs text-white/70 mt-6 font-sans">
-            {t("respect-inbox")}
-          </p>
         </div>
       </div>
 
@@ -225,33 +227,6 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h4 className="font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold text-[#2b2b2b]">
-      {children}
-    </h4>
-  );
-}
-
-function FooterLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <li>
-      <Link
-        href={href}
-        className="hover:text-[#c47456] transition-colors duration-200"
-      >
-        {children}
-      </Link>
-    </li>
   );
 }
 

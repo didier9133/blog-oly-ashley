@@ -33,11 +33,14 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
   const isHashMatch = !!targetHash && currentHash === targetHash;
 
   const isSubscribeNewsletter = targetHash === "#newsletter";
+  const isHome = url === "/";
   const isActive = isSubscribeNewsletter
     ? false
     : targetHash
       ? isHashMatch
-      : pathname.startsWith(url);
+      : isHome
+        ? pathname === "/"
+        : pathname.startsWith(url);
 
   const resolvedHref = useMemo(() => {
     if (external) return url;
@@ -61,10 +64,10 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
       onClick={handleClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={`text-base font-medium transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground after:transition-all ${
+      className={`font-[family-name:var(--font-lora)] text-[1rem] font-semibold tracking-[0.035em] transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground/60 after:transition-all ${
         isActive
           ? "text-foreground after:w-full"
-          : "text-foreground/80 hover:text-foreground after:w-0 hover:after:w-full"
+          : "text-foreground/75 hover:text-foreground after:w-0 hover:after:w-full"
       }`}
     >
       {title}

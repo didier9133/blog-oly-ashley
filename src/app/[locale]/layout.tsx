@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Header } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { MaxListenersBump } from "@/components/max-listeners-bump";
 
 import { Lora, Cormorant_Garamond, Great_Vibes } from "next/font/google";
 
@@ -93,7 +94,7 @@ export async function generateMetadata({
           type: "image/jpeg",
         },
         {
-          url: "https://www.raicesreturnings.com/og-image-square.jpg",
+          url: "https://www.raicesreturnings.com/og-image-square.jpeg",
           width: 1080,
           height: 1080,
           alt: t("title"),
@@ -126,12 +127,7 @@ export default async function RootLayout({
             name="google-site-verification"
             content="google4ff5fb217dd7438f"
           />
-          <link
-            rel="icon"
-            href="/favicon.svg"
-            sizes="any"
-            type="image/svg+xml"
-          />
+          <link rel="icon" href="/new_logo.png" sizes="any" type="image/png" />
           <link rel="icon" href="/favicon.ico" sizes="48x48" />
           <link
             rel="apple-touch-icon"
@@ -155,6 +151,7 @@ export default async function RootLayout({
           className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <MaxListenersBump />
             <Toaster position="top-right" richColors />
             <SidebarProvider defaultOpen={false}>
               <AppSidebar

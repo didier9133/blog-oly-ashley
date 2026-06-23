@@ -21,9 +21,10 @@ export default function ImageRecentPost({ post }: ImageCardBlogDetailProps) {
         className="object-cover"
         sizes="200px"
         onLoad={(e) => {
-          // Hide skeleton when image loads by changing opacity
-          const target = e.target as HTMLImageElement;
-          target.style.opacity = "1";
+          (e.target as HTMLImageElement).style.opacity = "1";
+        }}
+        onError={(e) => {
+          (e.target as HTMLImageElement).style.opacity = "1";
         }}
         style={{ opacity: 0, transition: "opacity 0.3s ease" }}
         priority={false}

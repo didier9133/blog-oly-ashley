@@ -102,7 +102,7 @@ const colors = {
   mutedText: "#6b6b6b",
   accent: "#a6a68c", // Sage Green
   accentLight: "#d1d1c2",
-  primary: "#c47456", // Clay
+  primary: "#bd775c", // Clay
   secondary: "#b89e69", // Brass Gold
   destructive: "#d85c44",
 };
@@ -172,7 +172,7 @@ const primaryButton = {
   textAlign: "center" as const,
   display: "inline-block",
   padding: "14px 36px",
-  boxShadow: "0 12px 30px rgba(196, 116, 86, 0.25)",
+  boxShadow: "0 12px 30px rgba(189, 119, 92, 0.25)",
 };
 
 const linkBlock = {

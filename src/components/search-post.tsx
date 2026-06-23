@@ -28,7 +28,6 @@ export function SearchPost() {
       try {
         const categoriesData = await getCategoriesPosts();
         setCategories(categoriesData);
-        console.log("Fetched categories:", categoriesData);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }

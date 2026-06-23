@@ -47,7 +47,10 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
       const { targetHash } = splitHash(item.url);
 
       if (!targetHash) {
-        map.set(item.url, pathname.startsWith(item.url));
+        map.set(
+          item.url,
+          item.url === "/" ? pathname === "/" : pathname.startsWith(item.url),
+        );
         continue;
       }
       const isHashMatch = currentHash === targetHash;
@@ -91,7 +94,7 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
               isActive={isActive}
               className={`h-auto py-3 px-6 text-2xl font-[family-name:var(--font-cormorant-garamond)] transition-all duration-300 rounded-sm ${
                 isActive
-                  ? "bg-[#de9e86]/10 text-[#c47456] font-medium italic"
+                  ? "bg-[#d8a08b]/10 text-[#bd775c] font-medium italic"
                   : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
               }`}
             >

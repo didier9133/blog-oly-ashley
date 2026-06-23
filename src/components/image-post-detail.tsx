@@ -37,14 +37,11 @@ export default function ImageBlogDetail({ post }: ImageBlogDetailProps) {
             fill
             className="object-cover"
             style={{ opacity: 0, transition: "opacity 0.3s ease" }}
-            onLoad={() => {
-              // Hide skeleton when image loads by changing opacity
-              const img = document.querySelector(
-                `img[alt='${post.title}']`
-              ) as HTMLImageElement;
-              if (img) {
-                img.style.opacity = "1";
-              }
+            onLoad={(e) => {
+              (e.target as HTMLImageElement).style.opacity = "1";
+            }}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.opacity = "1";
             }}
             sizes="(max-width: 768px) 100vw,80vw"
             priority

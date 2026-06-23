@@ -8,13 +8,11 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { ParallaxHero } from "@/components/parallax-hero";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import DOMPurify from "isomorphic-dompurify"; // Assuming you have a DOMPurify setup
+import DOMPurify from "isomorphic-dompurify";
 import ImageCardBlogDetail from "@/components/image-card-post";
 import NoPostsView from "@/components/empty-post";
 import { CategoryEnum } from "@/enums";
@@ -26,6 +24,63 @@ import { JsonLd } from "@/components/json-ld";
 const BASE_URL = "https://www.raicesreturnings.com";
 type SearchParams = Promise<{ page?: string }>;
 const PATH = CategoryEnum.Recipes;
+const EXCERPT_MAX = 280;
+
+const postSelect = {
+  id: true,
+  title_en: true,
+  title_es: true,
+  content_en: true,
+  content_es: true,
+  image: true,
+  slug_en: true,
+  updatedAt: true,
+  author: { select: { firstName: true, lastName: true } },
+} as const;
+
+type PostCard = {
+  id: number;
+  title: string;
+  excerpt: string;
+  image: string;
+  slug: string;
+  updatedAt: Date;
+  authorFirstName: string;
+  authorLastName: string;
+};
+
+const buildExcerpt = (html: string | null | undefined, max = EXCERPT_MAX) => {
+  const text = DOMPurify.sanitize(html ?? "", { ALLOWED_TAGS: [] }).trim();
+  return text.length <= max ? text : `${text.slice(0, max).trimEnd()}…`;
+};
+
+const toCard = (
+  post: {
+    id: number;
+    title_en: string;
+    title_es: string;
+    content_en: string | null;
+    content_es: string | null;
+    image: string;
+    slug_en: string;
+    updatedAt: Date;
+    author: { firstName: string; lastName: string };
+  },
+  currentLanguage: string,
+): PostCard => ({
+  id: post.id,
+  title: currentLanguage === "en" ? post.title_en : post.title_es,
+  excerpt: buildExcerpt(
+    currentLanguage === "en" ? post.content_en : post.content_es,
+  ),
+  image: post.image,
+  slug: post.slug_en,
+  updatedAt: post.updatedAt,
+  authorFirstName: post.author.firstName,
+  authorLastName: post.author.lastName,
+});
+
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,
@@ -72,80 +127,61 @@ export default async function Page(props: { searchParams?: SearchParams }) {
       },
     },
   });
-  const PAGE_SIZE = page === 1 ? 7 : 6; // Cambia el tamaño de página según la página actual
+  const PAGE_SIZE = page === 1 ? 7 : 6;
   const totalPages = Math.ceil(total / PAGE_SIZE);
   const t = await getTranslations("Blog");
   const tPagination = await getTranslations("ui.pagination");
   const tPostMeta = await getTranslations("ui.postMeta");
 
-  if (page < 1 || isNaN(page)) {
-    console.error("Invalid page number:", page, "Total pages:", totalPages);
+  if (page < 1 || isNaN(page) || page > totalPages) {
     notFound();
   }
 
   const skip = (page - 1) * PAGE_SIZE;
 
-  const posts = await prisma.post.findMany({
-    where: {
-      published: true,
-      category: {
-        name: PATH, // Asegúrate de que solo se obtienen posts de la categoría "blog"
+  const [firstPost, posts] = await Promise.all([
+    prisma.post.findFirst({
+      where: {
+        published: true,
+        category: { name: PATH },
       },
-    },
-    skip: skip,
-    take: PAGE_SIZE,
-    orderBy: { updatedAt: "desc" },
-    include: { author: true },
-  });
-
-  // El primer post (más reciente)
-  const [firstPost] = await prisma.post.findMany({
-    where: {
-      published: true,
-      category: {
-        name: PATH, // Asegúrate de que solo se obtiene el post de la categoría "blog"
+      orderBy: { updatedAt: "desc" },
+      select: postSelect,
+    }),
+    prisma.post.findMany({
+      where: {
+        published: true,
+        category: { name: PATH },
       },
-    },
-    take: 1,
-    orderBy: { updatedAt: "desc" },
-    include: { author: true },
-  });
-
-  console.log("Posts:", firstPost);
+      skip,
+      take: PAGE_SIZE,
+      orderBy: { updatedAt: "desc" },
+      select: postSelect,
+    }),
+  ]);
 
   if (!firstPost) {
     return <NoPostsView />;
   }
 
-  const firstPostTranslated = {
-    ...firstPost,
-    title: currentLanguage === "en" ? firstPost.title_en : firstPost.title_es,
-    content:
-      currentLanguage === "en" ? firstPost.content_en : firstPost.content_es,
-    slug: firstPost.slug_en,
-  };
+  const firstPostCard = toCard(firstPost, currentLanguage);
+  const postsWithoutFirstCards: PostCard[] = posts
+    .filter((post) => post.id !== firstPost.id)
+    .map((post) => toCard(post, currentLanguage));
 
-  // Los posts menos el primero (más reciente)
-  const postsWithoutFirst = posts.filter((post) => post.id !== firstPost?.id);
-  const postsWithoutFirstTranslated = postsWithoutFirst.map((post) => ({
-    ...post,
-    title: currentLanguage === "en" ? post.title_en : post.title_es,
-    content: currentLanguage === "en" ? post.content_en : post.content_es,
-    slug: post.slug_en,
-  }));
-
-  const allPagePosts = [firstPostTranslated, ...postsWithoutFirstTranslated];
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: currentLanguage === "en" ? "Recipes" : "Recetas",
     url: `${BASE_URL}/${currentLanguage}/recipes`,
-    itemListElement: allPagePosts.map((p, i) => ({
-      "@type": "ListItem",
-      position: (page - 1) * PAGE_SIZE + i + 1,
-      url: `${BASE_URL}/${currentLanguage}/recipes/${p.slug}`,
-      name: p.title,
-    })),
+    itemListElement: [firstPostCard, ...postsWithoutFirstCards].map(
+      (p, i) => ({
+        "@type": "ListItem",
+        position: (page - 1) * PAGE_SIZE + i + 1,
+        url: `${BASE_URL}/${currentLanguage}/recipes/${p.slug}`,
+        name: p.title,
+      }),
+    ),
   };
 
   return (
@@ -166,12 +202,12 @@ export default async function Page(props: { searchParams?: SearchParams }) {
               {/* Image Side */}
               <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
                 <Link
-                  href={`/${PATH}/${firstPostTranslated?.slug}`}
+                  href={`/${PATH}/${firstPostCard.slug}`}
                   className="block w-full relative aspect-[4/3] overflow-hidden rounded-sm shadow-sm"
                 >
                   <Image
-                    src={firstPostTranslated?.image || "/recipes-hero.jpeg"}
-                    alt={firstPostTranslated?.title || "Featured post"}
+                    src={firstPostCard.image || "/recipes-hero.jpeg"}
+                    alt={firstPostCard.title || "Featured post"}
                     fill
                     className="object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
                     priority
@@ -182,44 +218,43 @@ export default async function Page(props: { searchParams?: SearchParams }) {
               {/* Text Side */}
               <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-between py-2">
                 <div>
-                  <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+                  <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                     {t("featured-post")}
                   </span>
                   <Link
-                    href={`/${PATH}/${firstPostTranslated?.slug}`}
+                    href={`/${PATH}/${firstPostCard.slug}`}
                     className="group"
                   >
-                    <h2 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#de9e86] transition-colors duration-300">
-                      {firstPostTranslated?.title}
+                    <h2 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#d8a08b] transition-colors duration-300">
+                      {firstPostCard.title}
                     </h2>
                   </Link>
                   <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] mb-8 line-clamp-4 text-ellipsis overflow-hidden">
-                    {DOMPurify.sanitize(firstPostTranslated?.content ?? "", {
-                      ALLOWED_TAGS: [],
-                    })}
+                    {firstPostCard.excerpt}
                   </p>
                 </div>
 
                 <div className="mt-auto">
                   <div className="flex items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground font-sans mb-8">
-                    <span className="font-medium">{`${firstPostTranslated?.author.firstName} ${firstPostTranslated?.author.lastName}`}</span>
+                    <span className="font-medium">{`${firstPostCard.authorFirstName} ${firstPostCard.authorLastName}`}</span>
                     <span>•</span>
                     <span>
-                      {new Date(
-                        firstPostTranslated?.updatedAt,
-                      ).toLocaleDateString(currentLanguage, {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
+                      {new Date(firstPostCard.updatedAt).toLocaleDateString(
+                        currentLanguage,
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        },
+                      )}
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                     <Link
-                      href={`/${PATH}/${firstPostTranslated?.slug}`}
+                      href={`/${PATH}/${firstPostCard.slug}`}
                       className="w-full sm:w-auto"
                     >
-                      <Button className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm">
+                      <Button className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#d8a08b] text-white hover:bg-[#c28c77] transition-all duration-300 shadow-sm">
                         {t("read-more")}
                       </Button>
                     </Link>
@@ -247,7 +282,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
 
           {/* Lista de posts */}
           <section className="w-full max-w-4xl grid grid-cols-1 xs sm:grid-cols-2 md:grid-cols-3 gap-6 my-10">
-            {postsWithoutFirstTranslated.map((post) => (
+            {postsWithoutFirstCards.map((post) => (
               <Link href={`/${PATH}/${post.slug}`} key={post.id}>
                 <Card
                   key={post.id}
@@ -266,14 +301,12 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                       {post.title}
                     </CardTitle>
                     <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-5 text-ellipsis overflow-hidden lg:text-base">
-                      {DOMPurify.sanitize(post?.content ?? "", {
-                        ALLOWED_TAGS: [],
-                      })}
+                      {post.excerpt}
                     </p>
                     <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto">
                       <span>
                         {tPostMeta("by")}{" "}
-                        <span className="font-medium">{`${post.author.firstName} ${post.author.lastName}`}</span>
+                        <span className="font-medium">{`${post.authorFirstName} ${post.authorLastName}`}</span>
                       </span>
                       <span>
                         {new Date(post.updatedAt).toLocaleDateString(
@@ -305,7 +338,6 @@ export default async function Page(props: { searchParams?: SearchParams }) {
               </PaginationItem>
               {/* Pagination logic */}
               {totalPages <= 4 ? (
-                // Show all pages if 4 or less
                 Array.from({ length: totalPages }, (_, i) => (
                   <PaginationItem key={i}>
                     <PaginationLink
@@ -317,7 +349,6 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                   </PaginationItem>
                 ))
               ) : (
-                // More than 4 pages
                 <>
                   {page <= 2 && (
                     <>

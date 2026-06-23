@@ -28,6 +28,8 @@ type SearchParams = Promise<{ category?: string }>;
 
 const PATH = CategoryEnum.Blog;
 
+export const revalidate = 3600;
+
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {
   if (!html) return "";
@@ -111,44 +113,69 @@ export default async function BlogPostPage(props: {
   const post = await prisma.post.findFirst({
     where: {
       slug_en: slug,
-      published: true, // Ensure only published posts are included
+      published: true,
     },
-    include: { author: true },
+    select: {
+      id: true,
+      title_en: true,
+      title_es: true,
+      content_en: true,
+      content_es: true,
+      image: true,
+      video: true,
+      slug_en: true,
+      slug_es: true,
+      subcategoryId: true,
+      createdAt: true,
+      updatedAt: true,
+      author: { select: { firstName: true, lastName: true } },
+    },
   });
   if (!post || !category) return notFound();
+
+  const recentPostSelect = {
+    id: true,
+    title_en: true,
+    title_es: true,
+    image: true,
+    slug_en: true,
+    updatedAt: true,
+  } as const;
 
   let recentPosts = await prisma.post.findMany({
     where: {
       slug_en: {
-        not: slug, // Exclude the current post
+        not: slug,
       },
-      subcategoryId: Number(searchParams.category) || post.subcategoryId, // Filter by the same subcategory
-      published: true, // Ensure only published posts are included
+      subcategoryId: Number(searchParams.category) || post.subcategoryId,
+      published: true,
       category: {
-        name: PATH, // Ensure the post belongs to the correct category
+        name: PATH,
       },
     },
     orderBy: {
       updatedAt: "desc",
     },
     take: 5,
+    select: recentPostSelect,
   });
 
   if (!recentPosts || recentPosts.length === 0) {
     recentPosts = await prisma.post.findMany({
       where: {
         slug_en: {
-          not: slug, // Exclude the current post
+          not: slug,
         },
-        published: true, // Ensure only published posts are included
+        published: true,
         category: {
-          name: PATH, // Ensure the post belongs to the correct category
+          name: PATH,
         },
       },
       orderBy: {
         updatedAt: "desc",
       },
       take: 5,
+      select: recentPostSelect,
     });
   }
 
@@ -249,8 +276,9 @@ export default async function BlogPostPage(props: {
           {/* Imagen del post */}
           <ImageBlogDetail
             post={{
-              ...post,
+              image: post.image,
               title: postTraslated.title,
+              video: post.video,
             }}
           />
           <h1 className="text-3xl font-bold mb-4 text-primary font-[family-name:var(--font-cormorant-garamond)]">

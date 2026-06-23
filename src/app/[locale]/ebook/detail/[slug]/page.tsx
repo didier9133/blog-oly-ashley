@@ -117,7 +117,7 @@ export default async function PageDetail({
         <div className="bg-[#f5f0eb] py-16 lg:py-24">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center">
-              <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+              <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                 {t("new-release")}
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide mb-6">
@@ -162,7 +162,7 @@ export default async function PageDetail({
                           key={i}
                           className={`h-5 w-5 ${
                             i < Math.floor(book.rating!)
-                              ? "fill-[#de9e86] text-[#de9e86]"
+                              ? "fill-[#d8a08b] text-[#d8a08b]"
                               : "text-gray-300"
                           }`}
                         />
@@ -175,7 +175,7 @@ export default async function PageDetail({
                       ({book.reviewCount} {"reseñas"})
                     </span>
                   </div>
-                  <blockquote className="italic text-lg font-[family-name:var(--font-lora)] text-foreground/90 leading-relaxed border-l-2 border-[#de9e86] pl-4">
+                  <blockquote className="italic text-lg font-[family-name:var(--font-lora)] text-foreground/90 leading-relaxed border-l-2 border-[#d8a08b] pl-4">
                     "
                     {locale === "en"
                       ? book.featured_review_en
@@ -207,7 +207,7 @@ export default async function PageDetail({
                             <span className="text-lg text-muted-foreground line-through ml-3">
                               ${(book.originalPrice! / 100).toFixed(2)}
                             </span>
-                            <span className="ml-3 bg-[#de9e86]/10 text-[#de9e86] px-2 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
+                            <span className="ml-3 bg-[#d8a08b]/10 text-[#d8a08b] px-2 py-1 rounded-sm text-xs font-bold uppercase tracking-wider">
                               {book.discount}% DESC
                             </span>
                           </>
@@ -221,19 +221,19 @@ export default async function PageDetail({
                   <div>
                     <div className="grid grid-cols-2 gap-6 text-sm font-sans text-foreground/80">
                       <div className="flex items-center gap-3">
-                        <BookOpen className="h-5 w-5 text-[#de9e86]" />
+                        <BookOpen className="h-5 w-5 text-[#d8a08b]" />
                         <span className="font-medium">
                           {book.pages} {locale === "en" ? "pages" : "páginas"}
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <Users className="h-5 w-5 text-[#de9e86]" />
+                        <Users className="h-5 w-5 text-[#d8a08b]" />
                         <span className="font-medium">
                           {locale === "en" ? book.format_en : book.format_es}
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <Clock className="h-5 w-5 text-[#de9e86]" />
+                        <Clock className="h-5 w-5 text-[#d8a08b]" />
                         <span className="font-medium">
                           {locale === "en"
                             ? book.language_en
@@ -285,7 +285,7 @@ export default async function PageDetail({
                         : book.features_es
                       ).map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <span className="text-[#de9e86] mt-1 text-lg">•</span>
+                          <span className="text-[#d8a08b] mt-1 text-lg">•</span>
                           <span className="leading-relaxed">{feature}</span>
                         </li>
                       ))}

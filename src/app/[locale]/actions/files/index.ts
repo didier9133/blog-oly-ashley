@@ -158,7 +158,7 @@ export async function createDownloadUrl(
     ResponseContentDisposition: contentDisposition,
   });
 
-  const url = await getSignedUrl(s3Client, command, {
+  const url = await getSignedUrl(s3Client as any, command, {
     expiresIn: expiresInSeconds,
   });
 

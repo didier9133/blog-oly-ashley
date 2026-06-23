@@ -94,7 +94,7 @@ export default async function Page() {
             />
           </div>
           <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-center">
-            <h1 className="text-4xl sm:text-5xl font-light mb-8 text-[#de9e86] italic leading-tight">
+            <h1 className="text-4xl sm:text-5xl font-light mb-8 text-[#d8a08b] italic leading-tight">
               {t("title")}
             </h1>
             <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">
@@ -109,7 +109,7 @@ export default async function Page() {
             <h3 className="text-4xl sm:text-5xl font-light mb-2 text-foreground italic">
               Ashley
             </h3>
-            <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+            <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
               {t("description-ashley")}
             </span>
             <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">
@@ -145,7 +145,7 @@ export default async function Page() {
             <h3 className="text-4xl sm:text-5xl font-light mb-2 text-foreground italic">
               Olydi
             </h3>
-            <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+            <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
               {t("description-oly")}
             </span>
             <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">

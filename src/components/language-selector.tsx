@@ -18,7 +18,7 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <div className="flex items-center gap-2 text-sm font-medium text-foreground/70 px-2">
+    <div className="flex items-center gap-2 text-xs font-medium tracking-[0.04em] text-foreground/60 px-2">
       <button
         onClick={() => handleLanguageChange("es")}
         className={cn(

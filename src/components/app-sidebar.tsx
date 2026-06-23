@@ -32,6 +32,10 @@ export async function AppSidebar({
 
   const titleToPathMap = items.reduce(
     (acc, item) => {
+      if (!item.external && item.url === "/") {
+        acc[item.title] = "home";
+        return acc;
+      }
       if (!item.external && item.url.includes("#newsletter")) {
         acc[item.title] = "subscribe";
         return acc;
@@ -66,7 +70,7 @@ export async function AppSidebar({
       </SidebarHeader>
       <SidebarContent className="bg-[#F9F8F6] pt-8 relative overflow-hidden">
         {/* Decorative background element */}
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#de9e86]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-[#d8a08b]/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="absolute top-20 -left-20 w-48 h-48 bg-[#b5c4a6]/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <SidebarGroup className="relative z-10">

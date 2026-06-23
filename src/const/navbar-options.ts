@@ -1,6 +1,11 @@
 export const data = {
   navMain: [
     {
+      title: "Home",
+      url: "/",
+      isActive: false,
+    },
+    {
       title: "About Us",
       url: "/about",
       isActive: false,
@@ -37,6 +42,11 @@ export const data = {
     },
   ],
   navAdmin: [
+    {
+      title: "Home",
+      url: "/",
+      isActive: false,
+    },
     {
       title: "About Us",
       url: "/about",

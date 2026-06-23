@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
 import type { Metadata } from "next";
 import {
   Card,
@@ -18,6 +17,8 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 
 const BASE_URL = "https://www.raicesreturnings.com";
+
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,
@@ -59,7 +60,6 @@ export default async function EbookPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Ebook" });
-  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
   const books = await prisma.book.findMany({
     orderBy: { createdAt: "desc" },
@@ -106,40 +106,12 @@ export default async function EbookPage({
           />
         );
       })}
-      {metaPixelId && (
-        <>
-          <Script id="meta-pixel" strategy="afterInteractive">
-            {`
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${metaPixelId}');
-              fbq('track', 'PageView');
-            `}
-          </Script>
-          <noscript>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt="Meta Pixel"
-              height="1"
-              width="1"
-              style={{ display: "none" }}
-              src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
-            />
-          </noscript>
-        </>
-      )}
       <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
         {/* Hero Section */}
         <div className="relative bg-[#f5f0eb] py-16 lg:py-24">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center space-y-6">
-              <span className="text-[#de9e86] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+              <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                 {t("breadcrumb")}
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide">
@@ -186,7 +158,7 @@ export default async function EbookPage({
 
                   <CardContent className="p-6 space-y-4 flex-1 flex flex-col">
                     <div className="space-y-2">
-                      <CardTitle className="text-2xl font-semibold text-foreground lg:text-3xl group-hover:text-[#de9e86] transition-colors duration-300 line-clamp-2">
+                      <CardTitle className="text-2xl font-semibold text-foreground lg:text-3xl group-hover:text-[#d8a08b] transition-colors duration-300 line-clamp-2">
                         {title}
                       </CardTitle>
                       <CardDescription className="text-sm font-[family-name:var(--font-lora)] text-muted-foreground line-clamp-2">
@@ -205,7 +177,7 @@ export default async function EbookPage({
                             key={i}
                             className={`h-4 w-4 ${
                               i < Math.floor(book.rating!)
-                                ? "fill-[#de9e86] text-[#de9e86]"
+                                ? "fill-[#d8a08b] text-[#d8a08b]"
                                 : "text-gray-300"
                             }`}
                           />
@@ -248,7 +220,7 @@ export default async function EbookPage({
                       href={`/${locale}/ebook/detail/${locale === "en" ? book.slug_en : book.slug_es}`}
                       className="pt-4"
                     >
-                      <Button className="group/btn rounded-sm px-6 py-4 font-[family-name:var(--font-lora)] text-base bg-[#de9e86] text-white hover:bg-[#c88a72] transition-all duration-300 shadow-sm">
+                      <Button className="group/btn rounded-sm px-6 py-4 font-[family-name:var(--font-lora)] text-base bg-[#d8a08b] text-white hover:bg-[#c28c77] transition-all duration-300 shadow-sm">
                         {t("details-button")}
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                       </Button>
