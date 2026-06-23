@@ -7,6 +7,7 @@ interface HeroImageProps {
   sizes?: string;
   variant?: "default" | "clean";
   objectPosition?: string;
+  priority?: boolean;
 }
 
 export function HeroImage({
@@ -15,6 +16,7 @@ export function HeroImage({
   sizes,
   variant = "default",
   objectPosition = "object-center",
+  priority = true,
 }: HeroImageProps) {
   return (
     <>
@@ -24,8 +26,8 @@ export function HeroImage({
             src={src}
             alt={alt}
             fill
-            priority
-            quality={92}
+            priority={priority}
+            quality={82}
             sizes={sizes}
             className={`object-cover ${objectPosition}`}
           />

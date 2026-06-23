@@ -18,7 +18,7 @@ export function Footer() {
         className="relative w-full py-24 md:py-32 overflow-hidden bg-[#6b705c]"
       >
         <Image
-          src="/new_logo.png"
+          src="/new_logo.webp"
           alt="Background"
           fill
           className="object-cover opacity-15"

@@ -99,7 +99,7 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/blog"),
-      images: [`${BASE_URL}/blog-hero.jpeg`],
+      images: [`${BASE_URL}/blog-hero.webp`],
     },
     twitter: {
       card: "summary_large_image",
@@ -209,7 +209,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                   className="block w-full relative aspect-[4/3] overflow-hidden rounded-sm shadow-sm"
                 >
                   <Image
-                    src={firstPostCard.image || "/blog-hero.jpeg"}
+                    src={firstPostCard.image || "/blog-hero.webp"}
                     alt={firstPostCard.title || "Featured post"}
                     fill
                     className="object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"

@@ -17,18 +17,19 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { BASE_URL } from "@/lib/url";
+import { cache } from "react";
 
 //Analytics
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 
+// Cormorant Garamond is a variable font; loading the variable version
+// includes weights 300-700 and both normal/italic in a single file.
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
 });
 
 const lora = Lora({
@@ -46,13 +47,27 @@ const greatVibes = Great_Vibes({
   preload: false,
 });
 
+// Cache locale messages per request to avoid re-reading JSON files.
+const getMessagesCached = cache(async (locale: string) =>
+  getMessages({ locale }),
+);
+
+const getMetadataTranslationsCached = cache(async (locale: string) =>
+  getTranslations({ locale, namespace: "metadata" }),
+);
+
+// Pre-render both locales at build time to improve cold-start TTFB.
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata" });
+  const t = await getMetadataTranslationsCached(locale);
 
   return {
     title: t("title"),
@@ -121,7 +136,7 @@ export default async function RootLayout({
     notFound();
   }
 
-  const messages = await getMessages({ locale });
+  const messages = await getMessagesCached(locale);
 
   return (
     <ClerkProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface FadeInProps {
@@ -11,6 +11,14 @@ interface FadeInProps {
   direction?: "up" | "down" | "left" | "right" | "none";
 }
 
+const DIRECTION_OFFSET = {
+  up: "translateY(40px)",
+  down: "translateY(-40px)",
+  left: "translateX(40px)",
+  right: "translateX(-40px)",
+  none: "translate(0)",
+};
+
 export function FadeIn({
   children,
   className,
@@ -18,33 +26,49 @@ export function FadeIn({
   duration = 0.5,
   direction = "up",
 }: FadeInProps) {
-  const variants: Variants = {
-    hidden: {
-      opacity: 0.001,
-      y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
-      x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      transition: {
-        duration,
-        delay,
-        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
       },
-    },
-  };
+      { threshold: 0.05, rootMargin: "0px 0px 0px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.05 }}
-      variants={variants}
-      className={cn(className)}
+    <div
+      ref={ref}
+      className={cn(
+        "transition-[opacity,transform] motion-reduce:transition-none",
+        visible ? "opacity-100 translate-x-0 translate-y-0" : "opacity-[0.001]",
+        className
+      )}
+      style={{
+        transform: visible ? undefined : DIRECTION_OFFSET[direction],
+        transitionDuration: `${duration}s`,
+        transitionDelay: `${delay}s`,
+        transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        willChange: visible ? "auto" : "opacity, transform",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

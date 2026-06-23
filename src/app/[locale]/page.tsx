@@ -149,11 +149,12 @@ export default async function Home() {
           <div className="md:hidden relative w-full">
             <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] overflow-hidden bg-sand">
               <HeroImage
-                src="/hero-image.jpeg"
+                src="/hero-image.webp"
                 alt={t("alt-hero-main")}
                 sizes="(min-width: 768px) 0px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
                 variant="clean"
                 objectPosition="object-[center_25%]"
+                priority
               />
             </div>
           </div>
@@ -173,11 +174,12 @@ export default async function Home() {
                   }}
                 >
                   <HeroImage
-                    src="/hero-image.jpeg"
+                    src="/hero-image.webp"
                     alt={t("alt-hero-main")}
                     sizes="(min-width: 1024px) 60vw, (min-width: 1536px) 1152px, 100vw"
                     variant="clean"
                     objectPosition="object-center"
+                    priority={false}
                   />
                 </div>
               </div>
