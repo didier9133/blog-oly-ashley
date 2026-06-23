@@ -3,8 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl } from "@/lib/url";
 
 export async function generateMetadata({
   params,
@@ -22,11 +21,11 @@ export async function generateMetadata({
         ? "Términos y condiciones de Raíces & Returnings."
         : "Terms of service for Raíces & Returnings.",
     alternates: {
-      canonical: `${BASE_URL}/${locale}/terms`,
+      canonical: fullUrl(locale, "/terms"),
       languages: {
-        en: `${BASE_URL}/en/terms`,
-        es: `${BASE_URL}/es/terms`,
-        "x-default": `${BASE_URL}/en/terms`,
+        en: fullUrl("en", "/terms"),
+        es: fullUrl("es", "/terms"),
+        "x-default": fullUrl("en", "/terms"),
       },
     },
   };

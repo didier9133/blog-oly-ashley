@@ -3,8 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl } from "@/lib/url";
 
 export async function generateMetadata({
   params,
@@ -22,11 +21,11 @@ export async function generateMetadata({
         ? "Política de privacidad de Raíces & Returnings."
         : "Privacy policy for Raíces & Returnings.",
     alternates: {
-      canonical: `${BASE_URL}/${locale}/privacy`,
+      canonical: fullUrl(locale, "/privacy"),
       languages: {
-        en: `${BASE_URL}/en/privacy`,
-        es: `${BASE_URL}/es/privacy`,
-        "x-default": `${BASE_URL}/en/privacy`,
+        en: fullUrl("en", "/privacy"),
+        es: fullUrl("es", "/privacy"),
+        "x-default": fullUrl("en", "/privacy"),
       },
     },
   };

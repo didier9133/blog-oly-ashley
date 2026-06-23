@@ -20,8 +20,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 type SearchParams = Promise<{ page?: string }>;
 const PATH = CategoryEnum.Blog;
 const EXCERPT_MAX = 280;
@@ -99,7 +98,7 @@ export async function generateMetadata({
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${BASE_URL}/${locale}/blog`,
+      url: fullUrl(locale, "/blog"),
       images: [`${BASE_URL}/blog-hero.jpeg`],
     },
     twitter: {
@@ -108,11 +107,11 @@ export async function generateMetadata({
       description: t("description"),
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/blog`,
+      canonical: fullUrl(locale, "/blog"),
       languages: {
-        en: `${BASE_URL}/en/blog`,
-        es: `${BASE_URL}/es/blog`,
-        "x-default": `${BASE_URL}/en/blog`,
+        en: fullUrl("en", "/blog"),
+        es: fullUrl("es", "/blog"),
+        "x-default": fullUrl("en", "/blog"),
       },
     },
   };

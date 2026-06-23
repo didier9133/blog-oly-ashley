@@ -14,8 +14,7 @@ import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 
 export async function generateMetadata({
   params,
@@ -41,7 +40,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | Raíces & Returnings`,
       description,
-      url: `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`,
+      url: fullUrl(locale, `/ebook/detail/${detailSlug}`),
       images: [{ url: coverImage, width: 800, height: 1067, alt: title }],
     },
     twitter: {
@@ -51,11 +50,11 @@ export async function generateMetadata({
       images: [coverImage],
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`,
+      canonical: fullUrl(locale, `/ebook/detail/${detailSlug}`),
       languages: {
-        en: `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
-        es: `${BASE_URL}/es/ebook/detail/${book.slug_es}`,
-        "x-default": `${BASE_URL}/en/ebook/detail/${book.slug_en}`,
+        en: fullUrl("en", `/ebook/detail/${book.slug_en}`),
+        es: fullUrl("es", `/ebook/detail/${book.slug_es}`),
+        "x-default": fullUrl("en", `/ebook/detail/${book.slug_en}`),
       },
     },
   };
@@ -81,7 +80,7 @@ export default async function PageDetail({
     locale === "en" ? book.description_en : book.description_es;
   const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
-  const pageUrl = `${BASE_URL}/${locale}/ebook/detail/${detailSlug}`;
+  const pageUrl = fullUrl(locale, `/ebook/detail/${detailSlug}`);
 
   const bookSchema: Record<string, unknown> = {
     "@context": "https://schema.org",

@@ -16,9 +16,8 @@ import ImageRecentBlog from "@/components/image-recent-post";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
+import { fullUrl, BASE_URL } from "@/lib/url";
 import type { Metadata } from "next";
-
-const BASE_URL = "https://www.raicesreturnings.com";
 type Params = Promise<{ locale: string; slug: string }>;
 type SearchParams = Promise<{ category?: string }>;
 
@@ -72,7 +71,7 @@ export async function generateMetadata({
       type: "article",
       title: pageTitle,
       description,
-      url: `${BASE_URL}/${locale}/recipes/${slug}`,
+      url: fullUrl(locale, `/recipes/${slug}`),
       images: [{ url: post.image, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
       authors: ["https://www.raicesreturnings.com/about"],
@@ -84,11 +83,11 @@ export async function generateMetadata({
       images: [post.image],
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/recipes/${slug}`,
+      canonical: fullUrl(locale, `/recipes/${slug}`),
       languages: {
-        en: `${BASE_URL}/en/recipes/${post.slug_en}`,
-        es: `${BASE_URL}/es/recipes/${post.slug_en}`,
-        "x-default": `${BASE_URL}/en/recipes/${post.slug_en}`,
+        en: fullUrl("en", `/recipes/${post.slug_en}`),
+        es: fullUrl("es", `/recipes/${post.slug_en}`),
+        "x-default": fullUrl("en", `/recipes/${post.slug_en}`),
       },
     },
   };
@@ -198,7 +197,7 @@ export default async function BlogPostPage(props: {
 
   const { locale } = await props.params;
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
-  const pageUrl = `${BASE_URL}/${locale}/recipes/${slug}`;
+  const pageUrl = fullUrl(locale, `/recipes/${slug}`);
 
   const CUISINE_MAP: Record<string, string> = {
     venezuelan: "Venezuelan",
@@ -224,7 +223,7 @@ export default async function BlogPostPage(props: {
     author: {
       "@type": "Person",
       name: authorName,
-      url: `${BASE_URL}/${locale}/about`,
+      url: fullUrl(locale, "/about"),
     },
     publisher: {
       "@type": "Organization",
@@ -257,13 +256,13 @@ export default async function BlogPostPage(props: {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: `${BASE_URL}/${locale}`,
+        item: fullUrl(locale, ""),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Recipes",
-        item: `${BASE_URL}/${locale}/recipes`,
+        item: fullUrl(locale, "/recipes"),
       },
       {
         "@type": "ListItem",

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -15,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${BASE_URL}/${locale}/contact`,
+      url: fullUrl(locale, "/contact"),
       images: [`${BASE_URL}/og-image.jpeg`],
     },
     twitter: {
@@ -24,11 +23,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t("description"),
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/contact`,
+      canonical: fullUrl(locale, "/contact"),
       languages: {
-        en: `${BASE_URL}/en/contact`,
-        es: `${BASE_URL}/es/contact`,
-        "x-default": `${BASE_URL}/en/contact`,
+        en: fullUrl("en", "/contact"),
+        es: fullUrl("es", "/contact"),
+        "x-default": fullUrl("en", "/contact"),
       },
     },
   };

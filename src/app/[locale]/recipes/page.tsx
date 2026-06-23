@@ -20,8 +20,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 type SearchParams = Promise<{ page?: string }>;
 const PATH = CategoryEnum.Recipes;
 const EXCERPT_MAX = 280;
@@ -96,7 +95,7 @@ export async function generateMetadata({
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${BASE_URL}/${locale}/recipes`,
+      url: fullUrl(locale, "/recipes"),
       images: [`${BASE_URL}/recipes-hero.jpeg`],
     },
     twitter: {
@@ -105,11 +104,11 @@ export async function generateMetadata({
       description: t("description"),
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/recipes`,
+      canonical: fullUrl(locale, "/recipes"),
       languages: {
-        en: `${BASE_URL}/en/recipes`,
-        es: `${BASE_URL}/es/recipes`,
-        "x-default": `${BASE_URL}/en/recipes`,
+        en: fullUrl("en", "/recipes"),
+        es: fullUrl("es", "/recipes"),
+        "x-default": fullUrl("en", "/recipes"),
       },
     },
   };
@@ -173,12 +172,12 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: currentLanguage === "en" ? "Recipes" : "Recetas",
-    url: `${BASE_URL}/${currentLanguage}/recipes`,
+    url: fullUrl(currentLanguage, "/recipes"),
     itemListElement: [firstPostCard, ...postsWithoutFirstCards].map(
       (p, i) => ({
         "@type": "ListItem",
         position: (page - 1) * PAGE_SIZE + i + 1,
-        url: `${BASE_URL}/${currentLanguage}/recipes/${p.slug}`,
+        url: fullUrl(currentLanguage, `/recipes/${p.slug}`),
         name: p.title,
       }),
     ),

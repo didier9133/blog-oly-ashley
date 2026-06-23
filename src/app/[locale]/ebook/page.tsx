@@ -15,8 +15,7 @@ import { BookOpen, Star, ArrowRight } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 
 export const revalidate = 3600;
 
@@ -95,7 +94,7 @@ export default async function EbookPage({
               numberOfPages: book.pages,
               image: imageUrl,
               isbn: book.isbn,
-              url: `${BASE_URL}/${locale}/ebook/detail/${bookSlug}`,
+              url: fullUrl(locale, `/ebook/detail/${bookSlug}`),
               offers: {
                 "@type": "Offer",
                 price: (book.price / 100).toFixed(2),

@@ -21,8 +21,7 @@ import ImageRecentBlog from "@/components/image-recent-post";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
-
-const BASE_URL = "https://www.raicesreturnings.com";
+import { fullUrl, BASE_URL } from "@/lib/url";
 type Params = Promise<{ locale: string; slug: string }>;
 type SearchParams = Promise<{ category?: string }>;
 
@@ -76,7 +75,7 @@ export async function generateMetadata({
       type: "article",
       title: pageTitle,
       description,
-      url: `${BASE_URL}/${locale}/blog/${slug}`,
+      url: fullUrl(locale, `/blog/${slug}`),
       images: [{ url: post.image, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
       authors: ["https://www.raicesreturnings.com/about"],
@@ -88,11 +87,11 @@ export async function generateMetadata({
       images: [post.image],
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/blog/${slug}`,
+      canonical: fullUrl(locale, `/blog/${slug}`),
       languages: {
-        en: `${BASE_URL}/en/blog/${post.slug_en}`,
-        es: `${BASE_URL}/es/blog/${post.slug_en}`,
-        "x-default": `${BASE_URL}/en/blog/${post.slug_en}`,
+        en: fullUrl("en", `/blog/${post.slug_en}`),
+        es: fullUrl("es", `/blog/${post.slug_en}`),
+        "x-default": fullUrl("en", `/blog/${post.slug_en}`),
       },
     },
   };
@@ -195,7 +194,7 @@ export default async function BlogPostPage(props: {
 
   const { locale } = await props.params;
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
-  const pageUrl = `${BASE_URL}/${locale}/blog/${slug}`;
+  const pageUrl = fullUrl(locale, `/blog/${slug}`);
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
@@ -209,7 +208,7 @@ export default async function BlogPostPage(props: {
     author: {
       "@type": "Person",
       name: authorName,
-      url: `${BASE_URL}/${locale}/about`,
+      url: fullUrl(locale, "/about"),
     },
     publisher: {
       "@type": "Organization",
@@ -227,13 +226,13 @@ export default async function BlogPostPage(props: {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: `${BASE_URL}/${locale}`,
+        item: fullUrl(locale, ""),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Blog",
-        item: `${BASE_URL}/${locale}/blog`,
+        item: fullUrl(locale, "/blog"),
       },
       {
         "@type": "ListItem",

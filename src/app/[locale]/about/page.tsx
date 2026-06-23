@@ -1,9 +1,8 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import Image from "next/image";
 import { JsonLd } from "@/components/json-ld";
+import { fullUrl, BASE_URL } from "@/lib/url";
 import type { Metadata } from "next";
-
-const BASE_URL = "https://www.raicesreturnings.com";
 
 export async function generateMetadata({
   params,
@@ -19,7 +18,7 @@ export async function generateMetadata({
     openGraph: {
       title: t("title"),
       description: t("description"),
-      url: `${BASE_URL}/${locale}/about`,
+      url: fullUrl(locale, "/about"),
       images: [`${BASE_URL}/og-image.jpeg`],
     },
     twitter: {
@@ -28,11 +27,11 @@ export async function generateMetadata({
       description: t("description"),
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/about`,
+      canonical: fullUrl(locale, "/about"),
       languages: {
-        en: `${BASE_URL}/en/about`,
-        es: `${BASE_URL}/es/about`,
-        "x-default": `${BASE_URL}/en/about`,
+        en: fullUrl("en", "/about"),
+        es: fullUrl("es", "/about"),
+        "x-default": fullUrl("en", "/about"),
       },
     },
   };
@@ -47,7 +46,7 @@ export default async function Page() {
     "@type": "Person",
     name: "Ashley León",
     jobTitle: "Writer & Conscious Digital Creator",
-    url: `${BASE_URL}/${locale}/about`,
+    url: fullUrl(locale, "/about"),
     worksFor: {
       "@type": "Organization",
       name: "Raíces & Returnings",
@@ -64,7 +63,7 @@ export default async function Page() {
     "@type": "Person",
     name: "Olydi M Contreras",
     jobTitle: "Writer & Recipe Developer",
-    url: `${BASE_URL}/${locale}/about`,
+    url: fullUrl(locale, "/about"),
     worksFor: {
       "@type": "Organization",
       name: "Raíces & Returnings",
