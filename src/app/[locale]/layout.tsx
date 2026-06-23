@@ -26,14 +26,15 @@ const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
 });
 
 const lora = Lora({
   variable: "--font-lora",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500"],
 });
 
 const greatVibes = Great_Vibes({
@@ -41,6 +42,7 @@ const greatVibes = Great_Vibes({
   subsets: ["latin"],
   display: "swap",
   weight: ["400"],
+  preload: false,
 });
 
 export async function generateMetadata({
@@ -165,7 +167,7 @@ export default async function RootLayout({
                 <SpeedInsights />
                 <Script
                   id="meta-pixel"
-                  strategy="afterInteractive"
+                  strategy="lazyOnload"
                   dangerouslySetInnerHTML={{
                     __html: `
                       !function(f,b,e,v,n,t,s)

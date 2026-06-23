@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { FilmGrain } from "@/components/film-grain";
 
@@ -19,17 +16,10 @@ export function HeroImage({
   variant = "default",
   objectPosition = "object-center",
 }: HeroImageProps) {
-  const { scrollY } = useScroll();
-
-  const y = useTransform(scrollY, [0, 800], ["0%", "6%"]);
-
   return (
     <>
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          style={{ y }}
-          className="absolute -inset-y-[6%] inset-x-0 will-change-transform"
-        >
+        <div className="absolute -inset-y-[6%] inset-x-0">
           <Image
             src={src}
             alt={alt}
@@ -40,7 +30,7 @@ export function HeroImage({
             className={`object-cover ${objectPosition}`}
           />
           <FilmGrain opacity={variant === "clean" ? 0.08 : 0.14} />
-        </motion.div>
+        </div>
       </div>
 
       {variant === "default" ? (

@@ -8,7 +8,13 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/dashboard/", "/api/"],
+        disallow: [
+          "/dashboard/",
+          "/api/",
+          "/_next/static/",
+          "/*.woff2$",
+          "/*.webmanifest$",
+        ],
       },
       { userAgent: "GPTBot", allow: "/" },
       { userAgent: "ChatGPT-User", allow: "/" },
