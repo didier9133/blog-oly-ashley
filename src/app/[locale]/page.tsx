@@ -16,6 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, Leaf, Heart } from "lucide-react";
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export default async function Home() {
@@ -149,12 +150,11 @@ export default async function Home() {
           <div className="md:hidden relative w-full">
             <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] overflow-hidden bg-sand">
               <HeroImage
-                src="/hero-image.webp"
+                src="/hero-image.jpeg"
                 alt={t("alt-hero-main")}
                 sizes="(min-width: 768px) 0px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
                 variant="clean"
                 objectPosition="object-[center_25%]"
-                priority
               />
             </div>
           </div>
@@ -174,12 +174,11 @@ export default async function Home() {
                   }}
                 >
                   <HeroImage
-                    src="/hero-image.webp"
+                    src="/hero-image.jpeg"
                     alt={t("alt-hero-main")}
                     sizes="(min-width: 1024px) 60vw, (min-width: 1536px) 1152px, 100vw"
                     variant="clean"
                     objectPosition="object-center"
-                    priority={false}
                   />
                 </div>
               </div>
