@@ -1,13 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { currentUser } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
 import { Plus, Sparkles, Coffee, Heart, NotebookPen } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-export default async function NoPostsView() {
-  const user = await currentUser();
-  const isAdmin = Boolean(user?.publicMetadata?.isAdmin);
-  const t = await getTranslations("NotPostFound");
+export default function NoPostsView() {
+  const { user, isLoaded } = useUser();
+  // Mientras Clerk carga, asumimos no-admin: el botón "crear post" queda oculto.
+  const isAdmin = isLoaded && Boolean(user?.publicMetadata?.isAdmin);
+  const t = useTranslations("NotPostFound");
   return (
     <div className="font-[family-name:var(--font-lora)]">
       {/* Main Content */}

@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 
@@ -10,8 +12,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { data } from "@/const/navbar-options";
-import { currentUser } from "@clerk/nextjs/server";
-import { getTranslations } from "next-intl/server";
+import { useUser } from "@clerk/nextjs";
+import { useTranslations } from "next-intl";
 import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
 
 type NavItem = {
@@ -21,40 +23,25 @@ type NavItem = {
   external?: boolean;
 };
 
-export async function AppSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>): Promise<React.ReactElement> {
-  const user = await currentUser();
-  const t = await getTranslations("navigation");
-  const items = (
-    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain
-  ) as NavItem[];
+const titleToPath = (item: NavItem): string => {
+  if (item.external) return "merch";
+  if (item.url === "/") return "home";
+  if (item.url.includes("#newsletter")) return "subscribe";
+  return item.url.replace(/^\//, "");
+};
 
-  const titleToPathMap = items.reduce(
-    (acc, item) => {
-      if (!item.external && item.url === "/") {
-        acc[item.title] = "home";
-        return acc;
-      }
-      if (!item.external && item.url.includes("#newsletter")) {
-        acc[item.title] = "subscribe";
-        return acc;
-      }
-      // For internal links, remove the leading slash
-      const path = item.external ? item.url : item.url.replace(/^\//, "");
-      if (item.external) {
-        acc[item.title] = "merch";
-        return acc;
-      }
-      // Add the mapping to the accumulator object
-      acc[item.title] = path;
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
-  const itemsTraslated = items.map((item) => ({
+export function AppSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>): React.ReactElement {
+  const { user, isLoaded } = useUser();
+  const t = useTranslations("navigation");
+
+  const isAdmin = isLoaded && Boolean(user?.publicMetadata?.isAdmin);
+  const items = (isAdmin ? data.navAdmin : data.navMain) as NavItem[];
+
+  const itemsTranslated = items.map((item) => ({
     ...item,
-    title: t(titleToPathMap[item.title]),
+    title: t(titleToPath(item)),
   }));
 
   return (
@@ -75,7 +62,7 @@ export async function AppSidebar({
 
         <SidebarGroup className="relative z-10">
           <SidebarGroupContent>
-            <SidebarNavMenu items={itemsTraslated} />
+            <SidebarNavMenu items={itemsTranslated} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

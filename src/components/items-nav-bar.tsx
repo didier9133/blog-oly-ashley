@@ -1,7 +1,9 @@
+"use client";
+
 import { data } from "@/const/navbar-options";
 import { ItemNavBar } from "./item-nav-bar";
-import { currentUser } from "@clerk/nextjs/server";
-import { getTranslations } from "next-intl/server";
+import { useUser } from "@clerk/nextjs";
+import { useTranslations } from "next-intl";
 
 type NavItem = {
   title: string;
@@ -10,43 +12,30 @@ type NavItem = {
   external?: boolean;
 };
 
-export async function ItemsNavBar() {
-  const user = await currentUser();
-  const items = (
-    user && user.publicMetadata.isAdmin ? data.navAdmin : data.navMain
-  ) as NavItem[];
-  const t = await getTranslations("navigation");
+const titleToPath = (item: NavItem): string => {
+  if (item.external) return "merch";
+  if (item.url === "/") return "home";
+  if (item.url.includes("#newsletter")) return "subscribe";
+  return item.url.replace(/^\//, "");
+};
 
-  const titleToPathMap = items.reduce(
-    (acc, item) => {
-      if (!item.external && item.url === "/") {
-        acc[item.title] = "home";
-        return acc;
-      }
-      if (!item.external && item.url.includes("#newsletter")) {
-        acc[item.title] = "subscribe";
-        return acc;
-      }
-      // For internal links, remove the leading slash
-      const path = item.external ? item.url : item.url.replace(/^\//, "");
-      if (item.external) {
-        acc[item.title] = "merch";
-        return acc;
-      }
-      // Add the mapping to the accumulator object
-      acc[item.title] = path;
-      return acc;
-    },
-    {} as Record<string, string>,
-  );
-  const itemsTraslated = items.map((item) => ({
+export function ItemsNavBar() {
+  const { user, isLoaded } = useUser();
+  const t = useTranslations("navigation");
+
+  // Mientras Clerk carga el user, asumimos no-admin para evitar CLS:
+  // el nav se monta con el set base (navMain) y solo cambia si es admin.
+  const isAdmin = isLoaded && Boolean(user?.publicMetadata?.isAdmin);
+  const items = (isAdmin ? data.navAdmin : data.navMain) as NavItem[];
+
+  const itemsTranslated = items.map((item) => ({
     ...item,
-    title: t(titleToPathMap[item.title]),
+    title: t(titleToPath(item)),
   }));
 
   return (
     <div className="hidden md:flex items-center gap-8">
-      {itemsTraslated.map((item) => (
+      {itemsTranslated.map((item) => (
         <ItemNavBar key={item.title} {...item} />
       ))}
     </div>
