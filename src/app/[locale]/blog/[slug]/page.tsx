@@ -285,10 +285,16 @@ export default async function BlogPostPage(props: { params: Params }) {
         {/* Sidebar de posts recientes */}
         <aside className="w-full md:w-[25%] mt-10 md:mt-0 lg:pl-6">
           <div className="max-w-sm w-full mx-auto md:mx-0">
-            <ComboboxDemo
-              categoryId={category.id}
-              categoryName={category.name}
-            />
+            <Suspense
+              fallback={
+                <div className="h-10 w-full max-w-[350px] rounded-md border bg-muted/40 animate-pulse" />
+              }
+            >
+              <ComboboxDemo
+                categoryId={category.id}
+                categoryName={category.name}
+              />
+            </Suspense>
             <Separator className="flex my-4" />
             <Suspense
               fallback={
