@@ -22,18 +22,32 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL } from "@/lib/url";
 import { sumDurationsToISO } from "@/lib/duration";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 type Params = Promise<{ locale: string; slug: string }>;
 
 const PATH = CategoryEnum.Recipes;
 
-// Layout's <ClerkProvider> reads auth state per-request, making the entire
-// route tree dynamic. Combining that with generateStaticParams throws
-// DYNAMIC_SERVER_USAGE. Force dynamic rendering here; revalidate=3600 still
-// provides ISR cache. To restore SSG, Clerk UI must be moved out of root
-// layout (tracked separately).
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const recipes = await prisma.post.findMany({
+    where: { published: true, category: { name: PATH } },
+    select: { slug_en: true, slug_es: true },
+  });
+
+  const params: { locale: string; slug: string }[] = [];
+  for (const recipe of recipes) {
+    for (const locale of routing.locales) {
+      const slug = locale === "es" ? recipe.slug_es : recipe.slug_en;
+      if (slug) {
+        params.push({ locale, slug });
+      }
+    }
+  }
+  return params;
+}
 
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {

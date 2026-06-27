@@ -1,12 +1,3 @@
-import { ClerkProvider } from "@clerk/nextjs";
-
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { Header } from "@/components/nav-bar";
-import { Footer } from "@/components/footer";
-import { Toaster } from "@/components/ui/sonner";
-import { MaxListenersBump } from "@/components/max-listeners-bump";
-
 import { Lora, Cormorant_Garamond, Great_Vibes } from "next/font/google";
 
 import "./globals.css";
@@ -18,10 +9,14 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { BASE_URL } from "@/lib/url";
 
-//Analytics
+// Analytics
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
+
+// UI providers
+import { Toaster } from "@/components/ui/sonner";
+import { MaxListenersBump } from "@/components/max-listeners-bump";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -61,6 +56,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
+    metadataBase: new URL(BASE_URL),
     title: t("title"),
     description: t("description"),
     keywords: t("keywords").split(", "),
@@ -79,7 +75,6 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      // Homepage: as-needed → EN en raíz (sin /en), ES en /es.
       canonical: locale === "es" ? `${BASE_URL}/es` : BASE_URL,
       languages: {
         en: BASE_URL,
@@ -130,80 +125,68 @@ export default async function RootLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <ClerkProvider>
-      <html lang={locale}>
-        <head>
-          <meta
-            name="google-site-verification"
-            content="google4ff5fb217dd7438f"
-          />
-          <link rel="icon" href="/new_logo.png" sizes="any" type="image/png" />
-          <link rel="icon" href="/favicon.ico" sizes="48x48" />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon.png"
-          />
+    <html lang={locale}>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="google4ff5fb217dd7438f"
+        />
+        <link rel="icon" href="/new_logo.png" sizes="any" type="image/png" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
 
-          <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/site.webmanifest" />
 
-          <link
-            rel="preconnect"
-            href="https://dgw9atod1ju2x.cloudfront.net"
-            crossOrigin="anonymous"
+        <link
+          rel="preconnect"
+          href="https://dgw9atod1ju2x.cloudfront.net"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://dgw9atod1ju2x.cloudfront.net" />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=341835141552957&ev=PageView&noscript=1"
+            alt=""
           />
-          <link rel="dns-prefetch" href="https://dgw9atod1ju2x.cloudfront.net" />
-          <noscript>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              height="1"
-              width="1"
-              style={{ display: "none" }}
-              src="https://www.facebook.com/tr?id=341835141552957&ev=PageView&noscript=1"
-              alt=""
-            />
-          </noscript>
-        </head>
-        <body
-          className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
-        >
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <MaxListenersBump />
-            <Toaster position="top-right" richColors />
-            <SidebarProvider defaultOpen={false}>
-              <AppSidebar
-                side="right"
-                className="font-[family-name:var(--font-cormorant-garamond)]"
-              />
-              <SidebarInset>
-                <Header />
-                {children}
-                <Analytics />
-                <SpeedInsights />
-                <Script
-                  id="meta-pixel"
-                  strategy="lazyOnload"
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                      !function(f,b,e,v,n,t,s)
-                      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                      n.queue=[];t=b.createElement(e);t.async=!0;
-                      t.src=v;s=b.getElementsByTagName(e)[0];
-                      s.parentNode.insertBefore(t,s)}(window, document,'script',
-                      'https://connect.facebook.net/en_US/fbevents.js');
-                      fbq('init', '341835141552957');
-                      fbq('track', 'PageView');
-                    `,
-                  }}
-                />
-                <Footer />
-              </SidebarInset>
-            </SidebarProvider>
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </noscript>
+      </head>
+      <body
+        className={`${cormorantGaramond.variable} ${lora.variable} ${greatVibes.variable} antialiased overflow-x-hidden`}
+      >
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <MaxListenersBump />
+          <Toaster position="top-right" richColors />
+          {children}
+          <Analytics />
+          <SpeedInsights />
+          <Script
+            id="meta-pixel"
+            strategy="lazyOnload"
+            dangerouslySetInnerHTML={{
+              __html: `
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '341835141552957');
+                fbq('track', 'PageView');
+              `,
+            }}
+          />
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

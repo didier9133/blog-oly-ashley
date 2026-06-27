@@ -35,19 +35,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   getCategoriesWithSubcategories,
-  getPostById,
-  updatePost,
+  saveNewPost,
 } from "@/app/[locale]/actions/posts";
-import { Subcategory, Category } from "../../../generated/prisma/index";
+import { Subcategory, Category } from "@/app/generated/prisma/index";
 import RichTextEditor from "@/components/rich-text-editor";
 import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
-import { notFound, useParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
-const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 
@@ -120,84 +117,61 @@ function buildFormPostSchema(t: TFn) {
       .max(100, t("validation.titleMax", { max: 100 })),
 
     category: z.string().min(1, t("validation.categoryRequired")),
+
     subcategory: z.string().min(1, t("validation.subcategoryRequired")),
+
     isPublished: z.boolean(),
+
     image: z.lazy(() =>
       typeof window !== "undefined"
-        ? z.any().superRefine((val, ctx) => {
-            // If it's a string URL
-            if (typeof val === "string") {
-              if (val.trim() === "") {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: t("validation.imageRequired"),
-                });
-                return;
-              }
-              if (!val.includes("dgw9atod1ju2x.cloudfront.net")) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: t("validation.imageInvalidUrl"),
-                });
-                return;
-              }
-            }
-
-            // If it's a FileList
-            else if (val instanceof FileList) {
-              if (val.length === 0) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: t("validation.imageRequired"),
-                });
-                return;
-              }
-              if (val[0].size > FILE_SIZE_LIMIT) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: t("validation.imageMaxSize", { maxMb: 5 }),
-                });
-                return;
-              }
-            }
-
-            // Verificar formato de archivo
-            if (val instanceof FileList && val.length > 0) {
-              const fileName = val[0].name.toLowerCase();
-
-              const fileExtension = fileName.substring(
-                fileName.lastIndexOf("."),
-              );
-
-              if (!validExtensions.includes(fileExtension)) {
-                ctx.addIssue({
-                  code: z.ZodIssueCode.custom,
-                  message: t("validation.imageInvalidFormat"),
-                });
-                return;
-              }
-            }
-          })
+        ? z
+            .any()
+            .refine((files) => files instanceof FileList, {
+              message: t("validation.imageRequired"),
+            })
+            .refine(
+              (files) => !(files instanceof FileList) || files.length > 0,
+              {
+                message: t("validation.imageRequired"),
+              },
+            )
+            .refine(
+              (files) =>
+                !(files instanceof FileList) ||
+                files.length === 0 ||
+                files[0].size <= FILE_SIZE_LIMIT,
+              {
+                message: t("validation.imageMaxSize", { maxMb: 5 }),
+              },
+            )
+            .refine(
+              (files) =>
+                !(files instanceof FileList) ||
+                files.length === 0 ||
+                /^image\/(jpeg|png|gif|webp|svg\+xml)$/.test(files[0].type),
+              {
+                message: t("validation.imageInvalidFormat"),
+              },
+            )
         : z.any(),
     ),
     video: z
       .lazy(() =>
         typeof window !== "undefined"
-          ? z.any().superRefine((val, ctx) => {
+          ? z.any().superRefine((files, ctx) => {
               if (
-                val === undefined ||
-                val === null ||
-                val === "" ||
-                (val instanceof FileList && val.length === 0)
+                files === undefined ||
+                files === null ||
+                (files instanceof FileList && files.length === 0)
               ) {
                 return;
               }
 
-              if (typeof val === "string") {
+              if (typeof files === "string") {
                 return;
               }
 
-              if (!(val instanceof FileList)) {
+              if (!(files instanceof FileList)) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
                   message: t("validation.videoInvalidFile"),
@@ -205,7 +179,7 @@ function buildFormPostSchema(t: TFn) {
                 return;
               }
 
-              const file = val[0];
+              const file = files[0];
 
               if (file.size > VIDEO_SIZE_LIMIT) {
                 ctx.addIssue({
@@ -228,12 +202,6 @@ function buildFormPostSchema(t: TFn) {
 }
 
 type FormPost = z.infer<ReturnType<typeof buildFormPostSchema>>;
-type FormPostWithContent = FormPost & {
-  content_en: string;
-  content_es: string;
-  video: string | null;
-};
-
 interface CategoryWithSub extends Category {
   subcategories: Subcategory[];
 }
@@ -250,10 +218,6 @@ export default function CreatePostPage() {
     [t],
   );
 
-  const params = useParams<{ id: string }>();
-  if (!params.id) notFound();
-
-  // Estados para manejar las categorías y subcategorías
   const [subcategories, setSubcategories] = useState<
     { categoryId: number; name: string; id: number }[]
   >([]);
@@ -333,106 +297,17 @@ export default function CreatePostPage() {
   const formPost = useForm<FormPost>({
     resolver: zodResolver(formPostSchema),
     defaultValues: {
-      title_en: "",
       title_es: "",
+      title_en: "",
       category: "",
       subcategory: "",
       isPublished: false,
-      video: "",
+      video: undefined,
     },
   });
 
   // Guardar el valor anterior de la categoría
   const prevCategoryRef = useRef<string>("");
-
-  const post = useRef<FormPostWithContent | null>(null);
-  const isDeletedImage = useRef(false);
-  const videoChangedRef = useRef(false); // Marca si el video fue reemplazado o eliminado
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      toast.loading(t("toast.edit.loading"));
-      try {
-        const postData = await getPostById(Number(params.id));
-        if (!postData) throw new Error(t("toast.edit.notFound"));
-
-        const videoValue =
-          (postData as typeof postData & { video?: string | null }).video ??
-          null;
-
-        // Transform the response to match FormPost structure
-        post.current = {
-          title_en: postData.title_en,
-          title_es: postData.title_es,
-          category: postData.category.id.toString(),
-          subcategory: postData.subcategory.id.toString(),
-          isPublished: postData.published,
-          content_en: postData.content_en || "", // Ensure content is always a string
-          content_es: postData.content_es || "", // Ensure content is always a string
-          video: videoValue,
-        };
-
-        // Primero, filtra las subcategorías basadas en la categoría del post
-        const filteredSubcategories = subCategoriesAll.filter(
-          (sub) => sub.categoryId === postData.category.id,
-        );
-
-        // Actualiza el estado de subcategorías
-        setSubcategories(filteredSubcategories);
-        // Actualiza el valor anterior de categoría para evitar filtrados innecesarios
-        prevCategoryRef.current = postData.category.id.toString();
-
-        setTimeout(() => {
-          formPost.reset({
-            title_en: postData.title_en,
-            title_es: postData.title_es,
-            category: postData.category.id.toString(),
-            subcategory: postData.subcategory.id.toString(),
-            isPublished: postData.published,
-            image: postData.image, // Set the image as a FileList
-            video: videoValue ?? "",
-          });
-        }, 100); // Simula un pequeño retraso para la carga
-
-        if (postData.content_en) {
-          setContent_en(postData.content_en);
-        }
-        if (postData.content_es) {
-          setContent_es(postData.content_es);
-        }
-        if (postData.recipeIngredients?.length) {
-          setRecipeIngredients(postData.recipeIngredients.join("\n"));
-        }
-        if (postData.recipeInstructions?.length) {
-          setRecipeInstructions(postData.recipeInstructions.join("\n"));
-        }
-        setRecipeYield(postData.recipeYield ?? "");
-        setRecipePrepTime(postData.recipePrepTime ?? "");
-        setRecipeCookTime(postData.recipeCookTime ?? "");
-        if (postData.image) {
-          setImagePreview(postData.image);
-        }
-        setVideoPreview(videoValue ?? "");
-        setIsVideoPreviewPlaying(Boolean(videoValue));
-        videoChangedRef.current = false;
-        toast.dismiss();
-      } catch (error) {
-        toast.dismiss();
-        if (error instanceof Error) {
-          toast.error(error.message);
-        } else {
-          toast.error(t("toast.edit.loadError"));
-        }
-        notFound();
-      }
-    };
-
-    if (params.id && !isLoading && subCategoriesAll.length > 0) {
-      fetchPost();
-    }
-  }, [params.id, formPost, isLoading, subCategoriesAll]);
 
   useEffect(() => {
     const subscription = formPost.watch((value, { name }) => {
@@ -444,7 +319,7 @@ export default function CreatePostPage() {
           ),
         );
         prevCategoryRef.current = value.category ?? "";
-        formPost.setValue("subcategory", ""); // Limpiar subcategoría
+        formPost.resetField("subcategory");
       }
     });
     return () => {
@@ -497,6 +372,7 @@ export default function CreatePostPage() {
       categories.find((c) => c.id.toString() === values.category)?.name ===
       "recipes";
 
+    // Validar que el contenido no esté vacío
     const contenSanitized_es = DOMPurify.sanitize(content_es, {
       ALLOWED_TAGS: [],
     });
@@ -523,63 +399,30 @@ export default function CreatePostPage() {
       return;
     }
 
-    // Check if data has changed before updating
-    if (post.current) {
-      const videoFieldValue = values.video;
-      const hasVideoChanged =
-        (videoFieldValue instanceof FileList && videoFieldValue.length > 0) ||
-        videoChangedRef.current ||
-        (typeof videoFieldValue === "string"
-          ? post.current.video !==
-            (videoFieldValue.trim() === "" ? null : videoFieldValue)
-          : false);
+    toast.loading(t("toast.create.loading"));
 
-      const hasChanged =
-        post.current.title_en !== values.title_en ||
-        post.current.title_es !== values.title_es ||
-        post.current.category !== values.category ||
-        post.current.subcategory !== values.subcategory ||
-        post.current.content_en !== content_en ||
-        post.current.content_es !== content_es ||
-        post.current.isPublished !== values.isPublished ||
-        isDeletedImage.current ||
-        hasVideoChanged;
-
-      if (!hasChanged) {
-        toast.dismiss();
-        toast.info(t("toast.edit.noChanges"));
-        return;
-      }
-    }
-    toast.loading(t("toast.edit.updating"));
-    setIsSubmitting(true);
-    let urlImage = imagePreview;
     try {
-      // Si se ha eliminado la imagen, no subir una nueva
-      if (isDeletedImage.current) {
-        urlImage = await uploadImageToS3(values.image[0], values.image[0].type);
-        console.log("Imagen subida:", urlImage);
-      }
-      let videoUrl: string | null = post.current?.video ?? null;
-      const videoValue = values.video;
+      setIsSubmitting(true);
+      const urlImage = await uploadImageToS3(
+        values.image[0],
+        values.image[0].type,
+      );
+      let videoUrl: string | null = null;
 
-      if (videoValue instanceof FileList && videoValue.length > 0) {
+      if (values.video instanceof FileList && values.video.length > 0) {
         videoUrl = await uploadVideoViaPresignedUrl(
-          videoValue[0],
+          values.video[0],
           videoUploadErrors,
         );
-      } else if (videoChangedRef.current) {
-        videoUrl = null;
-      } else if (typeof videoValue === "string" && videoValue.trim() !== "") {
-        videoUrl = videoValue;
       }
+      console.log("URL de la imagen:", urlImage);
       const data = {
-        title_en: values.title_en,
-        title_es: values.title_es,
+        title_es: values.title_es.trim(),
+        title_en: values.title_en.trim(),
         categoryId: Number(values.category),
         subcategoryId: Number(values.subcategory),
-        content_en: content_en.trim(),
         content_es: content_es.trim(),
+        content_en: content_en.trim(),
         published: values.isPublished,
         image: urlImage,
         video: videoUrl,
@@ -597,12 +440,11 @@ export default function CreatePostPage() {
           recipeCookTime: recipeCookTime.trim() || null,
         }),
       };
-      await updatePost(Number(params.id), data);
+      await saveNewPost(data);
       toast.dismiss();
-      toast.success(t("toast.edit.success"));
-      router.push("/dashboard");
+      toast.success(t("toast.create.success"));
     } catch (error) {
-      let errorMessage = t("toast.edit.error");
+      let errorMessage = t("toast.create.error");
       if (error instanceof Error) {
         errorMessage = error.message;
       } else if (typeof error === "string") {
@@ -611,12 +453,22 @@ export default function CreatePostPage() {
       toast.dismiss();
       toast.error(errorMessage);
     } finally {
+      setImagePreview("");
+      setVideoPreview("");
+      formPost.reset();
+
+      setContent_es("");
+      setContent_en("");
+      setRecipeIngredients("");
+      setRecipeInstructions("");
+      setRecipeYield("");
+      setRecipePrepTime("");
+      setRecipeCookTime("");
+      setErrorMessage_en(null);
+      setErrorMessage_es(null);
       setIsSubmitting(false);
-      isDeletedImage.current = false; // Reset after submission
-      videoChangedRef.current = false;
     }
   };
-
   const watchedCategoryId = formPost.watch("category");
   const isRecipePostVisible =
     categories.find((c) => c.id.toString() === watchedCategoryId)?.name ===
@@ -628,9 +480,9 @@ export default function CreatePostPage() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-cormorant-garamond)]">
-            {t("edit.title")}
+            {t("create.title")}
           </h1>
-          <p className="mt-1 text-sm text-gray-400">{t("edit.subtitle")}</p>
+          <p className="mt-1 text-sm text-gray-400">{t("create.subtitle")}</p>
         </div>
 
         <Form {...formPost}>
@@ -638,7 +490,7 @@ export default function CreatePostPage() {
             onSubmit={formPost.handleSubmit(onSubmit)}
             className="space-y-6"
           >
-            <Card className="shadow-sm">
+            <Card className=" shadow-sm">
               <CardHeader>
                 <CardTitle>{t("card.postInfo")}</CardTitle>
               </CardHeader>
@@ -680,6 +532,7 @@ export default function CreatePostPage() {
                     </FormItem>
                   )}
                 />
+
                 {/* Categoría y Subcategoría */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -903,8 +756,7 @@ export default function CreatePostPage() {
                                   variant="destructive"
                                   onClick={() => {
                                     setImagePreview("");
-                                    formPost.setValue("image", "");
-                                    isDeletedImage.current = true;
+                                    formPost.resetField("image");
                                   }}
                                 >
                                   {t("actions.delete")}
@@ -939,7 +791,6 @@ export default function CreatePostPage() {
                                 const { files } = e.target;
                                 field.onChange(files);
                                 if (files && files[0]) {
-                                  videoChangedRef.current = true;
                                   setVideoPreview(
                                     URL.createObjectURL(files[0]),
                                   );
@@ -1011,7 +862,6 @@ export default function CreatePostPage() {
                                 size="sm"
                                 variant="destructive"
                                 onClick={() => {
-                                  videoChangedRef.current = true;
                                   setVideoPreview("");
                                   formPost.setValue("video", undefined);
                                   formPost.clearErrors("video");
@@ -1032,7 +882,7 @@ export default function CreatePostPage() {
                 {/* Estado de Publicación */}
                 <div className="flex items-center justify-between rounded-lg border-slate-200 focus:border-teal-500">
                   <div>
-                    <h3 className="font-medium ">
+                    <h3 className="font-medium text-muted-foreground">
                       {t("fields.published.sectionTitle")}
                     </h3>
                     <p className="text-sm text-gray-400">
@@ -1058,6 +908,7 @@ export default function CreatePostPage() {
                               id="isPublished"
                               checked={field.value}
                               onCheckedChange={(checked) => {
+                                console.log("Switch checked:", checked);
                                 field.onChange(checked);
                               }}
                             />
@@ -1083,7 +934,9 @@ export default function CreatePostPage() {
 
                   <Button type="submit" disabled={isSubmitting}>
                     <Save className="h-4 w-4 mr-2" />
-                    {t("actions.save")}
+                    {formPost.watch("isPublished")
+                      ? t("actions.publish")
+                      : t("actions.saveDraft")}
                   </Button>
                 </div>
               </CardFooter>

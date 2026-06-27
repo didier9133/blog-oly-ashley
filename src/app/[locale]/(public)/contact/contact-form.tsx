@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
-import { sendContactEmail } from "../actions/contact";
+import { sendContactEmail } from "@/app/[locale]/actions/contact";
 import { useTranslations } from "next-intl";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

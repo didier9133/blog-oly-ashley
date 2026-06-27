@@ -21,7 +21,7 @@ import {
 } from "@tanstack/react-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { getCategoriesPosts } from "../actions/posts";
+import { getCategoriesPosts } from "@/app/[locale]/actions/posts";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import {

@@ -1,22 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
 import { Plus, Sparkles, Coffee, Heart, NotebookPen } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-export default function NoPostsView() {
-  const { user, isLoaded } = useUser();
-  // Mientras Clerk carga, asumimos no-admin: el botón "crear post" queda oculto.
-  const isAdmin = isLoaded && Boolean(user?.publicMetadata?.isAdmin);
+interface NoPostsViewProps {
+  isAdmin?: boolean;
+}
+
+export default function NoPostsView({ isAdmin = false }: NoPostsViewProps) {
   const t = useTranslations("NotPostFound");
   return (
     <div className="font-[family-name:var(--font-lora)]">
-      {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
-          {/* Decorative Elements */}
           <div className="relative mb-8">
             <div className="absolute -top-4 -left-4 text-rose-200 animate-pulse">
               <Sparkles className="h-6 w-6" />
@@ -28,13 +26,11 @@ export default function NoPostsView() {
               <Coffee className="h-5 w-5" />
             </div>
 
-            {/* Main Icon */}
             <div className="w-24 h-24 mx-auto bg-gradient-to-br from-rose-100 to-amber-100 rounded-full flex items-center justify-center mb-6 shadow-sm">
               <NotebookPen className="h-12 w-12 text-rose-400" />
             </div>
           </div>
 
-          {/* Main Message */}
           <div className="space-y-4 mb-8">
             <h1 className="text-4xl md:text-5xl font-light tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
               {t("title")}
@@ -44,14 +40,11 @@ export default function NoPostsView() {
             </p>
           </div>
 
-          {/* Subtle Quote */}
           <div className="mb-12">
             <blockquote className="italic text-sm font-light">
               {t("subtleQuote")}
             </blockquote>
           </div>
-
-          {/* Action Buttons */}
 
           {isAdmin && (
             <div className="flex justify-center items-center">
@@ -66,7 +59,6 @@ export default function NoPostsView() {
         </div>
       </main>
 
-      {/* Subtle Background Pattern */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02]">
         <div
           className="absolute inset-0"

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Eye, Edit, Trash2 } from "lucide-react";
-import { deletePost } from "../actions/posts";
+import { deletePost } from "@/app/[locale]/actions/posts";
 import { toast } from "sonner";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
