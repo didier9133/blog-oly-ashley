@@ -17,19 +17,20 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { BASE_URL } from "@/lib/url";
-import { cache } from "react";
 
 //Analytics
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 
-// Cormorant Garamond is a variable font; loading the variable version
-// includes weights 300-700 and both normal/italic in a single file.
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  adjustFontFallback: true,
+  fallback: ["Georgia", "serif"],
 });
 
 const lora = Lora({
@@ -37,6 +38,8 @@ const lora = Lora({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500"],
+  adjustFontFallback: true,
+  fallback: ["Georgia", "serif"],
 });
 
 const greatVibes = Great_Vibes({
@@ -45,21 +48,9 @@ const greatVibes = Great_Vibes({
   display: "swap",
   weight: ["400"],
   preload: false,
+  adjustFontFallback: true,
+  fallback: ["cursive"],
 });
-
-// Cache locale messages per request to avoid re-reading JSON files.
-const getMessagesCached = cache(async (locale: string) =>
-  getMessages({ locale }),
-);
-
-const getMetadataTranslationsCached = cache(async (locale: string) =>
-  getTranslations({ locale, namespace: "metadata" }),
-);
-
-// Pre-render both locales at build time to improve cold-start TTFB.
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({
   params,
@@ -67,7 +58,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getMetadataTranslationsCached(locale);
+  const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
     title: t("title"),
@@ -136,7 +127,7 @@ export default async function RootLayout({
     notFound();
   }
 
-  const messages = await getMessagesCached(locale);
+  const messages = await getMessages({ locale });
 
   return (
     <ClerkProvider>
@@ -155,6 +146,13 @@ export default async function RootLayout({
           />
 
           <link rel="manifest" href="/site.webmanifest" />
+
+          <link
+            rel="preconnect"
+            href="https://dgw9atod1ju2x.cloudfront.net"
+            crossOrigin="anonymous"
+          />
+          <link rel="dns-prefetch" href="https://dgw9atod1ju2x.cloudfront.net" />
           <noscript>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img

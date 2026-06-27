@@ -32,21 +32,24 @@ export async function Header() {
                 variant={"ghost"}
                 size="icon"
                 aria-label="Iniciar sesión"
-                className="rounded-full hover:bg-foreground/5 h-9 w-9 sm:h-10 sm:w-10"
+                className="rounded-full hover:bg-foreground/5 h-10 w-10"
               >
-                <User className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/80" />
+                <User className="w-5 h-5 text-foreground/80" />
               </Button>
             </SignInButton>
           </SignedOut>
 
           <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "w-8 h-8 sm:w-9 sm:h-9",
-                },
-              }}
-            />
+            <div className="h-10 w-10 flex items-center justify-center">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-10 w-10",
+                    userButtonBox: "h-10 w-10",
+                  },
+                }}
+              />
+            </div>
           </SignedIn>
 
           <SidebarTrigger
