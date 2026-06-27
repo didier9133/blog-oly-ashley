@@ -26,14 +26,6 @@ const PATH = CategoryEnum.Recipes;
 
 export const revalidate = 3600;
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true, category: { name: PATH } },
-    select: { slug_en: true },
-  });
-  return posts.map((post) => ({ slug: post.slug_en }));
-}
-
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {
   if (!html) return "";
