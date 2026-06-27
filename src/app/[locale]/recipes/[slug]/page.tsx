@@ -27,15 +27,13 @@ type Params = Promise<{ locale: string; slug: string }>;
 
 const PATH = CategoryEnum.Recipes;
 
+// Layout's <ClerkProvider> reads auth state per-request, making the entire
+// route tree dynamic. Combining that with generateStaticParams throws
+// DYNAMIC_SERVER_USAGE. Force dynamic rendering here; revalidate=3600 still
+// provides ISR cache. To restore SSG, Clerk UI must be moved out of root
+// layout (tracked separately).
+export const dynamic = "force-dynamic";
 export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true, category: { name: PATH } },
-    select: { slug_en: true },
-  });
-  return posts.map((post) => ({ slug: post.slug_en }));
-}
 
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {
