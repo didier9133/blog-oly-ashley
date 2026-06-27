@@ -3,7 +3,7 @@ import {
   clerkMiddleware,
   createRouteMatcher,
 } from "@clerk/nextjs/server";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
@@ -13,26 +13,7 @@ const isProtectedRoute = createRouteMatcher([
   "/(es|en)/dashboard(.*)",
 ]);
 
-// Build the Clerk-only middleware once. It runs the auth + admin check
-// and is only invoked for protected routes (see dispatcher below).
-// Public pages now resolve auth state via client-side useUser(), so they
-// no longer need clerkMiddleware to have set up the request context —
-// which lets Vercel cache ISR responses (was TTFB 6.79s).
-const clerkHandler = clerkMiddleware(async (auth, req) => {
-  const { userId, redirectToSignIn } = await auth();
-  if (!userId) return redirectToSignIn();
-
-  const client = await clerkClient();
-  const user = await client.users.getUser(userId);
-  if (!user.publicMetadata?.isAdmin) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-});
-
-export default async function middleware(
-  req: NextRequest,
-  ev: Parameters<typeof clerkHandler>[1],
-) {
+export default clerkMiddleware(async (auth, req) => {
   const { pathname } = req.nextUrl;
 
   if (
@@ -43,17 +24,34 @@ export default async function middleware(
     return NextResponse.next();
   }
 
-  if (isProtectedRoute(req)) {
-    return clerkHandler(req, ev);
-  }
-
   if (pathname.startsWith("/api") || pathname.startsWith("/trpc")) {
+    if (isProtectedRoute(req)) {
+      const { userId, redirectToSignIn } = await auth();
+      if (!userId) return redirectToSignIn();
+      const client = await clerkClient();
+      const user = await client.users.getUser(userId);
+      if (!user.publicMetadata?.isAdmin) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+    }
     return NextResponse.next();
   }
 
-  return intlMiddleware(req);
-}
+  const intlResponse = intlMiddleware(req);
+  if (intlResponse && intlResponse.status !== 200) return intlResponse;
 
+  if (isProtectedRoute(req)) {
+    const { userId, redirectToSignIn } = await auth();
+    if (!userId) return redirectToSignIn();
+    const client = await clerkClient();
+    const user = await client.users.getUser(userId);
+    if (!user.publicMetadata?.isAdmin) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  }
+
+  return intlResponse || NextResponse.next();
+});
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
