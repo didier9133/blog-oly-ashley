@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,7 +13,10 @@ import {
 import RichTextEditor from "@/components/rich-text-editor";
 import ImageBlogDetail from "@/components/image-post-detail";
 import { Slash } from "lucide-react";
-import ImageRecentBlog from "@/components/image-recent-post";
+import {
+  RecentPostsList,
+  type RecentPostItem,
+} from "@/components/recent-posts-list";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
@@ -20,11 +24,18 @@ import { fullUrl, BASE_URL } from "@/lib/url";
 import { sumDurationsToISO } from "@/lib/duration";
 import type { Metadata } from "next";
 type Params = Promise<{ locale: string; slug: string }>;
-type SearchParams = Promise<{ category?: string }>;
 
 const PATH = CategoryEnum.Recipes;
 
 export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const posts = await prisma.post.findMany({
+    where: { published: true, category: { name: PATH } },
+    select: { slug_en: true },
+  });
+  return posts.map((post) => ({ slug: post.slug_en }));
+}
 
 /** Strip HTML tags and return plain text excerpt (max 160 chars) */
 function htmlExcerpt(html: string | null | undefined, max = 160): string {
@@ -94,14 +105,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage(props: {
-  params: Params;
-  searchParams: SearchParams;
-}) {
+export default async function BlogPostPage(props: { params: Params }) {
   const { slug } = await props.params;
-  const searchParams = await props.searchParams;
   const currentLanguage = await getLocale();
   const t = await getTranslations("Recipes");
+  const recentPostsLabel = t("recent-posts");
+  const noPostsLabel = t("no-posts");
 
   const category = await prisma.category.findFirst({
     where: {
@@ -138,63 +147,29 @@ export default async function BlogPostPage(props: {
 
   if (!post || !category) return notFound();
 
-  const recentPostSelect = {
-    id: true,
-    title_en: true,
-    title_es: true,
-    image: true,
-    slug_en: true,
-    updatedAt: true,
-  } as const;
-
-  let recentPosts = await prisma.post.findMany({
+  const recentPosts: RecentPostItem[] = await prisma.post.findMany({
     where: {
-      slug_en: {
-        not: slug,
-      },
-      subcategoryId: Number(searchParams.category) || post.subcategoryId,
+      slug_en: { not: slug },
       published: true,
-      category: {
-        name: PATH,
-      },
+      category: { name: PATH },
     },
-    orderBy: {
-      updatedAt: "desc",
+    orderBy: { updatedAt: "desc" },
+    select: {
+      id: true,
+      title_en: true,
+      title_es: true,
+      image: true,
+      slug_en: true,
+      updatedAt: true,
+      subcategoryId: true,
     },
-    take: 5,
-    select: recentPostSelect,
   });
-
-  if (!recentPosts || recentPosts.length === 0) {
-    recentPosts = await prisma.post.findMany({
-      where: {
-        slug_en: {
-          not: slug,
-        },
-        published: true,
-        category: {
-          name: PATH,
-        },
-      },
-      orderBy: {
-        updatedAt: "desc",
-      },
-      take: 5,
-      select: recentPostSelect,
-    });
-  }
 
   const postTraslated = {
     ...post,
     title: currentLanguage === "en" ? post.title_en : post.title_es,
     content: currentLanguage === "en" ? post.content_en : post.content_es,
   };
-
-  const recentPostsTranslated = recentPosts.map((recent) => ({
-    ...recent,
-    title: currentLanguage === "en" ? recent.title_en : recent.title_es,
-    slug: recent.slug_en,
-  }));
 
   const { locale } = await props.params;
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
@@ -347,47 +322,22 @@ export default async function BlogPostPage(props: {
               categoryName={category.name}
             />
             <Separator className="flex my-4" />
-            <div>
-              <h3 className="text-base font-semibold mb-2 transition-colors duration-700">
-                {t("recent-posts")}
-              </h3>
-              <ul className="space-y-4">
-                {recentPostsTranslated.map((recent) => (
-                  <li key={recent.id}>
-                    <Link
-                      href={`/${PATH}/${recent.slug}`}
-                      className="flex items-center gap-2"
-                    >
-                      <ImageRecentBlog
-                        post={{
-                          title: recent.title,
-                          image: recent.image,
-                        }}
-                      />
-                      <div>
-                        <div className="font-medium text-xs text-primary line-clamp-2">
-                          {recent.title}
-                        </div>
-                        <div className="text-[10px] text-muted-foreground">
-                          {new Date(recent.updatedAt).toLocaleDateString(
-                            currentLanguage,
-                            {
-                              month: "short",
-                              day: "numeric",
-                            },
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              {recentPostsTranslated.length === 0 && (
-                <p className="text-sm text-muted-foreground mt-2">
-                  {t("no-posts")}
-                </p>
-              )}
-            </div>
+            <Suspense
+              fallback={
+                <h3 className="text-base font-semibold mb-2">
+                  {recentPostsLabel}
+                </h3>
+              }
+            >
+              <RecentPostsList
+                posts={recentPosts}
+                currentSubcategoryId={post.subcategoryId}
+                currentLanguage={currentLanguage}
+                pathPrefix="recipes"
+                recentPostsLabel={recentPostsLabel}
+                noPostsLabel={noPostsLabel}
+              />
+            </Suspense>
           </div>
         </aside>
       </div>
