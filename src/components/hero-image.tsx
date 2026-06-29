@@ -20,20 +20,16 @@ export function HeroImage({
 }: HeroImageProps) {
   return (
     <>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-y-[6%] inset-x-0">
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            priority={priority}
-            quality={75}
-            sizes={sizes}
-            className={`object-cover ${objectPosition}`}
-          />
-          <FilmGrain opacity={variant === "clean" ? 0.08 : 0.14} />
-        </div>
-      </div>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        quality={75}
+        sizes={sizes}
+        className={`object-cover ${objectPosition}`}
+      />
+      <FilmGrain opacity={variant === "clean" ? 0.08 : 0.14} />
 
       {variant === "default" ? (
         <>
@@ -60,7 +56,7 @@ export function HeroImage({
             className="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1]"
             style={{
               background:
-                "linear-gradient(to top, rgba(20, 14, 10, 0.34), rgba(20, 14, 10, 0.12) 45%, transparent 80%)",
+                "linear-gradient(to top, rgba(20, 14, 10, 0.34), rgba(20, 14, 0.12) 45%, transparent 80%)",
             }}
           />
         </>

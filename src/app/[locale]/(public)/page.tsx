@@ -11,6 +11,7 @@ import { CategoryEnum } from "@/enums";
 import { JsonLd } from "@/components/json-ld";
 import { getLocale, getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
+import { BASE_URL } from "@/lib/url";
 import DOMPurify from "isomorphic-dompurify";
 import Image from "next/image";
 import Link from "next/link";
@@ -132,6 +133,16 @@ export default async function Home() {
     <>
       <JsonLd data={organizationSchema} />
       <JsonLd data={webSiteSchema} />
+      {/* Preload the LCP hero image at the breakpoints that mobile/desktop
+          will actually request. Saves a roundtrip on first load.
+          Matches the deviceSizes declared in next.config.ts. */}
+      <link
+        rel="preload"
+        as="image"
+        imageSrcSet={`${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=640&q=75 640w, ${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=1080&q=75 1080w, ${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=1920&q=75 1920w`}
+        imageSizes="100vw"
+        fetchPriority="high"
+      />
       <main className="bg-background text-foreground">
         <div className="max-w-[1760px] mx-auto min-[1280px]:flex min-[1280px]:gap-10">
         <div className="min-[1280px]:flex-1 min-[1280px]:min-w-0">
@@ -151,7 +162,7 @@ export default async function Home() {
               <HeroImage
                 src="/hero-image.jpeg"
                 alt={t("alt-hero-main")}
-                sizes="(min-width: 768px) 0px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+                sizes="100vw"
                 variant="clean"
                 objectPosition="object-[center_25%]"
               />
@@ -175,7 +186,7 @@ export default async function Home() {
                   <HeroImage
                     src="/hero-image.jpeg"
                     alt={t("alt-hero-main")}
-                    sizes="(min-width: 1024px) 60vw, (min-width: 1536px) 1152px, 100vw"
+                    sizes="(min-width: 1536px) 1152px, 60vw"
                     variant="clean"
                     objectPosition="object-center"
                   />
