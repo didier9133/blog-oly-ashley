@@ -197,8 +197,10 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Mobile text content (renders below the full-bleed image) */}
-          <div className="md:hidden relative z-10 max-w-[1760px] mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-16 sm:pb-20">
+          {/* Mobile text content (renders below the full-bleed image).
+              z-30 keeps the CTA above the decorative wave SVG (z-20),
+              and the extra pb clears the curve so it never crosses the button. */}
+          <div className="md:hidden relative z-30 max-w-[1760px] mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-20 sm:pb-28">
             <HeroContent
               spacing="tight"
               titleOne={t("hero-title-one")}
