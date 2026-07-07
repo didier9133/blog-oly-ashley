@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
 import { cn } from "@/lib/utils";
+import { localizedHref } from "@/lib/url";
 
 export interface PromotedBookData {
   title: string;
@@ -38,7 +39,9 @@ export function PromotedBook({
   variant = "default",
   className,
 }: PromotedBookProps) {
-  const href = book ? `/ebook/detail/${book.slug}` : fallbackHref;
+  const href = book
+    ? localizedHref(book.locale, `/workbooks/${book.slug}`)
+    : fallbackHref;
   const isCompact = variant === "compact";
 
   return (

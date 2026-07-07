@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 
-type Post = {
+export type DashboardPost = {
   category: {
     id: number;
     name: string;
@@ -53,7 +53,7 @@ const statusColors = {
   draft: "bg-yellow-100 text-yellow-800",
 };
 
-export function createPostColumns(t: TFn): ColumnDef<Post>[] {
+export function createPostColumns(t: TFn): ColumnDef<DashboardPost>[] {
   const statusLabels = {
     published: t("status.published"),
     draft: t("status.draft"),

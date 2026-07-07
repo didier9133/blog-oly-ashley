@@ -8,6 +8,7 @@ interface HeroImageProps {
   variant?: "default" | "clean";
   objectPosition?: string;
   priority?: boolean;
+  loading?: "eager" | "lazy";
 }
 
 export function HeroImage({
@@ -17,6 +18,7 @@ export function HeroImage({
   variant = "default",
   objectPosition = "object-center",
   priority = true,
+  loading,
 }: HeroImageProps) {
   return (
     <>
@@ -25,6 +27,7 @@ export function HeroImage({
         alt={alt}
         fill
         priority={priority}
+        loading={loading}
         quality={75}
         sizes={sizes}
         className={`object-cover ${objectPosition}`}

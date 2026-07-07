@@ -28,20 +28,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { sendContactEmail } from "@/app/[locale]/actions/contact";
 import { useTranslations } from "next-intl";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createFormContactSchema = (t: any) =>
+const createFormContactSchema = (t: { (key: string): string }) =>
   z.object({
-    firstName: z.string().min(1, t("firstName-required")),
-    lastName: z.string().min(1, t("lastName-required")),
+    name: z.string().min(1, t("name-required")),
     email: z.string().email(t("email-invalid")),
-    content: z
+    message: z
       .string()
-      .min(1, t("content-required"))
-      .max(5000, t("content-max")),
-    subject: z
-      .string()
-      .min(1, t("subject-required"))
-      .max(100, t("subject-max")),
+      .min(1, t("message-required"))
+      .max(5000, t("message-max")),
   });
 
 export default function ContactForm() {
@@ -49,19 +43,12 @@ export default function ContactForm() {
   const t = useTranslations("Contact");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Create the schema with the translation function
   const formContactSchema = createFormContactSchema(t_validation);
   type FormContact = z.infer<typeof formContactSchema>;
 
   const formContact = useForm<FormContact>({
     resolver: zodResolver(formContactSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      content: "",
-      subject: "",
-    },
+    defaultValues: { name: "", email: "", message: "" },
   });
 
   const onSubmit = async (values: FormContact) => {
@@ -69,24 +56,22 @@ export default function ContactForm() {
     try {
       setIsSubmitting(true);
       await sendContactEmail({
-        firstName: values.firstName,
-        lastName: values.lastName,
+        name: values.name,
         email: values.email,
-        content: values.content,
-        subject: values.subject,
+        message: values.message,
       });
       toast.dismiss();
       toast.success(t("toast-success"));
       formContact.reset();
     } catch (error) {
       console.error("Error sending contact email:", error);
-      const errorMessage = t("toast-error");
       toast.dismiss();
-      toast.error(errorMessage);
+      toast.error(t("toast-error"));
     } finally {
       setIsSubmitting(false);
     }
   };
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 lg:py-16">
       <Form {...formContact}>
@@ -103,120 +88,71 @@ export default function ContactForm() {
 
             <CardContent className="space-y-6 px-8 pb-8">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <FormField
-                    control={formContact.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-foreground/80">
-                          {t("firstName")}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={t("placeholder-firstName")}
-                            className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
-                            {...field}
-                          />
-                        </FormControl>
+                <FormField
+                  control={formContact.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground/80">
+                        {t("name")}
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={t("placeholder-name")}
+                          className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <FormField
-                    control={formContact.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-foreground/80">
-                          {t("lastName")}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={t("placeholder-lastName")}
-                            className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <FormField
-                    control={formContact.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-foreground/80">
-                          {t("email")}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={t("placeholder-email")}
-                            className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <FormField
-                    control={formContact.control}
-                    name="subject"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-foreground/80">
-                          {t("subject")}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder={t("placeholder-subject")}
-                            className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={formContact.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground/80">
+                        {t("email")}
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder={t("placeholder-email")}
+                          className="rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <FormField
                 control={formContact.control}
-                name="content"
+                name="message"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-foreground/80">
-                      {t("content")}
+                      {t("message")}
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={t("placeholder-content")}
+                        placeholder={t("placeholder-message")}
                         className="resize-none min-h-[150px] rounded-sm border-border/50 focus-visible:ring-[#d8a08b]"
                         {...field}
                       />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
+              <p className="text-sm text-foreground/50 italic font-[family-name:var(--font-lora)]">
+                {t("disclaimer")}
+              </p>
             </CardContent>
 
             <CardFooter className="flex justify-end border-t border-border/50 p-8 bg-[#f5f0eb]/30">

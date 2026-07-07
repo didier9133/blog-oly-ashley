@@ -37,7 +37,7 @@ const OwnerNotificationTemplate = ({
 
         <Section style={content}>
           <Text style={greeting}>
-            ¡Hola chicas! Tienen un nuevo mensaje esperando su atención.
+            Hi Ashley — a new message just came through from your contact form.
           </Text>
 
           <Section style={contactInfoSection}>

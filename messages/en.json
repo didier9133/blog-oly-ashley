@@ -1,52 +1,53 @@
 {
   "navigation": {
     "home": "Home",
-    "blog": "Blog",
+    "blog": "Writing",
     "recipes": "Recipes",
-    "about": "About Us",
+    "about": "About",
     "contact": "Contact",
     "merch": "Merch",
     "dashboard": "Dashboard",
-    "ebook": "Ebooks",
-    "subscribe": "Subscribe"
+    "ebook": "Workbooks",
+    "live-sessions": "The Circle",
+    "subscribe": "Subscribe",
+    "writing": "Writing",
+    "workbooks": "Workbooks",
+    "circle": "The Circle",
+    "community": "Community"
   },
-
   "metadata": {
-    "title": "Raíces & Returnings - Ashley & Oly",
-    "description": "A space for the stories we carry, the ones we're still learning how to tell, and the ones we're finally ready to live. Reflections on identity, queerness, healing, spirituality, and home. Recipes passed down and reimagined.",
-    "keywords": "Ashley & Oly, Raíces & Returnings, queerness, identity, healing, spirituality, recipes, migration, Venezuelan food, LGBTQ+, blog, reflections, culture, home, storytelling"
+    "title": "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
+    "description": "Writing, workbooks, and live workshops for returning to what is sacred without self-abandonment.",
+    "keywords": "Ashley Leon, faith deconstruction, queer spirituality, identity, healing, reverence, workbooks, live workshops",
+    "ogImageAlt": "Ashley Leon, writer and facilitator for faith, identity, and reverence after deconstruction"
   },
-
   "footer": {
-    "newsletter-label": "Sign Up for Newsletter",
+    "newsletter-label": "Newsletter",
     "subscribe-label": "Subscribe",
     "placeholder": "Enter your email address",
     "toast-loading": "Submitting your subscription...",
     "toast-success": "Welcome—happy you're here. See you in your inbox soon.",
     "toast-error": "There was an error subscribing. Please try again.",
     "join-community": "You don’t have to walk this alone.",
-    "stay-in-loop": "Join when you’re ready.",
-    "testimonial": "Over 10,000 people rebuilding their story",
-    "newsletter-desc": "Beyond writing, Raíces & Returnings offers optional community spaces for those wanting deeper connection, shared language, and guided integration.<title>Community editions include:</title><list><item>Ongoing reflective prompts</item><item>Scripture reframed through love</item><item>Monthly live gatherings</item><item>Shared space with others rebuilding faith honestly</item></list>",
+    "stay-in-loop": "Weekly reflections, when there is something worth saying.",
+    "testimonial": "Rebuilding faith with honesty, reverence, and room to breathe",
+    "newsletter-desc": "Weekly reflections, sent when there is something worth saying — not on a schedule.",
     "respect-inbox": "No spam · unsubscribe anytime.",
-    "brand-desc": "A digital space for the stories we carry and the ones we are still learning how to tell. Celebrating identity, queerness, healing, and the recipes that bring us home.",
+    "brand-desc": "Writing, workbooks, and live workshops for returning to what is sacred without self-abandonment.",
     "explore": "Explore",
-    "company": "Company",
+    "company": "More",
     "connect": "Connect",
     "privacy": "Privacy",
     "terms": "Terms",
-    "based-in": "Based in Canada/USA",
+    "based-in": "Writing from the in-between",
     "designed-by": "Designed & Built by",
     "rights-reserved": "All rights reserved.",
     "social": {
       "instagram": "Instagram",
-      "tiktok": "TikTok",
       "youtube": "YouTube",
-      "shop": "Shop",
       "substack": "Substack"
     }
   },
-
   "subscribeHero": {
     "toast-loading": "Submitting your subscription...",
     "toast-success": "Welcome—happy you're here. See you in your inbox soon.",
@@ -54,7 +55,6 @@
     "placeholder": "Your email address...",
     "cta": "Subscribe"
   },
-
   "search": {
     "postsPlaceholder": "Search by title, author, or content...",
     "statusPlaceholder": "Status",
@@ -64,7 +64,6 @@
     "categoryPlaceholder": "Category",
     "categoryAll": "All categories"
   },
-
   "dashboard": {
     "page": {
       "title": "Dashboard",
@@ -254,7 +253,6 @@
       "next": "Next"
     }
   },
-
   "ui": {
     "pagination": {
       "navLabel": "Pagination",
@@ -272,9 +270,8 @@
       "by": "By"
     }
   },
-
   "categories": {
-    "blog": "Blog",
+    "blog": "Writing",
     "recipes": "Recipes",
     "select": "Select a category",
     "search": "Search",
@@ -301,27 +298,28 @@
   },
   "Home": {
     "title": "Welcome to",
-    "subtitle": "Raíces & Returnings",
-    "title-description": "Returning to your raíces",
-    "subtitle-description-one": " – one recipe, ritual,",
-    "subtitle-description-two": "and reflection at a time",
-    "hero-title-one": "Returning to what's",
-    "hero-title-highlight": "sacred",
-    "hero-title-two": "— without self-abandonment.",
-    "hero-tagline": "Returning to what's sacred—without self-abandonment.",
-    "hero-description": "A space for people rebuilding faith, identity, and belonging after inherited belief systems no longer fit.",
+    "subtitle": "Ashley Leon",
+    "title-description": "Rebuilding faith, identity, and reverence",
+    "subtitle-description-one": " – one reflection, practice,",
+    "subtitle-description-two": "and return at a time",
+    "hero-eyebrow": "Faith after deconstruction",
+    "hero-title-one": "Writing, workbooks,",
+    "hero-title-highlight": "sacred.",
+    "hero-title-two": "and live workshops for returning to what's",
+    "hero-tagline": "Writing, workbooks, and live workshops for returning to what is sacred without self-abandonment.",
+    "hero-description": "For people rebuilding faith, identity, and belonging after inherited belief no longer fits. Do the work on your own, or do it in a room with others who left too.",
     "hero-est": "Est. 2025 — Vol. 01",
-    "alt-hero": "Oly & Ashley",
-    "alt-hero-main": "Oly & Ashley Main",
+    "alt-hero": "Ashley Leon",
+    "alt-hero-main": "Ashley Leon Main",
     "alt-hero-detail": "Detail",
     "alt-hero-texture": "Texture",
-    "intro-lead": "Raíces & Returnings is a digital home for reflection, spiritual integration, and honest language.",
+    "intro-lead": "Ashley Leon is a digital home for reflection, spiritual integration, and honest language.",
     "paragraph-description": "It exists for those navigating faith deconstruction, queerness, cultural identity, and the slow work of becoming whole.",
     "paragraph-description-two": "Here you'll find weekly reflections, honest language, and grounded spirituality—for people rebuilding reverence toward themselves, the divine, and their humanity.",
     "paragraph-description-three": "No dogma. No performance.",
     "paragraph-description-four": "Just depth, integration, and truth.",
     "pre-signature": "  With love,",
-    "signature": "Oly & Ashley",
+    "signature": "Ashley Leon",
     "find-label": "A gathering place",
     "find-title": "What you'll find here",
     "find-blurb": "Everything we've been tending — take what your moment needs.",
@@ -335,62 +333,84 @@
     "find-item-4-desc": "Language and prayer beyond inherited religion.",
     "find-item-5": "Community-centered invitations to go deeper",
     "find-item-5-desc": "Live gatherings for those who want to walk accompanied.",
+    "who-eyebrow": "For the threshold season",
+    "who-title": "If you are rebuilding language, faith, or belonging, there is room here to breathe.",
+    "who-quote-1": "I do not want to lose the sacred; I want to find it without losing myself.",
+    "who-label-1": "Faith after fear",
+    "who-quote-2": "I need gentle tools for learning how to hear my own voice again.",
+    "who-label-2": "Body-rooted practice",
+    "who-quote-3": "I want to walk with people who understand this process.",
+    "who-label-3": "Real belonging",
     "manifesto-eyebrow": "A digital refuge",
     "manifesto-title": "An edition for those returning to themselves, slowly.",
+    "manifesto-work-label": "The work",
     "manifesto-pillar-1-title": "Reflections that accompany",
     "manifesto-pillar-1-desc": "Stories, tools, and exercises for your process of personal reconstruction.",
     "manifesto-pillar-2-title": "Truth without performance",
     "manifesto-pillar-2-desc": "No dogma, no judgment. Only deep content, real integration, and space to be yourself.",
     "manifesto-pillar-3-title": "Community and belonging",
     "manifesto-pillar-3-desc": "You are not alone. Here you find a safe space to return to yourself, in community.",
-    "fresh-eyebrow": "Recent editions",
-    "cta-explore": "Explore the Writing",
-    "cta-journals": "Begin your reconstruction",
+    "fresh-eyebrow": "Recent writing",
+    "cta-explore": "Read the essays",
+    "cta-journals": "Begin with Rebuilding Reverence",
     "cta-youtube": "Listen on YouTube",
     "fresh-title-one": "New reflections. New language. Same intention.",
-    "fresh-title-two": "Stay a while. Take what you need.",
-    "paragraph-fresh": "Recent essays, affirmations, and digital editions designed to support your journey—whether you’re questioning, rebuilding, or beginning again.",
-    "fresh-blog-label": "Blog Story",
-    "fresh-recipe-label": "Latest Kitchen Creation",
+    "fresh-title-two": "Essays from the in-between.",
+    "paragraph-fresh": "New reflections on faith, identity, healing, and return.",
+    "fresh-blog-label": "Writing",
+    "fresh-recipe-label": "Archived",
     "fresh-view-all": "View All Stories",
     "btn-fresh": "Read More",
-    "btn-fresh-two": " All Recipes Posts",
-    "btn-all-posts": "All Blog Posts",
-    "book-eyebrow": "Featured edition",
-    "book-tagline": "The Workbook",
-    "book-cta": "Discover the Workbook",
+    "btn-fresh-two": "All Archived Posts",
+    "btn-all-posts": "All Writing",
+    "book-eyebrow": "Start here",
+    "book-tagline": "Rebuilding Reverence",
+    "book-cta": "Discover the Workbook — $33",
     "book-blurb-start": "A guided workbook to help you ",
     "book-blurb-highlight": "rebuild reverence",
     "book-blurb-end": " for your own becoming—away from inherited fear, and back toward the sacred in you.",
     "book-empty": "Our next edition is on its way. Sign up below to be the first to know.",
+    "circle-eyebrow": "The Circle",
+    "circle-title": "When you're ready to go deeper: The Rebuilding Reverence Circle.",
+    "circle-description": "A small, live 4-week group experience capped at 15 people, where we move through the journey together with Ashley in the room.",
+    "circle-cta": "Explore The Circle",
+    "community-eyebrow": "The In-Between",
+    "community-title": "Somewhere to keep returning.",
+    "community-description": "A grounded, affirming online community for reflection, honest conversation, and people walking the same in-between road.",
+    "community-cta": "Join The In-Between",
+    "writing-empty": "The next writings are on the way.",
     "sidebar-index": "On this page",
-    "sidebar-book": "The workbook",
+    "sidebar-book": "Workbooks",
+    "sidebar-who": "Who this is for",
     "sidebar-manifesto": "Manifesto",
-    "sidebar-find": "What you'll find",
-    "sidebar-fresh": "Recent editions",
+    "sidebar-find": "Ways to begin",
+    "sidebar-workbooks": "Workbooks",
+    "sidebar-circle": "The Circle",
+    "sidebar-community": "Community",
+    "sidebar-fresh": "Recent writing",
+    "sidebar-writing": "Recent writing",
     "sidebar-cta-eyebrow": "Join us",
     "sidebar-cta-desc": "Stories, affirmations, and reflections—straight to your inbox, once a week.",
     "sidebar-cta-link": "Subscribe"
   },
   "About": {
     "metadata": {
-      "title": "About Ashley & Oly | Raíces & Returnings",
-      "description": "Meet Ashley León & Oly Contreras — the queer, Venezuelan-American voices behind Raíces & Returnings. Stories of identity, faith, migration, and home."
+      "title": "About Ashley Leon | Writer, Coach & Workshop Facilitator on Faith & Identity",
+      "description": "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing."
     },
-    "title": "About Raíces & Returnings",
-    "intro": "Raíces & Returnings was created to hold what doesn’t fit neatly into categories—faith that’s been fractured, identity that’s been fragmented, spirituality that refuses fear.\n\nThis space exists for people learning how to return to themselves without abandoning their questions, bodies, or stories. It is writing-led, reflection-based, and rooted in lived experience—not performance or perfection.",
-    "image-alt": "Our team",
-    "introduction-paragraph": "Two voices, one home. Rooted in different lands, shaped by survival, stitched together by healing. We created Raíces & Returnings to hold everything that never fit neatly into categories— love that defies scripts, food that carries memory, queerness that feels holy, and stories that don't end where they began. It's part blog, part kitchen table, part altar. A little messy. Deeply honest. And always real.",
-    "description-oly": "The Heart Behind Raíces & Returnings",
-    "description-paragraph-oly": "Oly is part of the heart behind Raíces & Returnings.\n\nBorn in Venezuela and shaped by migration, resilience, and lived wisdom, she brings grounding, humor, and perspective into this space. While she isn’t the primary content creator, her presence influences the tone, the truth-telling, and the way this platform understands home, memory, and survival.\n\nAt times, she may share reflections or recipes rooted in culture and memory—but always as part of the larger story we’re living.",
-    "description-ashley": "Writer & Conscious Digital Creator",
-    "description-paragraph-ashley": "I’m Ashley—writer, conscious digital creator, and facilitator of reflective space. My life has been shaped in the in-between: between cultures, between belief systems, between certainty and doubt.\n\nI’ve lived deeply inside religion—and then had to learn how to leave it without losing my reverence for God, self, or meaning. My work now exists at that intersection: spirituality beyond dogma, faith without fear, and integration instead of erasure.\n\nThrough essays, affirmations, guided journals, and community spaces, I create language for people learning how to live whole—without self-abandonment. Most of what you’ll encounter here is my voice, my writing, and my lived experience, shared with honesty and care.",
-    "conclusion": "Together, Raíces & Returnings is a space built from real life, <nowrap>not aspiration.</nowrap>\nIt holds grief and reverence.\nUnlearning and returning.\nHumanity and divinity, side by side.\nWe’re glad you’re here."
+    "eyebrow": "About",
+    "title": "I'm Ashley.",
+    "image-alt": "Ashley Leon",
+    "paragraph-1": "I'm a writer, workshop facilitator, and certified holistic mind-body coach. My life has been shaped in the in-between — the space between the faith I was handed and the faith I'm still learning to trust. I lived deeply inside religion, and then I learned how to leave it without losing reverence.",
+    "paragraph-2": "I'm Cuban-Colombian, queer, first-generation, a former full-time missionary, and a seminary student who left with more questions than answers. I lived in the extremes for a long time. Now, I choose the gray.",
+    "paragraph-3": "My work lives at the intersection of faith deconstruction, queer spirituality, and emotional healing — spirituality beyond dogma, faith without fear, integration instead of erasure.",
+    "paragraph-4": "I'm not here to tell you what to believe. I'm here to hold space, alongside my wife, for the slow, honest work of return.",
+    "cta": "Begin with Rebuilding Reverence"
   },
   "Recipes": {
     "metadata": {
-      "title": "Heritage Recipes — Venezuelan & Latin American Cooking | Raíces & Returnings",
-      "description": "Venezuelan and Latin American heritage recipes by Oly Contreras. Traditional dishes passed down and reimagined with love, memory, and cultural pride."
+      "title": "Heritage Recipes — Venezuelan & Latin American Cooking | Ashley Leon",
+      "description": "Venezuelan and Latin American heritage recipes. Traditional dishes passed down and reimagined with love, memory, and cultural pride."
     },
     "breadcrumb": "Home",
     "recipes-page-title": "Recipes",
@@ -401,73 +421,47 @@
     "visit-substack": "Visit Substack",
     "breadcrumb-recipes": "Recipes"
   },
-  "Blog": {
-    "metadata": {
-      "title": "Blog — Reflections on Identity, Faith & Healing | Raíces & Returnings",
-      "description": "Essays and reflections on faith deconstruction, queerness, cultural identity, and the slow work of becoming whole. By Ashley León & Oly Contreras."
-    },
-    "breadcrumb": "Home",
-    "page-title": "Blog",
-    "recipes-page-title": "Recipes",
-    "recent-posts": "Recent Posts",
-    "no-posts": "No posts available.",
-    "read-more": "Read More",
-    "featured-post": "Featured Post",
-    "visit-substack": "Visit Substack",
-    "breadcrumb-recipes": "Recipes",
-    "breadcrumb-blog": "Blog"
-  },
   "Contact": {
     "metadata": {
-      "title": "Contact Us | Raíces & Returnings",
-      "description": "Have a question, collaboration idea, or something to share? Reach out to Ashley & Oly at Raíces & Returnings. We'd love to hear from you."
+      "title": "Contact | Ashley Leon",
+      "description": "For collaborations, media, speaking, or just to say something real."
     },
-    "title": "Want to reach out?",
-    "paragraph": "Whether you have a question, a collaboration idea, or something you need to say—we’d love to hear from you. This is a living, breathing platform. Your voice matters here.",
-    "title-form": "Contact Form",
-
+    "eyebrow": "Contact",
+    "title": "Reach out.",
+    "paragraph": "For collaborations, media, or just to say something real.",
+    "title-form": "Send a message",
+    "disclaimer": "I read everything myself. No auto-replies, no funnels — just a real inbox.",
     "toast-loading": "Sending your message...",
     "toast-success": "Message sent successfully!",
     "toast-error": "There was an error sending your message. Please try again.",
-
-    "firstName": "First Name",
-    "placeholder-firstName": "Enter your first name",
-    "lastName": "Last Name",
-    "placeholder-lastName": "Enter your last name",
+    "name": "Name",
+    "placeholder-name": "Your name",
     "email": "Email",
-    "placeholder-email": "Enter your email address",
-    "subject": "Subject",
-    "placeholder-subject": "Enter the subject of your message",
-    "content": "Message",
-    "placeholder-content": "Write your message here",
-
+    "placeholder-email": "you@email.com",
+    "message": "Message",
+    "placeholder-message": "Write your message here",
     "submit": "Send",
     "cancel": "Back to Home",
-    "submitting": "Submitting...",
-
+    "submitting": "Sending...",
     "validation": {
-      "firstName-required": "First name is required",
-      "lastName-required": "Last name is required",
+      "name-required": "Please enter your name",
       "email-invalid": "Please enter a valid email address",
-      "content-required": "Message content is required",
-      "content-max": "Message cannot exceed 5000 characters",
-      "subject-required": "Subject is required",
-      "subject-max": "Subject cannot exceed 100 characters"
+      "message-required": "Please write a message",
+      "message-max": "Message cannot exceed 5000 characters"
     }
   },
   "Email": {
-    "subject": "Thanks for reaching out to Raíces & Returnings 🌿",
+    "subject": "Thanks for reaching out to Ashley Leon",
     "greeting": "Hello,",
     "title": "Thank you for being here.",
-    "brandMessage": "We're Ashley & Oly, the voices and hearts behind Raíces & Returnings. This space was born from our stories—stories of migration, memory, queerness, healing, and home. It's a space where recipes carry history, reflections hold truth, and even the merch is made with meaning. Here's what you'll find in our little corner of the internet:",
-    "list-one": "🥄 Recipes rooted in culture and love",
-    "list-two": "📝 Blogs that reflect on identity, spirituality, and growth",
-    "list-three": "🛍 Merch designed with intention (and a lot of corazón)",
-
+    "brandMessage": "Ashley Leon is a space for writing, workbooks, and live workshops that help you return to what is sacred without self-abandonment.",
+    "list-one": "Writing on faith, identity, and healing",
+    "list-two": "Guided workbooks for honest reconstruction",
+    "list-three": "Community spaces for deeper integration",
     "your-message": "Your message",
-    "response-message": "We're so glad you reached out. Whether you had a question, an idea, or just wanted to say hi—your presence here matters to us. We're building a community, not a following. Thanks for being part of it. We'll get back to you as soon as we can.",
+    "response-message": "Thank you for reaching out. I read everything myself and will reply as soon as I can.",
     "gratitude": "With gratitude,",
-    "signature": "Oly & Ashley",
+    "signature": "Ashley Leon",
     "footer-text": "This email was sent because you contacted us through our website."
   },
   "EmailDownload": {
@@ -475,17 +469,18 @@
     "heading": "{productName} is ready",
     "greeting": "Hi {customerName},",
     "bodyThanks": "Thank you for trusting this process. <product>{productName}</product> is now yours.",
-    "buttonCta": "👉 Download now",
+    "buttonCta": "Download now",
     "linkInstruction": "Prefer to copy the link? Paste this URL into your browser:",
     "downloadWarning": "Please download your PDF within the next 48 hours—this link will only be active for a limited time.",
     "communityInvite": "Before you dive in, join the virtual community for {productName} — a safe space to share reflections, ask questions, and walk alongside others.",
-    "ctaBoxIntro": "Join from Safari or your computer, or download the GoKollab app to keep everything in one place.",
+    "ctaBoxIntro": "Join from Safari or your computer, or use the community app to keep everything in one place.",
+    "ctaBoxLink": "Join The In-Between",
     "ctaBoxNote": "* Note: If the link does not open, clear your browser cache or copy and paste it into a new tab.",
     "ctaBoxGoogle": "When you register, choose \"Continue with Google\" for the best experience.",
     "supportLine": "You are not walking alone. If you need support, reply to this email or reach us at <emailLink>{email}</emailLink>.",
     "closing": "With gratitude and reverence",
-    "signatureName": "Ashley Diana Leon",
-    "signatureOrg": "Raíces & Returnings"
+    "signatureName": "Ashley Leon",
+    "signatureOrg": "Ashley Leon"
   },
   "NotFound": {
     "title": "Something's wrong here.",
@@ -493,55 +488,11 @@
     "subtleQuote": "\"The page you are looking for does not exist, but the journey continues.\"",
     "returnHome": "Return to Home"
   },
-
   "NotPostFound": {
     "title": "No posts",
     "message": "The canvas is blank, waiting for the first brushstrokes of your creativity",
     "subtleQuote": "\"Every great story begins with a blank page\"",
     "create": "Create your first post"
-  },
-  "Ebook": {
-    "metadata-title": "Raíces & Returnings Digital Library",
-    "metadata-description": "Explore our curated collection of digital ebooks that delve into identity, spirituality, sexual diversity, and healing.",
-    "breadcrumb": "Digital Library",
-    "title": "For the Seekers, the Questioners, the Reclaimers.",
-    "subtitle": "Find your spiritual homecoming in guided journeys designed for authentic transformation.",
-    "details-button": "View Details",
-    "buy-button": "Buy Now",
-    "detail-title": "Ebook Details",
-    "information-title": "Delivery Information",
-    "information-paragraph": "Enter your delivery details to receive the confirmation and download link for your purchase.",
-    "payment-title": "Payment Information",
-    "payment-paragraph": "Choose your preferred method and confirm the details to complete the purchase.",
-    "about-title": "About This Ebook",
-    "features-title": "What You'll Discover",
-    "new-release": "New Release"
-  },
-  "EbookSuccess": {
-    "pending-title": "Payment in progress",
-    "pending-description": "The payment hasn't been completed yet",
-    "pending-body": "Please wait a few moments while we process your payment.",
-    "pending-notify": "We'll notify <highlight>{email}</highlight> once the payment is confirmed.",
-    "processing-title": "Processing your purchase...",
-    "processing-description": "Your payment was received successfully",
-    "processing-body": "We're finalizing your purchase. You'll receive an email with the download link within the next few minutes.",
-    "processing-email": "Confirmation email sent to <highlight>{email}</highlight>",
-    "processing-emailFallback": "your email address",
-    "complete-title": "Purchase completed successfully!",
-    "complete-subtitle": "Thank you for your purchase of <highlight>{product}</highlight>",
-    "emailSection-title": "Check your email",
-    "emailSection-body": "We've sent a download link to <highlight>{email}</highlight>",
-    "emailSection-note": "If you don't see it in your main inbox, check your spam folder.",
-    "infoSection-title": "ℹ️ Important information",
-    "infoSection-validity": "Your download link is valid for <highlight>48 hours</highlight>",
-    "infoSection-unique": "The link is unique and personal",
-    "detailsSection-title": "Purchase details",
-    "detailsSection-product": "Product",
-    "detailsSection-amount": "Amount",
-    "detailsSection-date": "Date",
-    "supportSection-issue": "Having trouble with the download?",
-    "supportSection-contact": "Contact us",
-    "supportSection-home": "Go to homepage"
   },
   "Checkout": {
     "loading-status": "Preparing secure checkout",
@@ -558,6 +509,9 @@
     "error-submit-fields": "Please complete all required fields.",
     "error-payment-failed": "We couldn't complete the payment.",
     "error-processing": "There was an error while processing the payment.",
+    "pay-button": "Buy Now",
+    "pay-preparing": "Preparing checkout",
+    "pay-processing": "Processing...",
     "billing-name-label": "Full name",
     "billing-name-placeholder": "E.g. Ana Pérez",
     "billing-name-required": "Please enter your name",
@@ -574,7 +528,7 @@
     "title": "Privacy Policy",
     "lastUpdatedLabel": "Last updated:",
     "lastUpdatedDate": "February 17, 2026",
-    "intro": "At Raíces & Returnings, we value your privacy. This policy explains what information we collect, how we use it, and the choices you have regarding your data when you visit our site or use our services.",
+    "intro": "At Ashley Leon, we value your privacy. This policy explains what information we collect, how we use it, and the choices you have regarding your data when you visit our site or use our services.",
     "backHome": "Back to home",
     "sections": {
       "informationCollected": {
@@ -628,7 +582,7 @@
     "sections": {
       "acceptance": {
         "title": "1. Acceptance of terms",
-        "body": "These terms govern your use of the site and services offered by Raíces & Returnings. By browsing, signing up, subscribing, or purchasing, you confirm that you have read and accepted these terms."
+        "body": "These terms govern your use of the site and services offered by Ashley Leon. By browsing, signing up, subscribing, or purchasing, you confirm that you have read and accepted these terms."
       },
       "useOfSite": {
         "title": "2. Permitted use of the site",
@@ -636,7 +590,7 @@
       },
       "intellectualProperty": {
         "title": "3. Intellectual property",
-        "body": "Unless otherwise stated, site content (text, images, brand assets, design, and resources) belongs to Raíces & Returnings or their respective owners. You may not copy, distribute, or commercially exploit this content without prior written authorization."
+        "body": "Unless otherwise stated, site content (text, images, brand assets, design, and resources) belongs to Ashley Leon or their respective owners. You may not copy, distribute, or commercially exploit this content without prior written authorization."
       },
       "userConduct": {
         "title": "4. User conduct",
@@ -656,11 +610,11 @@
       },
       "liability": {
         "title": "8. Limitation of liability",
-        "body": "To the fullest extent permitted by applicable law, Raíces & Returnings is not liable for indirect, incidental, special, or consequential damages arising from use of, or inability to use, the site."
+        "body": "To the fullest extent permitted by applicable law, Ashley Leon is not liable for indirect, incidental, special, or consequential damages arising from use of, or inability to use, the site."
       },
       "indemnification": {
         "title": "9. Indemnification",
-        "body": "You agree to defend and indemnify Raíces & Returnings against claims, losses, or expenses arising from your breach of these terms or misuse of the site."
+        "body": "You agree to defend and indemnify Ashley Leon against claims, losses, or expenses arising from your breach of these terms or misuse of the site."
       },
       "termination": {
         "title": "10. Termination",
@@ -679,5 +633,391 @@
         "body": "If you have questions about these Terms and Conditions, you can contact us at:"
       }
     }
+  },
+  "RebuildingReverence": {
+    "metadata-title": "Rebuilding Reverence | Ashley Leon",
+    "metadata-description": "A 30-day return to wonder after the ruins of religion. A slow, body-first practice to rebuild reverence without self-abandonment.",
+    "new-release": "New Release",
+    "hero": {
+      "title": "REBUILDING REVERENCE",
+      "subtitle": "A 30-day return to wonder after the ruins of religion",
+      "tagline": "You're not crazy. You're not backsliding. You're not orphaned. You're waking up."
+    },
+    "if-you": {
+      "heading": "If any of this is you…",
+      "items": [
+        "You've whispered a prayer and wondered if anyone was still listening.",
+        "You left a church and felt like you left God somewhere in the parking lot.",
+        "You were told your questions were dangerous, your body was a problem, your softness was sin.",
+        "You served more, hid more, sacrificed more — and called it belonging.",
+        "You've been blaming the devil for every hard thing, and you're so tired of living on guard."
+      ],
+      "closing": "Then you already know the truth no one in your old pew would say out loud:",
+      "truth": "You didn't lose your faith. You outgrew the cage it came in."
+    },
+    "different-way": {
+      "heading": "A different way back",
+      "paragraph1": "Rebuilding Reverence is for the ones who walked away — not from God, but from the version of God that couldn't hold your questions, your culture, or your full humanity.",
+      "paragraph2": "It's a 30-day path back to a faith that doesn't require self-abandonment.",
+      "paragraph3": "Not a quick fix. Not a spiritual sugar rush. A slow, honest, body-first practice that meets you exactly where you are — tender, unsure, still aching, still here."
+    },
+    "each-day": {
+      "heading": "What each day holds",
+      "intro": "Ten minutes. No performance. No pew required.",
+      "anchors": [
+        {
+          "name": "Arrival",
+          "desc": "a breath to bring you into your body"
+        },
+        {
+          "name": "Anchor",
+          "desc": "one true thing to carry through your day"
+        },
+        {
+          "name": "Reflect",
+          "desc": "a story that finds you where you live"
+        },
+        {
+          "name": "Respond",
+          "desc": "a prompt that moves something loose"
+        }
+      ],
+      "closing": "You don't have to go in order. You don't have to rush. This isn't a test. It's a return."
+    },
+    "whats-inside": {
+      "heading": "What's inside",
+      "items": [
+        {
+          "title": "The 30-Day Journey",
+          "desc": "Four weeks: Questioning the Old Blueprint, Reclaiming Trust, Rewriting What's True, Reconstructing from the Inside Out."
+        },
+        {
+          "title": "Guided Audio Companion",
+          "desc": "Every Arrival and key reflection, in my voice, so you can close your eyes and let yourself be led instead of leading yourself."
+        },
+        {
+          "title": "The Circle",
+          "desc": "A community of people walking the same road, so you never have to do the leaving and the returning alone."
+        },
+        {
+          "title": "The Release Toolkit",
+          "desc": "The closing prayer, the \"When I Feel Afraid\" integration practice, and the voices that walked me home."
+        }
+      ]
+    },
+    "who-for": {
+      "heading": "Who this is for",
+      "paragraph1": "The deconstructing. The questioning. The queer and called. The ones grieving a church that wasn't safe — and hungry for a sacred that is.",
+      "paragraph2": "If you're done being afraid of what you feel, you're already home here."
+    },
+    "promise": {
+      "heading": "My promise to you",
+      "paragraph1": "Move through all 30 days. If nothing shifts, email me and I'll refund you — no scripture required.",
+      "paragraph2": "I'd rather you trust the process than feel trapped by a purchase. That's the whole point.",
+      "cta": "Begin the journey — {price}",
+      "cta-button": "Start Day One →"
+    },
+    "behind": {
+      "heading": "Who's behind this",
+      "paragraph1": "I'm Ashley. I didn't grow up religious — but when I found evangelical Christianity, I gave it everything. For a season, it saved me. Then it began to cost me things I didn't know I was allowed to keep: my intuition, my voice, my joy.",
+      "paragraph2": "Eventually I had to walk away. Not from God — from the version of God that couldn't hold all of me. That's where the real journey began.",
+      "paragraph3": "I'm a certified holistic mind-body coach with a background in psychology, and these pages hold what took me years to unravel — so your own path home can feel a little less lonely."
+    },
+    "questions": {
+      "heading": "Questions you might be holding",
+      "items": [
+        {
+          "q": "Is this anti-Christian? Anti-Bible?",
+          "a": "No. This isn't about throwing it all away — it's about sifting, not scorning. There's beauty, grief, poetry, and truth in what you inherited. We hold the good without denying the pain."
+        },
+        {
+          "q": "What if I'm still in church?",
+          "a": "Welcome. This isn't a push to leave anything. It's a space to be honest about what you carry, wherever you stand."
+        },
+        {
+          "q": "I'm not really a journaler.",
+          "a": "That's okay. Speak your answers aloud. Take them on a walk. Use the audio and let your body respond. Whatever keeps you honest, start there."
+        },
+        {
+          "q": "How much time does it take?",
+          "a": "About ten minutes a day. You're allowed to pause, repeat a day, or stay in a question longer than expected."
+        },
+        {
+          "q": "Is this affirming?",
+          "a": "Yes. All of you belongs here — your culture, your body, your sexuality, your questions. Reverence should never require hiding."
+        }
+      ]
+    },
+    "closing": {
+      "heading": "One last thing",
+      "paragraph1": "The altar was never just wood and gold. After all the leaving and returning, you'll find something unshakeable: the Divine within.",
+      "paragraph2": "You are the sanctuary now.",
+      "welcome": "Welcome home.",
+      "cta-button": "Begin Rebuilding Reverence →"
+    }
+  },
+  "Community": {
+    "metadata": {
+      "title": "The In-Between | A Community for Rebuilding Faith Together — Ashley Leon",
+      "description": "An online community for people rebuilding faith and identity after deconstruction. The In-Between is a grounded, affirming space to keep returning."
+    },
+    "eyebrow": "The In-Between",
+    "title": "Somewhere to keep returning.",
+    "lead": "Healing isn't a one-time event. It's a practice you come back to — and it's easier with people walking the same road.",
+    "paragraph": "The In-Between is our online community: the place where this work stays alive between workbooks and circles. A grounded, affirming space for honest reflection, real conversation, and belonging without conditions.",
+    "inside-heading": "What you'll find inside:",
+    "inside-1": "Ongoing reflections and prompts to keep the work alive between workbooks and circles.",
+    "inside-2": "Honest conversation — no performance, no pressure to have it figured out.",
+    "inside-3": "A place to return to yourself in company.",
+    "cta": "Join The In-Between",
+    "footnote": "Free to join. The In-Between lives on a private, members-only platform."
+  },
+  "Writing": {
+    "metadata": {
+      "title": "Essays on Faith, Deconstruction & Healing | Ashley Leon",
+      "description": "Essays from the in-between on faith, deconstruction, identity, queerness, healing, and return."
+    },
+    "breadcrumb": "Home",
+    "page-title": "Essays from the in-between",
+    "recipes-page-title": "Recipes",
+    "recent-posts": "Recent Posts",
+    "no-posts": "No posts available.",
+    "read-more": "Read More",
+    "featured-post": "Featured Post",
+    "visit-substack": "Visit Substack",
+    "breadcrumb-recipes": "Recipes",
+    "breadcrumb-blog": "Writing"
+  },
+  "Workbooks": {
+    "metadata-title": "Guided Workbooks for Faith & Identity | Ashley Leon",
+    "metadata-description": "Guided digital workbooks for rebuilding faith, identity, reverence, and belonging.",
+    "breadcrumb": "Workbooks",
+    "title": "Guided workbooks for the return.",
+    "subtitle": "Two digital companions for rebuilding reverence, faith, and identity at your own pace.",
+    "details-button": "View Details",
+    "buy-button": "Buy Now",
+    "detail-title": "Workbook Details",
+    "information-title": "Delivery Information",
+    "information-paragraph": "Enter your delivery details to receive the confirmation and download link for your purchase.",
+    "payment-title": "Payment Information",
+    "payment-paragraph": "Choose your preferred method and confirm the details to complete the purchase.",
+    "about-title": "About This Workbook",
+    "features-title": "What You'll Discover",
+    "new-release": "New Release"
+  },
+  "WorkbooksSuccess": {
+    "pending-title": "Payment in progress",
+    "pending-description": "The payment hasn't been completed yet",
+    "pending-body": "Please wait a few moments while we process your payment.",
+    "pending-notify": "We'll notify <highlight>{email}</highlight> once the payment is confirmed.",
+    "processing-title": "Processing your purchase...",
+    "processing-description": "Your payment was received successfully",
+    "processing-body": "We're finalizing your purchase. You'll receive an email with the download link within the next few minutes.",
+    "processing-email": "Confirmation email sent to <highlight>{email}</highlight>",
+    "processing-emailFallback": "your email address",
+    "complete-title": "Purchase completed successfully!",
+    "complete-subtitle": "Thank you for your purchase of <highlight>{product}</highlight>",
+    "emailSection-title": "Check your email",
+    "emailSection-body": "We've sent a download link to <highlight>{email}</highlight>",
+    "emailSection-note": "If you don't see it in your main inbox, check your spam folder.",
+    "infoSection-title": "ℹ️ Important information",
+    "infoSection-validity": "Your download link is valid for <highlight>48 hours</highlight>",
+    "infoSection-unique": "The link is unique and personal",
+    "detailsSection-title": "Purchase details",
+    "detailsSection-product": "Product",
+    "detailsSection-amount": "Amount",
+    "detailsSection-date": "Date",
+    "supportSection-issue": "Having trouble with the download?",
+    "supportSection-contact": "Contact us",
+    "supportSection-home": "Go to homepage"
+  },
+  "Circle": {
+    "metadata-title": "The Rebuilding Reverence Circle | A Live 4-Week Faith Deconstruction Group",
+    "metadata-description": "A live 4-week group experience for those done rebuilding faith alone.",
+    "eyebrow": "Live Group Experience",
+    "reserveCta": "Reserve My Spot — ${price} →",
+    "nav": {
+      "inside": "Inside",
+      "weeks": "The 4 Weeks",
+      "forYou": "Is it for me?",
+      "promise": "Ashley's Promise",
+      "how": "How it Works",
+      "reserve": "Reserve",
+      "questions": "Questions",
+      "reserveCta": "Reserve — ${price} →"
+    },
+    "earlyRateNote": "Early cohort rate. Regular price ${regular}. Founding members receive the reduced rate in exchange for feedback that shapes future circles.",
+    "hero": {
+      "title": "The Rebuilding Reverence Circle",
+      "subtitle": "A 4-week live group experience for those done rebuilding faith alone"
+    },
+    "opening": {
+      "lines": [
+        "Some things you can't journal your way out of alone.",
+        "You need a room.",
+        "A circle.",
+        "People who don't need you to explain why you left — because they left too.",
+        "That's what this is."
+      ]
+    },
+    "what-circle-is": {
+      "heading": "What the Circle is",
+      "paragraph1": "The Rebuilding Reverence Circle is a small, intimate 4-week live group experience where we move through the journey together — with Ashley in the room.",
+      "paragraph2": "Not a course. Not a webinar. Not a lecture.",
+      "paragraph3": "A circle. Where everyone gets to speak. Where your story belongs. Where the work actually lands because someone is witnessing it with you.",
+      "paragraph4": "The Circle runs in cohorts — small, intentional groups that begin together and move through the journey together. A new cohort opens only when a full circle of 15 is complete. This is not a program you can drop into at any time. When a cohort is full, it's full — and the next one opens when we're ready to begin again."
+    },
+    "whats-inside": {
+      "heading": "What's inside",
+      "items": [
+        {
+          "title": "4 Live Weekly Sessions with Ashley",
+          "desc": "Every week we gather on Zoom for 60–75 minutes. Ashley opens the space, teaches, holds what comes up, and closes with a practice you carry into the week. Sessions are recorded so you never miss one."
+        },
+        {
+          "title": "A Capped Circle of 15 People Maximum",
+          "desc": "Small by design. Big enough to feel a community. Small enough that you are never invisible. This is not a webinar with hundreds of strangers. Everyone in this room is here on purpose."
+        },
+        {
+          "title": "The Full Rebuilding Reverence Journey",
+          "desc": "Your 30-day journal and daily guided meditations are included — the live sessions are structured to move alongside them, week by week. No separate purchase needed."
+        },
+        {
+          "title": "Mid-Week Voice Notes from Ashley",
+          "desc": "Between sessions, a short 3–5 minute voice note lands in the community — a grounding, a teaching, a reminder that you're not walking this alone. Just enough to keep the practice alive between sessions."
+        },
+        {
+          "title": "Private Circle Community",
+          "desc": "A dedicated thread inside the Rebuilding Reverence community just for circle members. For the 3am thoughts. The breakthroughs. The things you need to say before next week's session."
+        },
+        {
+          "title": "Optional: 1:1 Integration Call After Week 4",
+          "desc": "If you want to close the circle with a private 45-minute conversation with Ashley — to integrate what came up, discern what's next, and take the next step with support — this option is available to circle members after the final session."
+        }
+      ]
+    },
+    "four-weeks": {
+      "heading": "The Four Weeks",
+      "weeks": [
+        {
+          "name": "Week 1 — Questioning the Old Blueprint",
+          "desc": "We begin with honesty. What were we handed? What did it cost us? What do we want to sift from what we want to release? You'll leave this session with language for things you've been carrying without words."
+        },
+        {
+          "name": "Week 2 — Reclaiming Trust",
+          "desc": "The room gets warmer here. We've been journaling for a week. We go deeper — into the leaders who failed us, the God we're learning to trust again, the inner knowing we were told not to trust. This session does something."
+        },
+        {
+          "name": "Week 3 — Rewriting What's True",
+          "desc": "This is where it tends to break open. We dismantle inherited beliefs about sin, authority, the Bible, our bodies. We replace them not with new dogma but with deeper truth. Ashley's coaching background holds the room here."
+        },
+        {
+          "name": "Week 4 — Reconstructing from the Inside Out",
+          "desc": "The closing session. A ritual of return. Where do we carry this? What does belonging look like now? What do we bless and release? This session ends with a blessing over every person in the circle."
+        }
+      ]
+    },
+    "who-for": {
+      "heading": "Who this is for",
+      "paragraph1": "You've been in a deconstruction season — maybe for months, maybe for years.",
+      "paragraph2": "You've read the books. You've listened to the podcasts. You've journaled alone.",
+      "paragraph3": "But something is still unfinished. And you're starting to suspect that finishing it requires other people.",
+      "truth": "You're right.",
+      "paragraph4": "This circle is for the exvangelical. The questioning. The queer and called. The ones who still light candles and don't know why. The ones whose faith got smaller before it got real.",
+      "belong": "If that's you — you belong here."
+    },
+    "ashley-promise": {
+      "heading": "Ashley's promise",
+      "paragraph1": "I created Rebuilding Reverence during my own unraveling. I'm a certified holistic mind-body coach, a writer, a former full-time missionary, a seminary student who left with more questions than answers.",
+      "paragraph2": "I'm Cuban-Colombian. I'm queer. I'm first-gen. I've lived in extremes and I chose the gray.",
+      "paragraph3": "I'm not going to tell you what to believe. I'm going to hold space for you to find out.",
+      "closing": "That's the circle."
+    },
+    "enrollment": {
+      "heading": "How Enrollment Works",
+      "paragraph1": "The Circle is cohort-based — meaning we begin together, move through the four weeks together, and close together.",
+      "paragraph2": "A new cohort opens once we reach a full circle of 15 members. This is not a rolling program. We don't start with 5 people and figure it out — we wait until the room is full, because the room is the point.",
+      "intro": "Here's what happens when you reserve your spot:",
+      "steps": [
+        "You'll receive a confirmation with everything you need to prepare.",
+        "Once the cohort reaches 15, your confirmed start date is sent to the full group.",
+        "If this cohort fills before you join, you are automatically added to the waitlist for the next round — no action needed on your part."
+      ],
+      "note": "The Circle opens only a few times a year. If you feel the pull, don't wait on it."
+    },
+    "cohort-status": {
+      "heading": "Current Cohort Status",
+      "spotsRemaining": "{count} spots remaining out of {total}.",
+      "spotsNote": "This number updates as spots are reserved. When it hits zero, enrollment closes and the waitlist opens.",
+      "waitlist": "This cohort is full.",
+      "waitlistCta": "Join waitlist"
+    },
+    "questions": {
+      "heading": "Questions",
+      "items": [
+        {
+          "q": "Do I need to have bought the PDF first?",
+          "a": "No — the journal and meditations are included in your circle registration. You arrive with everything you need."
+        },
+        {
+          "q": "What if I can't make a live session?",
+          "a": "All sessions are recorded and shared with circle members within 24 hours. You won't fall behind."
+        },
+        {
+          "q": "What timezone are sessions in?",
+          "a": "Sessions are scheduled to work for the majority of registered members. Your confirmed time is shared once the cohort is full."
+        },
+        {
+          "q": "How long until we begin once I sign up?",
+          "a": "We begin when the circle of 15 is complete. Depending on where enrollment stands, that could be days or a few weeks. You'll be notified the moment your start date is confirmed."
+        },
+        {
+          "q": "Is this therapy?",
+          "a": "No. Ashley is a certified holistic mind-body coach, not a licensed therapist. The circle is a coaching and community space. If you are in active crisis, please seek licensed mental health support alongside this work."
+        },
+        {
+          "q": "Is this affirming?",
+          "a": "Fully. All of you belongs here — your culture, your body, your sexuality, your questions."
+        },
+        {
+          "q": "What if it's not what I expected?",
+          "a": "Reach out within the first week and we'll make it right."
+        }
+      ]
+    },
+    "closing": {
+      "heading": "One more thing",
+      "paragraph1": "The altar was never just wood and gold.",
+      "paragraph2": "It was always about encounter.",
+      "paragraph3": "You don't have to rebuild this alone.",
+      "finalLine": "15 people. One circle. A few times a year.",
+      "finalLine2": "When it's full, it's full."
+    }
+  },
+  "CircleSuccess": {
+    "pending-title": "Payment in progress",
+    "pending-description": "The payment hasn't been completed yet",
+    "pending-body": "Please wait a few moments while we process your payment.",
+    "pending-notify": "We'll notify <highlight>{email}</highlight> once the payment is confirmed.",
+    "processing-title": "Processing your reservation...",
+    "processing-description": "Your payment was received successfully",
+    "processing-body": "We're finalizing your seat in the cohort. You'll receive an email with the Zoom details within the next few minutes.",
+    "processing-email": "Confirmation email sent to <highlight>{email}</highlight>",
+    "processing-emailFallback": "your email address",
+    "complete-title": "Your seat is reserved!",
+    "complete-subtitle": "Thank you for joining <highlight>{product}</highlight>",
+    "emailSection-title": "Check your email",
+    "emailSection-body": "We've sent the Zoom details, your 30-day journal, and your daily meditations to <highlight>{email}</highlight>",
+    "emailSection-note": "If you don't see it in your main inbox, check your spam folder.",
+    "infoSection-title": "ℹ️ Important information",
+    "infoSection-validity": "The Zoom link is unique and personal — <highlight>don't share it</highlight>",
+    "infoSection-unique": "Sessions are recorded and shared within 24 hours",
+    "detailsSection-title": "Reservation details",
+    "detailsSection-product": "Circle",
+    "detailsSection-amount": "Amount",
+    "detailsSection-date": "Date",
+    "supportSection-issue": "Having trouble with your reservation?",
+    "supportSection-contact": "Contact us",
+    "supportSection-home": "Go to homepage"
   }
 }

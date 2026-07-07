@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate --no-engine && next build",
-    "start": "next start -p 3001",
+    "start": "next start -p 3000",
     "lint": "next lint"
   },
   "prisma": {
@@ -16,7 +16,6 @@
     "@aws-sdk/s3-request-presigner": "^3.832.0",
     "@clerk/nextjs": "^6.19.5",
     "@hookform/resolvers": "^5.1.1",
-    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@prisma/client": "^6.8.2",
     "@prisma/extension-accelerate": "^2.0.0",
     "@radix-ui/react-avatar": "^1.1.9",
@@ -64,8 +63,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
-    "@types/mailchimp__mailchimp_marketing": "^3.0.21",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

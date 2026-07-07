@@ -19,7 +19,7 @@ interface DownloadEmailTemplateProps {
   locale: "en" | "es";
 }
 
-const SUPPORT_EMAIL = "raicesreturnings@gmail.com";
+const SUPPORT_EMAIL = "ashleyleon@gmail.com";
 
 export default async function DownloadEmailTemplate({
   customerName,
@@ -61,10 +61,10 @@ export default async function DownloadEmailTemplate({
             <Text style={ctaBoxLink}>
               🔗{" "}
               <a
-                href="https://gokollab.com/reconstruyendolareverencia-trcsrr"
+                href="https://ashleyleon.com/community/join"
                 style={linkAnchor}
               >
-                https://gokollab.com/reconstruyendolareverencia-trcsrr
+                {t("ctaBoxLink")}
               </a>
             </Text>
             <Text style={ctaBoxText}>{t("ctaBoxNote")}</Text>
@@ -85,8 +85,6 @@ export default async function DownloadEmailTemplate({
             {t("closing")},
             <br />
             {t("signatureName")}
-            <br />
-            {t("signatureOrg")}
           </Text>
         </Container>
       </Body>

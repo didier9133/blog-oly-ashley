@@ -1,6 +1,6 @@
 import { routing } from "@/i18n/routing";
 
-export const BASE_URL = "https://www.raicesreturnings.com";
+export const BASE_URL = "https://ashleyleon.com";
 
 /**
  * Build a locale-aware path that respects `localePrefix: "as-needed"`.

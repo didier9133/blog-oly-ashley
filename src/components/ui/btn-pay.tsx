@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Loader2Icon, ShoppingCart } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ButtonPayProps {
   isSubmitting: boolean;
@@ -9,6 +10,7 @@ interface ButtonPayProps {
 }
 
 export function ButtonPay({ isSubmitting, isDisabled }: ButtonPayProps) {
+  const t = useTranslations("Checkout");
   const disabled = isSubmitting || Boolean(isDisabled);
   const showPreparingState = !isSubmitting && Boolean(isDisabled);
 
@@ -18,17 +20,17 @@ export function ButtonPay({ isSubmitting, isDisabled }: ButtonPayProps) {
         {isSubmitting ? (
           <>
             <Loader2Icon className="h-5 w-5 mr-2 animate-spin" />
-            {"Processing..."}
+            {t("pay-processing")}
           </>
         ) : showPreparingState ? (
           <>
             <Loader2Icon className="h-5 w-5 mr-2 animate-spin" />
-            {"Preparing checkout"}
+            {t("pay-preparing")}
           </>
         ) : (
           <>
             <ShoppingCart className="h-5 w-5 mr-2" />
-            {"Buy Now"}
+            {t("pay-button")}
           </>
         )}
       </Button>

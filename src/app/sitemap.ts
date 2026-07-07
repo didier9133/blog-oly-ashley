@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
-import { BASE_URL, fullUrl } from "@/lib/url";
+import { fullUrl } from "@/lib/url";
 
 const LOCALES = ["es", "en"] as const;
 
@@ -9,10 +9,10 @@ const LOCALES = ["es", "en"] as const;
 const STATIC_ROUTES: { path: string; lastModified: string }[] = [
   { path: "", lastModified: "2026-02-11" },
   { path: "/about", lastModified: "2025-11-07" },
-  { path: "/blog", lastModified: "2026-02-11" },
-  { path: "/recipes", lastModified: "2025-11-17" },
-  { path: "/ebook", lastModified: "2025-11-07" },
-  { path: "/our-love", lastModified: "2025-09-01" },
+  { path: "/writing", lastModified: "2026-02-11" },
+  { path: "/workbooks", lastModified: "2025-11-07" },
+  { path: "/circle", lastModified: "2025-11-07" },
+  { path: "/community", lastModified: "2025-07-31" },
   { path: "/contact", lastModified: "2025-07-31" },
   { path: "/privacy", lastModified: "2025-07-31" },
   { path: "/terms", lastModified: "2025-07-31" },
@@ -40,24 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     blogPosts.map((post) => ({
-      url: fullUrl(locale, `/blog/${post.slug_en}`),
-      lastModified: post.updatedAt,
-    })),
-  );
-
-  // Dynamic recipe posts — route always uses slug_en for both locales
-  const recipePosts = await prisma.post.findMany({
-    where: {
-      published: true,
-      category: { name: "recipes" },
-    },
-    select: { slug_en: true, updatedAt: true },
-    orderBy: { updatedAt: "desc" },
-  });
-
-  const recipeEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
-    recipePosts.map((post) => ({
-      url: fullUrl(locale, `/recipes/${post.slug_en}`),
+      url: fullUrl(locale, `/writing/${post.slug_en}`),
       lastModified: post.updatedAt,
     })),
   );
@@ -70,14 +53,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const ebookEntries: MetadataRoute.Sitemap = books.flatMap((book) => [
     {
-      url: fullUrl("en", `/ebook/detail/${book.slug_en}`),
+      url: fullUrl("en", `/workbooks/${book.slug_en}`),
       lastModified: book.updatedAt,
     },
     {
-      url: fullUrl("es", `/ebook/detail/${book.slug_es}`),
+      url: fullUrl("es", `/workbooks/${book.slug_es}`),
       lastModified: book.updatedAt,
     },
   ]);
 
-  return [...staticEntries, ...blogEntries, ...recipeEntries, ...ebookEntries];
+  return [...staticEntries, ...blogEntries, ...ebookEntries];
 }

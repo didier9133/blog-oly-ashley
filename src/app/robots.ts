@@ -1,6 +1,16 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://www.raicesreturnings.com";
+const BASE_URL = "https://ashleyleon.com";
+const PUBLIC_BLOCKLIST = [
+  "/dashboard/",
+  "/api/",
+  "/test-upload",
+  "/es/test-upload",
+  "/recipes",
+  "/es/recipes",
+  "/our-love",
+  "/es/our-love",
+];
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -14,49 +24,48 @@ export default function robots(): MetadataRoute.Robots {
           "/_next/static/",
           "/*.woff2$",
           "/*.webmanifest$",
-          "/test-upload",
-          "/es/test-upload",
+          ...PUBLIC_BLOCKLIST.slice(2),
         ],
       },
       {
         userAgent: "GPTBot",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "ChatGPT-User",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "OAI-SearchBot",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "ClaudeBot",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "PerplexityBot",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "Google-Extended",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "CCBot",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "Bytespider",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/test-upload"],
+        disallow: PUBLIC_BLOCKLIST,
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,

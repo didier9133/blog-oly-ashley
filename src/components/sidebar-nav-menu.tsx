@@ -23,7 +23,7 @@ function splitHash(url: string): { basePath: string; targetHash: string } {
 }
 
 export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "/";
   const router = useRouter();
 
   const [currentHash, setCurrentHash] = useState("");
@@ -83,19 +83,22 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
   };
 
   return (
-    <SidebarMenu className="gap-4 px-6">
-      {items.map((item) => {
+    <SidebarMenu className="gap-0 px-7">
+      {items.map((item, index) => {
         const isActive = activeMap.get(item.url) ?? false;
 
         return (
-          <SidebarMenuItem key={item.title}>
+          <SidebarMenuItem
+            key={item.title}
+            className="border-t border-foreground/10 first:border-t-0"
+          >
             <SidebarMenuButton
               asChild
               isActive={isActive}
-              className={`h-auto py-3 px-6 text-2xl font-[family-name:var(--font-cormorant-garamond)] transition-all duration-300 rounded-sm ${
+              className={`group h-auto rounded-none px-0 py-5 transition-all duration-300 ${
                 isActive
-                  ? "bg-[#d8a08b]/10 text-[#bd775c] font-medium italic"
-                  : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
+                  ? "bg-transparent text-[#a9664c]"
+                  : "text-foreground/78 hover:bg-transparent hover:text-foreground"
               }`}
             >
               <Link
@@ -103,9 +106,14 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
                 onClick={(e) => handleClick(e, item)}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noopener noreferrer" : undefined}
-                className="w-full flex items-center"
+                className="flex w-full items-baseline justify-between gap-4"
               >
-                {item.title}
+                <span className="font-[family-name:var(--font-cormorant-garamond)] text-[1.9rem] font-medium leading-none tracking-normal">
+                  {item.title}
+                </span>
+                <span className="font-[family-name:var(--font-lora)] text-[0.62rem] font-semibold leading-none tracking-[0.18em] text-current/40">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

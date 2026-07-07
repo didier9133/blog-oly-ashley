@@ -226,7 +226,7 @@ export async function saveNewPost(data: {
 
     revalidatePath("/dashboard");
     revalidatePath("/");
-    revalidatePath(`/blog/`);
+    revalidatePath(`/writing/`);
     return newPost;
   } catch (error) {
     console.error("Error saving new post:", error);

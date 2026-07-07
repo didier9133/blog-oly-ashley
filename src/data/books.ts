@@ -11,8 +11,6 @@ export interface BookV2 {
   subtitle_es: string;
   author: string;
   price: number;
-  originalPrice: number;
-  discount: number;
   coverImage_en: string;
   coverImage_es: string;
   description_en: string;
@@ -45,10 +43,8 @@ export const books: BookV2[] = [
       "A sacred invitation to reclaim your voice, reimagine your faith, and return to yourself — whole and holy",
     subtitle_es:
       "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
-    author: "Ashley Diana Leon - Raíces & Returning",
-    price: 1999,
-    originalPrice: 2499,
-    discount: 20,
+    author: "Ashley Leon",
+    price: 3300,
     coverImage_en: "/Queer_y_Called.jpeg",
     coverImage_es: "/Queer_y_Llamados.jpeg",
     description_en: `This journal was born from my own journey — one marked by exile and return, silence and rediscovery, unlearning lies and relearning the truth: that I was never too much, never too far, and was never supposed to choose between being queer and being called. I created this space for those who were told their faith and wholeness couldn't coexist. I no longer believe that, and I hope as you walk through these pages, you won't either.
@@ -97,10 +93,8 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
     title_es: "Reconstruyendo la Reverencia",
     subtitle_en: "A 30-Day Journey to Reconnect with Your Inner Self",
     subtitle_es: "Un Viaje de 30 Días para Reconectar con Tu Ser Interior",
-    author: "Ashley - Raíces & Returning",
-    price: 1999,
-    originalPrice: 2499,
-    discount: 20,
+    author: "Ashley Leon",
+    price: 3300,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
     coverImage_en: "/Rebuilding_Reverence.jpeg",
     description_en: `Embark on a transformative 30-day journey designed to help you reconnect with your authentic self and rediscover the reverence you deserve. Through daily reflections, guided exercises, and sacred practices, this journal becomes your companion in the path toward self-love and inner peace.

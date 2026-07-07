@@ -20,12 +20,12 @@ const securityHeaders = [
     key: "Content-Security-Policy-Report-Only",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com https://js.stripe.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://dgw9atod1ju2x.cloudfront.net https://cdn.pixabay.com https://*.clerk.dev",
-      "connect-src 'self' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com https://vitals.vercel-insights.com",
-      "frame-src 'self' https://*.clerk.dev",
+      "connect-src 'self' https://*.clerk.dev https://clerk.dev https://va.vercel-scripts.com https://vitals.vercel-insights.com https://api.stripe.com https://r.stripe.com",
+      "frame-src 'self' https://*.clerk.dev https://js.stripe.com https://hooks.stripe.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -148,6 +148,31 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  async redirects() {
+    return [
+      // Route renames (FASE 2): preserve SEO link equity with permanent 301s.
+      // EN (no locale prefix) + ES (/es prefix) — redirects run before next-intl middleware.
+      { source: "/blog", destination: "/writing", permanent: true },
+      { source: "/blog/:slug*", destination: "/writing/:slug*", permanent: true },
+      { source: "/ebook", destination: "/workbooks", permanent: true },
+      { source: "/ebook/detail/:slug*", destination: "/workbooks/:slug*", permanent: true },
+      { source: "/live-sessions", destination: "/circle", permanent: true },
+      { source: "/live-sessions/:slug*", destination: "/circle/:slug*", permanent: true },
+      { source: "/our-love", destination: "/", permanent: true },
+      { source: "/our-love/:slug*", destination: "/", permanent: true },
+      { source: "/rebuilding-reverence", destination: "/workbooks/rebuilding-reverence", permanent: true },
+      { source: "/es/blog", destination: "/es/writing", permanent: true },
+      { source: "/es/blog/:slug*", destination: "/es/writing/:slug*", permanent: true },
+      { source: "/es/ebook", destination: "/es/workbooks", permanent: true },
+      { source: "/es/ebook/detail/:slug*", destination: "/es/workbooks/:slug*", permanent: true },
+      { source: "/es/live-sessions", destination: "/es/circle", permanent: true },
+      { source: "/es/live-sessions/:slug*", destination: "/es/circle/:slug*", permanent: true },
+      { source: "/es/our-love", destination: "/es", permanent: true },
+      { source: "/es/our-love/:slug*", destination: "/es", permanent: true },
+      { source: "/es/rebuilding-reverence", destination: "/es/workbooks/rebuilding-reverence", permanent: true },
+    ];
+  },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -165,4 +190,3 @@ const nextConfig: NextConfig = {
 
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);
-

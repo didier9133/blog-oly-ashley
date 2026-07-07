@@ -1,72 +1,52 @@
-import { FadeIn } from "@/components/fade-in";
-import { HeroImage } from "@/components/hero-image";
-import { HeroContent } from "@/components/hero-content";
-import {
-  PromotedBook,
-  type PromotedBookData,
-} from "@/components/promoted-book";
-import { HomeSidebar } from "@/components/home-sidebar";
-import NoPostsView from "@/components/empty-post";
-import { CategoryEnum } from "@/enums";
-import { JsonLd } from "@/components/json-ld";
-import { getLocale, getTranslations } from "next-intl/server";
-import prisma from "@/lib/prisma";
-import { BASE_URL } from "@/lib/url";
-import DOMPurify from "isomorphic-dompurify";
 import Image from "next/image";
 import Link from "next/link";
-import { BookOpen, Leaf, Heart } from "lucide-react";
+import { HomeCircleCta } from "@/components/home-circle-cta";
+import { HomeCommunityCta } from "@/components/home-community-cta";
+import { HomeFeaturedRebuildingReverence } from "@/components/home-featured-rebuilding-reverence";
+import { HomeManifesto } from "@/components/home-manifesto";
+import { HomeRecentWriting } from "@/components/home-recent-writing";
+import { HomeSectionWhoFor } from "@/components/home-section-who-for";
+import { HomeSidebar } from "@/components/home-sidebar";
+import { JsonLd } from "@/components/json-ld";
+import { CategoryEnum } from "@/enums";
+import prisma from "@/lib/prisma";
+import { localizedHref } from "@/lib/url";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export const revalidate = 3600;
 
+const HERO_IMAGE = "/ashley-hero-room.png";
+
 export default async function Home() {
   const currentLanguage = await getLocale();
+  const t = await getTranslations("Home");
 
-  const [recentPostOfBlog, recentPostOfRecipes, featuredBook] =
-    await Promise.all([
-      prisma.post.findFirst({
-        where: { published: true, category: { name: CategoryEnum.Blog } },
-        orderBy: { updatedAt: "desc" },
-        select: {
-          id: true,
-          title_en: true,
-          title_es: true,
-          content_en: true,
-          content_es: true,
-          image: true,
-          slug_en: true,
-        },
-      }),
-      prisma.post.findFirst({
-        where: { published: true, category: { name: CategoryEnum.Recipes } },
-        orderBy: { updatedAt: "desc" },
-        select: {
-          id: true,
-          title_en: true,
-          title_es: true,
-          content_en: true,
-          content_es: true,
-          image: true,
-          slug_en: true,
-        },
-      }),
-      prisma.book.findFirst({ orderBy: { createdAt: "desc" } }),
-    ]);
+  const [recentWriting, featuredBook] = await Promise.all([
+    prisma.post.findMany({
+      where: { published: true, category: { name: CategoryEnum.Blog } },
+      orderBy: { updatedAt: "desc" },
+      take: 3,
+      select: {
+        id: true,
+        title_en: true,
+        title_es: true,
+        content_en: true,
+        content_es: true,
+        image: true,
+        slug_en: true,
+      },
+    }),
+    prisma.book.findFirst({
+      where: {
+        OR: [
+          { slug_en: "rebuilding-reverence" },
+          { slug_es: "reconstruyendo-la-reverencia" },
+        ],
+      },
+    }),
+  ]);
 
-  const translatePost = (post: typeof recentPostOfBlog) =>
-    post
-      ? {
-          ...post,
-          content: currentLanguage === "en" ? post.content_en : post.content_es,
-          title: currentLanguage === "en" ? post.title_en : post.title_es,
-          slug: post.slug_en,
-        }
-      : null;
-
-  const blogPost = translatePost(recentPostOfBlog);
-  const recipePost = translatePost(recentPostOfRecipes);
-
-  const promotedBook: PromotedBookData | null = featuredBook
+  const promotedBook = featuredBook
     ? {
         title:
           currentLanguage === "en"
@@ -84,32 +64,47 @@ export default async function Home() {
           currentLanguage === "en"
             ? featuredBook.slug_en
             : featuredBook.slug_es,
-        locale: currentLanguage === "en" ? "en" : "es",
+        locale: currentLanguage === "en" ? ("en" as const) : ("es" as const),
       }
     : null;
 
-  const t = await getTranslations("Home");
+  const writingPosts = recentWriting.map((post) => ({
+    id: post.id,
+    title: currentLanguage === "en" ? post.title_en : post.title_es,
+    content: currentLanguage === "en" ? post.content_en : post.content_es,
+    image: post.image,
+    slug: post.slug_en,
+  }));
+
+  const primaryWorkbookPath =
+    currentLanguage === "en"
+      ? "/workbooks/rebuilding-reverence"
+      : "/workbooks/reconstruyendo-la-reverencia";
+  const primaryWorkbookHref = localizedHref(
+    currentLanguage,
+    primaryWorkbookPath,
+  );
+  const writingHref = localizedHref(currentLanguage, "/writing");
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Raíces & Returnings",
-    url: "https://www.raicesreturnings.com",
+    name: "Ashley Leon",
+    url: "https://ashleyleon.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.raicesreturnings.com/og-image.jpeg",
+      url: "https://ashleyleon.com/og-image.jpeg",
       width: 1200,
       height: 630,
     },
     sameAs: [
-      "https://www.instagram.com/raicesreturnings",
-      "https://www.tiktok.com/@raicesreturnings",
-      "https://www.youtube.com/@raicesreturnings",
-      "https://raicesreturnings.substack.com",
+      "https://www.instagram.com/ashleyleon",
+      "https://www.youtube.com/@ashleyleon",
+      "https://ashleyleon.substack.com",
     ],
     contactPoint: {
-      "@type": "schema.org/ContactPoint",
-      email: "support@raicesreturnings.com",
+      "@type": "ContactPoint",
+      email: "support@ashleyleon.com",
       contactType: "customer support",
     },
   };
@@ -117,162 +112,212 @@ export default async function Home() {
   const webSiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Raíces & Returnings",
-    url: "https://www.raicesreturnings.com",
+    name: "Ashley Leon",
+    url: "https://ashleyleon.com",
     inLanguage: ["en", "es"],
     publisher: {
       "@type": "Organization",
-      name: "Raíces & Returnings",
+      name: "Ashley Leon",
     },
   };
 
-  const sanitize = (html: string | null | undefined) =>
-    DOMPurify.sanitize(html ?? "", { ALLOWED_TAGS: [] });
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ashley Leon",
+    url: "https://ashleyleon.com",
+    jobTitle: "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
+    description:
+      "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
+    sameAs: [
+      "https://www.instagram.com/ashleyleon",
+      "https://www.youtube.com/@ashleyleon",
+      "https://ashleyleon.substack.com",
+    ],
+  };
+
+  const aiSummaryEn =
+    "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
+  const aiSummaryEs =
+    "Ashley Leon es escritora, facilitadora de talleres y coach holística certificada de cuerpo-mente. Crea recursos para personas navegando la deconstrucción de fe, la espiritualidad queer y la sanación después de la religión. Su oferta principal es Rebuilding Reverence, una guía práctica guiada de 30 días por $33. También facilita El Encuentro de Rebuilding Reverence, un taller grupal en vivo de 4 semanas con cupo de 15 personas, una comunidad online llamada El proceso y una segunda guía práctica, Queer & Called. Su trabajo es afirmativo, no doctrinal y basado en coaching, no terapia.";
+
+  const aiSummarySchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
+    url: "https://ashleyleon.com",
+    inLanguage: ["en", "es"],
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Ashley Leon",
+      url: "https://ashleyleon.com",
+    },
+    about: {
+      "@type": "Person",
+      name: "Ashley Leon",
+      description:
+        "Writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
+      knowsAbout: [
+        "Faith deconstruction",
+        "Queer spirituality",
+        "Emotional healing",
+        "Guided workbooks",
+        "Live group workshops",
+        "Online community",
+        "Rebuilding Reverence",
+      ],
+    },
+    description: aiSummaryEn,
+  };
 
   return (
     <>
       <JsonLd data={organizationSchema} />
       <JsonLd data={webSiteSchema} />
-      {/* Preload the LCP hero image at the breakpoints that mobile/desktop
-          will actually request. Saves a roundtrip on first load.
-          Matches the deviceSizes declared in next.config.ts. */}
+      <JsonLd data={personSchema} />
+      <JsonLd data={aiSummarySchema} />
+      <div className="sr-only" aria-hidden="false">
+        <p lang="en">{aiSummaryEn}</p>
+        <p lang="es">{aiSummaryEs}</p>
+      </div>
       <link
         rel="preload"
         as="image"
-        imageSrcSet={`${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=640&q=75 640w, ${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=1080&q=75 1080w, ${BASE_URL}/_next/image?url=%2Fhero-image.jpeg&w=1920&q=75 1920w`}
-        imageSizes="100vw"
-        fetchPriority="high"
+        imageSrcSet={`/_next/image?url=%2Fashley-hero-room.png&w=640&q=75 640w, /_next/image?url=%2Fashley-hero-room.png&w=750&q=75 750w, /_next/image?url=%2Fashley-hero-room.png&w=1080&q=75 1080w, /_next/image?url=%2Fashley-hero-room.png&w=1200&q=75 1200w, /_next/image?url=%2Fashley-hero-room.png&w=1920&q=75 1920w`}
+        imageSizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
       />
       <main className="bg-background text-foreground">
-        <div className="max-w-[1760px] mx-auto min-[1280px]:flex min-[1280px]:gap-10">
-        <div className="min-[1280px]:flex-1 min-[1280px]:min-w-0">
-        {/* ============================================================== */}
-        {/* HERO — Editorial split (text left / image right)               */}
-        {/* Responsive: mobile = stacked (image top, text below)           */}
-        {/*             md+    = split with image bleeding to right edge   */}
-        {/* Wave SVG transitions into the book section below               */}
-        {/* ============================================================== */}
-        <section
-          id="hero"
-          className="relative bg-background -mt-16 sm:-mt-[72px] md:-mt-20"
-        >
-          {/* ---------- Mobile / Tablet: stacked with full-bleed image ---------- */}
-          <div className="md:hidden relative w-full">
-            <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] overflow-hidden bg-sand">
-              <HeroImage
-                src="/hero-image.jpeg"
-                alt={t("alt-hero-main")}
-                sizes="100vw"
-                variant="clean"
-                objectPosition="object-[center_25%]"
-              />
-            </div>
-          </div>
-
-          {/* ---------- Desktop: text on left, image aligned to navbar right edge ---------- */}
-          <div className="hidden md:block relative z-10 py-16 md:py-20 lg:py-24">
-            <div className="relative max-w-[1760px] mx-auto min-h-[75vh] sm:min-h-[80vh] lg:min-h-[85vh]">
-              {/* Image — absolute, constrained to navbar's right edge */}
-                <div className="absolute right-0 -inset-y-[25px] w-[55%] lg:w-[58%]">
-                <div
-                  className="relative h-full w-full overflow-hidden bg-sand"
-                  style={{
-                    WebkitMaskImage:
-                      "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.18) 10%, rgba(0,0,0,0.5) 22%, rgba(0,0,0,0.82) 36%, black 50%, black 100%)",
-                    maskImage:
-                      "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.18) 10%, rgba(0,0,0,0.5) 22%, rgba(0,0,0,0.82) 36%, black 50%, black 100%)",
-                  }}
-                >
-                  <HeroImage
-                    src="/hero-image.jpeg"
-                    alt={t("alt-hero-main")}
-                    sizes="(min-width: 1536px) 1152px, 60vw"
-                    variant="clean"
-                    objectPosition="object-center"
-                  />
-                </div>
-              </div>
-
-              <div className="relative z-10 flex items-end min-h-[75vh] sm:min-h-[80vh] lg:min-h-[85vh] px-4 sm:px-6 md:px-8 lg:px-12 pb-16 md:pb-20 lg:pb-24">
-                <div className="grid grid-cols-12 items-center gap-8 lg:gap-12 w-full">
-                  <HeroContent
-                    className="col-span-12 md:col-span-6 lg:col-span-6 max-w-[30rem]"
-                    titleOne={t("hero-title-one")}
-                    titleHighlight={t("hero-title-highlight")}
-                    titleTwo={t("hero-title-two")}
-                    description={t("hero-description")}
-                    ctaPrimary={{ label: t("cta-journals"), href: "/ebook" }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile text content (renders below the full-bleed image).
-              z-30 keeps the CTA above the decorative wave SVG (z-20),
-              and the extra pb clears the curve so it never crosses the button. */}
-          <div className="md:hidden relative z-30 max-w-[1760px] mx-auto px-4 sm:px-6 pt-12 sm:pt-14 pb-20 sm:pb-28">
-            <HeroContent
-              spacing="tight"
-              titleOne={t("hero-title-one")}
-              titleHighlight={t("hero-title-highlight")}
-              titleTwo={t("hero-title-two")}
-              description={t("hero-description")}
-              ctaPrimary={{ label: t("cta-journals"), href: "/ebook" }}
-            />
-          </div>
-
-          {/* Soft bottom edge: a hill-shaped curve that bleeds into the
-              workbook section below. The horizontal gradient fades from
-              transparent on the left to the book color on the right so
-              the curve and the section read as one continuous shape. The
-              slight negative bottom overlap with the section eliminates
-              any subpixel seam from anti-aliasing. */}
-          <svg
-            className="absolute bottom-[-18px] sm:bottom-[-23px] md:bottom-[-28px] lg:bottom-[-34px] left-0 z-20 w-full h-[120px] sm:h-[150px] md:h-[215px] lg:h-[265px] pointer-events-none"
-            viewBox="0 0 1440 140"
-            preserveAspectRatio="none"
-            fill="url(#bookWaveGradient)"
-            aria-hidden="true"
-            style={{
-              maskImage:
-                "linear-gradient(to bottom, black 0%, black 85%, transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to bottom, black 0%, black 85%, transparent 100%)",
-            }}
-          >
-            <defs>
-              <linearGradient
-                id="bookWaveGradient"
-                x1="0"
-                y1="0"
-                x2="1440"
-                y2="0"
-                gradientUnits="userSpaceOnUse"
+        <div className="mx-auto max-w-[1760px] min-[1280px]:flex min-[1280px]:gap-10">
+          <div className="min-[1280px]:min-w-0 min-[1280px]:flex-1">
+            <section
+              id="hero"
+              className="relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)]"
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0 overflow-hidden"
               >
-                <stop offset="0%" stopColor="var(--book)" stopOpacity="0" />
-                <stop offset="10%" stopColor="var(--book)" stopOpacity="0.32" />
-                <stop offset="25%" stopColor="var(--book)" stopOpacity="0.62" />
-                <stop offset="35%" stopColor="var(--book)" stopOpacity="0.88" />
-                <stop offset="50%" stopColor="var(--book)" stopOpacity="1" />
-                <stop offset="100%" stopColor="var(--book)" stopOpacity="1" />
-              </linearGradient>
-            </defs>
-            <path d="M0,84 C360,12 1080,12 1440,84 L1440,140 L0,140 Z" />
-          </svg>
-        </section>
+                <Image
+                  src={HERO_IMAGE}
+                  alt=""
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
+                  className="object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
+                />
+              </div>
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,246,240,0.66)_0%,rgba(250,246,240,0.44)_42%,rgba(250,246,240,0.12)_68%,rgba(250,246,240,0)_100%)] md:hidden"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(250,246,240,0.94)_0%,rgba(250,246,240,0.84)_28%,rgba(250,246,240,0.24)_46%,rgba(250,246,240,0.02)_64%,rgba(250,246,240,0.08)_82%,rgba(250,246,240,0.42)_100%)] md:block"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(250,246,240,0.02)_0%,rgba(250,246,240,0.12)_42%,rgba(246,234,226,0.78)_100%)] md:bg-[radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.6),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.16),transparent_38%,rgba(235,215,204,0.18)_100%)]"
+              />
+              <div
+                aria-hidden
+                className="absolute bottom-0 right-[9%] hidden h-[82%] w-px bg-white/55 shadow-[18px_0_0_rgba(255,255,255,0.38),36px_0_0_rgba(255,255,255,0.24)] md:block"
+              />
 
-        {/* ============================================================== */}
-        {/* FEATURED BOOK                                                  */}
-        {/* ============================================================== */}
-        <section
-          id="book"
-          className="relative -mt-px"
-          style={{ "--bridge-color": "var(--book)" } as React.CSSProperties}
-        >
-          <div className="section-bleed-bridge" />
-          <div className="relative max-w-[1760px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-            <PromotedBook
+              <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-8 px-4 pb-20 pt-[28svh] min-[390px]:pt-[32svh] sm:px-6 sm:pb-28 sm:pt-[48vh] md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:px-8 md:py-8 lg:px-12 lg:py-10">
+                <div className="max-w-[34rem] pb-7 md:col-span-6 md:pb-0">
+                  <span className="editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-block">
+                    {t("hero-eyebrow")}
+                  </span>
+                  <h1 className="mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.65rem,12vw,3.1rem)] font-light leading-[0.92] tracking-normal text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3rem,4.1vw,4.35rem)] md:tracking-normal xl:text-[clamp(3.2rem,4vw,4.75rem)]">
+                    {t("hero-title-one")}
+                    <span className="block">
+                      {t("hero-title-two")}{" "}
+                      <em className="not-italic text-primary">
+                        {t("hero-title-highlight")}
+                      </em>
+                    </span>
+                  </h1>
+                  <span className="editorial-rule-tick mt-6 block sm:mt-8 md:mt-5" />
+                  <p className="editorial-lede mt-5 max-w-[34ch] text-[1rem] leading-[1.5] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-5 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.55]">
+                    {t("hero-description")}
+                  </p>
+                  <div className="mt-6 flex w-full max-w-[28rem] flex-col gap-2.5 sm:mt-9 sm:gap-4 md:mt-5 md:gap-2.5">
+                    <Link
+                      href={primaryWorkbookHref}
+                      className="group inline-flex min-h-10 items-center justify-between gap-3 bg-primary px-6 py-3 font-[family-name:var(--font-lora)] text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-colors duration-500 hover:bg-primary/90 sm:min-h-12 sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                    >
+                      <span>{t("cta-journals")}</span>
+                      <span
+                        aria-hidden
+                        className="transition-transform duration-500 group-hover:translate-x-1.5"
+                      >
+                        →
+                      </span>
+                    </Link>
+                    <Link
+                      href={writingHref}
+                      className="group inline-flex min-h-10 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/22 px-6 py-3 font-[family-name:var(--font-lora)] text-[0.7rem] font-bold uppercase tracking-[0.16em] text-foreground transition-colors duration-500 hover:border-primary hover:text-primary sm:min-h-12 sm:bg-transparent sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                    >
+                      <span>{t("cta-explore")}</span>
+                      <span
+                        aria-hidden
+                        className="transition-transform duration-500 group-hover:translate-x-1.5"
+                      >
+                        →
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <svg
+                className="pointer-events-none absolute bottom-[-46px] left-0 z-20 h-[100px] w-full sm:bottom-[-1px] sm:h-[150px] md:hidden"
+                viewBox="0 0 1440 180"
+                preserveAspectRatio="none"
+                fill="var(--book)"
+                aria-hidden="true"
+              >
+                <path d="M0,126 C290,48 628,20 990,72 C1168,98 1306,139 1440,152 L1440,180 L0,180 Z" />
+              </svg>
+            </section>
+
+            <HomeSectionWhoFor
+              eyebrow={t("who-eyebrow")}
+              title={t("who-title")}
+              quotes={[
+                { quote: t("who-quote-1"), label: t("who-label-1") },
+                { quote: t("who-quote-2"), label: t("who-label-2") },
+                { quote: t("who-quote-3"), label: t("who-label-3") },
+              ]}
+            />
+
+            <HomeManifesto
+              eyebrow={t("manifesto-eyebrow")}
+              title={t("manifesto-title")}
+              quote={t("paragraph-description-two")}
+              workLabel={t("manifesto-work-label")}
+              body={t("paragraph-description")}
+              closing={`${t("paragraph-description-three")} ${t(
+                "paragraph-description-four",
+              )}`}
+              pillars={[
+                {
+                  title: t("manifesto-pillar-1-title"),
+                  desc: t("manifesto-pillar-1-desc"),
+                },
+                {
+                  title: t("manifesto-pillar-2-title"),
+                  desc: t("manifesto-pillar-2-desc"),
+                },
+                {
+                  title: t("manifesto-pillar-3-title"),
+                  desc: t("manifesto-pillar-3-desc"),
+                },
+              ]}
+            />
+
+            <span id="book" className="sr-only" aria-hidden="true" />
+            <HomeFeaturedRebuildingReverence
               book={promotedBook}
               eyebrow={t("book-eyebrow")}
               tagline={t("book-tagline")}
@@ -281,383 +326,43 @@ export default async function Home() {
               blurbEnd={t("book-blurb-end")}
               cta={t("book-cta")}
               emptyState={t("book-empty")}
-              fallbackHref="/ebook"
-              className="bg-transparent w-full"
+            />
+
+            <span id="find" className="sr-only" aria-hidden="true" />
+            <HomeCircleCta
+              eyebrow={t("circle-eyebrow")}
+              title={t("circle-title")}
+              description={t("circle-description")}
+              cta={t("circle-cta")}
+            />
+
+            <HomeCommunityCta
+              eyebrow={t("community-eyebrow")}
+              title={t("community-title")}
+              description={t("community-description")}
+              cta={t("community-cta")}
+            />
+
+            <span id="fresh" className="sr-only" aria-hidden="true" />
+            <HomeRecentWriting
+              eyebrow={t("fresh-eyebrow")}
+              title={t("fresh-title-two")}
+              description={t("paragraph-fresh")}
+              posts={writingPosts}
+              empty={t("writing-empty")}
+              readMore={t("btn-fresh")}
+              viewAll={t("fresh-view-all")}
             />
           </div>
-        </section>
 
-        {/* ============================================================== */}
-        {/* MANIFESTO — Quiet, generous, a single column of intention      */}
-        {/* ============================================================== */}
-        <section
-          id="manifesto"
-          className="relative editorial-breathe"
-          style={{ "--bridge-color": "var(--paper)" } as React.CSSProperties}
-        >
-          <div className="section-bleed-bridge" />
-          <div className="relative max-w-[1760px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-            <div className="editorial-container-narrow">
-            {/* Section header */}
-            <FadeIn>
-              <div className="grid grid-cols-12 gap-6 lg:gap-10 items-start mb-14 lg:mb-20">
-                <div className="col-span-12 lg:col-span-2">
-                  <span
-                    aria-hidden
-                    className="editorial-numeral block text-[7rem] sm:text-[9rem] lg:text-[10rem] leading-[0.8]"
-                  >
-                    01
-                  </span>
-                </div>
-                <div className="col-span-12 lg:col-span-10 lg:pt-6">
-                  <span className="editorial-eyebrow">
-                    {t("manifesto-eyebrow")}
-                  </span>
-                  <h2 className="editorial-display-m mt-5 text-foreground text-balance">
-                    {t("manifesto-title")}
-                  </h2>
-                  <span className="editorial-rule-tick block mt-8 lg:mt-10" />
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Pull quote */}
-            <FadeIn delay={0.15}>
-              <blockquote className="editorial-pullquote text-balance">
-                <span className="text-primary">“</span>
-                {t("paragraph-description-two")}
-                <span className="text-primary">”</span>
-              </blockquote>
-            </FadeIn>
-
-            {/* Pillar grid */}
-            <FadeIn delay={0.25}>
-              <div className="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
-                {[
-                  {
-                    icon: BookOpen,
-                    title: t("manifesto-pillar-1-title"),
-                    desc: t("manifesto-pillar-1-desc"),
-                  },
-                  {
-                    icon: Leaf,
-                    title: t("manifesto-pillar-2-title"),
-                    desc: t("manifesto-pillar-2-desc"),
-                  },
-                  {
-                    icon: Heart,
-                    title: t("manifesto-pillar-3-title"),
-                    desc: t("manifesto-pillar-3-desc"),
-                  },
-                ].map(({ icon: Icon, title, desc }) => (
-                  <div key={title} className="flex items-start gap-5">
-                    <span
-                      aria-hidden
-                      className="shrink-0 flex items-center justify-center w-11 h-11 rounded-full"
-                      style={{
-                        background:
-                          "color-mix(in oklab, var(--primary) 18%, transparent)",
-                        color: "var(--primary)",
-                      }}
-                    >
-                      <Icon className="w-[1.1rem] h-[1.1rem]" strokeWidth={1.5} />
-                    </span>
-                    <div>
-                      <span className="editorial-eyebrow-strong block">
-                        {title}
-                      </span>
-                      <p className="editorial-body mt-4 text-pretty">
-                        {desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
-
-            {/* Divider */}
-            <FadeIn delay={0.35}>
-              <span className="editorial-rule block mt-16 lg:mt-24" />
-            </FadeIn>
-
-            {/* The work */}
-            <FadeIn delay={0.4}>
-              <div className="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
-                <div className="lg:col-span-2">
-                  <span className="editorial-eyebrow">The work</span>
-                </div>
-                <div className="lg:col-span-9 space-y-6">
-                  <p className="editorial-body text-pretty">
-                    {t("paragraph-description")}
-                  </p>
-                  <p className="editorial-body text-pretty italic font-light text-foreground">
-                    {t("paragraph-description-three")}{" "}
-                    {t("paragraph-description-four")}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-          </div>
-        </section>
-
-        {/* ============================================================== */}
-        {/* WHAT YOU'LL FIND — Editorial typographic list                  */}
-        {/* ============================================================== */}
-        <section
-          id="find"
-          className="relative editorial-breathe"
-          style={{ "--bridge-color": "var(--sand)" } as React.CSSProperties}
-        >
-          <div className="section-bleed-bridge" />
-          <div className="relative max-w-[1760px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-            <div className="editorial-container">
-            <FadeIn>
-              <div className="grid grid-cols-12 gap-6 lg:gap-10 items-start mb-16 lg:mb-24">
-                <div className="col-span-12 lg:col-span-2">
-                  <span
-                    aria-hidden
-                    className="editorial-numeral block text-[7rem] sm:text-[9rem] lg:text-[10rem] leading-[0.8]"
-                  >
-                    02
-                  </span>
-                </div>
-                <div className="col-span-12 lg:col-span-6 lg:pt-6">
-                  <span className="editorial-eyebrow">{t("find-label")}</span>
-                  <h2 className="editorial-display-m mt-5 text-foreground text-balance">
-                    {t("find-title")}
-                  </h2>
-                </div>
-                <div className="col-span-12 lg:col-span-4 lg:pt-10">
-                  <p className="editorial-body text-pretty">
-                    {t("find-blurb")}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.15}>
-              <ol className="editorial-list max-w-4xl">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <li key={i} className="editorial-list-item group">
-                    <span aria-hidden className="editorial-list-num">
-                      0{i}
-                    </span>
-                    <div>
-                      <h3 className="editorial-list-title">
-                        {t(`find-item-${i}`)}
-                      </h3>
-                      <p className="editorial-list-desc">
-                        {t(`find-item-${i}-desc`)}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </FadeIn>
-
-            <FadeIn delay={0.25}>
-              <div className="mt-16 lg:mt-20 flex flex-wrap items-center gap-x-10 gap-y-5">
-                <a
-                  href="https://substack.com/@ashleyleon?utm_campaign=profile&utm_medium=profile-page"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="editorial-link"
-                >
-                  {t("cta-explore")}
-                  <span className="editorial-link-arrow">→</span>
-                </a>
-                <Link href="/ebook" className="editorial-link">
-                  {t("cta-journals")}
-                  <span className="editorial-link-arrow">→</span>
-                </Link>
-                <a
-                  href="https://www.youtube.com/@WhispersfortheInBetween"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="editorial-link"
-                >
-                  {t("cta-youtube")}
-                  <span className="editorial-link-arrow">→</span>
-                </a>
-              </div>
-            </FadeIn>
-          </div>
-          </div>
-        </section>
-
-        {/* ============================================================== */}
-        {/* FRESH FROM — Two latest offerings, asymmetric & sticky         */}
-        {/* ============================================================== */}
-        <section
-          id="fresh"
-          className="relative editorial-breathe"
-          style={{ "--bridge-color": "var(--background)" } as React.CSSProperties}
-        >
-          <div className="section-bleed-bridge" />
-          <div className="relative max-w-[1760px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
-            <div className="editorial-container">
-            <FadeIn>
-              <div className="grid grid-cols-12 gap-6 lg:gap-10 items-start pb-10 lg:pb-14 mb-20 lg:mb-28 border-b border-foreground/15">
-                <div className="col-span-12 lg:col-span-2">
-                  <span
-                    aria-hidden
-                    className="editorial-numeral block text-[7rem] sm:text-[9rem] lg:text-[10rem] leading-[0.8]"
-                  >
-                    03
-                  </span>
-                </div>
-                <div className="col-span-12 lg:col-span-6 lg:pt-6">
-                  <span className="editorial-eyebrow">
-                    {t("fresh-eyebrow")}
-                  </span>
-                  <h2 className="editorial-display-m mt-5 text-foreground text-balance">
-                    {t("fresh-title-two")}
-                  </h2>
-                  <p className="editorial-body mt-6 text-sm lg:text-base max-w-md text-pretty">
-                    {t("fresh-title-one")}
-                  </p>
-                </div>
-                <div className="col-span-12 lg:col-span-4 lg:pt-10">
-                  <p className="editorial-body text-pretty">
-                    {t("paragraph-fresh")}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-
-            {!blogPost || !recipePost ? (
-              <NoPostsView />
-            ) : (
-              <div className="space-y-28 lg:space-y-40">
-                {/* Post 01 — image left, text right */}
-                <article
-                  key={blogPost.id}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 group"
-                >
-                  <FadeIn className="lg:col-span-7 relative">
-                    <div
-                      className="relative w-full overflow-hidden bg-sand"
-                      style={{ aspectRatio: "4/5" }}
-                    >
-                      <Image
-                        src={blogPost.image || "/placeholder.jpg"}
-                        alt={blogPost.title}
-                        fill
-                        sizes="(min-width: 1024px) 58vw, 100vw"
-                        className="object-cover transition-transform duration-[2s] ease-[var(--ease-breath)] group-hover:scale-[1.04]"
-                      />
-                    </div>
-                  </FadeIn>
-
-                  <div className="lg:col-span-5 relative h-full">
-                    <div className="sticky top-20 md:top-24 h-fit flex flex-col text-left items-start">
-                      <FadeIn>
-                        <div className="flex items-center gap-4 mb-7">
-                          <span className="editorial-list-num">01</span>
-                          <span className="editorial-eyebrow-strong">
-                            {t("fresh-blog-label")}
-                          </span>
-                        </div>
-                        <h3 className="editorial-display-s text-foreground text-balance">
-                          <Link
-                            href={`/${CategoryEnum.Blog}/${blogPost.slug}`}
-                            className="transition-colors duration-700 hover:text-primary"
-                          >
-                            {blogPost.title}
-                          </Link>
-                        </h3>
-                        <p className="editorial-body mt-6 text-pretty line-clamp-4">
-                          {sanitize(blogPost.content)}
-                        </p>
-                        <Link
-                          href={`/${CategoryEnum.Blog}/${blogPost.slug}`}
-                          className="editorial-link mt-8"
-                        >
-                          {t("btn-fresh")}
-                          <span className="editorial-link-arrow">→</span>
-                        </Link>
-                      </FadeIn>
-                    </div>
-                  </div>
-                </article>
-
-                {/* Post 02 — text left, image right */}
-                <article
-                  key={recipePost.id}
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 group"
-                >
-                  <div className="lg:col-span-5 lg:order-1 relative h-full">
-                    <div className="sticky top-20 md:top-24 h-fit flex flex-col text-left items-start">
-                      <FadeIn>
-                        <div className="flex items-center gap-4 mb-7">
-                          <span className="editorial-list-num">02</span>
-                          <span className="editorial-eyebrow-strong">
-                            {t("fresh-recipe-label")}
-                          </span>
-                        </div>
-                        <h3 className="editorial-display-s text-foreground text-balance">
-                          <Link
-                            href={`/${CategoryEnum.Recipes}/${recipePost.slug}`}
-                            className="transition-colors duration-700 hover:text-primary"
-                          >
-                            {recipePost.title}
-                          </Link>
-                        </h3>
-                        <p className="editorial-body mt-6 text-pretty line-clamp-4">
-                          {sanitize(recipePost.content)}
-                        </p>
-                        <Link
-                          href={`/${CategoryEnum.Recipes}/${recipePost.slug}`}
-                          className="editorial-link mt-8"
-                        >
-                          {t("btn-fresh")}
-                          <span className="editorial-link-arrow">→</span>
-                        </Link>
-                      </FadeIn>
-                    </div>
-                  </div>
-
-                  <FadeIn className="lg:col-span-7 lg:order-2 relative">
-                    <div
-                      className="relative w-full overflow-hidden bg-sand"
-                      style={{ aspectRatio: "4/5" }}
-                    >
-                      <Image
-                        src={recipePost.image || "/placeholder.jpg"}
-                        alt={recipePost.title}
-                        fill
-                        sizes="(min-width: 1024px) 58vw, 100vw"
-                        className="object-cover transition-transform duration-[2s] ease-[var(--ease-breath)] group-hover:scale-[1.04]"
-                      />
-                    </div>
-                  </FadeIn>
-                </article>
-              </div>
-            )}
-
-            <FadeIn delay={0.15} className="mt-24 lg:mt-32 text-center">
-              <Link
-                href={`/${CategoryEnum.Blog}`}
-                className="editorial-link mx-auto"
-              >
-                {t("fresh-view-all")}
-                <span className="editorial-link-arrow">→</span>
-              </Link>
-            </FadeIn>
-          </div>
-          </div>
-        </section>
-
-        </div>
-        <aside
-          aria-label="Page navigation"
-          className="hidden lg:block w-[260px] shrink-0 pr-4 sm:pr-6 md:pr-8 lg:pr-10"
-        >
-          <div className="sticky top-[5rem] md:top-[5.5rem] pt-[7.5rem] pb-12">
-            <HomeSidebar />
-          </div>
-        </aside>
+          <aside
+            aria-label="Page navigation"
+            className="hidden w-[260px] shrink-0 pr-4 sm:pr-6 md:pr-8 min-[1280px]:block min-[1280px]:pr-10"
+          >
+            <div className="sticky top-[5rem] pb-12 pt-[7.5rem] md:top-[5.5rem]">
+              <HomeSidebar />
+            </div>
+          </aside>
         </div>
       </main>
     </>

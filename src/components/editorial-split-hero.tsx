@@ -103,7 +103,7 @@ export function EditorialSplitHero({
         <div className="flex items-center gap-6 border-b border-foreground/15 pb-5 mb-10 2xl:mb-14">
           <span className="h-px flex-1 bg-foreground/15" />
           <span className="font-sans text-[10px] uppercase tracking-[0.4em] text-foreground/60 whitespace-nowrap">
-            Raíces &amp; Returnings Editorial — Nº 01
+            Ashley Leon Editorial — Nº 01
           </span>
           <span className="h-px flex-1 bg-foreground/15" />
         </div>
@@ -158,7 +158,7 @@ export function EditorialSplitHero({
                 <FilmGrain opacity={0.09} />
               </div>
               <span className="block text-center font-sans text-[9px] uppercase tracking-[0.3em] text-foreground/55 pb-4">
-                Fig. 01 — Oly &amp; Ashley
+                Fig. 01 — Ashley Leon
               </span>
             </motion.div>
           </div>

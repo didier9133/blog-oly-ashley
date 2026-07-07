@@ -16,10 +16,20 @@ import {
 } from "./checkout-billing-details-form";
 import { Separator } from "./ui/separator";
 import type { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { localizedHref } from "@/lib/url";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({
+  paymentIntentId,
+  successPath = "/workbooks/success",
+}: {
+  paymentIntentId?: string | null;
+  successPath?: string;
+}) {
   const t = useTranslations("Checkout");
+  const locale = useLocale();
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,13 +52,13 @@ export default function CheckoutForm() {
   const paymentElementOptions = useMemo<StripePaymentElementOptions>(
     () => ({
       layout: "tabs",
-      business: { name: "Raíces & Returnings" },
+      business: { name: "Ashley Leon" },
       fields: {
         billingDetails: {
           name: "never",
           email: "never",
           phone: "never",
-          address: "never",
+          address: "auto",
         },
       },
       wallets: {
@@ -60,25 +70,63 @@ export default function CheckoutForm() {
     [],
   );
 
+  const recordCheckoutEvent = async (
+    eventType: string,
+    values: BillingDetailsFormValues,
+    paymentIntent?: {
+      id?: string | null;
+      status?: string | null;
+      amount?: number | null;
+      currency?: string | null;
+    },
+    failure?: {
+      code?: string | null;
+      message?: string | null;
+    },
+  ) => {
+    try {
+      await fetch("/api/checkout/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventType,
+          stripePaymentIntent: paymentIntent?.id ?? paymentIntentId,
+          customerEmail: values.email.trim(),
+          customerName: values.name.trim(),
+          amount: paymentIntent?.amount,
+          currency: paymentIntent?.currency,
+          status: paymentIntent?.status,
+          failureCode: failure?.code,
+          failureMessage: failure?.message,
+        }),
+      });
+    } catch (error) {
+      console.error("Error recording checkout event:", error);
+    }
+  };
+
   const handleSubmit = async (values: BillingDetailsFormValues) => {
     if (!stripe || !elements) return;
 
     try {
       setIsSubmitting(true);
 
-      const localeSegment = window.location.pathname.split("/")[1];
-      const successPath = localeSegment
-        ? `/${localeSegment}/ebook/success`
-        : "/ebook/success";
-      const returnUrl = `${window.location.origin}${successPath}`;
+      const returnUrl = `${window.location.origin}${localizedHref(locale, successPath)}`;
       const { error: submitError } = await elements.submit();
       if (submitError) {
+        await recordCheckoutEvent("checkout.submit_failed", values, undefined, {
+          code: submitError.code,
+          message: submitError.message,
+        });
         toast.error(submitError.message ?? t("error-submit-fields"));
         return;
       }
 
-      const { error } = await stripe.confirmPayment({
+      await recordCheckoutEvent("checkout.confirm_started", values);
+
+      const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
+        redirect: "if_required",
         confirmParams: {
           return_url: returnUrl,
           payment_method_data: {
@@ -92,21 +140,95 @@ export default function CheckoutForm() {
       });
 
       if (error) {
+        await recordCheckoutEvent(
+          "checkout.confirm_failed",
+          values,
+          "payment_intent" in error ? error.payment_intent : undefined,
+          {
+            code: error.code,
+            message: error.message,
+          },
+        );
         toast.error(error.message ?? t("error-payment-failed"));
+        return;
+      }
+
+      if (paymentIntent?.status === "succeeded") {
+        await recordCheckoutEvent(
+          "checkout.confirm_succeeded",
+          values,
+          paymentIntent,
+        );
+        router.push(
+          `${localizedHref(locale, successPath)}?payment_intent=${paymentIntent.id}&redirect_status=succeeded`,
+        );
+        return;
+      }
+
+      if (paymentIntent) {
+        await recordCheckoutEvent(
+          `checkout.confirm_${paymentIntent.status}`,
+          values,
+          paymentIntent,
+        );
+        router.push(
+          `${localizedHref(locale, successPath)}?payment_intent=${paymentIntent.id}&redirect_status=${paymentIntent.status}`,
+        );
+        return;
       }
     } catch (error) {
       console.error("Error al confirmar el pago:", error);
+      await recordCheckoutEvent("checkout.confirm_exception", values, undefined, {
+        message: error instanceof Error ? error.message : String(error),
+      });
       toast.error(t("error-processing"));
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleFormSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    const formElement = event.currentTarget;
+    const getInputValue = (name: string) =>
+      (
+        formElement.querySelector<HTMLInputElement>(`input[name="${name}"]`)
+          ?.value ?? ""
+      ).trim();
+
+    const parsed = billingDetailsSchema.safeParse({
+      name: getInputValue("name"),
+      email: getInputValue("email"),
+      phone: getInputValue("phone"),
+    });
+
+    if (!parsed.success) {
+      form.clearErrors();
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0];
+        if (field === "name" || field === "email" || field === "phone") {
+          form.setError(field, {
+            type: "manual",
+            message: issue.message,
+          });
+        }
+      }
+      return;
+    }
+
+    form.clearErrors();
+    form.reset(parsed.data, { keepValues: true });
+    await handleSubmit(parsed.data);
+  };
+
   return (
     <div>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(handleSubmit)}
+          onSubmit={handleFormSubmit}
           noValidate
           aria-busy={!isCheckoutReady}
           className={cn(

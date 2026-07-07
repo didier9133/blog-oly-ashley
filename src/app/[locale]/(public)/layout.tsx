@@ -11,7 +11,6 @@ export default function PublicLayout({
 }) {
   return (
     <SidebarProvider defaultOpen={false}>
-      <ScrollToTop />
       <PublicSidebar
         side="right"
         className="font-[family-name:var(--font-cormorant-garamond)]"
@@ -19,6 +18,7 @@ export default function PublicLayout({
       <SidebarInset>
         <PublicHeader />
         {children}
+        <ScrollToTop />
         <Footer />
       </SidebarInset>
     </SidebarProvider>

@@ -3,8 +3,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { HamburgerIcon } from "lucide-react";
-
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -255,6 +253,7 @@ function Sidebar({
 
 function SidebarTrigger({
   className,
+  children,
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
@@ -265,17 +264,33 @@ function SidebarTrigger({
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       variant="ghost"
-      size="icon"
-      className={cn("size-10", className)}
+      size="sm"
+      className={cn(
+        "h-9 w-9 rounded-none border border-foreground/15 bg-transparent p-0 text-foreground/75 hover:border-foreground/35 hover:bg-transparent hover:text-foreground focus-visible:ring-1 focus-visible:ring-foreground/30",
+        className,
+      )}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <HamburgerIcon />
+      {children ?? <SidebarMenuMark />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
+  );
+}
+
+function SidebarMenuMark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-4 w-5 flex-col justify-between"
+    >
+      <span className="block h-px w-full bg-current" />
+      <span className="block h-px w-full bg-current" />
+      <span className="block h-px w-full bg-current" />
+    </span>
   );
 }
 

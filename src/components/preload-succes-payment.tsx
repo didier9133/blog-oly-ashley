@@ -12,10 +12,12 @@ import AutoReload from "./auto-reload";
 
 export default function PreloadSuccessPayment({
   customerEmail,
+  namespace = "WorkbooksSuccess",
 }: {
   customerEmail?: string;
+  namespace?: string;
 }) {
-  const t = useTranslations("EbookSuccess");
+  const t = useTranslations(namespace);
 
   return (
     <>

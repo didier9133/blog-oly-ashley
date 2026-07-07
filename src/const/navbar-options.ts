@@ -6,38 +6,33 @@ export const data = {
       isActive: false,
     },
     {
-      title: "About Us",
+      title: "Writing",
+      url: "/writing",
+      isActive: false,
+    },
+    {
+      title: "Workbooks",
+      url: "/workbooks",
+      isActive: false,
+    },
+    {
+      title: "The Circle",
+      url: "/circle",
+      isActive: false,
+    },
+    {
+      title: "Community",
+      url: "/community",
+      isActive: false,
+    },
+    {
+      title: "About",
       url: "/about",
-      isActive: false,
-    },
-    {
-      title: "Blog",
-      url: "/blog",
-      isActive: false,
-    },
-    {
-      title: "Recipes",
-      url: "/recipes",
-      isActive: false,
-    },
-    // {
-    //   title: "Our Love",
-    //   url: "/our-love",
-    //   isActive: false,
-    // },
-    {
-      title: "Ebooks",
-      url: "/ebook",
       isActive: false,
     },
     {
       title: "Contact",
       url: "/contact",
-      isActive: false,
-    },
-    {
-      title: "Subscribe",
-      url: "/#newsletter",
       isActive: false,
     },
   ],
@@ -48,38 +43,33 @@ export const data = {
       isActive: false,
     },
     {
-      title: "About Us",
+      title: "Writing",
+      url: "/writing",
+      isActive: false,
+    },
+    {
+      title: "Workbooks",
+      url: "/workbooks",
+      isActive: false,
+    },
+    {
+      title: "The Circle",
+      url: "/circle",
+      isActive: false,
+    },
+    {
+      title: "Community",
+      url: "/community",
+      isActive: false,
+    },
+    {
+      title: "About",
       url: "/about",
-      isActive: false,
-    },
-    {
-      title: "Blog",
-      url: "/blog",
-      isActive: false,
-    },
-    {
-      title: "Recipes",
-      url: "/recipes",
-      isActive: false,
-    },
-    // {
-    //   title: "Our Love",
-    //   url: "/our-love",
-    //   isActive: false,
-    // },
-    {
-      title: "Ebooks",
-      url: "/ebook",
       isActive: false,
     },
     {
       title: "Contact",
       url: "/contact",
-      isActive: false,
-    },
-    {
-      title: "Subscribe",
-      url: "/#newsletter",
       isActive: false,
     },
     {

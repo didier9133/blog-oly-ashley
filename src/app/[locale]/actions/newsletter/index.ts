@@ -54,7 +54,7 @@ export async function subscribeToNewsletter(
   }
 
   await resend.emails.send({
-    from: `Raices & Returning <notify@${emailDomain}>`,
+    from: `Ashley Leon <notify@${emailDomain}>`,
     to: NOTIFICATION_EMAIL,
     subject: `📰 Nueva suscripción pendiente: ${normalizedEmail}`,
     react: OwnerNewsletterNotificationTemplate({

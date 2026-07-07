@@ -14,12 +14,12 @@ export async function generateMetadata({
   return {
     title:
       locale === "es"
-        ? "Política de Privacidad | Raíces & Returnings"
-        : "Privacy Policy | Raíces & Returnings",
+        ? "Política de Privacidad | Ashley Leon"
+        : "Privacy Policy | Ashley Leon",
     description:
       locale === "es"
-        ? "Política de privacidad de Raíces & Returnings."
-        : "Privacy policy for Raíces & Returnings.",
+        ? "Política de privacidad de Ashley Leon."
+        : "Privacy policy for Ashley Leon.",
     alternates: {
       canonical: fullUrl(locale, "/privacy"),
       languages: {

@@ -40,7 +40,7 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
       ? isHashMatch
       : isHome
         ? pathname === "/"
-        : pathname.startsWith(url);
+        : (pathname ?? "/").startsWith(url);
 
   const resolvedHref = useMemo(() => {
     if (external) return url;

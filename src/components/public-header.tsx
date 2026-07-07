@@ -10,10 +10,10 @@ export function PublicHeader() {
         <Link
           href="/"
           className="flex-shrink-0 min-w-0 md:hidden"
-          aria-label="Raíces & Returnings — Inicio"
+          aria-label="Ashley Leon — Inicio"
         >
           <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] sm:text-[1.75rem] font-medium text-foreground tracking-tighter leading-none whitespace-nowrap">
-            Raíces <span className="italic">&amp;</span> Returnings
+            Ashley Leon
           </span>
         </Link>
 
@@ -25,7 +25,7 @@ export function PublicHeader() {
           <LanguageSelector />
           <SidebarTrigger
             aria-label="Abrir menú"
-            className="md:hidden -mr-1 h-9 w-9 [&_svg]:size-5"
+            className="md:hidden -mr-1"
           />
         </div>
       </nav>

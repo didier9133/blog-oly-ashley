@@ -1,161 +1,91 @@
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { sendDownloadEmail } from "@/app/[locale]/actions/emails/send-download-email";
+import type Stripe from "stripe";
 import prisma from "@/lib/prisma";
-import { createDownloadUrl } from "@/app/[locale]/actions/files";
+import {
+  chargeEventData,
+  paymentIntentEventData,
+  recordPaymentEvent,
+} from "@/lib/checkout-events";
+import { finalizePaidPaymentIntent } from "@/lib/checkout-purchases";
 
-const DICTIONARY = {
-  ["Rebuilding_Reverence.pdf"]: "🕊 Rebuilding Reverence",
-  ["Reconstruyendo_Reverencia.pdf"]: "🕊 Reconstruyendo La Reverencia",
-  ["Queer_y_Llamados.pdf"]: "🌈 Queer y Llamados",
-  ["Queer_Called.pdf"]: "🌈 Queer and Called",
-};
-// Webhook para manejar eventos de Stripe
 export async function POST(req: NextRequest) {
   try {
     const body = await req.text();
     const headerList = await headers();
-    const signature = headerList.get("stripe-signature")!;
+    const signature = headerList.get("stripe-signature");
+
+    if (!signature) {
+      return NextResponse.json(
+        { error: "Missing Stripe signature" },
+        { status: 400 },
+      );
+    }
 
     if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
       throw new Error("Missing Stripe Webhook Signing Secret");
     }
+
     const event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SIGNING_SECRET
+      process.env.STRIPE_WEBHOOK_SIGNING_SECRET,
     );
-    // Procesar pago completado exitosamente
-    if (event.type === "charge.updated") {
-      const session = event.data.object;
-      const stripeSessionId =
-        session.metadata?.checkoutSessionId ??
-        session.metadata?.sessionId ??
-        session.id;
 
-      if (!stripeSessionId) {
-        console.error("❌ No se encontró stripeSessionId en el evento");
-        return NextResponse.json(
-          { error: "Missing stripeSessionId" },
-          { status: 400 }
+    if (event.type.startsWith("payment_intent.")) {
+      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+
+      await recordPaymentEvent(
+        paymentIntentEventData(event.type, paymentIntent, event.id),
+      );
+
+      if (event.type === "payment_intent.succeeded") {
+        const expandedPaymentIntent = await stripe.paymentIntents.retrieve(
+          paymentIntent.id,
+          { expand: ["latest_charge"] },
         );
+        await finalizePaidPaymentIntent(expandedPaymentIntent);
       }
+    }
 
-      // Obtener información del producto desde metadata
-      const rawProductName = session.metadata.productName;
-      const productName =
-        DICTIONARY[rawProductName as keyof typeof DICTIONARY] || rawProductName;
-      const productType = session.metadata.productType;
-      const s3Key = session.metadata.s3Key;
-      const language = (session.metadata.language || "es") as "en" | "es";
+    if (event.type.startsWith("charge.")) {
+      const charge = event.data.object as Stripe.Charge;
 
-      if (!s3Key || !productName || !productType || !language) {
-        console.error("❌ Faltan datos en metadata");
-        return NextResponse.json(
-          { error: "Missing data in metadata" },
-          { status: 400 }
-        );
-      }
+      await recordPaymentEvent(chargeEventData(event.type, charge, event.id));
 
       if (
-        !session.billing_details.email ||
-        !session.billing_details.name ||
-        !session.billing_details.address
+        (event.type === "charge.updated" || event.type === "charge.succeeded") &&
+        charge.paid &&
+        charge.payment_intent
       ) {
-        console.error("❌ Faltan datos en el billing details");
-        return NextResponse.json(
-          { error: "Missing billing details email" },
-          { status: 400 }
+        const paymentIntentId =
+          typeof charge.payment_intent === "string"
+            ? charge.payment_intent
+            : charge.payment_intent.id;
+        const paymentIntent = await stripe.paymentIntents.retrieve(
+          paymentIntentId,
+          { expand: ["latest_charge"] },
         );
+        await finalizePaidPaymentIntent(paymentIntent);
       }
 
-      const purchase = await prisma.purchase.upsert({
-        where: { stripeSessionId },
-        update: {
-          stripePaymentIntent: session.payment_intent as string,
-          customerEmail: session.billing_details.email,
-          customerName: session.billing_details.name,
-          amount: session.amount_captured ?? undefined,
-          currency: session.currency ?? undefined,
-          productName,
-          productType,
-          s3Key,
-          is_paid: session.paid ?? undefined,
-        },
-        create: {
-          stripeSessionId,
-          stripePaymentIntent: session.payment_intent as string,
-          customerEmail: session.billing_details.email,
-          customerName: session.billing_details.name,
-          amount: session.amount_captured || 0,
-          currency: session.currency || "usd",
-          productName,
-          productType,
-          s3Key,
-          is_paid: session.paid || false,
-        },
-      });
-      const downloadLink = await createDownloadUrl(
-        purchase.s3Key,
-        purchase.productName
-      );
-      // Enviar email con link de descarga
-      try {
-        if (!purchase.emailSent) {
-          console.log({
-            language,
-            productName,
-          });
-
-          await sendDownloadEmail({
-            email: purchase.customerEmail,
-            customerName: purchase.customerName || "Cliente",
-            productName: purchase.productName,
-            downloadLink,
-            locale: language,
-          });
-          await prisma.purchase.update({
-            where: { id: purchase.id },
-            data: { emailSent: true },
-          });
-        } else {
-          console.log(
-            "ℹ️ Email ya había sido enviado para la sesión:",
-            purchase.stripeSessionId,
-            purchase.productName
-          );
-        }
-      } catch (emailError) {
-        console.error("❌ Error enviando email:", emailError);
-        // No fallar el webhook por error de email
+      if (event.type === "charge.refunded") {
+        await prisma.purchase.updateMany({
+          where: {
+            stripePaymentIntent:
+              typeof charge.payment_intent === "string"
+                ? charge.payment_intent
+                : charge.payment_intent?.id,
+          },
+          data: { is_paid: false },
+        });
       }
     }
-    // Manejar reembolsos
-    if (event.type === "charge.refunded") {
-      const charge = event.data.object;
 
-      await prisma.purchase.updateMany({
-        where: { stripePaymentIntent: charge.payment_intent as string },
-        data: { is_paid: false },
-      });
-
-      console.log("✅ Compra marcada como reembolsada");
-    }
-
-    return NextResponse.json(
-      { received: true },
-      {
-        status: 200,
-      }
-    );
+    return NextResponse.json({ received: true }, { status: 200 });
   } catch (error) {
     console.error("Webhook Error:", error);
-    return NextResponse.json(
-      { error: "Webhook Error" },
-      {
-        status: 400,
-      }
-    );
+    return NextResponse.json({ error: "Webhook Error" }, { status: 400 });
   }
 }

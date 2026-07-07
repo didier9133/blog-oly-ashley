@@ -33,7 +33,7 @@ export async function sendDownloadEmail({
     );
 
     const { data, error } = await resend.emails.send({
-      from: `Raíces & Returnings <noreply@${emailDomain}>`, // Ajusta tu dominio
+      from: `Ashley Leon <noreply@${emailDomain}>`, // Ajusta tu dominio
       to: [email],
       subject: `${locale === "es" ? `Tu ${productName} PDF + Acceso A La Comunidad está listo` : `Your ${productName} PDF + Community Access is Ready`}`,
       html: emailHtml,

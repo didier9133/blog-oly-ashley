@@ -14,12 +14,12 @@ export async function generateMetadata({
   return {
     title:
       locale === "es"
-        ? "Términos y Condiciones | Raíces & Returnings"
-        : "Terms of Service | Raíces & Returnings",
+        ? "Términos y Condiciones | Ashley Leon"
+        : "Terms of Service | Ashley Leon",
     description:
       locale === "es"
-        ? "Términos y condiciones de Raíces & Returnings."
-        : "Terms of service for Raíces & Returnings.",
+        ? "Términos y condiciones de Ashley Leon."
+        : "Terms of service for Ashley Leon.",
     alternates: {
       canonical: fullUrl(locale, "/terms"),
       languages: {

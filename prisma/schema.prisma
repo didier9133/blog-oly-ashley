@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/app/generated/prisma"
 }
 
 datasource db {
@@ -100,6 +99,31 @@ model Purchase {
 
   @@index([stripeSessionId])
   @@index([customerEmail])
+}
+
+model PaymentEvent {
+  id                  String   @id @default(cuid())
+  stripeEventId       String?  @unique
+  eventType           String
+  stripePaymentIntent String?
+  stripeChargeId      String?
+  stripeSessionId     String?
+  customerEmail       String?
+  customerName        String?
+  amount              Int?
+  currency            String?
+  productName         String?
+  productType         String?
+  status              String?
+  failureCode         String?
+  failureMessage      String?
+  rawPayload          Json?
+  createdAt           DateTime @default(now())
+
+  @@index([eventType])
+  @@index([stripePaymentIntent])
+  @@index([customerEmail])
+  @@index([createdAt])
 }
 
 model Book {

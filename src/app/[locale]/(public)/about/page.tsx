@@ -1,5 +1,6 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL } from "@/lib/url";
 import type { Metadata } from "next";
@@ -39,129 +40,91 @@ export async function generateMetadata({
 
 export default async function Page() {
   const t = await getTranslations("About");
-  const locale = await getLocale();
 
   const ashleySchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Ashley León",
-    jobTitle: "Writer & Conscious Digital Creator",
-    url: fullUrl(locale, "/about"),
+    name: "Ashley Leon",
+    jobTitle: "Writer, Workshop Facilitator & Certified Holistic Mind-Body Coach",
+    url: fullUrl("en", "/about"),
     worksFor: {
       "@type": "Organization",
-      name: "Raíces & Returnings",
+      name: "Ashley Leon",
       url: BASE_URL,
     },
     sameAs: [
-      "https://www.instagram.com/raicesreturnings",
-      "https://raicesreturnings.substack.com",
+      "https://www.instagram.com/ashleyleon",
+      "https://www.youtube.com/@ashleyleon",
+      "https://ashleyleon.substack.com",
     ],
   };
 
-  const olySchema = {
+  const aboutPageSchema = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Olydi M Contreras",
-    jobTitle: "Writer & Recipe Developer",
-    url: fullUrl(locale, "/about"),
-    worksFor: {
-      "@type": "Organization",
-      name: "Raíces & Returnings",
+    "@type": "AboutPage",
+    name: t("metadata.title"),
+    description: t("metadata.description"),
+    url: fullUrl("en", "/about"),
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Ashley Leon",
       url: BASE_URL,
     },
-    sameAs: [
-      "https://www.instagram.com/raicesreturnings",
-      "https://raicesreturnings.substack.com",
-    ],
+    mainEntity: ashleySchema,
   };
 
   return (
     <>
+      <JsonLd data={aboutPageSchema} />
       <JsonLd data={ashleySchema} />
-      <JsonLd data={olySchema} />
-      <div className="container max-w-6xl mx-auto flex flex-col items-center min-h-screen px-6 py-16 sm:py-24 font-[family-name:var(--font-cormorant-garamond)]">
-        {/* SECCIÓN 1: About Raíces & Returnings */}
-        <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20 mb-24">
-          <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
-            <Image
-              src="/teamphoto2.jpeg"
-              alt={t("image-alt")}
-              width={800}
-              height={600}
-              className="rounded-sm shadow-sm object-cover w-full h-auto aspect-[4/3] scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
-              priority
-            />
-          </div>
-          <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-center">
-            <h1 className="text-4xl sm:text-5xl font-light mb-8 text-[#d8a08b] italic leading-tight">
-              {t("title")}
-            </h1>
-            <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">
-              {t("intro")}
-            </p>
-          </div>
-        </section>
-
-        {/* SECCIÓN 2: Ashley */}
-        <section className="w-full flex flex-col-reverse md:flex-row items-stretch gap-12 lg:gap-20 mb-24">
-          <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-center">
-            <h3 className="text-4xl sm:text-5xl font-light mb-2 text-foreground italic">
-              Ashley
-            </h3>
-            <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
-              {t("description-ashley")}
-            </span>
-            <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">
-              {t("description-paragraph-ashley")}
-            </p>
-          </div>
-          <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
-            <Image
-              src="/profile4.jpeg"
-              alt="Ashley"
-              width={800}
-              height={600}
-              className="rounded-sm shadow-sm object-cover w-full h-auto aspect-[4/5] scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
-              priority
-            />
-          </div>
-        </section>
-
-        {/* SECCIÓN 3: Olydi */}
-        <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20 mb-24">
-          <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
-            <Image
-              src="/profile3.jpeg"
-              alt="Olydi"
-              width={800}
-              height={600}
-              className="rounded-sm shadow-sm object-cover w-full h-auto aspect-[4/5] scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
-              priority
-            />
-          </div>
-
-          <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-center">
-            <h3 className="text-4xl sm:text-5xl font-light mb-2 text-foreground italic">
-              Olydi
-            </h3>
-            <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
-              {t("description-oly")}
-            </span>
-            <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] text-left whitespace-pre-line">
-              {t("description-paragraph-oly")}
-            </p>
-          </div>
-        </section>
-
-        {/* SECCIÓN 4: Conclusión */}
-        <section className="w-full max-w-3xl mx-auto text-center mt-12 mb-24 px-4">
-          <p className="text-xl sm:text-2xl text-foreground/90 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line italic [&>span]:whitespace-nowrap">
-            {t.rich("conclusion", {
-              nowrap: (chunks) => <span>{chunks}</span>,
-            })}
-          </p>
-        </section>
-      </div>
+      <main className="min-h-screen bg-[#F9F8F6] font-[family-name:var(--font-cormorant-garamond)] py-16 lg:py-24">
+        <div className="container max-w-6xl mx-auto px-4">
+          <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">
+            <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
+              <Image
+                src="/profile4.jpeg"
+                alt={t("image-alt")}
+                width={800}
+                height={1000}
+                className="rounded-sm shadow-sm object-cover w-full h-auto aspect-[4/5] scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
+                priority
+              />
+            </div>
+            <div className="w-full md:w-1/2 text-center md:text-left flex flex-col justify-center">
+              <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
+                {t("eyebrow")}
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight mb-8">
+                {t("title")}
+              </h1>
+              <div className="space-y-6 text-left">
+                <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line">
+                  {t("paragraph-1")}
+                </p>
+                <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line">
+                  {t("paragraph-2")}
+                </p>
+                <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line">
+                  {t("paragraph-3")}
+                </p>
+                <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line">
+                  {t("paragraph-4")}
+                </p>
+              </div>
+              <div className="mt-10">
+                <Link
+                  href="/workbooks/rebuilding-reverence"
+                  className="inline-flex items-center gap-2 rounded-sm bg-[#d8a08b] px-8 py-4 text-base text-white transition-all duration-300 hover:bg-[#c28c77] font-[family-name:var(--font-lora)] shadow-sm"
+                >
+                  {t("cta")}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
     </>
   );
 }

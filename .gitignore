@@ -42,21 +42,13 @@ next-env.d.ts
 
 # ignore all files in the postgres directory
 /postgres_data/*
-/app/generated/prisma
+/src/app/generated/prisma/
 
 # ebooks PDFs (stored in S3)
 /public/ebooks/
 
-# SEO audit artifacts
-SEO-SPEC.md
-FULL-AUDIT-REPORT.md
-ACTION-PLAN.md
-CONTENT-ANALYSIS.md
-PERFORMANCE-ANALYSIS.md
-PRIVATE_FILES_SETUP.md
-SCHEMA-ANALYSIS.md
-SECURE_DOWNLOADS_GUIDE.md
-SITEMAP-ANALYSIS.md
-TECHNICAL-SEO.md
+# SEO audit artifacts (archived)
+/docs/archive/
+
 /screenshots/
 /scripts/

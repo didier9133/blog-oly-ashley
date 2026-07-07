@@ -38,7 +38,7 @@ import {
   getPostById,
   updatePost,
 } from "@/app/[locale]/actions/posts";
-import { Subcategory, Category } from "@/app/generated/prisma/index";
+import { Subcategory, Category } from "@prisma/client";
 import RichTextEditor from "@/components/rich-text-editor";
 import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
@@ -251,7 +251,7 @@ export default function CreatePostPage() {
   );
 
   const params = useParams<{ id: string }>();
-  if (!params.id) notFound();
+  if (!params?.id) notFound();
 
   // Estados para manejar las categorías y subcategorías
   const [subcategories, setSubcategories] = useState<

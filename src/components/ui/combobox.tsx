@@ -57,11 +57,11 @@ export function ComboboxDemo({
 
   React.useEffect(() => {
     if (value) {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams?.toString() ?? "");
       params.set("category", value);
       router.replace(`?${params.toString()}`);
     } else {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams?.toString() ?? "");
       params.delete("category");
       router.replace(`?${params.toString()}`);
     }

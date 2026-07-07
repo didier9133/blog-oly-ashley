@@ -30,7 +30,7 @@ export function HomeSidebar() {
     <nav aria-label="Table of contents" className="space-y-12">
       <div>
         <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] font-light text-foreground/50 leading-none">
-          Raíces <span className="italic">&amp;</span> Returnings
+          Ashley Leon
         </span>
       </div>
 

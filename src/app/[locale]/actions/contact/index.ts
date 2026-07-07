@@ -11,41 +11,31 @@ const emailDomain = process.env.EMAIL_DOMAIN;
 const NOTIFICATION_EMAIL = CONTACT_NOTIFICATION_EMAIL;
 
 export async function sendContactEmail({
-  firstName,
-  lastName,
+  name,
   email,
-  content,
-  subject,
+  message,
 }: {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  content: string;
-  subject: string;
+  message: string;
 }) {
   const t = await getTranslations("Email");
 
   try {
     const { error } = await resend.emails.send({
-      from: `Raices & Returning <no-reply@${emailDomain}>`,
+      from: `Ashley Leon <no-reply@${emailDomain}>`,
       to: email,
       subject: t("subject"),
       react: ContactEmailTemplateProps({
-        customerName: `${firstName} ${lastName}`.trim(),
-        message: content,
+        customerName: name,
+        message: message,
       }),
     });
 
     if (error) {
       throw new Error(`Error al enviar el correo: ${error.message}`);
     }
-    notifyContactFormSubmission({
-      firstName,
-      lastName,
-      email,
-      content,
-      subject,
-    });
+    notifyContactFormSubmission({ name, email, message });
     return;
   } catch (error) {
     console.error("Error al enviar el correo:", error);
@@ -54,20 +44,18 @@ export async function sendContactEmail({
 }
 
 export async function notifyContactFormSubmission(params: {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  content: string;
-  subject: string;
+  message: string;
 }) {
   await resend.emails.send({
-    from: `Raices & Returning <notify@${emailDomain}>`,
+    from: `Ashley Leon <notify@${emailDomain}>`,
     to: NOTIFICATION_EMAIL,
-    subject: params.subject,
+    subject: `New contact message from ${params.name}`,
     react: OwnerNotificationTemplate({
       customerEmail: params.email,
-      customerName: `${params.firstName} ${params.lastName}`.trim(),
-      message: params.content,
+      customerName: params.name,
+      message: params.message,
     }),
   });
   return {

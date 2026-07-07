@@ -26,20 +26,39 @@ const stripePromise = loadStripe(
 );
 
 const CURRENCY = "usd";
-const productType = "ebook";
+const CHECKOUT_INIT_RETRIES = 3;
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export default function Checkout({
   ebook_price,
   ebook_s3key,
+  productName: productNameOverride,
+  productType = "ebook",
+  successPath = "/workbooks/success",
 }: {
   ebook_price: number;
   ebook_s3key: string;
+  productName?: string;
+  productType?: string;
+  successPath?: string;
 }) {
   const t = useTranslations("Checkout");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const isActiveRef = useRef(true);
+  const messagesRef = useRef({
+    noConfirmation: "",
+    error: "",
+  });
   const language = useLocale();
+  messagesRef.current = {
+    noConfirmation: t("toast-no-confirmation"),
+    error: t("toast-error"),
+  };
   // const params = useParams<{ slug?: string }>();
 
   // const productSlug = useMemo(() => {
@@ -49,6 +68,7 @@ export default function Checkout({
   // }, [params]);
 
   const productName = useMemo(() => {
+    if (productNameOverride) return productNameOverride;
     // console.log({ productSlug });
     // if (productSlug) {
     //   return productSlug;
@@ -59,11 +79,12 @@ export default function Checkout({
     }
     const [, ...rest] = basename.split("_");
     return rest.length > 0 ? rest.join("_") : basename;
-  }, [ebook_s3key]);
+  }, [ebook_s3key, productNameOverride]);
 
   const initializePayment = useCallback(async () => {
     setIsLoading(true);
     setClientSecret(null);
+    setPaymentIntentId(null);
 
     console.log({
       language,
@@ -72,50 +93,61 @@ export default function Checkout({
       s3Key: ebook_s3key,
     });
 
-    try {
-      const response = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: ebook_price,
-          currency: CURRENCY,
-          metadata: {
-            productName,
-            productType,
-            s3Key: ebook_s3key,
-            language,
-          },
-        }),
-      });
+    for (let attempt = 1; attempt <= CHECKOUT_INIT_RETRIES; attempt += 1) {
+      try {
+        const response = await fetch("/api/create-payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: ebook_price,
+            currency: CURRENCY,
+            metadata: {
+              productName,
+              productType,
+              s3Key: ebook_s3key,
+              language,
+            },
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error("No se pudo iniciar el pago.");
-      }
-      const data = (await response.json()) as { clientSecret?: string };
-      if (!isActiveRef.current) {
-        return;
-      }
+        if (!response.ok) {
+          throw new Error("No se pudo iniciar el pago.");
+        }
+        const data = (await response.json()) as {
+          clientSecret?: string;
+          paymentIntentId?: string;
+        };
+        if (!isActiveRef.current) {
+          return;
+        }
 
-      if (data.clientSecret) {
-        setClientSecret(data.clientSecret);
-      } else {
-        toast.error(t("toast-no-confirmation"));
-      }
-    } catch (error) {
-      console.error(error);
-      if (isActiveRef.current) {
-        toast.error(t("toast-error"));
-      }
-    } finally {
-      if (isActiveRef.current) {
-        setIsLoading(false);
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+          setPaymentIntentId(data.paymentIntentId ?? null);
+          setIsLoading(false);
+          return;
+        }
+
+        throw new Error("Missing client secret");
+      } catch (error) {
+        console.error(error);
+        if (attempt < CHECKOUT_INIT_RETRIES) {
+          await delay(750 * attempt);
+          continue;
+        }
+
+        if (isActiveRef.current) {
+          toast.error(messagesRef.current.error);
+          setClientSecret(null);
+          setIsLoading(false);
+        }
       }
     }
-  }, [ebook_price, ebook_s3key, productName, t, language]);
+  }, [ebook_price, ebook_s3key, productName, productType, language]);
 
   useEffect(() => {
-    initializePayment();
     isActiveRef.current = true;
+    initializePayment();
     return () => {
       isActiveRef.current = false;
     };
@@ -236,7 +268,10 @@ export default function Checkout({
       options={{ clientSecret, appearance }}
       key={clientSecret}
     >
-      <CheckoutForm />
+      <CheckoutForm
+        paymentIntentId={paymentIntentId}
+        successPath={successPath}
+      />
     </Elements>
   );
 }

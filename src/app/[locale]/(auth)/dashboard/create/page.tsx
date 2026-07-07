@@ -37,7 +37,7 @@ import {
   getCategoriesWithSubcategories,
   saveNewPost,
 } from "@/app/[locale]/actions/posts";
-import { Subcategory, Category } from "@/app/generated/prisma/index";
+import { Subcategory, Category } from "@prisma/client";
 import RichTextEditor from "@/components/rich-text-editor";
 import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";

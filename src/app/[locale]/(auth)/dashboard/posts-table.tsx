@@ -4,12 +4,10 @@ import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 
 import { DataTable } from "./data-table";
-import { createPostColumns } from "./columns";
+import { createPostColumns, type DashboardPost } from "./columns";
 
 type PostsTableProps = {
-  // Keeping this broad because Next serializes Dates as strings.
-  // The DataTable/columns already handle that case.
-  data: any[];
+  data: DashboardPost[];
 };
 
 export default function PostsTable({ data }: PostsTableProps) {

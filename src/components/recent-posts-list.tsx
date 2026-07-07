@@ -19,7 +19,7 @@ interface RecentPostsListProps {
   posts: RecentPostItem[];
   currentSubcategoryId: number | null;
   currentLanguage: string;
-  pathPrefix: "blog" | "recipes";
+  pathPrefix: "writing" | "recipes";
   recentPostsLabel: string;
   noPostsLabel: string;
   limit?: number;
@@ -35,7 +35,7 @@ export function RecentPostsList({
   limit = 5,
 }: RecentPostsListProps) {
   const searchParams = useSearchParams();
-  const filterCategory = searchParams.get("category");
+  const filterCategory = searchParams?.get("category");
   const filterId = filterCategory
     ? Number(filterCategory)
     : currentSubcategoryId;

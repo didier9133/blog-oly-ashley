@@ -50,7 +50,7 @@ export function AppSidebar({
         <div className="flex justify-start items-center h-full w-full">
           <Link href="/" className="flex-shrink-0">
             <span className="font-[family-name:var(--font-great-vibes)] text-3xl font-medium text-foreground tracking-tight">
-              Raíces <span className="italic">&amp;</span> Returnings
+              Ashley Leon
             </span>
           </Link>
         </div>

@@ -87,7 +87,7 @@ export function FormSubscribeNewsletter({
               "w-full sm:flex-1 transition-all h-14 text-base shadow-sm px-6 rounded-sm border",
               variant === "default"
                 ? "bg-white border-orange-900/10 focus:border-[#bd775c] focus:ring-[#bd775c]/20 placeholder:text-muted-foreground/60"
-                : "bg-transparent border-white/40 text-white placeholder:text-white/60 focus:border-white focus:ring-white/20",
+                : "bg-[#fbf7f1] border-[#fbf7f1] text-[#1a1714] placeholder:text-[#6a6259] focus-visible:border-[#bd775c] focus-visible:ring-[#bd775c]/30",
             )}
           />
           <Button
