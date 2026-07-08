@@ -101,10 +101,16 @@ const nextConfig: NextConfig = {
 
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // Find jsdom's default-stylesheet in the pnpm store
-      const pnpmJsdom = fs
-        .readdirSync(path.resolve(__dirname, "node_modules/.pnpm"))
-        .find((d) => d.startsWith("jsdom@"));
+      // Find jsdom's default-stylesheet in the pnpm store (only when pnpm is used locally).
+      // On Vercel (bun) there is no .pnpm dir, so guard with try/catch.
+      let pnpmJsdom: string | undefined;
+      try {
+        pnpmJsdom = fs
+          .readdirSync(path.resolve(__dirname, "node_modules/.pnpm"))
+          .find((d) => d.startsWith("jsdom@"));
+      } catch {
+        pnpmJsdom = undefined;
+      }
       if (pnpmJsdom) {
         const cssSrc = path.resolve(
           __dirname,
