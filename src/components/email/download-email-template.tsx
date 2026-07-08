@@ -16,6 +16,7 @@ interface DownloadEmailTemplateProps {
   customerName: string;
   productName: string;
   downloadLink: string;
+  communityLink: string;
   locale: "en" | "es";
 }
 
@@ -25,6 +26,7 @@ export default async function DownloadEmailTemplate({
   customerName,
   productName,
   downloadLink,
+  communityLink,
   locale,
 }: DownloadEmailTemplateProps) {
   const t = await getTranslations({ namespace: "EmailDownload", locale });
@@ -61,7 +63,9 @@ export default async function DownloadEmailTemplate({
             <Text style={ctaBoxLink}>
               🔗{" "}
               <a
-                href="https://ashleyleon.com/community/join"
+                href={communityLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={linkAnchor}
               >
                 {t("ctaBoxLink")}

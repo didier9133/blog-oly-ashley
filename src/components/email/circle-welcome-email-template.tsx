@@ -65,7 +65,12 @@ export default function CircleWelcomeEmailTemplate({
               connect between sessions, share reflections, and stay in community
               throughout the experience.
             </Text>
-            <Button style={primaryButton} href={communityLink}>
+            <Button
+              style={primaryButton}
+              href={communityLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Rebuilding Reverence Circle
             </Button>
             <Text style={stepText}>
@@ -109,7 +114,12 @@ export default function CircleWelcomeEmailTemplate({
             If either button does not open, use these links:
             <br />
             Group:{" "}
-            <Link href={communityLink} style={linkAnchor}>
+            <Link
+              href={communityLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={linkAnchor}
+            >
               {communityLink}
             </Link>
             <br />
@@ -182,6 +192,9 @@ const steps = {
   border: "1px solid rgba(166, 166, 140, 0.25)",
   margin: "0 40px 24px",
   padding: "20px 24px",
+  width: "calc(100% - 80px)",
+  maxWidth: "calc(100% - 80px)",
+  boxSizing: "border-box" as const,
 };
 
 const stepText = {

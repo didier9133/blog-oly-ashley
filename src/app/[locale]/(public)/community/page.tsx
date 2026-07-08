@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { fullUrl, BASE_URL, localizedHref } from "@/lib/url";
+import { fullUrl, BASE_URL } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 
-const COMMUNITY_JOIN_PATH = "/community/join";
+const COMMUNITY_URL =
+  "https://www.gokollab.com/reconstruyendolareverencia-trcsrr/home";
 
 export async function generateMetadata({
   params,
@@ -108,7 +109,9 @@ export default async function CommunityPage({
 
           <div className="pt-4">
             <a
-              href={localizedHref(locale, COMMUNITY_JOIN_PATH)}
+              href={COMMUNITY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-sm bg-[#d8a08b] px-8 py-4 text-base text-white transition-all duration-300 hover:bg-[#c28c77] font-[family-name:var(--font-lora)] shadow-sm"
             >
               {t("cta")}

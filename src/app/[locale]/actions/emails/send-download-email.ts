@@ -12,6 +12,7 @@ interface SendDownloadEmailParams {
   customerName: string;
   productName: string;
   downloadLink: string;
+  communityLink: string;
   locale: "en" | "es";
 }
 
@@ -20,6 +21,7 @@ export async function sendDownloadEmail({
   customerName,
   productName,
   downloadLink,
+  communityLink,
   locale,
 }: SendDownloadEmailParams) {
   try {
@@ -28,8 +30,9 @@ export async function sendDownloadEmail({
         customerName,
         productName,
         downloadLink,
+        communityLink,
         locale,
-      })
+      }),
     );
 
     const { data, error } = await resend.emails.send({

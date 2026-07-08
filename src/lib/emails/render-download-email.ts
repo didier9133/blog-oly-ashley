@@ -6,11 +6,12 @@ type RenderDownloadEmailOptions = {
   customerName: string;
   productName: string;
   downloadLink: string;
+  communityLink: string;
   locale: "en" | "es";
 };
 
 export async function renderDownloadEmailMarkup(
-  options: RenderDownloadEmailOptions
+  options: RenderDownloadEmailOptions,
 ) {
   const { renderToStaticMarkup } = await import("react-dom/server");
 

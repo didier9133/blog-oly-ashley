@@ -13,6 +13,16 @@ const REBUILDING_REVERENCE_JOURNAL_S3_KEY =
   "ebooks/1761430103993_Rebuilding_Reverence.pdf";
 const REBUILDING_REVERENCE_JOURNAL_FILE_NAME = "Rebuilding Reverence Journal";
 const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
+const COMMUNITY_LINK_BY_S3_KEY: Record<string, string> = {
+  "ebooks/1761430103993_Rebuilding_Reverence.pdf":
+    "https://www.gokollab.com/rebuilding-reverence-gcz6xl/home",
+  "ebooks/1761430437440_Reconstruyendo_la_Reverencia.pdf":
+    "https://www.gokollab.com/reconstruyendolareverencia-trcsrr/home",
+  "ebooks/1761429451534_Queer___Called.pdf":
+    "https://www.gokollab.com/queer-and-called-1zdxyb/home",
+  "ebooks/1761429904905_Queer_y_Llamados.pdf":
+    "https://www.gokollab.com/queeryllamados-iz8ip7/home",
+};
 
 function normalizeProductName(value: string | undefined) {
   if (!value) return undefined;
@@ -27,6 +37,10 @@ function getLatestCharge(paymentIntent: Stripe.PaymentIntent) {
 
 function isCirclePurchase(productType: string, s3Key: string) {
   return productType === CIRCLE_PRODUCT_TYPE && s3Key === CIRCLE_S3_KEY;
+}
+
+function getCommunityLinkForPurchase(s3Key: string) {
+  return COMMUNITY_LINK_BY_S3_KEY[s3Key] ?? CIRCLE_COMMUNITY_LINK;
 }
 
 export async function finalizePaidPaymentIntent(
@@ -85,7 +99,23 @@ export async function finalizePaidPaymentIntent(
   });
 
   if (!purchase.emailSent) {
+    let emailClaimed = false;
+
     try {
+      const emailClaim = await prisma.purchase.updateMany({
+        where: {
+          id: purchase.id,
+          emailSent: false,
+        },
+        data: { emailSent: true },
+      });
+
+      if (emailClaim.count === 0) {
+        return prisma.purchase.findUnique({ where: { id: purchase.id } });
+      }
+
+      emailClaimed = true;
+
       if (isCirclePurchase(purchase.productType, purchase.s3Key)) {
         const journalLink = await createDownloadUrl(
           REBUILDING_REVERENCE_JOURNAL_S3_KEY,
@@ -110,15 +140,24 @@ export async function finalizePaidPaymentIntent(
           customerName: purchase.customerName || "Cliente",
           productName: purchase.productName,
           downloadLink,
+          communityLink: getCommunityLinkForPurchase(purchase.s3Key),
           locale: language,
         });
       }
 
-      return prisma.purchase.update({
-        where: { id: purchase.id },
-        data: { emailSent: true },
-      });
+      return prisma.purchase.findUnique({ where: { id: purchase.id } });
     } catch (error) {
+      if (emailClaimed) {
+        await prisma.purchase
+          .update({
+            where: { id: purchase.id },
+            data: { emailSent: false },
+          })
+          .catch((updateError) => {
+            console.error("Error resetting checkout email claim:", updateError);
+          });
+      }
+
       console.error("Error sending checkout email:", error);
     }
   }
