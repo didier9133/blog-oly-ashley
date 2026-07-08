@@ -19,15 +19,13 @@ export const BASE_URL = normalizeSiteUrl(
 export const DEFAULT_OG_IMAGE = "/og-image-en.jpeg";
 export const SPANISH_OG_IMAGE = "/og-image-es.jpeg";
 
-/**
- * Build a locale-aware path that respects `localePrefix: "as-needed"`.
- * The default locale (en) renders without prefix; other locales are prefixed.
- */
+/** Build a locale-aware path that respects the configured prefix strategy. */
 export function localizedHref(locale: string, path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  const isDefault =
-    locale === routing.defaultLocale && routing.localePrefix === "as-needed";
-  return isDefault ? cleanPath : `/${locale}${cleanPath}`;
+  return routing.localePrefix === "always" ||
+    locale !== routing.defaultLocale
+    ? `/${locale}${cleanPath}`
+    : cleanPath;
 }
 
 export function fullUrl(locale: string, path: string): string {

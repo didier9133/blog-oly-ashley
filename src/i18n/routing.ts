@@ -7,6 +7,6 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: "en",
 
-  // Don't prefix default locale URLs (avoids 500ms redirect from / → /en)
-  localePrefix: "as-needed",
+  // Use explicit locale URLs so social scrapers cache each language separately.
+  localePrefix: "always",
 });

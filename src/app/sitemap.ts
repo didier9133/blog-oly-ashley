@@ -20,7 +20,7 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes — lastModified real, sin priority/changeFrequency (ignorados por Google).
-  // fullUrl() respeta `localePrefix: "as-needed"`: EN sin prefijo, ES con /es.
+  // fullUrl() respects the configured locale prefix strategy.
   const staticEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     STATIC_ROUTES.map(({ path, lastModified }) => ({
       url: fullUrl(locale, path),

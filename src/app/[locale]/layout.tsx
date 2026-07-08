@@ -7,7 +7,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { BASE_URL, ogImageUrl } from "@/lib/url";
+import { BASE_URL, fullUrl, ogImageUrl } from "@/lib/url";
 
 // Analytics
 import { Analytics } from "@vercel/analytics/next";
@@ -78,18 +78,18 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: locale === "es" ? `${BASE_URL}/es` : BASE_URL,
+      canonical: fullUrl(locale, "/"),
       languages: {
-        en: BASE_URL,
-        es: `${BASE_URL}/es`,
-        "x-default": BASE_URL,
+        en: fullUrl("en", "/"),
+        es: fullUrl("es", "/"),
+        "x-default": fullUrl("en", "/"),
       },
     },
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
       alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
-      url: locale === "es" ? `${BASE_URL}/es` : BASE_URL,
+      url: fullUrl(locale, "/"),
       siteName: "Ashley Leon",
       title,
       description,
