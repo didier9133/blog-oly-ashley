@@ -101,13 +101,6 @@ export async function generateMetadata({
           alt: ogImageAlt,
           type: "image/jpeg",
         },
-        {
-          url: `${BASE_URL}/og-image-square.jpeg`,
-          width: 1080,
-          height: 1080,
-          alt: ogImageAlt,
-          type: "image/jpeg",
-        },
       ],
     },
     twitter: {

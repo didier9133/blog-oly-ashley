@@ -1,6 +1,18 @@
 import { routing } from "@/i18n/routing";
 
-export const BASE_URL = "https://ashleyleon.com";
+const FALLBACK_SITE_URL = "https://ashleyleon.com";
+
+function normalizeSiteUrl(url: string): string {
+  const withProtocol = url.startsWith("http") ? url : `https://${url}`;
+  return withProtocol.replace(/\/$/, "");
+}
+
+export const BASE_URL = normalizeSiteUrl(
+  process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ??
+    process.env.VERCEL_URL ??
+    FALLBACK_SITE_URL,
+);
 export const DEFAULT_OG_IMAGE = "/og-image-en.jpeg";
 export const SPANISH_OG_IMAGE = "/og-image-es.jpeg";
 
