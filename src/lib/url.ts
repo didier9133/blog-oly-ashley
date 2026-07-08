@@ -9,8 +9,11 @@ function normalizeSiteUrl(url: string): string {
 
 export const BASE_URL = normalizeSiteUrl(
   process.env.NEXT_PUBLIC_SITE_URL ??
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ??
+    (process.env.VERCEL_ENV === "production"
+      ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+      : process.env.VERCEL_URL) ??
     process.env.VERCEL_URL ??
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ??
     FALLBACK_SITE_URL,
 );
 export const DEFAULT_OG_IMAGE = "/og-image-en.jpeg";
