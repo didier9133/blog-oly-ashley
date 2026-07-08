@@ -1,20 +1,21 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { localizedHref } from "@/lib/url";
 
 export const LanguageSelector = () => {
   const currentLanguage = useLocale();
-  const router = useRouter();
   const pathname = usePathname();
 
-  const handleLanguageChange = (lang: string) => {
+  const handleLanguageChange = (lang: "en" | "es") => {
     if (lang === currentLanguage) return;
-    router.replace(pathname, {
-      locale: lang,
-      scroll: false, // Prevent scrolling to the top
-    });
+
+    const pathWithoutLocale =
+      (pathname ?? "/").replace(/^\/(en|es)(?=\/|$)/, "") || "/";
+    document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax`;
+    window.location.assign(localizedHref(lang, pathWithoutLocale));
   };
 
   return (
