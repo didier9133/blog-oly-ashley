@@ -4,10 +4,10 @@ import prisma from "@/lib/prisma";
 export const PRODUCT_NAME_DICTIONARY: Record<string, string> = {
   Rebuilding_Reverence: "Rebuilding Reverence",
   "Rebuilding_Reverence.pdf": "Rebuilding Reverence",
-  Reconstruyendo_Reverencia: "Reconstruyendo La Reverencia",
-  "Reconstruyendo_Reverencia.pdf": "Reconstruyendo La Reverencia",
-  Queer_y_Llamados: "Queer y Llamados",
-  "Queer_y_Llamados.pdf": "Queer y Llamados",
+  Reconstruyendo_Reverencia: "Rebuilding Reverence",
+  "Reconstruyendo_Reverencia.pdf": "Rebuilding Reverence",
+  Queer_y_Llamados: "Queer & Called",
+  "Queer_y_Llamados.pdf": "Queer & Called",
   Queer_Called: "Queer and Called",
   "Queer_Called.pdf": "Queer and Called",
 };

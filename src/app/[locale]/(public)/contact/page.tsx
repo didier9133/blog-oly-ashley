@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { fullUrl, BASE_URL } from "@/lib/url";
+import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 import ContactForm from "./contact-form";
 
@@ -19,12 +19,13 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/contact"),
-      images: [`${BASE_URL}/og-image.jpeg`],
+      images: [ogImageUrl(locale)],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [ogImageUrl(locale)],
     },
     alternates: {
       canonical: fullUrl(locale, "/contact"),

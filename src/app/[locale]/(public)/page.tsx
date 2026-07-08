@@ -10,7 +10,7 @@ import { HomeSidebar } from "@/components/home-sidebar";
 import { JsonLd } from "@/components/json-ld";
 import { CategoryEnum } from "@/enums";
 import prisma from "@/lib/prisma";
-import { localizedHref } from "@/lib/url";
+import { localizedHref, ogImageUrl } from "@/lib/url";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export const revalidate = 3600;
@@ -93,7 +93,7 @@ export default async function Home() {
     url: "https://ashleyleon.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://ashleyleon.com/og-image.jpeg",
+      url: ogImageUrl(currentLanguage),
       width: 1200,
       height: 630,
     },
@@ -139,7 +139,7 @@ export default async function Home() {
   const aiSummaryEn =
     "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
   const aiSummaryEs =
-    "Ashley Leon es escritora, facilitadora de talleres y coach holística certificada de cuerpo-mente. Crea recursos para personas navegando la deconstrucción de fe, la espiritualidad queer y la sanación después de la religión. Su oferta principal es Rebuilding Reverence, una guía práctica guiada de 30 días por $33. También facilita El Encuentro de Rebuilding Reverence, un taller grupal en vivo de 4 semanas con cupo de 15 personas, una comunidad online llamada El proceso y una segunda guía práctica, Queer & Called. Su trabajo es afirmativo, no doctrinal y basado en coaching, no terapia.";
+    "Ashley Leon es escritora, facilitadora de talleres y coach holística certificada de cuerpo-mente. Crea recursos para personas atravesando deconstrucción de fe, identidad, pertenencia y sanación después de la religión. Su oferta principal es Rebuilding Reverence, una guía práctica guiada de 30 días por $33. También facilita The Rebuilding Reverence Circle, una experiencia grupal en vivo de 4 semanas con cupo de 15 personas, una comunidad privada llamada The In-Between y una segunda guía práctica sobre fe, identidad y llamado. Su trabajo es honesto, no doctrinal y basado en coaching, no terapia.";
 
   const aiSummarySchema = {
     "@context": "https://schema.org",
@@ -223,12 +223,12 @@ export default async function Home() {
                 className="absolute bottom-0 right-[9%] hidden h-[82%] w-px bg-white/55 shadow-[18px_0_0_rgba(255,255,255,0.38),36px_0_0_rgba(255,255,255,0.24)] md:block"
               />
 
-              <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-8 px-4 pb-20 pt-[28svh] min-[390px]:pt-[32svh] sm:px-6 sm:pb-28 sm:pt-[48vh] md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:px-8 md:py-8 lg:px-12 lg:py-10">
+              <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-8 px-4 pb-32 pt-[18svh] min-[390px]:pb-36 min-[390px]:pt-[20svh] sm:px-6 sm:pb-32 sm:pt-[38vh] md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:px-8 md:py-8 lg:px-12 lg:py-10">
                 <div className="max-w-[34rem] pb-7 md:col-span-6 md:pb-0">
                   <span className="editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-block">
                     {t("hero-eyebrow")}
                   </span>
-                  <h1 className="mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.65rem,12vw,3.1rem)] font-light leading-[0.92] tracking-normal text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3rem,4.1vw,4.35rem)] md:tracking-normal xl:text-[clamp(3.2rem,4vw,4.75rem)]">
+                  <h1 className="mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-normal text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3rem,4.1vw,4.35rem)] md:tracking-normal xl:text-[clamp(3.2rem,4vw,4.75rem)]">
                     {t("hero-title-one")}
                     <span className="block">
                       {t("hero-title-two")}{" "}
@@ -237,16 +237,16 @@ export default async function Home() {
                       </em>
                     </span>
                   </h1>
-                  <span className="editorial-rule-tick mt-6 block sm:mt-8 md:mt-5" />
-                  <p className="editorial-lede mt-5 max-w-[34ch] text-[1rem] leading-[1.5] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-5 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.55]">
+                  <span className="editorial-rule-tick mt-5 block sm:mt-8 md:mt-5" />
+                  <p className="editorial-lede mt-4 max-w-[34ch] text-[0.95rem] leading-[1.42] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-5 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.55]">
                     {t("hero-description")}
                   </p>
-                  <div className="mt-6 flex w-full max-w-[28rem] flex-col gap-2.5 sm:mt-9 sm:gap-4 md:mt-5 md:gap-2.5">
+                  <div className="mt-5 flex w-full max-w-[25rem] flex-col gap-2 sm:mt-9 sm:max-w-[28rem] sm:gap-4 md:mt-5 md:gap-2.5">
                     <Link
                       href={primaryWorkbookHref}
-                      className="group inline-flex min-h-10 items-center justify-between gap-3 bg-primary px-6 py-3 font-[family-name:var(--font-lora)] text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary-foreground transition-colors duration-500 hover:bg-primary/90 sm:min-h-12 sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                      className="group inline-flex min-h-9 items-center justify-between gap-3 bg-primary px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-primary-foreground transition-colors duration-500 hover:bg-primary/90 sm:min-h-12 sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
                     >
-                      <span>{t("cta-journals")}</span>
+                      <span className="min-w-0 text-balance">{t("cta-journals")}</span>
                       <span
                         aria-hidden
                         className="transition-transform duration-500 group-hover:translate-x-1.5"
@@ -256,9 +256,9 @@ export default async function Home() {
                     </Link>
                     <Link
                       href={writingHref}
-                      className="group inline-flex min-h-10 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/22 px-6 py-3 font-[family-name:var(--font-lora)] text-[0.7rem] font-bold uppercase tracking-[0.16em] text-foreground transition-colors duration-500 hover:border-primary hover:text-primary sm:min-h-12 sm:bg-transparent sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                      className="group inline-flex min-h-9 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/22 px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-foreground transition-colors duration-500 hover:border-primary hover:text-primary sm:min-h-12 sm:bg-transparent sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
                     >
-                      <span>{t("cta-explore")}</span>
+                      <span className="min-w-0 text-balance">{t("cta-explore")}</span>
                       <span
                         aria-hidden
                         className="transition-transform duration-500 group-hover:translate-x-1.5"

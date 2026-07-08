@@ -532,17 +532,17 @@ const books = [
     slug_es: "queer-y-llamados",
     slug_en: "queer-and-called",
     title_en: "QUEER AND CALLED",
-    title_es: "QUEER Y LLAMADOS",
+    title_es: "Queer & Called",
     subtitle_en:
       "A sacred invitation to reclaim your voice, reimagine your faith, and return to yourself — whole and holy",
     subtitle_es:
-      "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
+      "Una invitación sagrada a recuperar tu voz, reimaginar tu fe y volver a ti — íntegre y sagrade",
     author: "Ashley Leon",
     price: 3300,
     coverImage_en: "/Queer_y_Called.jpeg",
     coverImage_es: "/Queer_y_Llamados.jpeg",
     description_en: `The choice between your faith and your identity is a wound. What if you could begin to heal it? This 30-day journey creates a brave space to explore, feel, and weave together the threads of your spirit and truth. It's a dedicated container for reclaiming your voice and worth, one step at a time.`,
-    description_es: `Para quien pensó que debía elegir entre ser queer y ser llamado: este es tu regreso a casa. En 30 días guiados, reimaginarás tu fe, encarnarás tu verdad y recuperarás lo sagrado que siempre ha vivido en ti. Incluye 76 páginas de reflexión e integración, y acceso vitalicio gratuito (para los primeros 100) a una comunidad virtual donde nunca caminarás solo`,
+    description_es: `Esta guía es para quienes alguna vez sintieron que tenían que elegir entre su fe y su identidad. En 30 días, te acompaña a recuperar tu voz, mirar tu historia con honestidad y volver a lo sagrado sin esconder quien eres. Incluye 76 páginas de reflexión e integración, y acceso vitalicio gratuito para las primeras 100 personas a una comunidad privada para acompañar tu proceso.`,
     features_en: [
       "Peace from the internal war of 'having to choose'",
       "Sacred affirmations to rewire deep-seated worthiness",
@@ -551,12 +551,12 @@ const books = [
       "A chosen family community for the first 100—where you're fully known and celebrated",
     ],
     features_es: [
-      "30 días de reflexiones guiadas y prompts sagrados",
-      "Afirmaciones diarias para integración de identidad y fe",
-      "Espacio para escribir y procesar personalmente",
-      "Prácticas espirituales enraizadas en afirmación",
-      "Guía de conexión comunitaria incluida",
-      "Bellamente diseñado con layouts intencionales",
+      "30 días de reflexiones guiadas y preguntas sagradas",
+      "Afirmaciones diarias para integrar identidad y fe",
+      "Espacio para escribir, procesar y volver a ti",
+      "Prácticas espirituales desde la honestidad y el acompañamiento",
+      "Guía de conexión con comunidad privada incluida",
+      "Diseño cuidado con espacios intencionales",
     ],
     pages: 76,
     format_en: "Digital PDF",
@@ -569,7 +569,7 @@ const books = [
     featured_review_en:
       "This journal gave me permission to be both queer and faithful without apology. It's tender, affirming, and deeply needed.",
     featured_review_es:
-      "Este diario me dio permiso para ser tanto queer como fiel sin disculpas. Es tierno, afirmativo y profundamente necesario.",
+      "Este diario me dio permiso para reconciliar mi fe con quien soy, sin esconder mi identidad. Es tierno, honesto y profundamente necesario.",
     reviewerName: "María G.",
   },
   {
@@ -578,16 +578,16 @@ const books = [
     s3Key_es: "ebooks/1762468945355_Reconstruyendo_Reverencia.pdf",
     s3Key_en: "ebooks/1762468919064_Rebuilding_Reverence.pdf",
     title_en: "Rebuilding Reverence",
-    title_es: "Reconstruyendo la Reverencia",
+    title_es: "Rebuilding Reverence",
     subtitle_en: "A 30 DAY RETURN TO WONDER AFTER THE RUINS OF RELIGION",
     subtitle_es:
-      "UN REGRESO DE 30 DÍAS A LA MARAVILLA TRAS LAS RUINAS DE LA RELIGIÓN",
+      "UN CAMINO DE 30 DÍAS PARA VOLVER A LO SAGRADO DESPUÉS DE UNA FE QUE SE QUEBRÓ",
     author: "Ashley Leon",
     price: 3300,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
     coverImage_en: "/Rebuilding_Reverence.jpeg",
     description_en: `What if the path through deconstruction could lead you back to wonder, not just away from religion? This 76-page guide is your 30-day companion through the questions and uncertainty, helping you gently rebuild reverence on your own terms. Distilling a decade of spiritual work, it offers a compassionate framework to explore, process, and reconnect with the sacred.`,
-    description_es: `Un retorno de 30 días a la maravilla después de las ruinas de la religión has deconstruido. Ahora toca reconstruir — no las reglas, sino la reverencia. Este recorrido guiado de 76 páginas condensa más de una década de trabajo interior en 30 días transformadores para reconectarte con Dios, contigo mismo y con lo sagrado. Los primeros 100 recibirán acceso vitalicio gratuito a una comunidad virtual privada para acompañar su proceso.`,
+    description_es: `Un camino de 30 días para volver a lo sagrado después de una fe que se quebró. Ahora toca reconstruir, no desde las reglas, sino desde una fe más honesta. Este recorrido guiado de 76 páginas condensa más de una década de proceso interior en 30 días transformadores para reconciliarte con tu historia, con Dios y con lo sagrado. Las primeras 100 personas recibirán acceso vitalicio gratuito a una comunidad privada para acompañar su proceso.`,
     features_en: [
       "Replacing spiritual confusion with authentic connection",
       "Grounded daily practices to soften cynicism and reopen to awe",
@@ -596,12 +596,11 @@ const books = [
       "Community access for the first 100—so you don't walk alone",
     ],
     features_es: [
-      "30 días de reflexiones y ejercicios guiados",
-      "Prácticas sagradas para el autocuidado y la sanación",
-      "Prompts de diario para introspección profunda",
-      "Afirmaciones y mantras para uso diario",
-      "Páginas bellamente diseñadas con espacio para notas",
-      "Acceso a comunidad de apoyo exclusiva",
+      "Un camino claro para atravesar la confusión espiritual y volver a descansar",
+      "Prácticas diarias, simples y honestas, para volver a lo sagrado sin exigirte sentir nada.",
+      "Preguntas guiadas para volver a confiar en tu brújula interna",
+      "Rituales de sanación para el cansancio religioso y lo que tu cuerpo ha cargado",
+      "Acceso a comunidad privada para las primeras 100 personas, porque no tienes que sanar en soledad",
     ],
     pages: 76,
     format_en: "Digital PDF",
@@ -614,7 +613,7 @@ const books = [
     featured_review_en:
       "This journal changed my life. The daily practices helped me find peace I didn't know I needed. Thank you for creating such a beautiful space for healing.",
     featured_review_es:
-      "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar la paz que no sabía que necesitaba. Gracias por crear un espacio tan hermoso para sanar.",
+      "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar una paz que no sabía que necesitaba. Gracias por crear un espacio tan honesto para sanar.",
     reviewerName: "Angelica R.",
   },
 ];

@@ -7,7 +7,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { BASE_URL } from "@/lib/url";
+import { BASE_URL, ogImageUrl } from "@/lib/url";
 
 // Analytics
 import { Analytics } from "@vercel/analytics/next";
@@ -56,6 +56,7 @@ export async function generateMetadata({
   const title = t("title");
   const description = t("description");
   const ogImageAlt = t("ogImageAlt");
+  const localeOgImage = ogImageUrl(locale);
 
   return {
     metadataBase: new URL(BASE_URL),
@@ -94,7 +95,7 @@ export async function generateMetadata({
       description,
       images: [
         {
-          url: `${BASE_URL}/og-image.jpeg`,
+          url: localeOgImage,
           width: 1200,
           height: 630,
           alt: ogImageAlt,
@@ -115,7 +116,7 @@ export async function generateMetadata({
       description,
       images: [
         {
-          url: `${BASE_URL}/og-image.jpeg`,
+          url: localeOgImage,
           alt: ogImageAlt,
         },
       ],

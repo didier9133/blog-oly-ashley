@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { fullUrl, BASE_URL } from "@/lib/url";
+import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 
 const COMMUNITY_URL =
@@ -21,12 +21,13 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/community"),
-      images: [`${BASE_URL}/og-image.jpeg`],
+      images: [ogImageUrl(locale)],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [ogImageUrl(locale)],
     },
     alternates: {
       canonical: fullUrl(locale, "/community"),
@@ -52,8 +53,8 @@ export default async function CommunityPage({
     "@type": "WebPage",
     name: t("metadata.title"),
     description: t("metadata.description"),
-    url: fullUrl("en", "/community"),
-    inLanguage: "en",
+    url: fullUrl(locale, "/community"),
+    inLanguage: locale,
     isPartOf: {
       "@type": "WebSite",
       name: "Ashley Leon",

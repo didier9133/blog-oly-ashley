@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL } from "@/lib/url";
+import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -20,12 +20,13 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/about"),
-      images: [`${BASE_URL}/og-image.jpeg`],
+      images: [ogImageUrl(locale)],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [ogImageUrl(locale)],
     },
     alternates: {
       canonical: fullUrl(locale, "/about"),

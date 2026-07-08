@@ -15,7 +15,7 @@ import { BookOpen, Star, ArrowRight } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL, localizedHref } from "@/lib/url";
+import { fullUrl, BASE_URL, localizedHref, ogImageUrl } from "@/lib/url";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 
 export const revalidate = 3600;
@@ -35,12 +35,13 @@ export async function generateMetadata({
       title: t("metadata-title"),
       description: t("metadata-description"),
       url: fullUrl(locale, "/workbooks"),
-      images: [`${BASE_URL}/og-image.jpeg`],
+      images: [ogImageUrl(locale)],
     },
     twitter: {
       card: "summary_large_image",
       title: t("metadata-title"),
       description: t("metadata-description"),
+      images: [ogImageUrl(locale)],
     },
     alternates: {
       canonical: fullUrl(locale, "/workbooks"),
@@ -122,8 +123,8 @@ export default async function WorkbooksPage({
             a: "No. Ashley es coach holística certificada de cuerpo-mente, no terapeuta licenciada. Este es un recurso reflexivo y basado en coaching.",
           },
           {
-            q: "¿Tengo que elegir entre mi fe y mi queerness para usar Queer & Called?",
-            a: "No. Este trabajo trata de integración, no de elegir. Es no doctrinal y no requiere que pertenezcas a ninguna tradición.",
+            q: "¿Tengo que elegir entre mi fe y mi identidad para usar esta guía?",
+            a: "No. Esta guía habla de integración, no de elegir. Es un espacio no doctrinal para reconciliar tu historia, tu fe y quien eres sin tener que esconderte.",
           },
         ];
 
@@ -270,11 +271,11 @@ export default async function WorkbooksPage({
                       </CardDescription>
                     </div>
 
-                    <p className="text-base font-[family-name:var(--font-lora)] text-muted-foreground line-clamp-3 flex-1">
+                    <p className="text-base leading-7 font-[family-name:var(--font-lora)] text-muted-foreground line-clamp-4 min-h-[7rem]">
                       {description}
                     </p>
 
-                    <div className="flex items-center gap-2 text-sm font-sans mt-auto pt-4">
+                    <div className="flex items-center gap-2 text-sm font-sans mt-auto pt-2">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
                           <Star
@@ -303,8 +304,8 @@ export default async function WorkbooksPage({
                     </div>
                   </CardContent>
 
-                  <CardFooter className="p-6 pt-0 flex items-center justify-between border-t border-border/50 mt-4">
-                    <div className="space-y-1 pt-4">
+                  <CardFooter className="mt-4 flex flex-col items-stretch gap-4 border-t border-border/50 p-6 pt-4 sm:flex-row sm:items-end sm:justify-between">
+                    <div className="space-y-1">
                       <div className="flex items-baseline gap-2 font-sans">
                         <span className="text-2xl font-bold text-foreground">
                           ${(workbookPriceCents(book.price) / 100).toFixed(2)}
@@ -315,17 +316,17 @@ export default async function WorkbooksPage({
                       </p>
                     </div>
 
-                    <Link
-                      href={localizedHref(locale, `/workbooks/${bookSlug}`)}
-                      className="pt-4"
+                    <Button
+                      asChild
+                      className="group/btn h-auto min-h-11 w-full rounded-sm bg-[#d8a08b] px-4 py-3 text-center font-[family-name:var(--font-lora)] text-sm leading-snug whitespace-normal text-white shadow-sm transition-all duration-300 hover:bg-[#c28c77] sm:w-auto sm:max-w-[16rem] sm:px-5 sm:text-base"
                     >
-                      <Button className="group/btn rounded-sm px-6 py-4 font-[family-name:var(--font-lora)] text-base bg-[#d8a08b] text-white hover:bg-[#c28c77] transition-all duration-300 shadow-sm">
+                      <Link href={localizedHref(locale, `/workbooks/${bookSlug}`)}>
                         {locale === "en"
                           ? `Get ${title} — $33`
                           : `Obtener ${title} — $33`}
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                      </Button>
-                    </Link>
+                        <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                      </Link>
+                    </Button>
                   </CardFooter>
                 </Card>
               );

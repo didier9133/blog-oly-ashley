@@ -761,3 +761,28 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.circle-faq-details {
+  interpolate-size: allow-keywords;
+}
+
+.circle-faq-details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size 500ms var(--ease-breath),
+    opacity 360ms var(--ease-rest),
+    content-visibility 500ms allow-discrete;
+}
+
+.circle-faq-details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circle-faq-details::details-content {
+    transition: none;
+  }
+}

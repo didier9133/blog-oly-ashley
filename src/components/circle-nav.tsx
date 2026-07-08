@@ -119,12 +119,14 @@ export function CircleNav({
                       }
                       onClick={(e) => handleClick(e, item.id)}
                       className={cn(
-                        "inline-flex items-center px-3 py-1.5 rounded-full",
+                        "relative inline-flex items-center px-3 py-2",
                         "font-sans text-xs sm:text-sm tracking-wide",
-                        "transition-all duration-200",
+                        "transition-colors duration-200",
+                        "after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px after:origin-center",
+                        "after:bg-foreground/35 after:transition-transform after:duration-300",
                         isActive
-                          ? "bg-[#d8a08b] text-white"
-                          : "text-foreground/70 hover:text-foreground hover:bg-foreground/5",
+                          ? "font-medium text-foreground after:scale-x-100"
+                          : "text-foreground/70 after:scale-x-0 hover:text-foreground",
                       )}
                     >
                       {item.label}
@@ -140,7 +142,9 @@ export function CircleNav({
                   "hidden sm:inline-flex shrink-0 items-center",
                   "bg-[#d8a08b] text-white px-4 py-2 rounded-full",
                   "font-sans text-xs sm:text-sm font-medium tracking-wide",
-                  "hover:bg-[#c98e78] transition-colors",
+                  "shadow-sm shadow-[#d8a08b]/25",
+                  "hover:bg-[#c98e78] hover:shadow-md hover:shadow-[#d8a08b]/30",
+                  "transition-all duration-200",
                 )}
               >
                 {reserveLabel}

@@ -38,11 +38,11 @@ export const books: BookV2[] = [
     slug_es: "queer-y-llamados",
     slug_en: "queer-and-called",
     title_en: "QUEER AND CALLED",
-    title_es: "QUEER Y LLAMADOS",
+    title_es: "Queer & Called",
     subtitle_en:
       "A sacred invitation to reclaim your voice, reimagine your faith, and return to yourself — whole and holy",
     subtitle_es:
-      "Una invitación sagrada a reclamar tu voz, reimaginar tu fe y regresar a ti mismo — íntegro y sagrado",
+      "Una invitación sagrada a recuperar tu voz, reimaginar tu fe y volver a ti — íntegre y sagrade",
     author: "Ashley Leon",
     price: 3300,
     coverImage_en: "/Queer_y_Called.jpeg",
@@ -50,9 +50,9 @@ export const books: BookV2[] = [
     description_en: `This journal was born from my own journey — one marked by exile and return, silence and rediscovery, unlearning lies and relearning the truth: that I was never too much, never too far, and was never supposed to choose between being queer and being called. I created this space for those who were told their faith and wholeness couldn't coexist. I no longer believe that, and I hope as you walk through these pages, you won't either.
 
 This 30-day guided journal invites you into sacred reflection, honest questions, and gentle practices that honor both your identity and your spirituality. Each day offers prompts, affirmations, and space to process, reclaim, and reimagine what it means to be whole.`,
-    description_es: `Este diario nació de mi propio viaje — uno marcado por el exilio y el regreso, por el silencio y el redescubrimiento, por desaprender las mentiras y volver a aprender la verdad: que nunca fui demasiado, nunca estuve muy lejos, y nunca se supuso que debía elegir entre ser queer y ser llamado. Creé este espacio para aquellos a quienes les dijeron que su fe y su plenitud no podían coexistir. Ya no creo eso, y espero que, a medida que recorras estas páginas, tú tampoco lo creas.
+    description_es: `Esta guía es para quienes alguna vez sintieron que tenían que elegir entre su fe y su identidad. En 30 días, te acompaña a recuperar tu voz, mirar tu historia con honestidad y volver a lo sagrado sin esconder quien eres. Incluye reflexión, integración y acceso a una comunidad privada para acompañar tu proceso.
 
-Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas honestas y prácticas gentiles que honran tanto tu identidad como tu espiritualidad. Cada día ofrece prompts, afirmaciones y espacio para procesar, reclamar y reimaginar lo que significa ser íntegro.`,
+Este diario guiado de 30 días te invita a la reflexión sagrada, a preguntas honestas y a prácticas suaves que honran tanto tu identidad como tu espiritualidad. Cada día ofrece preguntas, afirmaciones y espacio para procesar, recuperar y reimaginar lo que significa vivir en plenitud.`,
     features_en: [
       "30 days of guided reflections and sacred prompts",
       "Daily affirmations for identity and faith integration",
@@ -62,12 +62,12 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
       "Beautifully designed with intentional layouts",
     ],
     features_es: [
-      "30 días de reflexiones guiadas y prompts sagrados",
-      "Afirmaciones diarias para integración de identidad y fe",
-      "Espacio para escribir y procesar personalmente",
-      "Prácticas espirituales enraizadas en afirmación",
-      "Guía de conexión comunitaria incluida",
-      "Bellamente diseñado con layouts intencionales",
+      "30 días de reflexiones guiadas y preguntas sagradas",
+      "Afirmaciones diarias para integrar identidad y fe",
+      "Espacio para escribir, procesar y volver a ti",
+      "Prácticas espirituales desde la honestidad y el acompañamiento",
+      "Guía de conexión con comunidad privada incluida",
+      "Diseño cuidado con espacios intencionales",
     ],
     pages: 75,
     format_en: "Digital PDF",
@@ -80,7 +80,7 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
     featured_review_en:
       "This journal gave me permission to be both queer and faithful without apology. It's tender, affirming, and deeply needed.",
     featured_review_es:
-      "Este diario me dio permiso para ser tanto queer como fiel sin disculpas. Es tierno, afirmativo y profundamente necesario.",
+      "Este diario me dio permiso para reconciliar mi fe con quien soy, sin esconder mi identidad. Es tierno, honesto y profundamente necesario.",
     reviewerName: "María G.",
   },
   {
@@ -90,9 +90,10 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
     s3Key_es: "ebooks/1761430437440_Reconstruyendo_la_Reverencia.pdf",
     s3Key_en: "ebooks/1761430103993_Rebuilding_Reverence.pdf",
     title_en: "Rebuilding Reverence",
-    title_es: "Reconstruyendo la Reverencia",
+    title_es: "Rebuilding Reverence",
     subtitle_en: "A 30-Day Journey to Reconnect with Your Inner Self",
-    subtitle_es: "Un Viaje de 30 Días para Reconectar con Tu Ser Interior",
+    subtitle_es:
+      "UN CAMINO DE 30 DÍAS PARA VOLVER A LO SAGRADO DESPUÉS DE UNA FE QUE SE QUEBRÓ",
     author: "Ashley Leon",
     price: 3300,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
@@ -100,9 +101,9 @@ Este diario guiado de 30 días te invita a una reflexión sagrada, preguntas hon
     description_en: `Embark on a transformative 30-day journey designed to help you reconnect with your authentic self and rediscover the reverence you deserve. Through daily reflections, guided exercises, and sacred practices, this journal becomes your companion in the path toward self-love and inner peace.
 
 In a world that constantly demands more from us, this book invites you to pause, breathe, and honor your own rhythm. Each day presents a new theme, a gentle reminder that your story matters, your feelings are valid, and your healing is sacred.`,
-    description_es: `Embárcate en un viaje transformador de 30 días diseñado para ayudarte a reconectar con tu ser auténtico y redescubrir la reverencia que mereces. A través de reflexiones diarias, ejercicios guiados y prácticas sagradas, este diario se convierte en tu compañero en el camino hacia el amor propio y la paz interior.
+    description_es: `Un camino de 30 días para volver a lo sagrado después de una fe que se quebró. Ahora toca reconstruir, no desde las reglas, sino desde una fe más honesta. Este recorrido guiado condensa más de una década de proceso interior en 30 días transformadores para reconciliarte con tu historia, con Dios y con lo sagrado.
 
-En un mundo que constantemente nos exige más, este libro te invita a pausar, respirar y honrar tu propio ritmo. Cada día presenta un nuevo tema, un recordatorio gentil de que tu historia importa, tus sentimientos son válidos y tu sanación es sagrada.`,
+En un mundo que constantemente nos exige más, este libro te invita a pausar, respirar y honrar tu propio ritmo. Cada día trae un nuevo tema y un recordatorio amable: tu historia importa, lo que sientes es válido y tu sanación es sagrada.`,
     features_en: [
       "30 days of guided reflections and exercises",
       "Sacred practices for self-care and healing",
@@ -112,12 +113,11 @@ En un mundo que constantemente nos exige más, este libro te invita a pausar, re
       "Access to exclusive community support",
     ],
     features_es: [
-      "30 días de reflexiones y ejercicios guiados",
-      "Prácticas sagradas para el autocuidado y la sanación",
-      "Prompts de diario para introspección profunda",
-      "Afirmaciones y mantras para uso diario",
-      "Páginas bellamente diseñadas con espacio para notas",
-      "Acceso a comunidad de apoyo exclusiva",
+      "Un camino claro para atravesar la confusión espiritual y volver a descansar",
+      "Prácticas diarias, simples y honestas, para volver a lo sagrado sin exigirte sentir nada.",
+      "Preguntas guiadas para volver a confiar en tu brújula interna",
+      "Rituales de sanación para el cansancio religioso y lo que tu cuerpo ha cargado",
+      "Acceso a comunidad privada para las primeras 100 personas, porque no tienes que sanar en soledad",
     ],
     pages: 120,
     format_en: "Digital PDF",
@@ -130,7 +130,7 @@ En un mundo que constantemente nos exige más, este libro te invita a pausar, re
     featured_review_en:
       "This journal changed my life. The daily practices helped me find peace I didn't know I needed. Thank you for creating such a beautiful space for healing.",
     featured_review_es:
-      "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar la paz que no sabía que necesitaba. Gracias por crear un espacio tan hermoso para sanar.",
+      "Este diario cambió mi vida. Las prácticas diarias me ayudaron a encontrar una paz que no sabía que necesitaba. Gracias por crear un espacio tan honesto para sanar.",
     reviewerName: "Ana S.",
   },
 ];

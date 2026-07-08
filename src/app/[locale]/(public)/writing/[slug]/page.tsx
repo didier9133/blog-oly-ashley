@@ -25,7 +25,7 @@ import { Slash } from "lucide-react";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL } from "@/lib/url";
+import { fullUrl, ogImageUrl } from "@/lib/url";
 import { routing } from "@/i18n/routing";
 type Params = Promise<{ locale: string; slug: string }>;
 
@@ -206,7 +206,7 @@ export default async function BlogPostPage(props: { params: Params }) {
     publisher: {
       "@type": "Organization",
       name: "Ashley Leon",
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpeg` },
+      logo: { "@type": "ImageObject", url: ogImageUrl(locale) },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   };

@@ -18,17 +18,17 @@ export function CircleFaq({ items, className }: CircleFaqProps) {
           className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden"
         >
           <CardContent className="p-0">
-            <details className="group">
+            <details className="circle-faq-details group">
               <summary
                 className={cn(
                   "flex items-center justify-between gap-4 p-6 cursor-pointer list-none",
-                  "transition-colors hover:bg-foreground/[0.02]",
+                  "transition-colors duration-300 hover:bg-foreground/[0.02]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d8a08b]/40 focus-visible:ring-inset",
                 )}
               >
-                <h3 className="text-lg font-light text-foreground italic pr-4">
+                <span className="text-lg font-light text-foreground italic pr-4">
                   {item.q}
-                </h3>
+                </span>
                 <span
                   aria-hidden
                   className={cn(
@@ -41,13 +41,15 @@ export function CircleFaq({ items, className }: CircleFaqProps) {
                   <Plus className="h-4 w-4" strokeWidth={1.5} />
                 </span>
               </summary>
-              <div
-                className={cn(
-                  "px-6 pb-6 pt-0 font-[family-name:var(--font-lora)]",
-                  "text-foreground/80 leading-relaxed",
-                )}
-              >
-                {item.a}
+              <div className="circle-faq-answer">
+                <div
+                  className={cn(
+                    "px-6 pb-6 pt-0 font-[family-name:var(--font-lora)]",
+                    "text-foreground/80 leading-relaxed",
+                  )}
+                >
+                  {item.a}
+                </div>
               </div>
             </details>
           </CardContent>

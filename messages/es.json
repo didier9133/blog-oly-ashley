@@ -1,45 +1,45 @@
 {
   "navigation": {
     "home": "Inicio",
-    "blog": "Lecturas",
+    "blog": "Ensayos",
     "recipes": "Recetas",
     "about": "Sobre mí",
     "contact": "Contacto",
     "merch": "Tienda",
     "dashboard": "Panel",
-    "ebook": "Guías prácticas",
-    "live-sessions": "El Encuentro",
+    "ebook": "Guías",
+    "live-sessions": "The Circle",
     "subscribe": "Suscríbete",
-    "writing": "Lecturas",
-    "workbooks": "Guías prácticas",
-    "circle": "El Encuentro",
-    "community": "Comunidad"
+    "writing": "Ensayos",
+    "workbooks": "Guías",
+    "circle": "The Circle",
+    "community": "The In-Between"
   },
   "metadata": {
-    "title": "Ashley Leon | Reconstruyendo fe, identidad y reverencia",
-    "description": "Lecturas, guías prácticas y talleres en vivo para volver a lo sagrado sin abandonarte.",
-    "keywords": "Ashley Leon, deconstrucción de fe, espiritualidad queer, identidad, sanación, reverencia, guías prácticas, talleres en vivo",
+    "title": "Ashley Leon | Fe, identidad y reverencia después de la deconstrucción",
+    "description": "Ensayos, guías y experiencias en vivo para volver a lo sagrado sin tener que abandonarte.",
+    "keywords": "Ashley Leon, deconstrucción de fe, identidad, sanación, reverencia, guías espirituales, experiencias en vivo, volver a lo sagrado",
     "ogImageAlt": "Ashley Leon, escritora y facilitadora sobre fe, identidad y reverencia después de la deconstrucción"
   },
   "footer": {
-    "newsletter-label": "Boletín",
+    "newsletter-label": "Carta semanal",
     "subscribe-label": "Suscribirme",
-    "placeholder": "Ingresa tu correo electrónico",
+    "placeholder": "Escribe tu correo electrónico",
     "toast-loading": "Enviando tu suscripción...",
-    "toast-success": "¡Bienvenida a la comunidad! Nos leemos pronto.",
+    "toast-success": "Bienvenida. Qué alegría encontrarte aquí. Nos leemos pronto.",
     "toast-error": "Hubo un error al suscribirse. Por favor, inténtalo de nuevo.",
-    "join-community": "No tienes que caminar esto sola.",
-    "stay-in-loop": "Reflexiones semanales, cuando hay algo que vale la pena decir.",
-    "testimonial": "Reconstruyendo la fe con honestidad, reverencia y espacio para respirar",
-    "newsletter-desc": "Reflexiones semanales, enviadas cuando hay algo que vale la pena decir — no por obligación de calendario.",
-    "respect-inbox": "Sin spam · baja cuando quieras.",
-    "brand-desc": "Lecturas, guías prácticas y talleres en vivo para volver a lo sagrado sin abandonarte.",
+    "join-community": "No tienes que recorrer esto en soledad.",
+    "stay-in-loop": "Reflexiones semanales, solo cuando hay algo que de verdad merece ser dicho.",
+    "testimonial": "Reconstruir la fe con honestidad, reverencia y espacio para respirar",
+    "newsletter-desc": "Reflexiones semanales, enviadas cuando hay algo que de verdad merece ser dicho, no por cumplir un calendario.",
+    "respect-inbox": "Sin spam · puedes darte de baja cuando quieras.",
+    "brand-desc": "Ensayos, guías y experiencias en vivo para volver a lo sagrado sin tener que abandonarte.",
     "explore": "Explorar",
     "company": "Más",
     "connect": "Conectar",
     "privacy": "Privacidad",
     "terms": "Términos",
-    "based-in": "Escribiendo desde El proceso",
+    "based-in": "Escribiendo desde la transición",
     "designed-by": "Diseñado y construido por",
     "rights-reserved": "Todos los derechos reservados.",
     "social": {
@@ -50,10 +50,10 @@
   },
   "subscribeHero": {
     "toast-loading": "Enviando tu suscripción...",
-    "toast-success": "¡Bienvenida a la comunidad! Nos leemos pronto.",
+    "toast-success": "Bienvenida. Qué alegría encontrarte aquí. Nos leemos pronto.",
     "toast-error": "No se pudo registrar tu suscripción. Intenta de nuevo.",
     "placeholder": "Tu correo electrónico...",
-    "cta": "Suscribirse"
+    "cta": "Suscribirme"
   },
   "search": {
     "postsPlaceholder": "Buscar por título, autor o contenido...",
@@ -67,11 +67,11 @@
   "dashboard": {
     "page": {
       "title": "Dashboard",
-      "subtitle": "Bienvenido de vuelta",
+      "subtitle": "Qué bueno verte de nuevo",
       "subscribers": "Suscriptores",
-      "newPost": "Nuevo Post",
+      "newPost": "Nueva publicación",
       "welcomeTitle": "¡Hola, Administrador!",
-      "welcomeSummary": "Tienes {total} posts en total. {drafts} borradores pendientes de publicación."
+      "welcomeSummary": "Tienes {total} publicaciones en total. {drafts} borradores pendientes de publicación."
     },
     "postsColumns": {
       "th": {
@@ -96,22 +96,22 @@
       "toast": {
         "delete": {
           "loading": "Eliminando post...",
-          "success": "Post eliminado correctamente",
-          "error": "Error al eliminar el post"
+          "success": "Publicación eliminada correctamente",
+          "error": "No se pudo eliminar la publicación"
         }
       }
     },
     "postForm": {
       "create": {
-        "title": "Crear Nuevo Post",
+        "title": "Crear nueva publicación",
         "subtitle": "Comparte tus ideas con el mundo"
       },
       "edit": {
-        "title": "Editar Post",
+        "title": "Editar publicación",
         "subtitle": "Comparte tus ideas con el mundo"
       },
       "card": {
-        "postInfo": "Información del Post"
+        "postInfo": "Información de la publicación"
       },
       "fields": {
         "title": {
@@ -194,17 +194,17 @@
       "toast": {
         "create": {
           "loading": "Guardando post...",
-          "success": "Post guardado exitosamente",
-          "error": "Error al guardar el post"
+          "success": "Publicación guardada correctamente",
+          "error": "No se pudo guardar la publicación"
         },
         "edit": {
           "loading": "Cargando post...",
-          "notFound": "Post no encontrado",
-          "loadError": "Error al cargar el post",
+          "notFound": "Publicación no encontrada",
+          "loadError": "No se pudo cargar la publicación",
           "noChanges": "No hay cambios para guardar",
           "updating": "Actualizando post...",
-          "success": "Post actualizado exitosamente",
-          "error": "Error al guardar el post"
+          "success": "Publicación actualizada correctamente",
+          "error": "No se pudo guardar la publicación"
         }
       }
     },
@@ -212,12 +212,12 @@
       "toast-mark-loading": "Marcando como procesado...",
       "toast-mark-success": "Marcado como procesado.",
       "toast-mark-error": "No se pudo marcar como procesado.",
-      "toast-copy-success": "Email copiado.",
+      "toast-copy-success": "Correo copiado.",
       "toast-copy-error": "No se pudo copiar.",
-      "th-email": "Email",
+      "th-email": "Correo",
       "th-status": "Estado",
       "th-source": "Origen",
-      "th-locale": "Locale",
+      "th-locale": "Idioma",
       "th-date": "Fecha",
       "th-actions": "Acciones",
       "status-handled": "Procesado",
@@ -231,13 +231,13 @@
     "newsletterPage": {
       "restricted-title": "Acceso restringido",
       "restricted-body": "Debes iniciar sesión para ver esta página.",
-      "title": "Suscriptores Newsletter",
+      "title": "Suscripciones al boletín",
       "summary": "{pending} pendientes · {total} total",
       "back": "Volver",
       "latest": "Últimas suscripciones"
     },
     "postsTable": {
-      "search-title": "Buscar y filtrar posts",
+      "search-title": "Buscar y filtrar publicaciones",
       "search-placeholder": "Buscar por título, autor o contenido...",
       "status-placeholder": "Estado",
       "status-all": "Todos los estados",
@@ -245,7 +245,7 @@
       "status-draft": "Borrador",
       "category-placeholder": "Categoría",
       "category-all": "Todas las categorías",
-      "posts-title": "Posts ({count} {resultsLabel})",
+      "posts-title": "Publicaciones ({count} {resultsLabel})",
       "result-singular": "resultado",
       "result-plural": "resultados",
       "no-results": "No hay resultados.",
@@ -271,7 +271,7 @@
     }
   },
   "categories": {
-    "blog": "Lecturas",
+    "blog": "Ensayos",
     "recipes": "Recetas",
     "select": "Selecciona una categoría",
     "search": "Buscar",
@@ -297,115 +297,115 @@
     "es": "Español"
   },
   "Home": {
-    "title": "Bienvenidos a",
+    "title": "Te damos la bienvenida a",
     "subtitle": "Ashley Leon",
-    "title-description": "Reconstruyendo fe, identidad y reverencia",
-    "subtitle-description-one": " – una reflexión, práctica,",
-    "subtitle-description-two": "y retorno a la vez",
+    "title-description": "Fe, identidad y reverencia después de la deconstrucción",
+    "subtitle-description-one": " — una reflexión, una práctica,",
+    "subtitle-description-two": "un regreso a la vez",
     "hero-eyebrow": "Fe después de la deconstrucción",
-    "hero-title-one": "Lecturas, guías prácticas ",
+    "hero-title-one": "Ensayos, guías",
     "hero-title-highlight": "sagrado.",
-    "hero-title-two": "y talleres en vivo para volver a lo",
-    "hero-tagline": "Lecturas, guías prácticas y talleres en vivo para volver a lo sagrado sin abandonarte.",
-    "hero-description": "Para personas reconstruyendo fe, identidad y pertenencia después de que la creencia heredada ya no encaja. Haz el trabajo a tu ritmo, o en una sala con otras personas que también se fueron.",
+    "hero-title-two": "y experiencias en vivo para volver a lo",
+    "hero-tagline": "Ensayos, guías y experiencias en vivo para volver a lo sagrado sin tener que abandonarte.",
+    "hero-description": "Para quienes están reconstruyendo su fe, su identidad y su sentido de pertenencia después de que la creencia heredada dejó de sostener su vida. Haz el proceso a tu ritmo, o entra en una sala con otras personas que también tuvieron que irse.",
     "hero-est": "Desde 2025 — Vol. 01",
     "alt-hero": "Ashley Leon",
     "alt-hero-main": "Ashley Leon (principal)",
     "alt-hero-detail": "Detalle",
     "alt-hero-texture": "Textura",
-    "intro-lead": "Ashley Leon es un hogar digital para la reflexión, la integración espiritual y un lenguaje honesto.",
-    "paragraph-description": "Existe para quienes navegan la deconstrucción de la fe, la diversidad sexual, la identidad cultural y el lento trabajo de volverse enteros.",
-    "paragraph-description-two": "Aquí encontrarás reflexiones semanales, lenguaje honesto y espiritualidad arraigada—para personas que reconstruyen la reverencia hacia sí mismas, lo divino y su humanidad.",
-    "paragraph-description-three": "Sin dogma. Sin performance.",
-    "paragraph-description-four": "Solo profundidad, integración y verdad.",
+    "intro-lead": "Ashley Leon es un hogar digital para la reflexión, la integración espiritual y un lenguaje más honesto.",
+    "paragraph-description": "Este espacio nació para acompañar a quienes están reconstruyendo su fe, reconciliándose con su identidad y buscando una forma más honesta de habitar lo sagrado.",
+    "paragraph-description-two": "Aquí encontrarás reflexiones semanales, lenguaje honesto y una espiritualidad con los pies en la tierra: para personas que están aprendiendo a reconciliarse con su historia, con lo divino y con quienes son.",
+    "paragraph-description-three": "Sin dogma. Sin actuación. Sin tener que demostrar nada.",
+    "paragraph-description-four": "Solo un lugar donde puedas volver a ti con honestidad.",
     "pre-signature": "  Con amor,",
     "signature": "Ashley Leon",
-    "find-label": "Un lugar de encuentro",
-    "find-title": "Lo que encontrarás aquí",
-    "find-blurb": "Todo lo que hemos ido sembrando — toma lo que tu momento necesite.",
-    "find-item-1": "Lecturas reflexivas y escritura espiritual",
-    "find-item-1-desc": "Lecturas para pensar, dudar y volver a tierra.",
-    "find-item-2": "Diarios guiados y PDFs digitales",
-    "find-item-2-desc": "Pequeños libros digitales para practicar a tu ritmo.",
-    "find-item-3": "Afirmaciones diarias y reflexiones en audio",
-    "find-item-3-desc": "Frases y voces para acompañarte en lo cotidiano.",
-    "find-item-4": "Recursos para reconstruir la fe más allá del dogma",
-    "find-item-4-desc": "Lenguaje y oración más allá de la religión heredada.",
-    "find-item-5": "Invitaciones centradas en la comunidad para profundizar",
-    "find-item-5-desc": "Encuentros vivos para quienes quieren caminar acompañadas.",
-    "who-eyebrow": "Para quien está en el umbral",
+    "find-label": "Un lugar para volver",
+    "find-title": "Empieza por donde estés",
+    "find-blurb": "Todo aquí está cuidado para acompañar un momento distinto del camino. Toma lo que necesites ahora.",
+    "find-item-1": "Ensayos que acompañan",
+    "find-item-1-desc": "Textos para pensar, cuestionar y volver a tierra.",
+    "find-item-2": "Guías digitales y prácticas guiadas",
+    "find-item-2-desc": "Pequeños libros digitales para recorrer el proceso a tu propio ritmo.",
+    "find-item-3": "Afirmaciones y reflexiones en audio",
+    "find-item-3-desc": "Palabras y voces para sostenerte en lo cotidiano.",
+    "find-item-4": "Nuevas formas de nombrar lo sagrado",
+    "find-item-4-desc": "Lenguaje, oración y práctica más allá de la religión heredada.",
+    "find-item-5": "Espacios para caminar acompañada",
+    "find-item-5-desc": "Encuentros en vivo para quienes quieren ir más profundo junto a otras personas.",
+    "who-eyebrow": "Para este momento de transición",
     "who-title": "Si estás reconstruyendo lenguaje, fe o pertenencia, aquí hay espacio para respirar.",
-    "who-quote-1": "No quiero perder lo sagrado; quiero encontrarlo sin perderme.",
+    "who-quote-1": "No quiero perder lo sagrado; quiero encontrarlo sin perderme a mí.",
     "who-label-1": "Fe después del miedo",
-    "who-quote-2": "Necesito herramientas suaves para volver a escuchar mi propia voz.",
-    "who-label-2": "Prácticas para el cuerpo",
-    "who-quote-3": "Quiero caminar con otras personas que entienden este proceso.",
+    "who-quote-2": "Necesito volver a confiar en mi voz, sin forzarme.",
+    "who-label-2": "Una práctica que empieza en el cuerpo",
+    "who-quote-3": "Quiero caminar con personas que entienden este proceso sin que tenga que explicarlo todo.",
     "who-label-3": "Pertenencia real",
     "manifesto-eyebrow": "Un refugio digital",
-    "manifesto-title": "Una edición para quienes vuelven a sí mismas, despacio.",
-    "manifesto-work-label": "El trabajo",
+    "manifesto-title": "Para quienes están aprendiendo a volver a su centro. Sin prisa.",
+    "manifesto-work-label": "El camino",
     "manifesto-pillar-1-title": "Reflexiones que acompañan",
-    "manifesto-pillar-1-desc": "Historias, herramientas y ejercicios para tu proceso de reconstrucción personal.",
-    "manifesto-pillar-2-title": "Verdad sin performance",
-    "manifesto-pillar-2-desc": "Sin dogma ni juicios. Solo contenido profundo, integración real y espacio para ser tú.",
-    "manifesto-pillar-3-title": "Comunidad y pertenencia",
-    "manifesto-pillar-3-desc": "No estás sola. Aquí encuentras un espacio seguro para volver a ti, en comunidad.",
-    "fresh-eyebrow": "Lecturas recientes",
-    "cta-explore": "Leer las lecturas",
-    "cta-journals": "Comienza con Rebuilding Reverence",
+    "manifesto-pillar-1-desc": "Historias, preguntas y prácticas para acompañar tu propia reconstrucción.",
+    "manifesto-pillar-2-title": "Verdad sin actuación",
+    "manifesto-pillar-2-desc": "Sin dogma ni juicio. Solo profundidad, integración real y permiso para ser tú.",
+    "manifesto-pillar-3-title": "Volver en compañía",
+    "manifesto-pillar-3-desc": "No tienes que sostener todo esto por tu cuenta. Aquí hay espacio para regresar a ti en comunidad.",
+    "fresh-eyebrow": "Ensayos recientes",
+    "cta-explore": "Leer los ensayos",
+    "cta-journals": "Empezar con Rebuilding Reverence",
     "cta-youtube": "Escuchar en YouTube",
     "fresh-title-one": "Nuevas reflexiones. Nuevo lenguaje. La misma intención.",
-    "fresh-title-two": "Lecturas desde El proceso.",
-    "paragraph-fresh": "Nuevas reflexiones sobre fe, identidad, sanación y retorno.",
-    "fresh-blog-label": "Lectura",
+    "fresh-title-two": "Ensayos desde la transición.",
+    "paragraph-fresh": "Reflexiones nuevas sobre fe, identidad, sanación y regreso.",
+    "fresh-blog-label": "Ensayos",
     "fresh-recipe-label": "Archivado",
-    "fresh-view-all": "Ver todas las historias",
-    "btn-fresh": "Leer Más",
+    "fresh-view-all": "Ver todos los ensayos",
+    "btn-fresh": "Leer más",
     "btn-fresh-two": "Todos los archivos",
-    "btn-all-posts": "Todas las lecturas",
+    "btn-all-posts": "Todos los ensayos",
     "book-eyebrow": "Empieza aquí",
     "book-tagline": "Rebuilding Reverence",
-    "book-cta": "Descubre la Guía práctica — $33",
-    "book-blurb-start": "Una guía práctica guiada para ayudarte a ",
-    "book-blurb-highlight": "reconstruir la reverencia",
-    "book-blurb-end": " hacia tu propio devenir—lejos del miedo heredado, de vuelta hacia lo sagrado en ti.",
-    "book-empty": "Nuestra próxima edición está en camino. Suscríbete abajo para ser la primera en saberlo.",
-    "circle-eyebrow": "El Encuentro",
-    "circle-title": "Cuando estés lista para profundizar: El Encuentro de Rebuilding Reverence.",
-    "circle-description": "Una experiencia grupal pequeña, en vivo, de 4 semanas y con cupo de 15 personas, donde recorremos el proceso juntas con Ashley en la sala.",
-    "circle-cta": "Explorar El Encuentro",
-    "community-eyebrow": "El proceso",
-    "community-title": "Siempre puedes volver.",
-    "community-description": "Una comunidad online basada en el respeto, el acompañamiento y la fe.",
-    "community-cta": "Unirme a El proceso",
-    "writing-empty": "Las próximas lecturas están en camino.",
+    "book-cta": "Descubre la guía — $33",
+    "book-blurb-start": "Una guía para ayudarte a ",
+    "book-blurb-highlight": "reconstruir la fe",
+    "book-blurb-end": " en tu propio proceso: lejos del miedo heredado y de vuelta hacia lo sagrado que vive en ti.",
+    "book-empty": "La próxima edición está en camino. Suscríbete abajo para ser la primera en saberlo.",
+    "circle-eyebrow": "The Circle",
+    "circle-title": "Cuando llegue el momento de ir más profundo: The Rebuilding Reverence Circle.",
+    "circle-description": "Una experiencia grupal pequeña, en vivo, de 4 semanas y con cupo de 15 personas, donde recorremos el proceso en compañía, con Ashley en la sala.",
+    "circle-cta": "Explorar The Circle",
+    "community-eyebrow": "The In-Between",
+    "community-title": "Un lugar al que puedas seguir volviendo.",
+    "community-description": "Una comunidad privada para reflexionar, conversar con honestidad y caminar con personas que también están en proceso.",
+    "community-cta": "Unirme a The In-Between",
+    "writing-empty": "Los próximos ensayos están en camino.",
     "sidebar-index": "En esta página",
-    "sidebar-book": "Guías prácticas",
+    "sidebar-book": "Guías",
     "sidebar-who": "Para quién es",
     "sidebar-manifesto": "Manifiesto",
     "sidebar-find": "Formas de empezar",
-    "sidebar-workbooks": "Guías prácticas",
-    "sidebar-circle": "El Encuentro",
-    "sidebar-community": "Comunidad",
-    "sidebar-fresh": "Lecturas recientes",
-    "sidebar-writing": "Lecturas recientes",
+    "sidebar-workbooks": "Guías",
+    "sidebar-circle": "The Circle",
+    "sidebar-community": "The In-Between",
+    "sidebar-fresh": "Ensayos recientes",
+    "sidebar-writing": "Ensayos recientes",
     "sidebar-cta-eyebrow": "Únete",
-    "sidebar-cta-desc": "Historias, afirmaciones y reflexiones—directamente a tu inbox, una vez por semana.",
+    "sidebar-cta-desc": "Historias, afirmaciones y reflexiones, directo a tu correo, una vez por semana.",
     "sidebar-cta-link": "Suscribirme"
   },
   "About": {
     "metadata": {
-      "title": "Sobre Ashley Leon | Escritora, Coach y Facilitadora de Talleres sobre Fe e Identidad",
-      "description": "Ashley Leon es escritora, facilitadora de talleres y coach holística de cuerpo-mente certificada. Trabaja en la intersección de la deconstrucción de fe, espiritualidad queer y sanación emocional."
+      "title": "Sobre Ashley Leon | Escritora, coach y facilitadora sobre fe e identidad",
+      "description": "Ashley Leon es escritora, facilitadora de experiencias y coach holística cuerpo-mente certificada. Su trabajo vive en la intersección entre deconstrucción de fe, identidad, espiritualidad y sanación emocional."
     },
     "eyebrow": "Sobre mí",
     "title": "Soy Ashley.",
     "image-alt": "Ashley Leon",
-    "paragraph-1": "Soy escritora, facilitadora de talleres y coach holística de cuerpo-mente certificada. Mi vida se ha formado en El proceso — el espacio entre la fe que me entregaron y la fe que todavía estoy aprendiendo a confiar. Viví profundamente dentro de la religión, y luego aprendí cómo dejarla sin perder reverencia.",
-    "paragraph-2": "Soy cubano-colombiana, queer, de primera generación, ex misionera de tiempo completo, y ex estudiante de seminario que se fue con más preguntas que respuestas. Viví en los extremos durante mucho tiempo. Ahora, elijo el gris.",
-    "paragraph-3": "Mi trabajo vive en la intersección de la deconstrucción de fe, la espiritualidad queer y la sanación emocional — espiritualidad más allá del dogma, fe sin miedo, integración en lugar de borrado.",
-    "paragraph-4": "No estoy aquí para decirte qué creer. Estoy aquí para sostener espacio, junto a mi esposa, para el trabajo lento y honesto del retorno.",
-    "cta": "Comienza con Rebuilding Reverence"
+    "paragraph-1": "Soy escritora, facilitadora de experiencias y coach holística cuerpo-mente certificada. Mi vida ha tomado forma en la transición: ese lugar entre la fe que recibí y la fe que todavía estoy aprendiendo a confiar. Viví profundamente dentro de la religión, y luego aprendí a salir sin perder la reverencia.",
+    "paragraph-2": "Soy cubano-colombiana, de primera generación, ex misionera de tiempo completo y ex estudiante de seminario. He tenido que reconciliar mi historia, mi identidad y mi fe sin dejar partes de mí afuera. Viví mucho tiempo en los extremos. Ahora elijo el gris.",
+    "paragraph-3": "Mi trabajo vive en la intersección entre deconstrucción de fe, identidad, pertenencia y sanación emocional: una espiritualidad más allá del dogma, una fe sin miedo, integración en lugar de borrado.",
+    "paragraph-4": "No estoy aquí para decirte qué creer. Estoy aquí para sostener espacio, junto a mi esposa, para el proceso lento y honesto de volver a ti.",
+    "cta": "Empezar con Rebuilding Reverence"
   },
   "Recipes": {
     "metadata": {
@@ -414,10 +414,10 @@
     },
     "breadcrumb": "Inicio",
     "recipes-page-title": "Recetas",
-    "recent-posts": "Publicaciones Recientes",
+    "recent-posts": "Publicaciones recientes",
     "no-posts": "No hay publicaciones disponibles.",
-    "read-more": "Leer Más",
-    "featured-post": "Publicación Destacada",
+    "read-more": "Leer más",
+    "featured-post": "Publicación destacada",
     "visit-substack": "Visitar Substack",
     "breadcrumb-recipes": "Recetas"
   },
@@ -454,9 +454,9 @@
     "subject": "Gracias por contactar a Ashley Leon",
     "greeting": "Hola,",
     "title": "Gracias por estar aquí.",
-    "brandMessage": "Ashley Leon es un espacio de lecturas, guías prácticas y talleres en vivo para ayudarte a volver a lo sagrado sin abandonarte.",
-    "list-one": "Lecturas sobre fe, identidad y sanación",
-    "list-two": "Guías prácticas guiadas para una reconstrucción honesta",
+    "brandMessage": "Ashley Leon es un espacio de ensayos, guías y experiencias en vivo para ayudarte a volver a lo sagrado sin tener que abandonarte.",
+    "list-one": "Ensayos sobre fe, identidad y sanación",
+    "list-two": "Guías para una reconstrucción honesta",
     "list-three": "Espacios comunitarios para una integración más profunda",
     "your-message": "Tu mensaje",
     "response-message": "Gracias por escribir. Leo todo personalmente y responderé tan pronto como pueda.",
@@ -466,27 +466,27 @@
   },
   "EmailDownload": {
     "preview": "Descarga disponible por 48 horas + acceso de por vida a tu comunidad privada.",
-    "heading": "{productName} ya está disponible.",
+    "heading": "{productName} ya está lista.",
     "greeting": "Hola, {customerName}",
-    "bodyThanks": "Gracias por confiar en este proceso. <product>{productName}</product> ya es tuyo.",
+    "bodyThanks": "Gracias por confiar en este proceso. <product>{productName}</product> ya es tuya.",
     "buttonCta": "Descargar ahora",
     "linkInstruction": "Si prefieres, copia y pega este enlace en tu navegador:",
-    "downloadWarning": "Por favor, asegúrate de descargar tu PDF dentro de las próximas 48 horas, ya que el enlace estará activo por tiempo limitado.",
-    "communityInvite": "Antes de comenzar, únete a la comunidad virtual de {productName} — un espacio seguro para compartir reflexiones, hacer preguntas y caminar junto a otros.",
+    "downloadWarning": "Descarga tu PDF dentro de las próximas 48 horas. El enlace estará activo por tiempo limitado.",
+    "communityInvite": "Antes de comenzar, únete a la comunidad virtual de {productName}: un espacio seguro para compartir reflexiones, hacer preguntas y caminar junto a otras personas.",
     "ctaBoxIntro": "Únete desde Safari o tu computadora, o usa la app de la comunidad para tener todo en un solo lugar.",
-    "ctaBoxLink": "Únete a El proceso",
+    "ctaBoxLink": "Unirme a The In-Between",
     "ctaBoxNote": "* Nota: Si el enlace no se abre, borra la caché de tu navegador o copia y pega el enlace en una nueva pestaña.",
     "ctaBoxGoogle": "Al registrarte, selecciona \"Continuar con Google\" para una mejor experiencia.",
-    "supportLine": "No caminas solo/a. Si necesitas ayuda, responde a este correo o escríbenos a <emailLink>{email}</emailLink>.",
+    "supportLine": "No estás caminando esto en soledad. Si necesitas apoyo, responde a este correo o escríbenos a <emailLink>{email}</emailLink>.",
     "closing": "Con gratitud y reverencia",
     "signatureName": "Ashley Leon",
     "signatureOrg": "Ashley Leon"
   },
   "NotFound": {
-    "title": "Algo está mal aquí.",
-    "message": "Este es un error 404, lo que significa que has hecho clic en un enlace incorrecto o ingresado una URL inválida.",
-    "subtleQuote": "&quot;La página que buscas no existe, pero el viaje continúa.&quot;",
-    "returnHome": "Volver al Inicio"
+    "title": "Algo no llegó a donde debía.",
+    "message": "Este es un error 404. Puede que hayas entrado por un enlace roto o una dirección que ya no existe.",
+    "subtleQuote": "\"La página que buscas no existe, pero el camino continúa.\"",
+    "returnHome": "Volver al inicio"
   },
   "NotPostFound": {
     "title": "No hay publicaciones",
@@ -496,7 +496,7 @@
   },
   "Checkout": {
     "loading-status": "Preparando un checkout seguro",
-    "loading-message": "Estamos conectando con Stripe y preparando todo para tu compra. Esto sólo tarda unos segundos.",
+    "loading-message": "Estamos conectando con Stripe y preparando todo para tu compra. Esto solo tarda unos segundos.",
     "error-title": "No pudimos iniciar el pago",
     "error-message": "Puede que la conexión con Stripe haya fallado. Inténtalo de nuevo o avísanos si el problema persiste.",
     "retry-button": "Reintentar",
@@ -635,175 +635,175 @@
     }
   },
   "RebuildingReverence": {
-    "metadata-title": "Reconstruyendo la Reverencia | Ashley Leon",
-    "metadata-description": "Un regreso de 30 días a la maravilla después de las ruinas de la religión. Una práctica lenta y body-first para reconstruir la reverencia sin abandonarte.",
-    "new-release": "Nuevo Lanzamiento",
+    "metadata-title": "Rebuilding Reverence | Ashley Leon",
+    "metadata-description": "Un regreso de 30 días al asombro después de una fe que se quebró. Una práctica lenta, desde el cuerpo, para reconstruir la fe sin tener que esconderte.",
+    "new-release": "Nuevo lanzamiento",
     "hero": {
-      "title": "RECONSTRUYENDO LA REVERENCIA",
-      "subtitle": "Un regreso de 30 días a la maravilla tras las ruinas de la religión",
-      "tagline": "No estás loco. No estás retrocediendo. No estás huérfano. Te estás despertando."
+      "title": "REBUILDING REVERENCE",
+      "subtitle": "UN CAMINO DE 30 DÍAS PARA VOLVER A LO SAGRADO DESPUÉS DE UNA FE QUE SE QUEBRÓ",
+      "tagline": "No estás perdiendo la cabeza. No estás retrocediendo. No estás huérfana. Estás despertando."
     },
     "if-you": {
-      "heading": "Si algo de esto eres tú…",
+      "heading": "Tal vez esto también ha sido parte de tu historia…",
       "items": [
-        "Has susurrado una oración y te has preguntado si alguien seguía escuchando.",
-        "Dejaste una iglesia y sentiste que dejaste a Dios en algún lugar del estacionamiento.",
+        "Has susurrado una oración y te has preguntado si alguien todavía escucha.",
+        "Saliste de una iglesia y sentiste que habías dejado a Dios en algún rincón del estacionamiento.",
         "Te dijeron que tus preguntas eran peligrosas, que tu cuerpo era un problema, que tu ternura era pecado.",
-        "Serviste más, te escondiste más, sacrificaste más — y a eso le llamaste pertenencia.",
-        "Has estado culpando al diablo por cada cosa difícil, y estás tan cansado de vivir a la defensiva."
+        "Serviste más, te escondiste más, te sacrificaste más — y a eso le llamaste pertenecer.",
+        "Has culpado al diablo por cada cosa difícil, y estás cansada de vivir siempre en guardia."
       ],
-      "closing": "Entonces ya sabes la verdad que nadie en tu antiguo banco se atrevería a decir en voz alta:",
-      "truth": "No perdiste tu fe. Superaste la jaula en la que venía."
+      "closing": "Entonces ya sabes esa verdad que nadie en tu antigua banca se atrevía a decir en voz alta:",
+      "truth": "No perdiste la fe. Te quedó pequeña la jaula donde venía."
     },
     "different-way": {
-      "heading": "Otra forma de regresar",
-      "paragraph1": "Reconstruyendo la Reverencia es para quienes se alejaron — no de Dios, sino de la versión de Dios que no podía sostener tus preguntas, tu cultura o tu humanidad completa.",
-      "paragraph2": "Es un camino de 30 días de regreso a una fe que no requiere abandono de ti mismo.",
-      "paragraph3": "No es una solución rápida. No es un subidón espiritual. Una práctica lenta, honesta y body-first que te encuentra exactamente donde estás — tierno, inseguro, todavía doliéndote, todavía aquí."
+      "heading": "Otra forma de volver",
+      "paragraph1": "Rebuilding Reverence es para quienes se fueron — no de Dios, sino de una versión de Dios que no podía sostener sus preguntas, su cultura ni toda su humanidad.",
+      "paragraph2": "Es un camino de 30 días de regreso a una fe que no te pide abandonarte para pertenecer.",
+      "paragraph3": "No es una solución rápida. No es una subida de azúcar espiritual. Es una práctica lenta, honesta y encarnada que te encuentra exactamente donde estás: sensible, insegura, todavía doliendo, todavía aquí."
     },
     "each-day": {
-      "heading": "Lo que cada día sostiene",
-      "intro": "Diez minutos. Sin actuación. Sin banco requerido.",
+      "heading": "Lo que sostiene cada día",
+      "intro": "Diez minutos. Sin actuación. Sin necesidad de volver a una banca de iglesia.",
       "anchors": [
         {
-          "name": "Llegada",
-          "desc": "una respiración para traerte a tu cuerpo"
+          "name": "Llegar",
+          "desc": "una respiración para volver al cuerpo"
         },
         {
-          "name": "Ancla",
-          "desc": "una verdad para llevar contigo durante el día"
+          "name": "Anclar",
+          "desc": "una verdad sencilla para llevar contigo durante el día"
         },
         {
-          "name": "Reflexiona",
-          "desc": "una historia que te encuentra donde vives"
+          "name": "Reflexionar",
+          "desc": "una historia que te encuentra justo donde estás"
         },
         {
-          "name": "Responde",
-          "desc": "un prompt que mueve algo que estaba atascado"
+          "name": "Responder",
+          "desc": "una pregunta que afloja algo por dentro"
         }
       ],
-      "closing": "No tienes que seguir el orden. No tienes que apresurarte. Esto no es una prueba. Es un regreso."
+      "closing": "No tienes que hacerlo en orden. No tienes que apresurarte. Esto no es una prueba. Es un regreso."
     },
     "whats-inside": {
-      "heading": "Lo que hay dentro",
+      "heading": "Lo que encontrarás dentro",
       "items": [
         {
-          "title": "El Viaje de 30 Días",
-          "desc": "Cuatro semanas: Cuestionar el Viejo Plano, Reclamar la Confianza, Reescribir lo Verdadero, Reconstruir desde Adentro hacia Afuera."
+          "title": "El viaje de 30 días",
+          "desc": "Cuatro semanas: cuestionar el viejo molde, recuperar la confianza, reescribir lo verdadero y reconstruir desde adentro hacia afuera."
         },
         {
-          "title": "Acompañamiento de Audio Guiado",
-          "desc": "Cada Llegada y reflexión clave, en mi voz, para que puedas cerrar los ojos y dejarte guiar en lugar de guiarte a ti mismo."
+          "title": "Acompañamiento guiado en audio",
+          "desc": "Cada llegada y cada reflexión clave, en mi voz, para que puedas cerrar los ojos y dejarte guiar sin tener que sostenerlo todo en soledad."
         },
         {
-          "title": "El Encuentro",
-          "desc": "Una comunidad de personas caminando la misma ruta, para que nunca tengas que hacer la partida ni el regreso en soledad."
+          "title": "The Circle",
+          "desc": "Una comunidad de personas recorriendo un camino parecido, para que no tengas que vivir la salida ni el regreso en soledad."
         },
         {
-          "title": "El Kit de Liberación",
-          "desc": "La oración de cierre, la práctica de integración \"Cuando Siento Miedo\" y las voces que me llevaron a casa."
+          "title": "El kit para soltar",
+          "desc": "La oración de cierre, la práctica de integración “Cuando siento miedo” y las voces que me acompañaron de vuelta a casa."
         }
       ]
     },
     "who-for": {
       "heading": "Para quién es esto",
-      "paragraph1": "Para quienes deconstruyen. Para quienes cuestionan. Para los queer y llamados. Para quienes lloran una iglesia que no fue segura — y tienen hambre de algo sagrado que sí lo sea.",
-      "paragraph2": "Si ya terminaste de tener miedo de lo que sientes, ya estás en casa aquí."
+      "paragraph1": "Para quienes están deconstruyendo. Para quienes cuestionan. Para quienes están reconciliando su identidad con su llamado. Para quienes hacen duelo por una iglesia que no fue segura, y tienen hambre de algo sagrado que sí lo sea.",
+      "paragraph2": "Si ya no quieres seguir teniendo miedo de lo que sientes, aquí ya hay casa para ti."
     },
     "promise": {
       "heading": "Mi promesa para ti",
-      "paragraph1": "Recorre los 30 días. Si nada se mueve, escríbeme y te devuelvo tu dinero — sin necesidad de citar escritura alguna.",
-      "paragraph2": "Prefiero que confíes en el proceso a que te sientas atrapado por una compra. Ese es todo el punto.",
-      "cta": "Comienza el viaje — {price}",
-      "cta-button": "Comenzar el Día Uno →"
+      "paragraph1": "Recorre los 30 días. Si nada se mueve, escríbeme y te devuelvo tu dinero, sin pedirte un versículo que lo justifique.",
+      "paragraph2": "Prefiero que puedas confiar en el proceso antes que sentirte atrapada por una compra. Ese también es el punto.",
+      "cta": "Comenzar el viaje — {price}",
+      "cta-button": "Empezar el Día Uno →"
     },
     "behind": {
       "heading": "Quién está detrás de esto",
-      "paragraph1": "Soy Ashley. No crecí religiosa — pero cuando encontré el cristianismo evangélico, le di todo. Por una temporada, me salvó. Luego empezó a costarme cosas que no sabía que se me permitía conservar: mi intuición, mi voz, mi alegría.",
-      "paragraph2": "Eventualmente tuve que alejarme. No de Dios — de la versión de Dios que no podía sostener todo lo que soy. Ahí comenzó el viaje real.",
-      "paragraph3": "Soy coach holístico certificado cuerpo-mente con formación en psicología, y estas páginas contienen lo que me tomó años desenredar — para que tu propio camino a casa se sienta un poco menos solitario."
+      "paragraph1": "Soy Ashley. No crecí religiosa, pero cuando encontré el cristianismo evangélico, le entregué todo. Por un tiempo, me salvó. Luego empezó a costarme cosas que no sabía que tenía permiso de conservar: mi intuición, mi voz, mi alegría.",
+      "paragraph2": "Con el tiempo tuve que irme. No de Dios, sino de una versión de Dios que no podía sostener todo lo que soy. Ahí empezó el viaje real.",
+      "paragraph3": "Soy coach holística cuerpo-mente certificada, con formación en psicología, y estas páginas sostienen lo que a mí me tomó años desenredar, para que tu propio camino a casa se sienta un poco menos solitario."
     },
     "questions": {
       "heading": "Preguntas que quizás llevas contigo",
       "items": [
         {
           "q": "¿Es esto anticristiano? ¿Antibiblia?",
-          "a": "No. No se trata de tirarlo todo — se trata de tamizar, no de menospreciar. Hay belleza, dolor, poesía y verdad en lo que heredaste. Sostenemos lo bueno sin negar el dolor."
+          "a": "No. No se trata de tirarlo todo, sino de discernir sin despreciar. Hay belleza, duelo, poesía y verdad en lo que heredaste. Sostenemos lo bueno sin negar el dolor."
         },
         {
           "q": "¿Y si sigo en la iglesia?",
-          "a": "Bienvenido. Esto no es un empujón para irte de nada. Es un espacio para ser honesto sobre lo que llevas, estés donde estés."
+          "a": "Claro. Esto no es un empujón para irte de nada. Es un espacio para decir la verdad sobre lo que llevas, estés donde estés."
         },
         {
-          "q": "No soy mucho de escribir en un diario.",
-          "a": "Está bien. Di tus respuestas en voz alta. Llévalas a caminar. Usa el audio y deja que tu cuerpo responda. Lo que sea que te mantenga honesto, empieza ahí."
+          "q": "No soy de escribir en diario. ¿Igual me sirve?",
+          "a": "Sí. Puedes decir tus respuestas en voz alta. Llevarlas a caminar. Usar el audio y dejar que tu cuerpo responda. Lo que te ayude a ser honesta, empieza por ahí."
         },
         {
           "q": "¿Cuánto tiempo toma?",
           "a": "Unos diez minutos al día. Puedes pausar, repetir un día o quedarte en una pregunta más tiempo del esperado."
         },
         {
-          "q": "¿Es afirmativo?",
-          "a": "Sí. Todo tú pertenece aquí — tu cultura, tu cuerpo, tu sexualidad, tus preguntas. La reverencia nunca debería requerir esconderse."
+          "q": "¿Puedo estar aquí sin tener que esconderme?",
+          "a": "Sí. Todo lo que eres tiene lugar aquí: tu cultura, tu cuerpo, tu sexualidad, tus preguntas. La reverencia nunca debería exigirte esconderte."
         }
       ]
     },
     "closing": {
       "heading": "Una última cosa",
-      "paragraph1": "El altar nunca fue solo madera y oro. Después de toda la partida y el regreso, encontrarás algo inconmovible: lo Divino dentro de ti.",
+      "paragraph1": "El altar nunca fue solo madera y oro. Después de todo el irte y volver, encontrarás algo inamovible: lo Divino dentro de ti.",
       "paragraph2": "Tú eres el santuario ahora.",
-      "welcome": "Bienvenido a casa.",
-      "cta-button": "Comenzar Reconstruyendo la Reverencia →"
+      "welcome": "Estás en casa.",
+      "cta-button": "Comenzar Rebuilding Reverence →"
     }
   },
   "Community": {
     "metadata": {
-      "title": "El proceso | Una comunidad para reconstruir la fe juntos — Ashley Leon",
-      "description": "Una comunidad en línea para personas reconstruyendo la fe y la identidad después de la deconstrucción. El proceso es una comunidad online basada en el respeto, el acompañamiento y la fe, a la que siempre puedes volver."
+      "title": "The In-Between | Una comunidad para reconstruir la fe acompañada — Ashley Leon",
+      "description": "Una comunidad privada para personas reconstruyendo fe e identidad después de la deconstrucción. The In-Between es un espacio de honestidad y acompañamiento al que puedes seguir volviendo."
     },
-    "eyebrow": "El proceso",
-    "title": "Siempre puedes volver.",
-    "lead": "La sanación no es un evento único. Es una práctica a la que regresas — y es más fácil con personas que recorren el mismo camino.",
-    "paragraph": "El proceso es nuestra comunidad en línea: el lugar donde este trabajo se mantiene vivo entre guías prácticas y encuentros. Un espacio basado en el respeto, el acompañamiento y la fe para la reflexión honesta, la conversación real y la pertenencia sin condiciones.",
-    "inside-heading": "Lo que encontrarás dentro:",
-    "inside-1": "Reflexiones y prompts continuos para mantener vivo el trabajo entre guías prácticas y encuentros.",
-    "inside-2": "Conversación honesta — sin actuación, sin presión a tenerlo todo resuelto.",
-    "inside-3": "Un lugar para regresar a ti mismo en compañía.",
-    "cta": "Únete a El proceso",
-    "footnote": "Gratis para unirse. El proceso vive en una plataforma privada solo para miembros."
+    "eyebrow": "The In-Between",
+    "title": "Un espacio para volver a ti, una y otra vez.",
+    "lead": "La sanación no sucede de una sola vez. Es algo a lo que regresas, especialmente cuando no tienes que hacerlo en soledad.",
+    "paragraph": "The In-Between es nuestra comunidad privada: un espacio para mantener vivo este proceso entre guías, encuentros y temporadas de cambio. Aquí puedes conversar con honestidad, hacer preguntas, compartir lo que estás viviendo y volver a ti en compañía.",
+    "inside-heading": "Dentro encontrarás:",
+    "inside-1": "Reflexiones y preguntas para seguir integrando el proceso entre una guía y el próximo encuentro.",
+    "inside-2": "Conversaciones honestas — sin actuación, sin presión por tenerlo todo resuelto.",
+    "inside-3": "Un lugar para volver a ti en compañía.",
+    "cta": "Unirme a The In-Between",
+    "footnote": "Unirte es gratis. The In-Between vive en una plataforma privada solo para miembros."
   },
   "Writing": {
     "metadata": {
-      "title": "Lecturas sobre Fe, Deconstrucción y Sanación | Ashley Leon",
-      "description": "Lecturas desde El proceso sobre fe, deconstrucción, identidad, diversidad sexual, sanación y retorno."
+      "title": "Ensayos sobre fe, deconstrucción y sanación | Ashley Leon",
+      "description": "Ensayos desde la transición sobre fe, deconstrucción, identidad, sanación y regreso."
     },
     "breadcrumb": "Inicio",
-    "page-title": "Lecturas desde El proceso",
+    "page-title": "Ensayos desde la transición",
     "recipes-page-title": "Recetas",
-    "recent-posts": "Publicaciones Recientes",
+    "recent-posts": "Ensayos recientes",
     "no-posts": "No hay publicaciones disponibles.",
-    "read-more": "Leer Más",
-    "featured-post": "Publicación Destacada",
+    "read-more": "Leer más",
+    "featured-post": "Publicación destacada",
     "visit-substack": "Visitar Substack",
     "breadcrumb-recipes": "Recetas",
-    "breadcrumb-blog": "Lecturas"
+    "breadcrumb-blog": "Ensayos"
   },
   "Workbooks": {
-    "metadata-title": "Guías Prácticas para Fe e Identidad | Ashley Leon",
-    "metadata-description": "Guías prácticas digitales para reconstruir fe, identidad, reverencia y pertenencia.",
-    "breadcrumb": "Guías prácticas",
-    "title": "Guías prácticas guiadas para el retorno.",
-    "subtitle": "Dos acompañantes digitales para reconstruir reverencia, fe e identidad a tu propio ritmo.",
-    "details-button": "Ver Detalles",
-    "buy-button": "Comprar Ahora",
-    "detail-title": "Detalles de la guía práctica",
-    "information-title": "Información de Envio",
-    "information-paragraph": "Completa tus datos de envio para recibir la confirmación y el enlace de descarga de tu compra.",
-    "payment-title": "Información de Pago",
+    "metadata-title": "Guías digitales para fe e identidad | Ashley Leon",
+    "metadata-description": "Guías digitales para reconstruir fe, identidad y pertenencia.",
+    "breadcrumb": "Guías",
+    "title": "Guías para el regreso.",
+    "subtitle": "Dos acompañantes digitales para reconstruir fe, identidad y pertenencia a tu propio ritmo.",
+    "details-button": "Ver detalles",
+    "buy-button": "Comprar ahora",
+    "detail-title": "Detalles de la guía",
+    "information-title": "Información de envío",
+    "information-paragraph": "Completa tus datos de envío para recibir la confirmación y el enlace de descarga de tu compra.",
+    "payment-title": "Información de pago",
     "payment-paragraph": "Selecciona tu método preferido y confirma los datos para finalizar la compra.",
-    "about-title": "Acerca de esta guía práctica",
-    "features-title": "Lo Que Descubrirás",
-    "new-release": "Nuevo Lanzamiento"
+    "about-title": "Sobre esta guía",
+    "features-title": "Lo que encontrarás",
+    "new-release": "Nuevo lanzamiento"
   },
   "WorkbooksSuccess": {
     "pending-title": "Pago en proceso",
@@ -815,9 +815,9 @@
     "processing-body": "Estamos finalizando tu compra. Recibirás un correo con el enlace de descarga en los próximos minutos.",
     "processing-email": "Correo de confirmación enviado a <highlight>{email}</highlight>",
     "processing-emailFallback": "tu correo electrónico",
-    "complete-title": "¡Compra completada exitosamente!",
-    "complete-subtitle": "Gracias por tu compra de <highlight>{product}</highlight>",
-    "emailSection-title": "Revisa tu correo electrónico",
+    "complete-title": "¡Tu compra está lista!",
+    "complete-subtitle": "Gracias por comprar <highlight>{product}</highlight>",
+    "emailSection-title": "Revisa tu correo",
     "emailSection-body": "Hemos enviado un enlace de descarga a <highlight>{email}</highlight>",
     "emailSection-note": "Si no lo encuentras en tu bandeja principal, revisa la carpeta de spam.",
     "infoSection-title": "ℹ️ Información importante",
@@ -832,121 +832,121 @@
     "supportSection-home": "Ir al inicio"
   },
   "Circle": {
-    "metadata-title": "El Encuentro de Rebuilding Reverence | Grupo en Vivo de 4 Semanas sobre Deconstrucción de Fe",
+    "metadata-title": "The Rebuilding Reverence Circle | Grupo en vivo de 4 semanas sobre deconstrucción de fe",
     "metadata-description": "Una experiencia grupal en vivo de 4 semanas para quienes ya no quieren reconstruir su fe en soledad.",
-    "eyebrow": "Experiencia Grupal en Vivo",
+    "eyebrow": "Experiencia grupal en vivo",
     "reserveCta": "Reservar mi lugar — ${price} →",
     "nav": {
       "inside": "Qué incluye",
-      "weeks": "Las 4 Semanas",
+      "weeks": "Las 4 semanas",
       "forYou": "¿Es para mí?",
-      "promise": "La Promesa",
+      "promise": "La promesa",
       "how": "Cómo funciona",
       "reserve": "Reservar",
       "questions": "Preguntas",
       "reserveCta": "Reservar — ${price} →"
     },
-    "earlyRateNote": "Tarifa de cohorte temprana. Precio regular ${regular}. Las miembros fundadoras reciben la tarifa reducida a cambio de feedback que dará forma a futuros encuentros.",
+    "earlyRateNote": "Tarifa de la primera cohorte. Precio regular ${regular}. Quienes formen parte del grupo fundador reciben una tarifa reducida a cambio de compartir comentarios que ayudarán a dar forma a futuros círculos.",
     "hero": {
-      "title": "El Encuentro de Rebuilding Reverence",
+      "title": "The Rebuilding Reverence Circle",
       "subtitle": "Una experiencia grupal en vivo de 4 semanas para quienes ya no quieren reconstruir su fe en soledad"
     },
     "opening": {
       "lines": [
-        "Hay cosas de las que no puedes salir escribiendo en soledad.",
+        "Hay cosas que no se terminan de procesar escribiéndolas a solas.",
         "Necesitas una sala.",
-        "Un encuentro.",
-        "Personas que no necesitan que les expliques por qué te fuiste — porque ellas también se fueron.",
-        "Eso es lo que esto es."
+        "Un círculo.",
+        "Personas a quienes no tengas que explicarles por qué te fuiste — porque también tuvieron que irse.",
+        "Eso es esto."
       ]
     },
     "what-circle-is": {
-      "heading": "Lo que es el Encuentro",
-      "paragraph1": "El Encuentro de Rebuilding Reverence es una experiencia grupal en vivo de 4 semanas, pequeña e íntima, donde recorremos el viaje juntas — con Ashley en la sala.",
+      "heading": "Qué es The Circle",
+      "paragraph1": "The Rebuilding Reverence Circle es una experiencia grupal en vivo de 4 semanas, pequeña e íntima, donde recorremos el camino en compañía, con Ashley en la sala.",
       "paragraph2": "No es un curso. No es un webinar. No es una conferencia.",
-      "paragraph3": "Un encuentro. Donde todas pueden hablar. Donde tu historia tiene lugar. Donde el trabajo realmente aterriza porque alguien lo está presenciando contigo.",
-      "paragraph4": "El Encuentro funciona por cohortes — grupos pequeños e intencionales que comienzan juntas y recorren el viaje juntas. Una nueva cohorte abre solo cuando se completa un encuentro de 15. No es un programa al que puedas unirte en cualquier momento. Cuando una cohorte se llena, se llena — y la siguiente abre cuando estamos listas para comenzar de nuevo."
+      "paragraph3": "Es un círculo. Un lugar donde cada persona puede hablar. Donde tu historia tiene espacio. Donde el proceso por fin aterriza porque alguien lo está presenciando contigo.",
+      "paragraph4": "The Circle funciona por cohortes: grupos pequeños e intencionales que comienzan al mismo tiempo y atraviesan el camino en compañía. Una nueva cohorte abre solo cuando se completa un grupo de 15. No es un programa al que entras en cualquier momento. Cuando una cohorte se llena, se llena, y la siguiente abre cuando llega el momento de empezar otra vez."
     },
     "whats-inside": {
       "heading": "Lo que incluye",
       "items": [
         {
-          "title": "4 Sesiones Semanales en Vivo con Ashley",
-          "desc": "Cada semana nos reunimos en Zoom por 60–75 minutos. Ashley abre el espacio, enseña, sostiene lo que emerge y cierra con una práctica que llevas a la semana. Las sesiones se graban para que no te pierdas ninguna."
+          "title": "4 sesiones semanales en vivo con Ashley",
+          "desc": "Cada semana nos reunimos por Zoom durante 60–75 minutos. Ashley abre el espacio, enseña, acompaña lo que emerge y cierra con una práctica para llevar a la semana. Las sesiones se graban para que no te pierdas ninguna."
         },
         {
-          "title": "Un Encuentro Limitado a 15 Personas Máximo",
-          "desc": "Pequeño por diseño. Suficientemente grande para sentir una comunidad. Suficientemente pequeño para que nunca seas invisible. No es un webinar con cientos de desconocidas. Todas en esta sala están aquí a propósito."
+          "title": "Un círculo limitado a 15 personas",
+          "desc": "Pequeño por intención. Lo bastante grande para sentir comunidad. Lo bastante íntimo para que nunca seas invisible. Esto no es un webinar con cientos de personas desconocidas. Cada persona en esta sala está aquí con propósito."
         },
         {
-          "title": "El Viaje Completo de Rebuilding Reverence",
-          "desc": "Tu diario de 30 días y las meditaciones guiadas diarias están incluidos — las sesiones en vivo están estructuradas para acompañarlos, semana a semana. No necesitas comprar nada aparte."
+          "title": "El camino completo de Rebuilding Reverence",
+          "desc": "Tu guía de 30 días y las meditaciones diarias están incluidas. Las sesiones en vivo están diseñadas para acompañar ese recorrido, semana a semana. No necesitas comprar nada aparte."
         },
         {
-          "title": "Notas de Voz de Ashley entre Semanas",
-          "desc": "Entre sesiones, una nota de voz corta de 3–5 minutos llega a la comunidad — un anclaje, una enseñanza, un recordatorio de que no estás caminando esto sola. Lo justo para mantener viva la práctica entre sesiones."
+          "title": "Notas de voz de Ashley entre semanas",
+          "desc": "Entre sesiones, recibirás una nota de voz breve de 3–5 minutos en la comunidad: un ancla, una enseñanza, un recordatorio de que no estás caminando esto en soledad. Lo justo para mantener viva la práctica entre sesiones."
         },
         {
-          "title": "Comunidad Privada del Encuentro",
-          "desc": "Un hilo dedicado dentro de la comunidad de Rebuilding Reverence solo para quienes estén en el encuentro. Para los pensamientos de las 3 a.m. Los hallazgos. Lo que necesitas decir antes de la sesión de la próxima semana."
+          "title": "Comunidad privada de The Circle",
+          "desc": "Un hilo dedicado dentro de la comunidad de Rebuilding Reverence solo para quienes formen parte de The Circle. Para los pensamientos de las 3 a.m. Los descubrimientos. Eso que necesitas decir antes de la sesión de la próxima semana."
         },
         {
-          "title": "Opcional: Llamada de Integración 1:1 Después de la Semana 4",
-          "desc": "Si quieres cerrar el encuentro con una conversación privada de 45 minutos con Ashley — para integrar lo que surgió, discernir qué sigue y dar el próximo paso con apoyo — esta opción está disponible para quienes estén en el encuentro después de la sesión final."
+          "title": "Opcional: llamada de integración 1:1 después de la semana 4",
+          "desc": "Si quieres cerrar The Circle con una conversación privada de 45 minutos con Ashley — para integrar lo que surgió, discernir qué sigue y dar el próximo paso con apoyo — esta opción estará disponible después de la sesión final."
         }
       ]
     },
     "four-weeks": {
-      "heading": "Las Cuatro Semanas",
+      "heading": "Las cuatro semanas",
       "weeks": [
         {
-          "name": "Semana 1 — Cuestionar el Viejo Plan",
-          "desc": "Comenzamos con honestidad. ¿Qué se nos entregó? ¿Cuánto nos costó? ¿Qué queremos tamizar y qué queremos soltar? Saldrás de esta sesión con palabras para cosas que has cargado sin nombrar."
+          "name": "Semana 1 — Cuestionar el viejo molde",
+          "desc": "Empezamos con honestidad. ¿Qué recibimos? ¿Qué nos costó? ¿Qué queremos discernir y qué estamos en disposición de soltar? Saldrás de esta sesión con lenguaje para cosas que venías cargando sin poder nombrar."
         },
         {
-          "name": "Semana 2 — Reclamar la Confianza",
-          "desc": "La sala se vuelve más cálida aquí. Llevamos una semana escribiendo. Vamos más profundo — hacia los líderes que nos fallaron, el Dios que estamos aprendiendo a confiar de nuevo, el saber interior que nos dijeron no confiar. Esta sesión hace algo."
+          "name": "Semana 2 — Recuperar la confianza",
+          "desc": "Aquí la sala se vuelve más cálida. Llevamos una semana escribiendo. Vamos más profundo: hacia los líderes que nos fallaron, el Dios en quien estamos aprendiendo a confiar otra vez y esa voz interior que nos enseñaron a ignorar. Esta sesión mueve algo."
         },
         {
-          "name": "Semana 3 — Reescribir lo Verdadero",
-          "desc": "Aquí es donde suele abrirse. Desmantelamos creencias heredadas sobre el pecado, la autoridad, la Biblia, nuestros cuerpos. Las reemplazamos no con un dogma nuevo, sino con verdad más profunda. La formación de coaching de Ashley sostiene la sala aquí."
+          "name": "Semana 3 — Reescribir lo verdadero",
+          "desc": "Aquí algo suele abrirse. Desmontamos creencias heredadas sobre el pecado, la autoridad, la Biblia y nuestros cuerpos. No las reemplazamos con otro dogma, sino con una verdad más profunda. La formación de coaching de Ashley sostiene la sala aquí."
         },
         {
-          "name": "Semana 4 — Reconstruir desde Adentro hacia Afuera",
-          "desc": "La sesión de cierre. Un ritual de retorno. ¿A dónde llevamos esto? ¿Cómo se ve ahora la pertenencia? ¿Qué bendecimos y qué soltamos? Esta sesión termina con una bendición sobre cada persona del encuentro."
+          "name": "Semana 4 — Reconstruir desde adentro hacia afuera",
+          "desc": "La sesión de cierre. Un ritual de regreso. ¿A dónde llevamos esto? ¿Cómo se ve ahora la pertenencia? ¿Qué bendecimos y qué soltamos? Esta sesión termina con una bendición sobre cada persona de The Circle."
         }
       ]
     },
     "who-for": {
       "heading": "Para quién es esto",
-      "paragraph1": "Has estado en una temporada de deconucción — quizás por meses, quizás por años.",
-      "paragraph2": "Has leído los libros. Has escuchado los podcasts. Has escrito en soledad.",
-      "paragraph3": "Pero algo sigue incompleto. Y empiezas a sospechar que terminarlo requiere a otras personas.",
+      "paragraph1": "Has estado en una temporada de deconstrucción, quizá por meses, quizá por años.",
+      "paragraph2": "Has leído libros. Has escuchado podcasts. Has escrito en soledad.",
+      "paragraph3": "Pero algo sigue inconcluso. Y empiezas a sospechar que para terminar de atravesarlo necesitas a otras personas.",
       "truth": "Tienes razón.",
-      "paragraph4": "Este encuentro es para la exvangelical. La cuestionadora. La queer y llamada. Las que aún encienden velas y no saben por qué. Las cuya fe se hizo más pequeña antes de hacerse real.",
-      "belong": "Si esa eres tú — perteneces aquí."
+      "paragraph4": "Este Círculo es para quienes salieron del mundo evangélico. Para quienes cuestionan. Para quienes están reconciliando su identidad con su llamado. Para quienes todavía encienden velas y no saben por qué. Para quienes tuvieron que hacer su fe más pequeña antes de verla volverse real.",
+      "belong": "Si te reconoces ahí — aquí perteneces."
     },
     "ashley-promise": {
       "heading": "La promesa de Ashley",
-      "paragraph1": "Creé Rebuilding Reverence durante mi propio desmoronamiento. Soy coach holística de cuerpo-mente certificada, escritora, ex misionera de tiempo completo, estudiante de seminario que se fue con más preguntas que respuestas.",
-      "paragraph2": "Soy cubano-colombiana. Soy queer. Soy de primera generación. He vivido en extremos y elegí el gris.",
-      "paragraph3": "No voy a decirte en qué creer. Voy a sostener el espacio para que lo descubras.",
-      "closing": "Eso es el encuentro."
+      "paragraph1": "Creé Rebuilding Reverence durante mi propio desmoronamiento. Soy coach holística cuerpo-mente certificada, escritora, ex misionera de tiempo completo y ex estudiante de seminario que se fue con más preguntas que respuestas.",
+      "paragraph2": "Soy cubano-colombiana. Soy de primera generación. He tenido que reconciliar mi historia, mi identidad y mi fe. He vivido en extremos y elegí el gris.",
+      "paragraph3": "No voy a decirte en qué creer. Voy a sostener el espacio para que puedas descubrirlo.",
+      "closing": "Eso es The Circle."
     },
     "enrollment": {
-      "heading": "Cómo Funciona la Inscripción",
-      "paragraph1": "El Encuentro es por cohorte — es decir, comenzamos juntas, recorremos las cuatro semanas juntas y cerramos juntas.",
-      "paragraph2": "Una nueva cohorte abre una vez que alcanzamos un encuentro completo de 15 miembros. No es un programa continuo. No empezamos con 5 personas y vemos qué pasa — esperamos hasta que la sala esté llena, porque la sala es el punto.",
-      "intro": "Esto es lo que pasa cuando reservas tu lugar:",
+      "heading": "Cómo funciona la inscripción",
+      "paragraph1": "The Circle funciona por cohorte: empezamos en grupo, atravesamos las cuatro semanas en grupo y cerramos en grupo.",
+      "paragraph2": "Una nueva cohorte abre cuando llegamos a un círculo completo de 15 personas. No es un programa continuo. No empezamos con 5 personas a ver qué pasa: esperamos hasta que la sala esté llena, porque la sala es parte del proceso.",
+      "intro": "Esto pasa cuando reservas tu lugar:",
       "steps": [
         "Recibirás una confirmación con todo lo que necesitas para prepararte.",
-        "Una vez que la cohorte llegue a 15, tu fecha de inicio confirmada se envía a todo el grupo.",
-        "Si esta cohorte se llena antes de que te unas, se te agrega automáticamente a la lista de espera de la próxima ronda — sin que tengas que hacer nada."
+        "Cuando la cohorte llegue a 15 personas, enviaremos la fecha de inicio confirmada a todo el grupo.",
+        "Si esta cohorte se llena antes de que te unas, quedarás automáticamente en la lista de espera de la próxima ronda — sin tener que hacer nada más."
       ],
-      "note": "El Encuentro abre solo unas pocas veces al año. Si sientes el llamado, no lo dejes pasar."
+      "note": "The Circle abre solo unas pocas veces al año. Si sientes el llamado, no lo dejes pasar."
     },
     "cohort-status": {
-      "heading": "Estado Actual de la Cohorte",
+      "heading": "Estado actual de la cohorte",
       "spotsRemaining": "{count} lugares disponibles de {total}.",
       "spotsNote": "Este número se actualiza a medida que se reservan los lugares. Cuando llega a cero, la inscripción se cierra y se abre la lista de espera.",
       "waitlist": "Esta cohorte está llena.",
@@ -957,11 +957,11 @@
       "items": [
         {
           "q": "¿Necesito haber comprado el PDF primero?",
-          "a": "No — el diario y las meditaciones están incluidos en tu registro al encuentro. Llegas con todo lo que necesitas."
+          "a": "No. La guía y las meditaciones están incluidas con tu reserva de The Circle. Llegas con todo lo que necesitas."
         },
         {
           "q": "¿Y si no puedo asistir a una sesión en vivo?",
-          "a": "Todas las sesiones se graban y se comparten con quienes estén en el encuentro en 24 horas. No te quedarás atrás."
+          "a": "Todas las sesiones se graban y se comparten con quienes formen parte de The Circle dentro de las siguientes 24 horas. No te quedarás atrás."
         },
         {
           "q": "¿En qué zona horaria son las sesiones?",
@@ -969,28 +969,28 @@
         },
         {
           "q": "¿Cuánto falta para comenzar una vez que me inscribo?",
-          "a": "Comenzamos cuando el encuentro de 15 está completo. Dependiendo de dónde esté la inscripción, pueden ser días o unas semanas. Se te notificará en el momento en que tu fecha de inicio se confirme."
+          "a": "Comenzamos cuando el círculo de 15 personas esté completo. Dependiendo del estado de la inscripción, pueden ser días o algunas semanas. Te avisaremos en cuanto tu fecha de inicio esté confirmada."
         },
         {
           "q": "¿Esto es terapia?",
-          "a": "No. Ashley es coach holística de cuerpo-mente certificada, no terapeuta licenciada. El encuentro es un espacio de coaching y comunidad. Si estás en crisis activa, busca apoyo de salud mental licenciado junto a este trabajo."
+          "a": "No. Ashley es coach holística cuerpo-mente certificada, no terapeuta licenciada. The Circle es un espacio de coaching y comunidad. Si estás atravesando un momento de crisis, por favor busca acompañamiento profesional de salud mental además de este espacio."
         },
         {
-          "q": "¿Esto es afirmativo?",
-          "a": "Totalmente. Todo de ti tiene cabida aquí — tu cultura, tu cuerpo, tu sexualidad, tus preguntas."
+          "q": "¿Puedo estar aquí sin tener que esconderme?",
+          "a": "Totalmente. Todo lo que eres tiene cabida aquí: tu cultura, tu cuerpo, tu sexualidad, tus preguntas."
         },
         {
           "q": "¿Y si no es lo que esperaba?",
-          "a": "Escríbenos dentro de la primera semana y lo haremos bien."
+          "a": "Escríbenos durante la primera semana. Queremos escucharte y encontrar contigo la mejor forma de acompañarte."
         }
       ]
     },
     "closing": {
       "heading": "Una cosa más",
       "paragraph1": "El altar nunca fue solo madera y oro.",
-      "paragraph2": "Siempre fue sobre el encuentro.",
-      "paragraph3": "No tienes que reconstruir esto sola.",
-      "finalLine": "15 personas. Un encuentro. Unas pocas veces al año.",
+      "paragraph2": "Siempre se trató del encuentro.",
+      "paragraph3": "No tienes que reconstruir esto en soledad.",
+      "finalLine": "15 personas. Un círculo. Unas pocas veces al año.",
       "finalLine2": "Cuando se llena, se llena."
     }
   },
@@ -1013,7 +1013,7 @@
     "infoSection-validity": "El enlace de Zoom es único y personal — <highlight>no lo compartas</highlight>",
     "infoSection-unique": "Las sesiones se graban y se comparten en 24 horas",
     "detailsSection-title": "Detalle de reserva",
-    "detailsSection-product": "Encuentro",
+    "detailsSection-product": "The Circle",
     "detailsSection-amount": "Monto",
     "detailsSection-date": "Fecha",
     "supportSection-issue": "¿Problemas con tu reserva?",
