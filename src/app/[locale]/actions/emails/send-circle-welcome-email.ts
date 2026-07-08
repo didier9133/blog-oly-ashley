@@ -12,6 +12,7 @@ interface SendCircleWelcomeEmailParams {
   customerName: string;
   communityLink: string;
   journalLink: string;
+  locale: "en" | "es";
 }
 
 export async function sendCircleWelcomeEmail({
@@ -19,6 +20,7 @@ export async function sendCircleWelcomeEmail({
   customerName,
   communityLink,
   journalLink,
+  locale,
 }: SendCircleWelcomeEmailParams) {
   try {
     const emailHtml = await render(
@@ -26,6 +28,7 @@ export async function sendCircleWelcomeEmail({
         customerName,
         communityLink,
         journalLink,
+        locale,
       }),
     );
 
@@ -33,7 +36,9 @@ export async function sendCircleWelcomeEmail({
       from: `Ashley Leon <noreply@${emailDomain}>`,
       to: [email],
       subject:
-        "You're in. Here's everything you need for Rebuilding Reverence Circle",
+        locale === "es"
+          ? "Ya estás dentro. Bienvenida a The Circle de Rebuilding Reverence"
+          : "You're in. Here's everything you need for Rebuilding Reverence Circle",
       html: emailHtml,
     });
 

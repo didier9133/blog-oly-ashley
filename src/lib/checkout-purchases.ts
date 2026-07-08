@@ -128,6 +128,7 @@ export async function finalizePaidPaymentIntent(
           customerName: purchase.customerName || "there",
           communityLink: CIRCLE_COMMUNITY_LINK,
           journalLink,
+          locale: language,
         });
       } else {
         const downloadLink = await createDownloadUrl(
