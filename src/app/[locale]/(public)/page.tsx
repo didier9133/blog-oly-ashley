@@ -15,7 +15,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 export const revalidate = 3600;
 
-const HERO_IMAGE = "/ashley-hero-room.png";
+const HERO_IMAGE = "/ashley-hero-2026.jpeg";
 
 export default async function Home() {
   const currentLanguage = await getLocale();
@@ -183,7 +183,7 @@ export default async function Home() {
       <link
         rel="preload"
         as="image"
-        imageSrcSet={`/_next/image?url=%2Fashley-hero-room.png&w=640&q=75 640w, /_next/image?url=%2Fashley-hero-room.png&w=750&q=75 750w, /_next/image?url=%2Fashley-hero-room.png&w=1080&q=75 1080w, /_next/image?url=%2Fashley-hero-room.png&w=1200&q=75 1200w, /_next/image?url=%2Fashley-hero-room.png&w=1920&q=75 1920w`}
+        imageSrcSet={`/_next/image?url=%2Fashley-hero-2026.jpeg&w=640&q=75 640w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=750&q=75 750w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1920&q=75 1920w`}
         imageSizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
       />
       <main className="bg-background text-foreground">
