@@ -1,7 +1,7 @@
 # PLAN DE MIGRACIÓN — Raíces & Returnings → Ashley Leon
 
 **Baseline:** Next.js 15 App Router · React 19 · Prisma (PostgreSQL) · next-intl (en/es) · Clerk · Stripe · Resend · AWS S3/CloudFront
-**Dominio actual:** `raicesreturnings.com` → **Nuevo:** `ashleyleon.com` (swap al final)
+**Dominio actual:** `raicesreturnings.com` → **Nuevo:** `ashleydianaleon.com` (swap al final)
 **Fuentes:** `Ashley-Leon-BUILD.md` (documento de handoff), auditoría previa del repo
 
 ---
@@ -12,7 +12,7 @@
 - **Dominio:** Migración al final (Vercel/DNS)
 - **Recipes:** Ocultar de UI/sitemap pero conservar código
 - **Oly Contreras + /our-love:** Eliminar todo rastro
-- **Community link:** Usar `https://gokollab.com/reconstruyendolareverencia-trcsrr` existente
+- **Community link:** Usar `https://www.gokollab.com/the-in-between-4dzfnm/home` para The In-Between
 - **Stripe:** Subir workbooks a $33 ahora (nuevos Price IDs)
 - **Spots Circle:** Env vars (`NEXT_PUBLIC_CIRCLE_*`)
 - **Formato:** Fases ordenadas detalladas
@@ -66,8 +66,8 @@ Archivos a tocar:
 Reemplazo global en ~20 archivos:
 - `"Raíces & Returnings"` → `"Ashley Leon"`
 - `"Raices & Returning"` (sin tilde, en `actions/contact/index.ts`, `actions/newsletter/index.ts`) → `"Ashley Leon"`
-- `BASE_URL` en `src/lib/url.ts:3` → `https://ashleyleon.com`
-- `src/app/robots.ts:3` → `https://ashleyleon.com`
+- `BASE_URL` en `src/lib/url.ts:3` → `https://ashleydianaleon.com`
+- `src/app/robots.ts:3` → `https://ashleydianaleon.com`
 - Logo/wordmark en headers/sidebar
 - `editorial-split-hero.tsx` "Raíces & Returnings Editorial — Nº 01" → "Ashley Leon — Nº 01"
 - Emails: from-addresses y body
@@ -110,7 +110,7 @@ Reemplazo global en ~20 archivos:
 **3.1 Crear `/community` (The In-Between)**
 - Nueva: `src/app/[locale]/(public)/community/page.tsx`
 - Copy PAGE 5 del BUILD: "Somewhere to keep returning.", 3 bullets "What you'll find inside"
-- Botón "Join The In-Between →" enlazando a `COMMUNITY_JOIN_URL` (constante → `https://gokollab.com/reconstruyendolareverencia-trcsrr`)
+- Botón "Join The In-Between →" enlazando a `COMMUNITY_JOIN_URL` (constante → `https://www.gokollab.com/the-in-between-4dzfnm/home`)
 - Schema `WebPage` vía `json-ld.tsx`
 - `generateMetadata` con título/descripción del BUILD
 - Añadir a sitemap, navbar, footer
@@ -229,10 +229,10 @@ NEXT_PUBLIC_CIRCLE_REGULAR_PRICE=297
 - Añadir `/community`
 - Renombrar `/blog`→`/writing`, `/ebook`→`/workbooks`, `/live-sessions`→`/circle`
 - Quitar `/recipes`, `/recipes/[slug]`, `/our-love`
-- URLs con `ashleyleon.com` (vía `lib/url.ts`)
+- URLs con `ashleydianaleon.com` (vía `lib/url.ts`)
 
 **7.4 Robots `src/app/robots.ts`**
-- `Host: https://ashleyleon.com`
+- `Host: https://ashleydianaleon.com`
 - `Disallow: /recipes`, `/our-love`, `/dashboard`, `/api`, `/_next/static`, `test-upload`
 - Mantener reglas AI bots (GPTBot, Claude, etc.)
 
@@ -301,11 +301,11 @@ NEXT_PUBLIC_CIRCLE_REGULAR_PRICE=297
 - Sitemap.xml y robots.txt
 
 **10.4 Swap de dominio (último paso)**
-- Vercel: añadir `ashleyleon.com` como production domain
+- Vercel: añadir `ashleydianaleon.com` como production domain
 - DNS: apuntar A/CNAME
-- 301 `raicesreturnings.com` → `ashleyleon.com`
+- 301 `raicesreturnings.com` → `ashleydianaleon.com`
 - Google Search Console: nueva propiedad
-- Stripe webhook URL en Dashboard: `https://ashleyleon.com/api/checkout/webhook`
+- Stripe webhook URL en Dashboard: `https://ashleydianaleon.com/api/checkout/webhook`
 - Clerk: actualizar URLs de dashboard si cambian
 
 ---

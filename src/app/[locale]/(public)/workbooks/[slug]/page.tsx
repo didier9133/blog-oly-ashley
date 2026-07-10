@@ -14,7 +14,8 @@ import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl } from "@/lib/url";
+import { BASE_URL, fullUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 
 export async function generateMetadata({
@@ -34,6 +35,9 @@ export async function generateMetadata({
   const description = locale === "en" ? book.subtitle_en : book.subtitle_es;
   const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
+  const imageUrl = coverImage.startsWith("http")
+    ? coverImage
+    : `${BASE_URL}${coverImage}`;
 
   return {
     title: `${title} | Ashley Leon`,
@@ -42,22 +46,18 @@ export async function generateMetadata({
       title: `${title} | Ashley Leon`,
       description,
       url: fullUrl(locale, `/workbooks/${detailSlug}`),
-      images: [{ url: coverImage, width: 800, height: 1067, alt: title }],
+      images: [{ url: imageUrl, width: 800, height: 1067, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | Ashley Leon`,
       description,
-      images: [coverImage],
+      images: [imageUrl],
     },
-    alternates: {
-      canonical: fullUrl(locale, `/workbooks/${detailSlug}`),
-      languages: {
-        en: fullUrl("en", `/workbooks/${book.slug_en}`),
-        es: fullUrl("es", `/workbooks/${book.slug_es}`),
-        "x-default": fullUrl("en", `/workbooks/${book.slug_en}`),
-      },
-    },
+    alternates: localizedAlternates(locale, {
+      en: `/workbooks/${book.slug_en}`,
+      es: `/workbooks/${book.slug_es}`,
+    }),
   };
 }
 
@@ -80,6 +80,9 @@ export default async function PageDetail({
   const bookDescription =
     locale === "en" ? book.description_en : book.description_es;
   const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
+  const imageUrl = coverImage.startsWith("http")
+    ? coverImage
+    : `${BASE_URL}${coverImage}`;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
   const pageUrl = fullUrl(locale, `/workbooks/${detailSlug}`);
   const priceCents = workbookPriceCents(book.price);
@@ -92,7 +95,7 @@ export default async function PageDetail({
     author: { "@type": "Person", name: book.author },
     bookFormat: "https://schema.org/EBook",
     numberOfPages: book.pages,
-    image: coverImage,
+    image: imageUrl,
     isbn: book.isbn,
     url: pageUrl,
     offers: {

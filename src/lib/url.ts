@@ -1,6 +1,6 @@
 import { routing } from "@/i18n/routing";
 
-const FALLBACK_SITE_URL = "https://ashleyleon.com";
+const FALLBACK_SITE_URL = "https://ashleydianaleon.com";
 
 function normalizeSiteUrl(url: string): string {
   const withProtocol = url.startsWith("http") ? url : `https://${url}`;

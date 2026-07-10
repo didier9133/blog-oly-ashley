@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
@@ -16,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import PreloadSuccessPayment from "@/components/preload-succes-payment";
+import { transactionalRobots } from "@/lib/seo";
 
 interface SuccessPageProps {
   params: Promise<{
@@ -28,6 +30,11 @@ interface SuccessPageProps {
     redirect_status?: string;
   }>;
 }
+
+export const metadata: Metadata = {
+  title: "Reservation complete | Ashley Leon",
+  robots: transactionalRobots,
+};
 
 async function SuccessContent({
   locale,

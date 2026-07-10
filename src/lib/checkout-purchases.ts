@@ -8,7 +8,7 @@ import { PRODUCT_NAME_DICTIONARY } from "@/lib/checkout-events";
 const CIRCLE_PRODUCT_TYPE = "live_session";
 const CIRCLE_S3_KEY = "live-sessions/rebuilding-reverence-circle";
 const CIRCLE_COMMUNITY_LINK =
-  "https://www.gokollab.com/rebuilding-reverence-circle-tbxqud/home";
+  "https://www.gokollab.com/rebuilding-reverence-gcz6xl/home";
 const REBUILDING_REVERENCE_JOURNAL_S3_KEY =
   "ebooks/1761430103993_Rebuilding_Reverence.pdf";
 const REBUILDING_REVERENCE_JOURNAL_FILE_NAME = "Rebuilding Reverence Journal";

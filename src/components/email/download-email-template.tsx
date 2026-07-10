@@ -11,6 +11,7 @@ import {
   Text,
 } from "@react-email/components";
 import { getTranslations } from "next-intl/server";
+import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 
 interface DownloadEmailTemplateProps {
   customerName: string;
@@ -20,7 +21,7 @@ interface DownloadEmailTemplateProps {
   locale: "en" | "es";
 }
 
-const SUPPORT_EMAIL = "ashleyleon@gmail.com";
+const SUPPORT_EMAIL = CONTACT_NOTIFICATION_EMAIL;
 
 export default async function DownloadEmailTemplate({
   customerName,

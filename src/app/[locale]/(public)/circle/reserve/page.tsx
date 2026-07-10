@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Checkout from "@/components/checkout";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
+import { localizedAlternates, transactionalRobots } from "@/lib/seo";
 
 const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
 const REGULAR_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_REGULAR_PRICE) || 297;
@@ -43,20 +44,17 @@ export async function generateMetadata({
   return {
     title: t("cohort-status.heading"),
     description: t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) }),
+    robots: transactionalRobots,
     openGraph: {
       title: t("cohort-status.heading"),
       description: t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) }),
       url: fullUrl(locale, "/circle/reserve"),
       images: [{ url: coverImage.src, width: 1024, height: 1536, alt: coverImage.alt }],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/circle/reserve"),
-      languages: {
-        en: fullUrl("en", "/circle/reserve"),
-        es: fullUrl("es", "/circle/reserve"),
-        "x-default": fullUrl("en", "/circle/reserve"),
-      },
-    },
+    alternates: localizedAlternates(locale, {
+      en: "/circle/reserve",
+      es: "/circle/reserve",
+    }),
   };
 }
 

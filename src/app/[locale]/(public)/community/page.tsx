@@ -4,7 +4,7 @@ import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 
 const COMMUNITY_URL =
-  "https://www.gokollab.com/reconstruyendolareverencia-trcsrr/home";
+  "https://www.gokollab.com/the-in-between-4dzfnm/home";
 
 export async function generateMetadata({
   params,

@@ -90,7 +90,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Ashley Leon",
-    url: "https://ashleyleon.com",
+    url: "https://ashleydianaleon.com",
     logo: {
       "@type": "ImageObject",
       url: ogImageUrl(currentLanguage),
@@ -104,7 +104,7 @@ export default async function Home() {
     ],
     contactPoint: {
       "@type": "ContactPoint",
-      email: "support@ashleyleon.com",
+      email: "support@ashleydianaleon.com",
       contactType: "customer support",
     },
   };
@@ -113,7 +113,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Ashley Leon",
-    url: "https://ashleyleon.com",
+    url: "https://ashleydianaleon.com",
     inLanguage: ["en", "es"],
     publisher: {
       "@type": "Organization",
@@ -125,7 +125,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ashley Leon",
-    url: "https://ashleyleon.com",
+    url: "https://ashleydianaleon.com",
     jobTitle: "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
     description:
       "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
@@ -145,12 +145,12 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
-    url: "https://ashleyleon.com",
+    url: "https://ashleydianaleon.com",
     inLanguage: ["en", "es"],
     isPartOf: {
       "@type": "WebSite",
       name: "Ashley Leon",
-      url: "https://ashleyleon.com",
+      url: "https://ashleydianaleon.com",
     },
     about: {
       "@type": "Person",

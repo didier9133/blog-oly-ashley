@@ -25,7 +25,8 @@ import { Slash } from "lucide-react";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, ogImageUrl } from "@/lib/url";
+import { BASE_URL, fullUrl, ogImageUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 type Params = Promise<{ locale: string; slug: string }>;
 
@@ -94,6 +95,10 @@ export async function generateMetadata({
   const content = locale === "en" ? post.content_en : post.content_es;
   const description = htmlExcerpt(content);
   const pageTitle = `${title} | Ashley Leon`;
+  const detailSlug = locale === "es" ? post.slug_es : post.slug_en;
+  const imageUrl = post.image.startsWith("http")
+    ? post.image
+    : `${BASE_URL}${post.image}`;
 
   return {
     title: pageTitle,
@@ -102,25 +107,22 @@ export async function generateMetadata({
       type: "article",
       title: pageTitle,
       description,
-      url: fullUrl(locale, `/writing/${slug}`),
-      images: [{ url: post.image, width: 1200, height: 630, alt: title }],
+      url: fullUrl(locale, `/writing/${detailSlug}`),
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
-      authors: ["https://ashleyleon.com/about"],
+      modifiedTime: post.updatedAt.toISOString(),
+      authors: ["https://ashleydianaleon.com/about"],
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description,
-      images: [post.image],
+      images: [imageUrl],
     },
-    alternates: {
-      canonical: fullUrl(locale, `/writing/${slug}`),
-      languages: {
-        en: fullUrl("en", `/writing/${post.slug_en}`),
-        es: fullUrl("es", `/writing/${post.slug_en}`),
-        "x-default": fullUrl("en", `/writing/${post.slug_en}`),
-      },
-    },
+    alternates: localizedAlternates(locale, {
+      en: `/writing/${post.slug_en}`,
+      es: `/writing/${post.slug_es}`,
+    }),
   };
 }
 
@@ -186,14 +188,18 @@ export default async function BlogPostPage(props: { params: Params }) {
 
   const { locale } = await props.params;
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
-  const pageUrl = fullUrl(locale, `/writing/${slug}`);
+  const detailSlug = locale === "es" ? post.slug_es : post.slug_en;
+  const pageUrl = fullUrl(locale, `/writing/${detailSlug}`);
+  const imageUrl = post.image.startsWith("http")
+    ? post.image
+    : `${BASE_URL}${post.image}`;
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: postTraslated.title,
     description: htmlExcerpt(postTraslated.content),
-    image: post.image,
+    image: imageUrl,
     url: pageUrl,
     inLanguage: locale,
     datePublished: post.createdAt.toISOString(),

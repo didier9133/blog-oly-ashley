@@ -8,6 +8,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { BASE_URL, fullUrl, ogImageUrl } from "@/lib/url";
+import { indexableRobots, localizedAlternates } from "@/lib/seo";
 
 // Analytics
 import { Analytics } from "@vercel/analytics/next";
@@ -66,25 +67,8 @@ export async function generateMetadata({
     authors: [{ name: "Ashley Leon" }],
     creator: "Ashley Leon",
     publisher: "Ashley Leon",
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-    alternates: {
-      canonical: fullUrl(locale, "/"),
-      languages: {
-        en: fullUrl("en", "/"),
-        es: fullUrl("es", "/"),
-        "x-default": fullUrl("en", "/"),
-      },
-    },
+    robots: indexableRobots,
+    alternates: localizedAlternates(locale, { en: "/", es: "/" }),
     openGraph: {
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",

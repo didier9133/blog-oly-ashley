@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://ashleyleon.com";
+const BASE_URL = "https://ashleydianaleon.com";
 const PUBLIC_BLOCKLIST = [
   "/dashboard/",
   "/api/",
@@ -8,6 +8,10 @@ const PUBLIC_BLOCKLIST = [
   "/es/test-upload",
   "/recipes",
   "/es/recipes",
+  "/circle/success",
+  "/es/circle/success",
+  "/workbooks/success",
+  "/es/workbooks/success",
   "/our-love",
   "/es/our-love",
 ];
