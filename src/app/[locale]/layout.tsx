@@ -128,13 +128,13 @@ export default async function RootLayout({
           name="google-site-verification"
           content="google4ff5fb217dd7438f"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon-96x96.png" sizes="96x96" type="image/png" />
+        <link rel="icon" href="/favicon-adl.ico" sizes="any" />
+        <link rel="icon" href="/favicon-adl.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-adl-96x96.png" sizes="96x96" type="image/png" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
+          href="/apple-touch-icon-adl.png"
         />
 
         <link rel="manifest" href="/site.webmanifest" />
