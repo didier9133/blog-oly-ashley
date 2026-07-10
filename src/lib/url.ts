@@ -22,10 +22,16 @@ export const SPANISH_OG_IMAGE = "/og-image-es-v2.jpeg";
 /** Build a locale-aware path that respects the configured prefix strategy. */
 export function localizedHref(locale: string, path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  return routing.localePrefix === "always" ||
+  const localizedPath = routing.localePrefix === "always" ||
     locale !== routing.defaultLocale
     ? `/${locale}${cleanPath}`
     : cleanPath;
+
+  // Next.js redirects locale homepages from `/en/` to `/en`. Generate the
+  // final URL directly so canonicals, hreflang and sitemap entries agree.
+  return localizedPath.length > 1 && localizedPath.endsWith("/")
+    ? localizedPath.slice(0, -1)
+    : localizedPath;
 }
 
 export function fullUrl(locale: string, path: string): string {

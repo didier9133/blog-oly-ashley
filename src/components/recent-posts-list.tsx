@@ -11,6 +11,7 @@ export interface RecentPostItem {
   title_es: string;
   image: string | null;
   slug_en: string;
+  slug_es: string;
   updatedAt: Date | string;
   subcategoryId: number | null;
 }
@@ -64,7 +65,9 @@ export function RecentPostsList({
           return (
             <li key={recent.id}>
               <Link
-                href={`/${pathPrefix}/${recent.slug_en}`}
+                href={`/${currentLanguage}/${pathPrefix}/${
+                  currentLanguage === "es" ? recent.slug_es : recent.slug_en
+                }`}
                 className="flex items-center gap-2"
               >
                 <ImageRecentBlog

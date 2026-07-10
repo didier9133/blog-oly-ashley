@@ -20,6 +20,7 @@ import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL, localizedHref } from "@/lib/url";
 import { htmlToPlainText } from "@/lib/plain-text";
 import { localizedAlternates } from "@/lib/seo";
+import { publicPostSlug } from "@/lib/post-slugs";
 type SearchParams = Promise<{ page?: string }>;
 const CATEGORY = CategoryEnum.Blog;
 const PATH = "writing";
@@ -76,10 +77,12 @@ const toCard = (
     currentLanguage === "en" ? post.content_en : post.content_es,
   ),
   image: post.image,
-  slug: currentLanguage === "es" ? post.slug_es : post.slug_en,
+  slug: publicPostSlug(
+    currentLanguage === "es" ? post.slug_es : post.slug_en,
+  ),
   href: localizedHref(
     currentLanguage,
-    `/${PATH}/${currentLanguage === "es" ? post.slug_es : post.slug_en}`,
+    `/${PATH}/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
   ),
   updatedAt: post.updatedAt,
   authorFirstName: post.author.firstName,

@@ -12,6 +12,7 @@ import { CategoryEnum } from "@/enums";
 import prisma from "@/lib/prisma";
 import { fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
 import { getLocale, getTranslations } from "next-intl/server";
+import { publicPostSlug } from "@/lib/post-slugs";
 
 export const revalidate = 3600;
 
@@ -72,7 +73,7 @@ export default async function Home() {
   const writingPosts = recentWriting.map((post) => ({
     href: localizedHref(
       currentLanguage,
-      `/writing/${currentLanguage === "es" ? post.slug_es : post.slug_en}`,
+      `/writing/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
     ),
     id: post.id,
     title: currentLanguage === "en" ? post.title_en : post.title_es,

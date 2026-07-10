@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
 import { fullUrl } from "@/lib/url";
 import { localizedLanguages } from "@/lib/seo";
+import { publicPostSlug } from "@/lib/post-slugs";
 
 const LOCALES = ["es", "en"] as const;
 
@@ -46,8 +47,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     blogPosts
       .map((post) => {
         const paths = {
-          en: `/writing/${post.slug_en}`,
-          es: `/writing/${post.slug_es}`,
+          en: `/writing/${publicPostSlug(post.slug_en)}`,
+          es: `/writing/${publicPostSlug(post.slug_es)}`,
         };
 
         return {

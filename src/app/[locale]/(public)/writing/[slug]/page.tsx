@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 
 import { Separator } from "@/components/ui/separator";
@@ -28,6 +28,7 @@ import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
+import { postSlugCandidates, publicPostSlug } from "@/lib/post-slugs";
 type Params = Promise<{ locale: string; slug: string }>;
 
 const PATH = CategoryEnum.Blog;
@@ -44,7 +45,9 @@ export async function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
   for (const post of posts) {
     for (const locale of routing.locales) {
-      const slug = locale === "es" ? post.slug_es : post.slug_en;
+      const slug = publicPostSlug(
+        locale === "es" ? post.slug_es : post.slug_en,
+      );
       if (slug) {
         params.push({ locale, slug });
       }
@@ -69,10 +72,14 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  const slugCandidates = postSlugCandidates(slug);
 
   const post = await prisma.post.findFirst({
     where: {
-      OR: [{ slug_en: slug }, { slug_es: slug }],
+      OR: [
+        { slug_en: { in: slugCandidates } },
+        { slug_es: { in: slugCandidates } },
+      ],
       published: true,
       category: { name: PATH },
     },
@@ -95,7 +102,9 @@ export async function generateMetadata({
   const content = locale === "en" ? post.content_en : post.content_es;
   const description = htmlExcerpt(content);
   const pageTitle = `${title} | Ashley Leon`;
-  const detailSlug = locale === "es" ? post.slug_es : post.slug_en;
+  const detailSlug = publicPostSlug(
+    locale === "es" ? post.slug_es : post.slug_en,
+  );
   const imageUrl = post.image.startsWith("http")
     ? post.image
     : `${BASE_URL}${post.image}`;
@@ -120,15 +129,16 @@ export async function generateMetadata({
       images: [imageUrl],
     },
     alternates: localizedAlternates(locale, {
-      en: `/writing/${post.slug_en}`,
-      es: `/writing/${post.slug_es}`,
+      en: `/writing/${publicPostSlug(post.slug_en)}`,
+      es: `/writing/${publicPostSlug(post.slug_es)}`,
     }),
   };
 }
 
 export default async function BlogPostPage(props: { params: Params }) {
   const currentLanguage = await getLocale();
-  const { slug } = await props.params;
+  const { locale, slug } = await props.params;
+  const slugCandidates = postSlugCandidates(slug);
   const category = await prisma.category.findFirst({
     where: {
       name: PATH,
@@ -136,7 +146,10 @@ export default async function BlogPostPage(props: { params: Params }) {
   });
   const post = await prisma.post.findFirst({
     where: {
-      OR: [{ slug_en: slug }, { slug_es: slug }],
+      OR: [
+        { slug_en: { in: slugCandidates } },
+        { slug_es: { in: slugCandidates } },
+      ],
       published: true,
       category: { name: PATH },
     },
@@ -158,9 +171,16 @@ export default async function BlogPostPage(props: { params: Params }) {
   });
   if (!post || !category) return notFound();
 
+  const detailSlug = publicPostSlug(
+    locale === "es" ? post.slug_es : post.slug_en,
+  );
+  if (slug !== detailSlug) {
+    permanentRedirect(localizedHref(locale, `/writing/${detailSlug}`));
+  }
+
   const recentPosts: RecentPostItem[] = await prisma.post.findMany({
     where: {
-      slug_en: { not: slug },
+      id: { not: post.id },
       published: true,
       category: { name: PATH },
     },
@@ -171,6 +191,7 @@ export default async function BlogPostPage(props: { params: Params }) {
       title_es: true,
       image: true,
       slug_en: true,
+      slug_es: true,
       updatedAt: true,
       subcategoryId: true,
     },
@@ -186,9 +207,7 @@ export default async function BlogPostPage(props: { params: Params }) {
   const recentPostsLabel = t("recent-posts");
   const noPostsLabel = t("no-posts");
 
-  const { locale } = await props.params;
   const authorName = `${post.author.firstName} ${post.author.lastName}`;
-  const detailSlug = locale === "es" ? post.slug_es : post.slug_en;
   const pageUrl = fullUrl(locale, `/writing/${detailSlug}`);
   const imageUrl = post.image.startsWith("http")
     ? post.image
@@ -267,9 +286,7 @@ export default async function BlogPostPage(props: { params: Params }) {
                 <Slash />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbPage>
-                  {currentLanguage === "en" ? slug : postTraslated.slug_es}
-                </BreadcrumbPage>
+                <BreadcrumbPage>{postTraslated.title}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -329,7 +346,11 @@ export default async function BlogPostPage(props: { params: Params }) {
               }
             >
               <RecentPostsList
-                posts={recentPosts}
+                posts={recentPosts.map((recentPost) => ({
+                  ...recentPost,
+                  slug_en: publicPostSlug(recentPost.slug_en),
+                  slug_es: publicPostSlug(recentPost.slug_es),
+                }))}
                 currentSubcategoryId={post.subcategoryId}
                 currentLanguage={currentLanguage}
                 pathPrefix="writing"

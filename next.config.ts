@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import path from "node:path";
 import fs from "node:fs";
+import { POST_SLUG_REDIRECTS } from "./src/lib/post-slugs";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -162,6 +163,11 @@ const nextConfig: NextConfig = {
         destination: "https://ashleydianaleon.com/:path*",
         permanent: true,
       },
+      ...POST_SLUG_REDIRECTS.map(({ locale, from, to }) => ({
+        source: `/${locale}/writing/${from}`,
+        destination: `/${locale}/writing/${to}`,
+        permanent: true,
+      })),
       // Route renames (FASE 2): preserve SEO link equity with permanent 301s.
       // EN (no locale prefix) + ES (/es prefix) — redirects run before next-intl middleware.
       { source: "/blog", destination: "/en/writing", permanent: true },

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
+import { slugifyPostTitle } from "@/lib/post-slugs";
 
 type type = {
   categoryId: number;
@@ -115,17 +116,8 @@ export async function updatePost(
 
     const { video, ...rest } = data;
 
-    const newSlugEs = rest.title_es
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
-
-    const newSlugEn = rest.title_en
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
+    const newSlugEs = slugifyPostTitle(rest.title_es);
+    const newSlugEn = slugifyPostTitle(rest.title_en);
 
     const updateData = {
       ...rest,
@@ -191,17 +183,8 @@ export async function saveNewPost(data: {
     }
     const { video = null, ...rest } = data;
 
-    const slug_es = rest.title_es
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
-
-    const slug_en = rest.title_en
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-      .slice(0, 50);
+    const slug_es = slugifyPostTitle(rest.title_es);
+    const slug_en = slugifyPostTitle(rest.title_en);
 
     const existingPost = await prisma.post.findFirst({
       where: {
