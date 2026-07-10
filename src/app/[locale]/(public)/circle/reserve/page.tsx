@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { fullUrl } from "@/lib/url";
+import { BASE_URL, fullUrl } from "@/lib/url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Checkout from "@/components/checkout";
@@ -40,16 +40,25 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Circle" });
   const coverImage = getCircleCheckoutImage(locale);
+  const imageUrl = `${BASE_URL}${coverImage.src}`;
+  const title = t("cohort-status.heading");
+  const description = t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) });
 
   return {
-    title: t("cohort-status.heading"),
-    description: t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) }),
+    title,
+    description,
     robots: transactionalRobots,
     openGraph: {
-      title: t("cohort-status.heading"),
-      description: t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) }),
+      title,
+      description,
       url: fullUrl(locale, "/circle/reserve"),
-      images: [{ url: coverImage.src, width: 1024, height: 1536, alt: coverImage.alt }],
+      images: [{ url: imageUrl, width: 1024, height: 1536, alt: coverImage.alt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
     },
     alternates: localizedAlternates(locale, {
       en: "/circle/reserve",
