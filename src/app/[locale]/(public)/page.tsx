@@ -10,7 +10,7 @@ import { HomeSidebar } from "@/components/home-sidebar";
 import { JsonLd } from "@/components/json-ld";
 import { CategoryEnum } from "@/enums";
 import prisma from "@/lib/prisma";
-import { localizedHref, ogImageUrl } from "@/lib/url";
+import { fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export const revalidate = 3600;
@@ -34,6 +34,7 @@ export default async function Home() {
         content_es: true,
         image: true,
         slug_en: true,
+        slug_es: true,
       },
     }),
     prisma.book.findFirst({
@@ -69,11 +70,14 @@ export default async function Home() {
     : null;
 
   const writingPosts = recentWriting.map((post) => ({
+    href: localizedHref(
+      currentLanguage,
+      `/writing/${currentLanguage === "es" ? post.slug_es : post.slug_en}`,
+    ),
     id: post.id,
     title: currentLanguage === "en" ? post.title_en : post.title_es,
     content: currentLanguage === "en" ? post.content_en : post.content_es,
     image: post.image,
-    slug: post.slug_en,
   }));
 
   const primaryWorkbookPath =
@@ -85,12 +89,16 @@ export default async function Home() {
     primaryWorkbookPath,
   );
   const writingHref = localizedHref(currentLanguage, "/writing");
+  const circleHref = localizedHref(currentLanguage, "/circle");
+  const communityHref = localizedHref(currentLanguage, "/community");
+  const homeUrl = fullUrl(currentLanguage, "/");
+  const aboutUrl = fullUrl(currentLanguage, "/about");
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Ashley Leon",
-    url: "https://ashleydianaleon.com",
+    url: homeUrl,
     logo: {
       "@type": "ImageObject",
       url: ogImageUrl(currentLanguage),
@@ -113,7 +121,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Ashley Leon",
-    url: "https://ashleydianaleon.com",
+    url: homeUrl,
     inLanguage: ["en", "es"],
     publisher: {
       "@type": "Organization",
@@ -125,7 +133,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ashley Leon",
-    url: "https://ashleydianaleon.com",
+    url: aboutUrl,
     jobTitle: "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
     description:
       "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
@@ -145,12 +153,12 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
-    url: "https://ashleydianaleon.com",
-    inLanguage: ["en", "es"],
+    url: homeUrl,
+    inLanguage: currentLanguage,
     isPartOf: {
       "@type": "WebSite",
       name: "Ashley Leon",
-      url: "https://ashleydianaleon.com",
+      url: homeUrl,
     },
     about: {
       "@type": "Person",
@@ -334,6 +342,7 @@ export default async function Home() {
               title={t("circle-title")}
               description={t("circle-description")}
               cta={t("circle-cta")}
+              href={circleHref}
             />
 
             <HomeCommunityCta
@@ -341,6 +350,7 @@ export default async function Home() {
               title={t("community-title")}
               description={t("community-description")}
               cta={t("community-cta")}
+              href={communityHref}
             />
 
             <span id="fresh" className="sr-only" aria-hidden="true" />
@@ -352,6 +362,7 @@ export default async function Home() {
               empty={t("writing-empty")}
               readMore={t("btn-fresh")}
               viewAll={t("fresh-view-all")}
+              viewAllHref={writingHref}
             />
           </div>
 

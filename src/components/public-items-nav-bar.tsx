@@ -1,6 +1,7 @@
 import { data } from "@/const/navbar-options";
 import { ItemNavBar } from "./item-nav-bar";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { localizedHref } from "@/lib/url";
 
 type NavItem = {
   title: string;
@@ -17,12 +18,14 @@ const titleToPath = (item: NavItem): string => {
 };
 
 export async function PublicItemsNavBar() {
+  const locale = await getLocale();
   const t = await getTranslations("navigation");
   const items = data.navMain as NavItem[];
 
   const itemsTranslated = items.map((item) => ({
     ...item,
     title: t(titleToPath(item)),
+    url: item.external ? item.url : localizedHref(locale, item.url),
   }));
 
   return (

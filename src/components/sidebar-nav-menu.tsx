@@ -22,6 +22,14 @@ function splitHash(url: string): { basePath: string; targetHash: string } {
   return { basePath: pathPart || "/", targetHash: `#${hashPart}` };
 }
 
+function isHomePath(url: string): boolean {
+  return url === "/" || /^\/(en|es)\/?$/.test(url);
+}
+
+function normalizePath(url: string): string {
+  return url.replace(/\/$/, "") || "/";
+}
+
 export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
   const pathname = usePathname() ?? "/";
   const router = useRouter();
@@ -49,7 +57,9 @@ export function SidebarNavMenu({ items }: { items: SidebarNavItem[] }) {
       if (!targetHash) {
         map.set(
           item.url,
-          item.url === "/" ? pathname === "/" : pathname.startsWith(item.url),
+          isHomePath(item.url)
+            ? normalizePath(pathname) === normalizePath(item.url)
+            : pathname.startsWith(item.url),
         );
         continue;
       }

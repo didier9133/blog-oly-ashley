@@ -8,6 +8,7 @@ interface HomeCircleCtaProps {
   title: string;
   description: string;
   cta: string;
+  href: string;
 }
 
 export function HomeCircleCta({
@@ -15,6 +16,7 @@ export function HomeCircleCta({
   title,
   description,
   cta,
+  href,
 }: HomeCircleCtaProps) {
   return (
     <section
@@ -40,7 +42,7 @@ export function HomeCircleCta({
             </p>
           </div>
           <div className="md:col-span-3 md:text-right">
-            <Link href="/circle" className="editorial-link">
+            <Link href={href} className="editorial-link">
               {cta}
               <span className="editorial-link-arrow">→</span>
             </Link>

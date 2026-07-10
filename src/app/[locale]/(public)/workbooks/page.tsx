@@ -16,6 +16,7 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL, localizedHref, ogImageUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 
 export const revalidate = 3600;
@@ -43,14 +44,10 @@ export async function generateMetadata({
       description: t("metadata-description"),
       images: [ogImageUrl(locale)],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/workbooks"),
-      languages: {
-        en: fullUrl("en", "/workbooks"),
-        es: fullUrl("es", "/workbooks"),
-        "x-default": fullUrl("en", "/workbooks"),
-      },
-    },
+    alternates: localizedAlternates(locale, {
+      en: "/workbooks",
+      es: "/workbooks",
+    }),
   };
 }
 

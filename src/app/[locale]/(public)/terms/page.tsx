@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
-import { fullUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -20,14 +20,7 @@ export async function generateMetadata({
       locale === "es"
         ? "Términos y condiciones de Ashley Leon."
         : "Terms of service for Ashley Leon.",
-    alternates: {
-      canonical: fullUrl(locale, "/terms"),
-      languages: {
-        en: fullUrl("en", "/terms"),
-        es: fullUrl("es", "/terms"),
-        "x-default": fullUrl("en", "/terms"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/terms", es: "/terms" }),
   };
 }
 

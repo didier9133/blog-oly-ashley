@@ -33,13 +33,15 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
   const isHashMatch = !!targetHash && currentHash === targetHash;
 
   const isSubscribeNewsletter = targetHash === "#newsletter";
-  const isHome = url === "/";
+  const isHome = url === "/" || /^\/(en|es)\/?$/.test(url);
+  const normalizedPathname = (pathname ?? "/").replace(/\/$/, "") || "/";
+  const normalizedUrl = url.replace(/\/$/, "") || "/";
   const isActive = isSubscribeNewsletter
     ? false
     : targetHash
       ? isHashMatch
       : isHome
-        ? pathname === "/"
+        ? normalizedPathname === normalizedUrl
         : (pathname ?? "/").startsWith(url);
 
   const resolvedHref = useMemo(() => {

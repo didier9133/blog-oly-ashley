@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
-import { fullUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -20,14 +20,7 @@ export async function generateMetadata({
       locale === "es"
         ? "Política de privacidad de Ashley Leon."
         : "Privacy policy for Ashley Leon.",
-    alternates: {
-      canonical: fullUrl(locale, "/privacy"),
-      languages: {
-        en: fullUrl("en", "/privacy"),
-        es: fullUrl("es", "/privacy"),
-        "x-default": fullUrl("en", "/privacy"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/privacy", es: "/privacy" }),
   };
 }
 

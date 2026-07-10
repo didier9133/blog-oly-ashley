@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
 import { CircleStickyCta } from "@/components/circle-sticky-cta";
@@ -34,14 +35,7 @@ export async function generateMetadata({
       description: t("metadata-description"),
       images: [coverImage],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/circle"),
-      languages: {
-        en: fullUrl("en", "/circle"),
-        es: fullUrl("es", "/circle"),
-        "x-default": fullUrl("en", "/circle"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/circle", es: "/circle" }),
   };
 }
 

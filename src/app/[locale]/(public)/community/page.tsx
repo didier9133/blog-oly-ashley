@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
+import { localizedAlternates } from "@/lib/seo";
 
 const COMMUNITY_URL =
   "https://www.gokollab.com/the-in-between-4dzfnm/home";
@@ -29,14 +30,10 @@ export async function generateMetadata({
       description: t("description"),
       images: [ogImageUrl(locale)],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/community"),
-      languages: {
-        en: fullUrl("en", "/community"),
-        es: fullUrl("es", "/community"),
-        "x-default": fullUrl("en", "/community"),
-      },
-    },
+    alternates: localizedAlternates(locale, {
+      en: "/community",
+      es: "/community",
+    }),
   };
 }
 

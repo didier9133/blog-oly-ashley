@@ -156,17 +156,23 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.ashleydianaleon.com" }],
+        destination: "https://ashleydianaleon.com/:path*",
+        permanent: true,
+      },
       // Route renames (FASE 2): preserve SEO link equity with permanent 301s.
       // EN (no locale prefix) + ES (/es prefix) — redirects run before next-intl middleware.
-      { source: "/blog", destination: "/writing", permanent: true },
-      { source: "/blog/:slug*", destination: "/writing/:slug*", permanent: true },
-      { source: "/ebook", destination: "/workbooks", permanent: true },
-      { source: "/ebook/detail/:slug*", destination: "/workbooks/:slug*", permanent: true },
-      { source: "/live-sessions", destination: "/circle", permanent: true },
-      { source: "/live-sessions/:slug*", destination: "/circle/:slug*", permanent: true },
-      { source: "/our-love", destination: "/", permanent: true },
-      { source: "/our-love/:slug*", destination: "/", permanent: true },
-      { source: "/rebuilding-reverence", destination: "/workbooks/rebuilding-reverence", permanent: true },
+      { source: "/blog", destination: "/en/writing", permanent: true },
+      { source: "/blog/:slug*", destination: "/en/writing/:slug*", permanent: true },
+      { source: "/ebook", destination: "/en/workbooks", permanent: true },
+      { source: "/ebook/detail/:slug*", destination: "/en/workbooks/:slug*", permanent: true },
+      { source: "/live-sessions", destination: "/en/circle", permanent: true },
+      { source: "/live-sessions/:slug*", destination: "/en/circle/:slug*", permanent: true },
+      { source: "/our-love", destination: "/en", permanent: true },
+      { source: "/our-love/:slug*", destination: "/en", permanent: true },
+      { source: "/rebuilding-reverence", destination: "/en/workbooks/rebuilding-reverence", permanent: true },
       { source: "/es/blog", destination: "/es/writing", permanent: true },
       { source: "/es/blog/:slug*", destination: "/es/writing/:slug*", permanent: true },
       { source: "/es/ebook", destination: "/es/workbooks", permanent: true },
@@ -175,7 +181,7 @@ const nextConfig: NextConfig = {
       { source: "/es/live-sessions/:slug*", destination: "/es/circle/:slug*", permanent: true },
       { source: "/es/our-love", destination: "/es", permanent: true },
       { source: "/es/our-love/:slug*", destination: "/es", permanent: true },
-      { source: "/es/rebuilding-reverence", destination: "/es/workbooks/rebuilding-reverence", permanent: true },
+      { source: "/es/rebuilding-reverence", destination: "/es/workbooks/reconstruyendo-la-reverencia", permanent: true },
     ];
   },
 

@@ -5,11 +5,11 @@ import { FadeIn } from "@/components/fade-in";
 import { htmlToPlainText } from "@/lib/plain-text";
 
 interface HomeRecentWritingPost {
+  href: string;
   id: number;
   title: string;
   content: string | null;
   image: string | null;
-  slug: string;
 }
 
 interface HomeRecentWritingProps {
@@ -20,6 +20,7 @@ interface HomeRecentWritingProps {
   empty: string;
   readMore: string;
   viewAll: string;
+  viewAllHref: string;
 }
 
 export function HomeRecentWriting({
@@ -30,6 +31,7 @@ export function HomeRecentWriting({
   empty,
   readMore,
   viewAll,
+  viewAllHref,
 }: HomeRecentWritingProps) {
   return (
     <section
@@ -69,7 +71,7 @@ export function HomeRecentWriting({
               {posts.map((post, index) => (
                 <FadeIn key={post.id} delay={0.12 * index}>
                   <article className="group h-full">
-                    <Link href={`/writing/${post.slug}`} className="block">
+                    <Link href={post.href} className="block">
                       <div className="relative aspect-[4/5] overflow-hidden bg-sand">
                         <Image
                           src={post.image || "/blog-hero.jpeg"}
@@ -85,7 +87,7 @@ export function HomeRecentWriting({
                     </span>
                     <h3 className="editorial-display-s mt-3 text-balance text-foreground">
                       <Link
-                        href={`/writing/${post.slug}`}
+                        href={post.href}
                         className="transition-colors duration-500 hover:text-primary"
                       >
                         {post.title}
@@ -94,7 +96,7 @@ export function HomeRecentWriting({
                     <p className="editorial-body mt-5 line-clamp-3 text-pretty">
                       {htmlToPlainText(post.content)}
                     </p>
-                    <Link href={`/writing/${post.slug}`} className="editorial-link mt-8">
+                    <Link href={post.href} className="editorial-link mt-8">
                       {readMore}
                       <span className="editorial-link-arrow">→</span>
                     </Link>
@@ -105,7 +107,7 @@ export function HomeRecentWriting({
           )}
 
           <FadeIn delay={0.15} className="mt-20 text-center">
-            <Link href="/writing" className="editorial-link mx-auto">
+            <Link href={viewAllHref} className="editorial-link mx-auto">
               {viewAll}
               <span className="editorial-link-arrow">→</span>
             </Link>

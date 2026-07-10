@@ -17,10 +17,12 @@ import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL } from "@/lib/url";
+import { fullUrl, BASE_URL, localizedHref } from "@/lib/url";
 import { htmlToPlainText } from "@/lib/plain-text";
+import { localizedAlternates } from "@/lib/seo";
 type SearchParams = Promise<{ page?: string }>;
-const PATH = CategoryEnum.Blog;
+const CATEGORY = CategoryEnum.Blog;
+const PATH = "writing";
 const EXCERPT_MAX = 280;
 
 const postSelect = {
@@ -31,6 +33,7 @@ const postSelect = {
   content_es: true,
   image: true,
   slug_en: true,
+  slug_es: true,
   updatedAt: true,
   author: { select: { firstName: true, lastName: true } },
 } as const;
@@ -41,6 +44,7 @@ type PostCard = {
   excerpt: string;
   image: string;
   slug: string;
+  href: string;
   updatedAt: Date;
   authorFirstName: string;
   authorLastName: string;
@@ -60,6 +64,7 @@ const toCard = (
     content_es: string | null;
     image: string;
     slug_en: string;
+    slug_es: string;
     updatedAt: Date;
     author: { firstName: string; lastName: string };
   },
@@ -71,7 +76,11 @@ const toCard = (
     currentLanguage === "en" ? post.content_en : post.content_es,
   ),
   image: post.image,
-  slug: post.slug_en,
+  slug: currentLanguage === "es" ? post.slug_es : post.slug_en,
+  href: localizedHref(
+    currentLanguage,
+    `/${PATH}/${currentLanguage === "es" ? post.slug_es : post.slug_en}`,
+  ),
   updatedAt: post.updatedAt,
   authorFirstName: post.author.firstName,
   authorLastName: post.author.lastName,
@@ -101,14 +110,7 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
     },
-    alternates: {
-      canonical: fullUrl(locale, "/writing"),
-      languages: {
-        en: fullUrl("en", "/writing"),
-        es: fullUrl("es", "/writing"),
-        "x-default": fullUrl("en", "/writing"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/writing", es: "/writing" }),
   };
 }
 
@@ -123,7 +125,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     where: {
       published: true,
       category: {
-        name: PATH,
+        name: CATEGORY,
       },
     },
   });
@@ -140,7 +142,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     prisma.post.findFirst({
       where: {
         published: true,
-        category: { name: PATH },
+        category: { name: CATEGORY },
       },
       orderBy: { updatedAt: "desc" },
       select: postSelect,
@@ -148,7 +150,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     prisma.post.findMany({
       where: {
         published: true,
-        category: { name: PATH },
+        category: { name: CATEGORY },
       },
       skip,
       take: PAGE_SIZE,
@@ -170,12 +172,12 @@ export default async function Page(props: { searchParams?: SearchParams }) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Writing",
-    url: `${BASE_URL}/${currentLanguage}/writing`,
+    url: fullUrl(currentLanguage, "/writing"),
     itemListElement: [firstPostCard, ...postsWithoutFirstCards].map(
       (p, i) => ({
         "@type": "ListItem",
         position: (page - 1) * PAGE_SIZE + i + 1,
-        url: `${BASE_URL}/${currentLanguage}/writing/${p.slug}`,
+        url: fullUrl(currentLanguage, `/writing/${p.slug}`),
         name: p.title,
       }),
     ),
@@ -199,7 +201,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
               {/* Image Side */}
               <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
                 <Link
-                  href={`/${PATH}/${firstPostCard.slug}`}
+                  href={firstPostCard.href}
                   className="block w-full relative aspect-[4/3] overflow-hidden rounded-sm shadow-sm"
                 >
                   <Image
@@ -219,7 +221,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     {t("featured-post")}
                   </span>
                   <Link
-                    href={`/${PATH}/${firstPostCard.slug}`}
+                    href={firstPostCard.href}
                     className="group"
                   >
                     <h2 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#d8a08b] transition-colors duration-300">
@@ -248,7 +250,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                   </div>
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                     <Link
-                      href={`/${PATH}/${firstPostCard.slug}`}
+                      href={firstPostCard.href}
                       className="w-full sm:w-auto"
                     >
                       <Button className="w-full sm:w-auto rounded-sm px-8 py-6 font-[family-name:var(--font-lora)] text-base bg-[#d8a08b] text-white hover:bg-[#c28c77] transition-all duration-300 shadow-sm">
@@ -281,7 +283,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
           <section className="w-full max-w-4xl grid grid-cols-1 gap-8 px-6 my-10 sm:grid-cols-2 md:grid-cols-3 md:px-0">
             {postsWithoutFirstCards.map((post, index) => (
               <article className="group h-full" key={post.id}>
-                <Link href={`/${PATH}/${post.slug}`} className="block">
+                <Link href={post.href} className="block">
                   <div className="relative aspect-[4/5] overflow-hidden bg-sand">
                     <Image
                       src={post.image || "/blog-hero.jpeg"}
@@ -297,7 +299,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                 </span>
                 <h2 className="editorial-display-s mt-3 text-balance text-foreground">
                   <Link
-                    href={`/${PATH}/${post.slug}`}
+                    href={post.href}
                     className="transition-colors duration-500 hover:text-primary"
                   >
                     {post.title}
@@ -306,7 +308,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                 <p className="editorial-body mt-5 line-clamp-3 text-pretty">
                   {post.excerpt}
                 </p>
-                <Link href={`/${PATH}/${post.slug}`} className="editorial-link mt-8">
+                <Link href={post.href} className="editorial-link mt-8">
                   {t("read-more")}
                   <span className="editorial-link-arrow">→</span>
                 </Link>

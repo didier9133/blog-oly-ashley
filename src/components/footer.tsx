@@ -2,13 +2,16 @@ import Image from "next/image";
 import { FormSubscribeNewsletter } from "@/components/subscribe-newsletter";
 import Link from "next/link";
 import { Instagram, Youtube, Mail } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
+import { localizedHref } from "@/lib/url";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const locale = useLocale();
   const t = useTranslations("footer");
   const navT = useTranslations("navigation");
+  const href = (path: string) => localizedHref(locale, path);
 
   return (
     <footer className="mt-auto flex flex-col w-full">
@@ -115,22 +118,22 @@ export function Footer() {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href="/writing" className="hover:text-white transition-colors">
+                    <Link href={href("/writing")} className="hover:text-white transition-colors">
                       {navT("writing")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/workbooks" className="hover:text-white transition-colors">
+                    <Link href={href("/workbooks")} className="hover:text-white transition-colors">
                       {navT("workbooks")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/circle" className="hover:text-white transition-colors">
+                    <Link href={href("/circle")} className="hover:text-white transition-colors">
                       {navT("circle")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/community" className="hover:text-white transition-colors">
+                    <Link href={href("/community")} className="hover:text-white transition-colors">
                       {navT("community")}
                     </Link>
                   </li>
@@ -143,27 +146,27 @@ export function Footer() {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href="/about" className="hover:text-white transition-colors">
+                    <Link href={href("/about")} className="hover:text-white transition-colors">
                       {navT("about")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact" className="hover:text-white transition-colors">
+                    <Link href={href("/contact")} className="hover:text-white transition-colors">
                       {navT("contact")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/#newsletter" className="hover:text-white transition-colors">
+                    <Link href={`${href("/")}#newsletter`} className="hover:text-white transition-colors">
                       {navT("subscribe")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/privacy" className="hover:text-white transition-colors">
+                    <Link href={href("/privacy")} className="hover:text-white transition-colors">
                       {t("privacy")}
                     </Link>
                   </li>
                   <li>
-                    <Link href="/terms" className="hover:text-white transition-colors">
+                    <Link href={href("/terms")} className="hover:text-white transition-colors">
                       {t("terms")}
                     </Link>
                   </li>

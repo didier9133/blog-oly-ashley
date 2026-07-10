@@ -8,6 +8,7 @@ interface HomeCommunityCtaProps {
   title: string;
   description: string;
   cta: string;
+  href: string;
 }
 
 export function HomeCommunityCta({
@@ -15,6 +16,7 @@ export function HomeCommunityCta({
   title,
   description,
   cta,
+  href,
 }: HomeCommunityCtaProps) {
   return (
     <section
@@ -38,7 +40,7 @@ export function HomeCommunityCta({
               strokeWidth={1.35}
             />
             <p className="editorial-body text-pretty">{description}</p>
-            <Link href="/community" className="editorial-link mt-9">
+            <Link href={href} className="editorial-link mt-9">
               {cta}
               <span className="editorial-link-arrow">→</span>
             </Link>

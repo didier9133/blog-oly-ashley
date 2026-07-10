@@ -25,7 +25,7 @@ import { Slash } from "lucide-react";
 import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
-import { BASE_URL, fullUrl, ogImageUrl } from "@/lib/url";
+import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 type Params = Promise<{ locale: string; slug: string }>;
@@ -111,7 +111,7 @@ export async function generateMetadata({
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
-      authors: ["https://ashleydianaleon.com/about"],
+      authors: [fullUrl(locale, "/about")],
     },
     twitter: {
       card: "summary_large_image",
@@ -253,13 +253,15 @@ export default async function BlogPostPage(props: { params: Params }) {
           <Breadcrumb className="mb-8">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <Link href="/">{t("breadcrumb")}</Link>
+                <Link href={localizedHref(locale, "/")}>{t("breadcrumb")}</Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <Slash />
               </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <Link href="/writing">{t("breadcrumb-blog")}</Link>
+                <Link href={localizedHref(locale, "/writing")}>
+                  {t("breadcrumb-blog")}
+                </Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
                 <Slash />

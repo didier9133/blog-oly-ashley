@@ -16,11 +16,15 @@ export function localizedAlternates(
 
   return {
     canonical: fullUrl(currentLocale, paths[currentLocale]),
-    languages: {
-      en: fullUrl("en", paths.en),
-      es: fullUrl("es", paths.es),
-      "x-default": fullUrl("en", paths.en),
-    },
+    languages: localizedLanguages(paths),
+  };
+}
+
+export function localizedLanguages(paths: Record<SupportedLocale, string>) {
+  return {
+    en: fullUrl("en", paths.en),
+    es: fullUrl("es", paths.es),
+    "x-default": fullUrl("en", paths.en),
   };
 }
 

@@ -3,8 +3,11 @@ import type { MetadataRoute } from "next";
 const BASE_URL = "https://ashleydianaleon.com";
 const PUBLIC_BLOCKLIST = [
   "/dashboard/",
+  "/en/dashboard/",
+  "/es/dashboard/",
   "/api/",
   "/test-upload",
+  "/en/test-upload",
   "/es/test-upload",
   "/recipes",
   "/es/recipes",
@@ -22,14 +25,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/dashboard/",
-          "/api/",
-          "/_next/static/",
-          "/*.woff2$",
-          "/*.webmanifest$",
-          ...PUBLIC_BLOCKLIST.slice(2),
-        ],
+        disallow: PUBLIC_BLOCKLIST,
       },
       {
         userAgent: "GPTBot",

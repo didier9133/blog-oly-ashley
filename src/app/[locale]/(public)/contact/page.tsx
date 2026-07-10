@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
+import { localizedAlternates } from "@/lib/seo";
 import ContactForm from "./contact-form";
 
 export async function generateMetadata({
@@ -27,27 +28,25 @@ export async function generateMetadata({
       description: t("description"),
       images: [ogImageUrl(locale)],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/contact"),
-      languages: {
-        en: fullUrl("en", "/contact"),
-        es: fullUrl("es", "/contact"),
-        "x-default": fullUrl("en", "/contact"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/contact", es: "/contact" }),
   };
 }
 
-export default async function ContactPage() {
-  const t = await getTranslations("Contact");
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Contact" });
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: t("metadata.title"),
     description: t("metadata.description"),
-    url: fullUrl("en", "/contact"),
-    inLanguage: "en",
+    url: fullUrl(locale, "/contact"),
+    inLanguage: locale,
     isPartOf: {
       "@type": "WebSite",
       name: "Ashley Leon",

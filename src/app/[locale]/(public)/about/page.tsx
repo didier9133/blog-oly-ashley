@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
+import { localizedAlternates } from "@/lib/seo";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -28,26 +29,24 @@ export async function generateMetadata({
       description: t("description"),
       images: [ogImageUrl(locale)],
     },
-    alternates: {
-      canonical: fullUrl(locale, "/about"),
-      languages: {
-        en: fullUrl("en", "/about"),
-        es: fullUrl("es", "/about"),
-        "x-default": fullUrl("en", "/about"),
-      },
-    },
+    alternates: localizedAlternates(locale, { en: "/about", es: "/about" }),
   };
 }
 
-export default async function Page() {
-  const t = await getTranslations("About");
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "About" });
 
   const ashleySchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ashley Leon",
     jobTitle: "Writer, Workshop Facilitator & Certified Holistic Mind-Body Coach",
-    url: fullUrl("en", "/about"),
+    url: fullUrl(locale, "/about"),
     worksFor: {
       "@type": "Organization",
       name: "Ashley Leon",
@@ -65,8 +64,8 @@ export default async function Page() {
     "@type": "AboutPage",
     name: t("metadata.title"),
     description: t("metadata.description"),
-    url: fullUrl("en", "/about"),
-    inLanguage: "en",
+    url: fullUrl(locale, "/about"),
+    inLanguage: locale,
     isPartOf: {
       "@type": "WebSite",
       name: "Ashley Leon",
@@ -115,7 +114,11 @@ export default async function Page() {
               </div>
               <div className="mt-10">
                 <Link
-                  href="/workbooks/rebuilding-reverence"
+                  href={
+                    locale === "es"
+                      ? "/es/workbooks/reconstruyendo-la-reverencia"
+                      : "/en/workbooks/rebuilding-reverence"
+                  }
                   className="inline-flex items-center gap-2 rounded-sm bg-[#d8a08b] px-8 py-4 text-base text-white transition-all duration-300 hover:bg-[#c28c77] font-[family-name:var(--font-lora)] shadow-sm"
                 >
                   {t("cta")}
