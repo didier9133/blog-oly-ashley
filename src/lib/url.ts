@@ -16,8 +16,8 @@ export const BASE_URL = normalizeSiteUrl(
     process.env.VERCEL_PROJECT_PRODUCTION_URL ??
     FALLBACK_SITE_URL,
 );
-export const DEFAULT_OG_IMAGE = "/og-image-en.jpeg";
-export const SPANISH_OG_IMAGE = "/og-image-es.jpeg";
+export const DEFAULT_OG_IMAGE = "/og-image-en-v2.jpeg";
+export const SPANISH_OG_IMAGE = "/og-image-es-v2.jpeg";
 
 /** Build a locale-aware path that respects the configured prefix strategy. */
 export function localizedHref(locale: string, path: string): string {
