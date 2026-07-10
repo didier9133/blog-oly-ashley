@@ -141,7 +141,7 @@
         "image": {
           "label": "Imagen destacada",
           "uploadPrompt": "Haz clic para subir una imagen",
-          "uploadHelp": "Tamaño máximo: 5MB. Formatos permitidos: JPG, PNG, GIF, WebP o SVG.",
+          "uploadHelp": "Para OG/WhatsApp: JPG de 1200x630 px, máximo 1MB.",
           "previewAlt": "Vista previa"
         },
         "video": {
@@ -178,7 +178,9 @@
         "contentRequired": "El contenido es obligatorio",
         "imageRequired": "La imagen es obligatoria",
         "imageMaxSize": "Tamaño máximo de imagen {maxMb}MB",
-        "imageInvalidFormat": "Formato de imagen no válido. Usa JPG, PNG, GIF, WEBP o SVG",
+        "imageInvalidFormat": "Formato de imagen no válido. Usa JPG o JPEG",
+        "imageInvalidDimensions": "La imagen debe medir exactamente {width}x{height} px",
+        "imageUnreadable": "No se pudieron leer las dimensiones de la imagen",
         "imageInvalidUrl": "URL de imagen no válida",
         "videoInvalidFile": "Archivo de video no válido",
         "videoMaxSize": "Tamaño máximo de video {maxMb}MB",

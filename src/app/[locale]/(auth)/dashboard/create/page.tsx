@@ -43,8 +43,15 @@ import { uploadImageToS3 } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import {
+  getImageDimensions,
+  isAllowedOgImageFile,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_MAX_SIZE,
+  OG_IMAGE_MAX_SIZE_MB,
+  OG_IMAGE_WIDTH,
+} from "@/lib/og-image-validation";
 
-const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 
@@ -124,35 +131,65 @@ function buildFormPostSchema(t: TFn) {
 
     image: z.lazy(() =>
       typeof window !== "undefined"
-        ? z
-            .any()
-            .refine((files) => files instanceof FileList, {
-              message: t("validation.imageRequired"),
-            })
-            .refine(
-              (files) => !(files instanceof FileList) || files.length > 0,
-              {
+        ? z.any().superRefine(async (files, ctx) => {
+            if (!(files instanceof FileList)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
                 message: t("validation.imageRequired"),
-              },
-            )
-            .refine(
-              (files) =>
-                !(files instanceof FileList) ||
-                files.length === 0 ||
-                files[0].size <= FILE_SIZE_LIMIT,
-              {
-                message: t("validation.imageMaxSize", { maxMb: 5 }),
-              },
-            )
-            .refine(
-              (files) =>
-                !(files instanceof FileList) ||
-                files.length === 0 ||
-                /^image\/(jpeg|png|gif|webp|svg\+xml)$/.test(files[0].type),
-              {
+              });
+              return;
+            }
+
+            if (files.length === 0) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: t("validation.imageRequired"),
+              });
+              return;
+            }
+
+            const file = files[0];
+
+            if (file.size > OG_IMAGE_MAX_SIZE) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: t("validation.imageMaxSize", {
+                  maxMb: OG_IMAGE_MAX_SIZE_MB,
+                }),
+              });
+              return;
+            }
+
+            if (!isAllowedOgImageFile(file)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
                 message: t("validation.imageInvalidFormat"),
-              },
-            )
+              });
+              return;
+            }
+
+            try {
+              const dimensions = await getImageDimensions(file);
+
+              if (
+                dimensions.width !== OG_IMAGE_WIDTH ||
+                dimensions.height !== OG_IMAGE_HEIGHT
+              ) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: t("validation.imageInvalidDimensions", {
+                    width: OG_IMAGE_WIDTH,
+                    height: OG_IMAGE_HEIGHT,
+                  }),
+                });
+              }
+            } catch {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: t("validation.imageUnreadable"),
+              });
+            }
+          })
         : z.any(),
     ),
     video: z
@@ -689,7 +726,7 @@ export default function CreatePostPage() {
                           <div className="border-2 flex flex-col justify-center min-h-[500px]  relative  border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
                             <Input
                               type="file"
-                              accept="image/*"
+                              accept="image/jpeg"
                               id="image"
                               aria-describedby="image-description"
                               // Remove value prop, handle file input manually

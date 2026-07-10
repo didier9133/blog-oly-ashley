@@ -45,9 +45,15 @@ import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import {
+  getImageDimensions,
+  isAllowedOgImageFile,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_MAX_SIZE,
+  OG_IMAGE_MAX_SIZE_MB,
+  OG_IMAGE_WIDTH,
+} from "@/lib/og-image-validation";
 
-const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
-const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]; // Extensiones de archivo válidas
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 
@@ -124,7 +130,7 @@ function buildFormPostSchema(t: TFn) {
     isPublished: z.boolean(),
     image: z.lazy(() =>
       typeof window !== "undefined"
-        ? z.any().superRefine((val, ctx) => {
+        ? z.any().superRefine(async (val, ctx) => {
             // If it's a string URL
             if (typeof val === "string") {
               if (val.trim() === "") {
@@ -143,7 +149,6 @@ function buildFormPostSchema(t: TFn) {
               }
             }
 
-            // If it's a FileList
             else if (val instanceof FileList) {
               if (val.length === 0) {
                 ctx.addIssue({
@@ -152,29 +157,46 @@ function buildFormPostSchema(t: TFn) {
                 });
                 return;
               }
-              if (val[0].size > FILE_SIZE_LIMIT) {
+              const file = val[0];
+
+              if (file.size > OG_IMAGE_MAX_SIZE) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
-                  message: t("validation.imageMaxSize", { maxMb: 5 }),
+                  message: t("validation.imageMaxSize", {
+                    maxMb: OG_IMAGE_MAX_SIZE_MB,
+                  }),
                 });
                 return;
               }
-            }
 
-            // Verificar formato de archivo
-            if (val instanceof FileList && val.length > 0) {
-              const fileName = val[0].name.toLowerCase();
-
-              const fileExtension = fileName.substring(
-                fileName.lastIndexOf("."),
-              );
-
-              if (!validExtensions.includes(fileExtension)) {
+              if (!isAllowedOgImageFile(file)) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
                   message: t("validation.imageInvalidFormat"),
                 });
                 return;
+              }
+
+              try {
+                const dimensions = await getImageDimensions(file);
+
+                if (
+                  dimensions.width !== OG_IMAGE_WIDTH ||
+                  dimensions.height !== OG_IMAGE_HEIGHT
+                ) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: t("validation.imageInvalidDimensions", {
+                      width: OG_IMAGE_WIDTH,
+                      height: OG_IMAGE_HEIGHT,
+                    }),
+                  });
+                }
+              } catch {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: t("validation.imageUnreadable"),
+                });
               }
             }
           })
@@ -836,7 +858,7 @@ export default function CreatePostPage() {
                           <div className="border-2 flex flex-col justify-center min-h-[500px]  relative  border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
                             <Input
                               type="file"
-                              accept="image/*"
+                              accept="image/jpeg"
                               id="image"
                               aria-describedby="image-description"
                               // Remove value prop, handle file input manually

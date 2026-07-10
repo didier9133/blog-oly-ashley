@@ -141,7 +141,7 @@
         "image": {
           "label": "Featured image",
           "uploadPrompt": "Click to upload an image",
-          "uploadHelp": "Max size: 5MB. Allowed formats: JPG, PNG, GIF, WebP, or SVG.",
+          "uploadHelp": "For OG/WhatsApp: 1200x630 px JPG, max 1MB.",
           "previewAlt": "Preview"
         },
         "video": {
@@ -178,7 +178,9 @@
         "contentRequired": "Content is required",
         "imageRequired": "Image is required",
         "imageMaxSize": "Max image size is {maxMb}MB",
-        "imageInvalidFormat": "Invalid image format. Use JPG, PNG, GIF, WEBP, or SVG",
+        "imageInvalidFormat": "Invalid image format. Use JPG or JPEG",
+        "imageInvalidDimensions": "Image must be exactly {width}x{height} px",
+        "imageUnreadable": "Couldn't read the image dimensions",
         "imageInvalidUrl": "Invalid image URL",
         "videoInvalidFile": "Invalid video file",
         "videoMaxSize": "Max video size is {maxMb}MB",
