@@ -58,10 +58,19 @@ export default async function CommunityPage({
       url: BASE_URL,
     },
   };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
+      { "@type": "ListItem", position: 2, name: "The In-Between", item: fullUrl(locale, "/community") },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-[#F9F8F6] font-[family-name:var(--font-cormorant-garamond)]">
       <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbSchema} />
 
       {/* Header */}
       <section className="bg-[#f5f0eb] py-16 lg:py-24">

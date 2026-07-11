@@ -26,7 +26,9 @@ import { CategoryEnum } from "@/enums";
 import { getLocale, getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
-import { localizedAlternates } from "@/lib/seo";
+import { isSupportedLocale, localizedAlternates } from "@/lib/seo";
+import { getPostSeoDecision } from "@/lib/seo-content";
+import { ProductCta } from "@/components/product-cta";
 import { routing } from "@/i18n/routing";
 import { postSlugCandidates, publicPostSlug } from "@/lib/post-slugs";
 type Params = Promise<{ locale: string; slug: string }>;
@@ -101,7 +103,13 @@ export async function generateMetadata({
   const title = locale === "en" ? post.title_en : post.title_es;
   const content = locale === "en" ? post.content_en : post.content_es;
   const description = htmlExcerpt(content);
-  const pageTitle = `${title} | Ashley Leon`;
+  const decision = getPostSeoDecision(
+    publicPostSlug(post.slug_en),
+    publicPostSlug(post.slug_es),
+  );
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const pageTitle = decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Leon`;
+  const seoDescription = decision?.description?.[supportedLocale] ?? description;
   const detailSlug = publicPostSlug(
     locale === "es" ? post.slug_es : post.slug_en,
   );
@@ -111,11 +119,11 @@ export async function generateMetadata({
 
   return {
     title: pageTitle,
-    description,
+    description: seoDescription,
     openGraph: {
       type: "article",
       title: pageTitle,
-      description,
+      description: seoDescription,
       url: fullUrl(locale, `/writing/${detailSlug}`),
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
@@ -125,7 +133,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
-      description,
+      description: seoDescription,
       images: [imageUrl],
     },
     alternates: localizedAlternates(locale, {
@@ -212,6 +220,11 @@ export default async function BlogPostPage(props: { params: Params }) {
   const imageUrl = post.image.startsWith("http")
     ? post.image
     : `${BASE_URL}${post.image}`;
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const seoDecision = getPostSeoDecision(
+    publicPostSlug(post.slug_en),
+    publicPostSlug(post.slug_es),
+  );
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
@@ -319,6 +332,16 @@ export default async function BlogPostPage(props: { params: Params }) {
               content={postTraslated.content!}
               isEditable={false}
             />
+            {seoDecision?.productCta && seoDecision.productCta !== "none" ? (
+              <ProductCta
+                product={seoDecision.productCta}
+                placement="end"
+                locale={supportedLocale}
+                articleSlug={detailSlug}
+                articleCategory={supportedLocale === "es" ? seoDecision.categoryEs : seoDecision.category}
+                primaryKeyword={seoDecision.primaryKeyword?.[supportedLocale]}
+              />
+            ) : null}
           </article>
         </div>
 

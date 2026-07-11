@@ -760,12 +760,12 @@
   },
   "Community": {
     "metadata": {
-      "title": "The In-Between | Una comunidad para reconstruir la fe acompañada — Ashley Leon",
-      "description": "Una comunidad privada para personas reconstruyendo fe e identidad después de la deconstrucción. The In-Between es un espacio de honestidad y acompañamiento al que puedes seguir volviendo."
+      "title": "Comunidad para reconstruir la fe | The In-Between",
+      "description": "Una comunidad privada y afirmativa para conversar con honestidad, reconstruir la fe y encontrar pertenencia después de la deconstrucción."
     },
-    "eyebrow": "The In-Between",
+    "eyebrow": "Una comunidad para este momento de transición",
     "title": "Un espacio para volver a ti, una y otra vez.",
-    "lead": "La sanación no sucede de una sola vez. Es algo a lo que regresas, especialmente cuando no tienes que hacerlo en soledad.",
+    "lead": "Una comunidad privada para reconstruir la fe, la identidad y la pertenencia después de la deconstrucción.",
     "paragraph": "The In-Between es nuestra comunidad privada: un espacio para mantener vivo este proceso entre guías, encuentros y temporadas de cambio. Aquí puedes conversar con honestidad, hacer preguntas, compartir lo que estás viviendo y volver a ti en compañía.",
     "inside-heading": "Dentro encontrarás:",
     "inside-1": "Reflexiones y preguntas para seguir integrando el proceso entre una guía y el próximo encuentro.",
@@ -834,8 +834,8 @@
     "supportSection-home": "Ir al inicio"
   },
   "Circle": {
-    "metadata-title": "The Rebuilding Reverence Circle | Grupo en vivo de 4 semanas sobre deconstrucción de fe",
-    "metadata-description": "Una experiencia grupal en vivo de 4 semanas para quienes ya no quieren reconstruir su fe en soledad.",
+    "metadata-title": "Experiencia grupal para reconstruir la fe | Rebuilding Reverence Circle",
+    "metadata-description": "Una experiencia grupal en vivo de cuatro semanas para reconstruir la fe, la identidad y el sentido de pertenencia en compañía.",
     "eyebrow": "Experiencia grupal en vivo",
     "reserveCta": "Reservar mi lugar — ${price} →",
     "nav": {

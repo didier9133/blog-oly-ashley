@@ -16,7 +16,9 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
+import { isSupportedLocale } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
+import { getWorkbookSeo } from "@/lib/seo-content";
 
 export async function generateMetadata({
   params,
@@ -32,7 +34,9 @@ export async function generateMetadata({
   if (!book) return notFound();
 
   const title = locale === "en" ? book.title_en : book.title_es;
-  const description = locale === "en" ? book.subtitle_en : book.subtitle_es;
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const seo = getWorkbookSeo(supportedLocale, book.slug_en);
+  const description = seo?.description ?? (locale === "en" ? book.subtitle_en : book.subtitle_es);
   const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
   const imageUrl = coverImage.startsWith("http")
@@ -40,17 +44,17 @@ export async function generateMetadata({
     : `${BASE_URL}${coverImage}`;
 
   return {
-    title: `${title} | Ashley Leon`,
+    title: seo?.title ?? `${title} | Ashley Leon`,
     description,
     openGraph: {
-      title: `${title} | Ashley Leon`,
+      title: seo?.title ?? `${title} | Ashley Leon`,
       description,
       url: fullUrl(locale, `/workbooks/${detailSlug}`),
       images: [{ url: imageUrl, width: 800, height: 1067, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Ashley Leon`,
+      title: seo?.title ?? `${title} | Ashley Leon`,
       description,
       images: [imageUrl],
     },
@@ -86,6 +90,8 @@ export default async function PageDetail({
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
   const pageUrl = fullUrl(locale, `/workbooks/${detailSlug}`);
   const priceCents = workbookPriceCents(book.price);
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const seo = getWorkbookSeo(supportedLocale, book.slug_en);
 
   const bookSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -112,10 +118,20 @@ export default async function PageDetail({
       reviewCount: book.reviewCount,
     };
   }
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
+      { "@type": "ListItem", position: 2, name: locale === "es" ? "Guías" : "Workbooks", item: fullUrl(locale, "/workbooks") },
+      { "@type": "ListItem", position: 3, name: bookTitle, item: pageUrl },
+    ],
+  };
 
   return (
     <>
       <JsonLd data={bookSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
         {/* Header */}
         <div className="bg-[#f5f0eb] py-16 lg:py-24">
@@ -128,7 +144,7 @@ export default async function PageDetail({
                 {locale === "en" ? book.title_en : book.title_es}
               </h1>
               <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] max-w-2xl mx-auto">
-                {locale === "en" ? book.subtitle_en : book.subtitle_es}
+                {seo?.supportingLine ?? (locale === "en" ? book.subtitle_en : book.subtitle_es)}
               </p>
             </div>
           </div>

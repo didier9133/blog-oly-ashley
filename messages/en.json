@@ -760,12 +760,12 @@
   },
   "Community": {
     "metadata": {
-      "title": "The In-Between | A Community for Rebuilding Faith Together — Ashley Leon",
-      "description": "An online community for people rebuilding faith and identity after deconstruction. The In-Between is a grounded, affirming space to keep returning."
+      "title": "Online Faith Deconstruction Community | The In-Between",
+      "description": "A grounded, affirming online community for people rebuilding faith, spirituality, identity, and belonging after deconstruction."
     },
-    "eyebrow": "The In-Between",
+    "eyebrow": "Online faith deconstruction community",
     "title": "Somewhere to keep returning.",
-    "lead": "Healing isn't a one-time event. It's a practice you come back to — and it's easier with people walking the same road.",
+    "lead": "A grounded, affirming space for rebuilding faith, identity, and belonging after deconstruction.",
     "paragraph": "The In-Between is our online community: the place where this work stays alive between workbooks and circles. A grounded, affirming space for honest reflection, real conversation, and belonging without conditions.",
     "inside-heading": "What you'll find inside:",
     "inside-1": "Ongoing reflections and prompts to keep the work alive between workbooks and circles.",
@@ -834,9 +834,9 @@
     "supportSection-home": "Go to homepage"
   },
   "Circle": {
-    "metadata-title": "The Rebuilding Reverence Circle | A Live 4-Week Faith Deconstruction Group",
-    "metadata-description": "A live 4-week group experience for those done rebuilding faith alone.",
-    "eyebrow": "Live Group Experience",
+    "metadata-title": "Online Faith Deconstruction Group | Rebuilding Reverence Circle",
+    "metadata-description": "A live four-week online group for people rebuilding faith, identity, trust, and belonging after religious deconstruction.",
+    "eyebrow": "Live online faith deconstruction group",
     "reserveCta": "Reserve My Spot — ${price} →",
     "nav": {
       "inside": "Inside",

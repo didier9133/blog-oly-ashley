@@ -119,12 +119,21 @@ export default async function CirclePage({
       },
     })),
   };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
+      { "@type": "ListItem", position: 2, name: productName, item: fullUrl(locale, "/circle") },
+    ],
+  };
 
   return (
     <>
       <JsonLd data={courseSchema} />
       <JsonLd data={eventSchema} />
       <JsonLd data={faqSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <div id="nav-sentinel" aria-hidden className="h-px w-px" />
       <CircleNav
         items={navItems}
