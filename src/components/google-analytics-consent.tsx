@@ -15,19 +15,19 @@ const GA_MEASUREMENT_ID =
 
 const COPY = {
   en: {
-    title: "Your privacy choices",
-    body: "We use optional analytics cookies to understand which articles and resources are useful. We do not send your form responses, email, or payment details to Analytics.",
-    accept: "Allow analytics",
+    title: "Cookies & privacy",
+    body: "We use analytics to understand what content is useful to you and improve this site. We do not send your personal information.",
+    accept: "Accept",
     reject: "Decline",
-    settings: "Cookie settings",
+    settings: "Cookies",
     privacy: "Privacy policy",
   },
   es: {
-    title: "Tus opciones de privacidad",
-    body: "Usamos cookies analíticas opcionales para entender qué artículos y recursos son útiles. No enviamos tus respuestas, correo ni datos de pago a Analytics.",
-    accept: "Permitir analítica",
+    title: "Cookies y privacidad",
+    body: "Usamos analítica para entender qué contenido te resulta útil y mejorar este sitio. No enviamos tus datos personales.",
+    accept: "Aceptar",
     reject: "Rechazar",
-    settings: "Configurar cookies",
+    settings: "Cookies",
     privacy: "Política de privacidad",
   },
 } as const;
