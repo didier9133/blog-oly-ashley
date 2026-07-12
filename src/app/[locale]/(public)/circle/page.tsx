@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
 import { CircleStickyCta } from "@/components/circle-sticky-cta";
 import { CircleFaq } from "@/components/circle-faq";
+import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 
 const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
 
@@ -134,6 +135,14 @@ export default async function CirclePage({
       <JsonLd data={eventSchema} />
       <JsonLd data={faqSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <ViewItemAnalytics
+        itemId="rebuilding-reverence-circle"
+        itemName={productName}
+        itemCategory="live-group"
+        locale={locale}
+        value={EARLY_PRICE}
+        currency="USD"
+      />
       <div id="nav-sentinel" aria-hidden className="h-px w-px" />
       <CircleNav
         items={navItems}

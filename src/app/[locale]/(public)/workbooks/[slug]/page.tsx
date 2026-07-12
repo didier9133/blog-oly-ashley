@@ -19,6 +19,7 @@ import { localizedAlternates } from "@/lib/seo";
 import { isSupportedLocale } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 import { getWorkbookSeo } from "@/lib/seo-content";
+import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 
 export async function generateMetadata({
   params,
@@ -132,6 +133,14 @@ export default async function PageDetail({
     <>
       <JsonLd data={bookSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <ViewItemAnalytics
+        itemId={book.slug_en}
+        itemName={bookTitle}
+        itemCategory="workbook"
+        locale={locale}
+        value={priceCents / 100}
+        currency="USD"
+      />
       <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
         {/* Header */}
         <div className="bg-[#f5f0eb] py-16 lg:py-24">

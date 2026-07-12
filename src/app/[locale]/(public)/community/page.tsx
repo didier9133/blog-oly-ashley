@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 import { localizedAlternates } from "@/lib/seo";
+import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 
 const COMMUNITY_URL =
   "https://www.gokollab.com/the-in-between-4dzfnm/home";
@@ -71,6 +72,12 @@ export default async function CommunityPage({
     <main className="min-h-screen bg-[#F9F8F6] font-[family-name:var(--font-cormorant-garamond)]">
       <JsonLd data={jsonLd} />
       <JsonLd data={breadcrumbSchema} />
+      <ViewItemAnalytics
+        itemId="the-in-between"
+        itemName="The In-Between"
+        itemCategory="community"
+        locale={locale}
+      />
 
       {/* Header */}
       <section className="bg-[#f5f0eb] py-16 lg:py-24">

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import PreloadSuccessPayment from "@/components/preload-succes-payment";
 import { transactionalRobots } from "@/lib/seo";
+import { PurchaseAnalytics } from "@/components/ecommerce-analytics";
 
 interface SuccessPageProps {
   params: Promise<{
@@ -167,6 +168,17 @@ async function SuccessContent({
     // Compra encontrada y completada
     return (
       <div className="relative">
+        <PurchaseAnalytics
+          transactionId={
+            purchase.stripePaymentIntent ?? purchase.stripeSessionId
+          }
+          itemId={purchase.productName}
+          itemName={purchase.productName}
+          itemCategory={purchase.productType}
+          locale={locale}
+          value={purchase.amount / 100}
+          currency={purchase.currency}
+        />
         <div
           className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-transparent to-accent/10"
           aria-hidden

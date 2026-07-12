@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { scrollToNewsletter as scrollToNewsletterUtil } from "@/lib/newsletter-scroll";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 interface FormSubscribeNewsletterProps {
   className?: string;
@@ -22,6 +23,7 @@ export function FormSubscribeNewsletter({
   variant = "default",
 }: FormSubscribeNewsletterProps) {
   const t = useTranslations("footer");
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -49,6 +51,10 @@ export function FormSubscribeNewsletter({
 
     try {
       await subscribeToNewsletter(email, { source: "footer" });
+      trackAnalyticsEvent("newsletter_signup", {
+        source_location: "footer",
+        locale,
+      });
       toast.success(t("toast-success"), { id: toastId });
       setEmail("");
     } catch (err) {

@@ -529,7 +529,7 @@
   "Privacy": {
     "title": "Privacy Policy",
     "lastUpdatedLabel": "Last updated:",
-    "lastUpdatedDate": "February 17, 2026",
+    "lastUpdatedDate": "July 11, 2026",
     "intro": "At Ashley Leon, we value your privacy. This policy explains what information we collect, how we use it, and the choices you have regarding your data when you visit our site or use our services.",
     "backHome": "Back to home",
     "sections": {
@@ -547,7 +547,7 @@
       },
       "cookies": {
         "title": "4. Cookies and similar technologies",
-        "body": "We may use cookies or similar technologies to remember preferences, measure traffic, and improve functionality. You can manage cookie settings in your browser, though some site features may be affected."
+        "body": "We use essential technologies for site functionality and, only with your permission, Google Analytics 4 to understand visits, article engagement, and interactions with resource links. Google Analytics may set the first-party _ga cookie and process information such as visited pages, general device and browser details, session information, and approximate location. We do not send form responses, email addresses, or payment details to Analytics. You can accept, decline, or later change analytics consent using the Cookie settings control on the site."
       },
       "security": {
         "title": "5. Information security",

@@ -271,6 +271,10 @@ export default function Checkout({
       <CheckoutForm
         paymentIntentId={paymentIntentId}
         successPath={successPath}
+        productName={productName}
+        productType={productType}
+        value={ebook_price / 100}
+        currency={CURRENCY}
       />
     </Elements>
   );

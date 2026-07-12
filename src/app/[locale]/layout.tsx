@@ -17,6 +17,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 // UI providers
 import { Toaster } from "@/components/ui/sonner";
 import { MaxListenersBump } from "@/components/max-listeners-bump";
+import { GoogleAnalyticsConsent } from "@/components/google-analytics-consent";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -63,7 +64,6 @@ export async function generateMetadata({
     metadataBase: new URL(BASE_URL),
     title,
     description,
-    keywords: t("keywords").split(", "),
     authors: [{ name: "Ashley Leon" }],
     creator: "Ashley Leon",
     publisher: "Ashley Leon",
@@ -153,6 +153,7 @@ export default async function RootLayout({
           <MaxListenersBump />
           <Toaster position="top-right" richColors />
           {children}
+          <GoogleAnalyticsConsent locale={locale} />
           <Analytics />
           <SpeedInsights />
         </NextIntlClientProvider>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { toast } from "sonner";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
@@ -19,13 +19,22 @@ import type { StripePaymentElementOptions } from "@stripe/stripe-js";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { localizedHref } from "@/lib/url";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export default function CheckoutForm({
   paymentIntentId,
   successPath = "/workbooks/success",
+  productName,
+  productType,
+  value,
+  currency,
 }: {
   paymentIntentId?: string | null;
   successPath?: string;
+  productName: string;
+  productType: string;
+  value: number;
+  currency: string;
 }) {
   const t = useTranslations("Checkout");
   const locale = useLocale();
@@ -34,6 +43,7 @@ export default function CheckoutForm({
   const elements = useElements();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPaymentElementReady, setIsPaymentElementReady] = useState(false);
+  const hasTrackedBeginCheckout = useRef(false);
   const billingDetailsSchema = useMemo(
     () => createBillingDetailsSchema(t),
     [t],
@@ -107,6 +117,21 @@ export default function CheckoutForm({
 
   const handleSubmit = async (values: BillingDetailsFormValues) => {
     if (!stripe || !elements) return;
+
+    if (!hasTrackedBeginCheckout.current) {
+      hasTrackedBeginCheckout.current = trackAnalyticsEvent("begin_checkout", {
+        value,
+        currency: currency.toUpperCase(),
+        locale,
+        items: [
+          {
+            item_id: productName,
+            item_name: productName,
+            item_category: productType,
+          },
+        ],
+      });
+    }
 
     try {
       setIsSubmitting(true);
