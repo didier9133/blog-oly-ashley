@@ -29,8 +29,23 @@ describe("bilingual SEO configuration", () => {
   });
 
   test("uses distinct English and Spanish commercial metadata", () => {
-    expect(getWorkbookSeo("en", "rebuilding-reverence")?.title).toContain("Religious Trauma");
-    expect(getWorkbookSeo("es", "rebuilding-reverence")?.title).toContain("Guía para reconstruir la fe");
+    const english = getWorkbookSeo("en", "rebuilding-reverence");
+    const spanish = getWorkbookSeo("es", "rebuilding-reverence");
+
+    expect(english?.title).toContain("Religious Trauma Workbook");
+    expect(english?.description.toLowerCase()).toContain(
+      "religious trauma workbook",
+    );
+    expect(english?.intentSection?.body.toLowerCase()).toContain(
+      "religious trauma workbook",
+    );
+    expect(spanish?.title).toContain("Guía para reconstruir la fe");
+    expect(spanish?.intentSection?.title).toBe(
+      "Una guía para acompañar el daño religioso con reflexión y cuidado",
+    );
+    expect(
+      spanish?.intentSection?.title.toLowerCase().includes("libro de trabajo"),
+    ).toBe(false);
   });
 
   test("keeps Spanish acquisition informational and commercial language hypothetical", () => {

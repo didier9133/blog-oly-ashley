@@ -93,12 +93,13 @@ export default async function PageDetail({
   const priceCents = workbookPriceCents(book.price);
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
   const seo = getWorkbookSeo(supportedLocale, book.slug_en);
+  const intentHeadingId = `${book.slug_en}-intent-heading`;
 
   const bookSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Book",
     name: bookTitle,
-    description: bookDescription,
+    description: seo?.description ?? bookDescription,
     author: { "@type": "Person", name: book.author },
     bookFormat: "https://schema.org/EBook",
     numberOfPages: book.pages,
@@ -284,9 +285,9 @@ export default async function PageDetail({
               <Card className="border-border/50 shadow-sm rounded-sm bg-card">
                 <CardContent className="space-y-8 px-8 py-8">
                   <div>
-                    <CardTitle className="text-2xl font-light text-foreground italic mb-4">
+                    <h2 className="text-2xl font-light text-foreground italic mb-4">
                       {t("about-title")}
-                    </CardTitle>
+                    </h2>
                     <p className="leading-relaxed font-[family-name:var(--font-lora)] text-foreground/80 text-base">
                       {locale === "en"
                         ? book.description_en
@@ -294,10 +295,30 @@ export default async function PageDetail({
                     </p>
                   </div>
 
+                  {seo?.intentSection ? (
+                    <section
+                      aria-labelledby={intentHeadingId}
+                      className="border-l-2 border-[#d8a08b] pl-5"
+                    >
+                      <h2
+                        id={intentHeadingId}
+                        className="text-2xl font-light text-foreground italic mb-4"
+                      >
+                        {seo.intentSection.title}
+                      </h2>
+                      <p className="leading-relaxed font-[family-name:var(--font-lora)] text-foreground/80 text-base">
+                        {seo.intentSection.body}
+                      </p>
+                      <p className="mt-4 text-sm leading-relaxed font-sans text-muted-foreground">
+                        {seo.intentSection.disclaimer}
+                      </p>
+                    </section>
+                  ) : null}
+
                   <div>
-                    <h4 className="text-xl font-light text-foreground italic mb-4">
+                    <h2 className="text-xl font-light text-foreground italic mb-4">
                       {t("features-title")}
-                    </h4>
+                    </h2>
                     <ul className="space-y-3 font-[family-name:var(--font-lora)] text-foreground/80">
                       {(locale === "en"
                         ? book.features_en

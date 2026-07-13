@@ -266,7 +266,18 @@ export function getPostSeoDecision(...slugs: (string | null | undefined)[]) {
   }
 }
 
-type CommercialSeo = { title: string; description: string; supportingLine: string };
+type WorkbookIntentSection = {
+  title: string;
+  body: string;
+  disclaimer: string;
+};
+
+type CommercialSeo = {
+  title: string;
+  description: string;
+  supportingLine: string;
+  intentSection?: WorkbookIntentSection;
+};
 
 export function getWorkbookSeo(
   locale: SupportedLocale,
@@ -275,14 +286,24 @@ export function getWorkbookSeo(
   const content: Record<string, Record<SupportedLocale, CommercialSeo>> = {
     "rebuilding-reverence": {
       en: {
-        title: "Religious Trauma & Faith Deconstruction Workbook | Ashley Leon",
-        description: "A guided 30-day workbook for reflecting on religious harm, inherited beliefs, spiritual burnout, and rebuilding faith without abandoning yourself.",
-        supportingLine: "A guided faith deconstruction workbook for life after religious harm.",
+        title: "Religious Trauma Workbook | Rebuilding Reverence",
+        description: "A guided 30-day religious trauma workbook for reflecting on religious harm, inherited beliefs, spiritual burnout, and rebuilding trust without abandoning yourself.",
+        supportingLine: "A guided 30-day religious trauma workbook for reflection after religious harm.",
+        intentSection: {
+          title: "A Religious Trauma Workbook for Gentle Reflection",
+          body: "Rebuilding Reverence is a guided 30-day religious trauma workbook for people examining inherited beliefs, spiritual burnout, church hurt, and the ways religious experiences may still shape the body, identity, and sense of trust. Through reflective prompts and gentle practices, it offers space to name what happened, listen to your inner wisdom, and explore what a more honest relationship with faith or the sacred could look like.",
+          disclaimer: "This workbook is an educational and reflective resource. It does not diagnose or treat trauma and is not a substitute for therapy or other professional care.",
+        },
       },
       es: {
         title: "Guía para reconstruir la fe | Rebuilding Reverence",
         description: "Una guía práctica de 30 días para cuestionar creencias heredadas, procesar el daño religioso y reconstruir una fe más honesta sin abandonarte.",
-        supportingLine: "Una guía de 30 días para reconstruir la fe después de la deconstrucción.",
+        supportingLine: "Una guía práctica de 30 días para acompañar el daño religioso y reconstruir una fe más honesta.",
+        intentSection: {
+          title: "Una guía para acompañar el daño religioso con reflexión y cuidado",
+          body: "Rebuilding Reverence es una guía práctica de 30 días para quienes desean comprender cómo las creencias heredadas, el cansancio espiritual, las heridas de iglesia o las experiencias religiosas difíciles siguen influyendo en su cuerpo, su identidad y su capacidad de confiar. Con preguntas guiadas y prácticas amables, ofrece un espacio para nombrar lo vivido, volver a escuchar tu brújula interna y explorar cómo sería una relación más honesta con la fe o lo sagrado.",
+          disclaimer: "Es un recurso educativo y de reflexión. No diagnostica ni trata el trauma, ni sustituye la terapia u otra atención profesional.",
+        },
       },
     },
     "queer-and-called": {
