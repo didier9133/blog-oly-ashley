@@ -218,6 +218,18 @@ type PostSeoDecision = {
   primaryKeyword?: Partial<Record<SupportedLocale, string>>;
   seoTitle?: Partial<Record<SupportedLocale, string>>;
   description?: Partial<Record<SupportedLocale, string>>;
+  relatedGuide?: Partial<
+    Record<
+      SupportedLocale,
+      {
+        href: string;
+        eyebrow: string;
+        title: string;
+        description: string;
+        label: string;
+      }
+    >
+  >;
 };
 
 export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
@@ -236,6 +248,16 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     description: {
       en: "A personal and practical reflection on life after faith deconstruction, rebuilding spiritual trust, and creating a sacred life without returning to self-abandonment.",
       es: "Una reflexión personal sobre la vida después de la deconstrucción, la reconstrucción de la confianza espiritual y la búsqueda de una fe más honesta.",
+    },
+    relatedGuide: {
+      en: {
+        href: "/deconstructing-christianity",
+        eyebrow: "Start with the foundation",
+        title: "What does deconstructing Christianity mean?",
+        description:
+          "Read the complete guide to faith deconstruction, why it happens, what it can feel like, and the different directions it may take.",
+        label: "Read the deconstruction guide",
+      },
     },
   },
   "seeking-first-again": {

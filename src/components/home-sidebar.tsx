@@ -29,12 +29,6 @@ export function HomeSidebar() {
   return (
     <nav aria-label="Table of contents" className="space-y-12">
       <div>
-        <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] font-light text-foreground/50 leading-none">
-          Ashley Leon
-        </span>
-      </div>
-
-      <div>
         <span className="editorial-eyebrow tracking-[0.34em] text-foreground/45">
           {t("sidebar-index")}
         </span>

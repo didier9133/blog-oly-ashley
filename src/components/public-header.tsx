@@ -13,15 +13,17 @@ export async function PublicHeader() {
       <nav className="w-full flex items-center justify-between gap-2 sm:gap-4 md:gap-6 lg:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 mx-auto max-w-[1760px]">
         <Link
           href={localizedHref(locale, "/")}
-          className="flex-shrink-0 min-w-0 md:hidden"
-          aria-label="Ashley Leon — Inicio"
+          className="min-w-0 flex-shrink-0"
+          aria-label={
+            locale === "es" ? "Ashley Leon — Inicio" : "Ashley Leon — Home"
+          }
         >
-          <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] sm:text-[1.75rem] font-medium text-foreground tracking-tighter leading-none whitespace-nowrap">
+          <span className="whitespace-nowrap font-[family-name:var(--font-great-vibes)] text-[1.5rem] font-medium leading-none tracking-tighter text-foreground sm:text-[1.75rem] lg:text-[1.45rem] xl:text-[1.7rem]">
             Ashley Leon
           </span>
         </Link>
 
-        <div className="hidden md:flex flex-1 justify-start min-w-0">
+        <div className="hidden min-w-0 flex-1 justify-start lg:flex">
           <PublicItemsNavBar />
         </div>
 
@@ -29,7 +31,7 @@ export async function PublicHeader() {
           <LanguageSelector />
           <SidebarTrigger
             aria-label="Abrir menú"
-            className="md:hidden -mr-1"
+            className="-mr-1 lg:hidden"
           />
         </div>
       </nav>

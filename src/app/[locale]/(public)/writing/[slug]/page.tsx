@@ -225,6 +225,7 @@ export default async function BlogPostPage(props: { params: Params }) {
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
+  const relatedGuide = seoDecision?.relatedGuide?.[supportedLocale];
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
@@ -332,6 +333,34 @@ export default async function BlogPostPage(props: { params: Params }) {
               content={postTraslated.content!}
               isEditable={false}
             />
+            {relatedGuide ? (
+              <aside
+                className="not-prose mt-12 border-y border-border bg-paper px-6 py-8 sm:px-8"
+                aria-labelledby="related-pillar-heading"
+              >
+                <p className="font-[family-name:var(--font-lora)] text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-primary">
+                  {relatedGuide.eyebrow}
+                </p>
+                <h2
+                  id="related-pillar-heading"
+                  className="mt-3 font-[family-name:var(--font-cormorant-garamond)] text-2xl font-medium text-foreground sm:text-3xl"
+                >
+                  {relatedGuide.title}
+                </h2>
+                <p className="mt-3 font-[family-name:var(--font-lora)] text-base leading-7 text-muted-foreground">
+                  {relatedGuide.description}
+                </p>
+                <Link
+                  href={localizedHref(supportedLocale, relatedGuide.href)}
+                  className="editorial-link mt-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {relatedGuide.label}
+                  <span className="editorial-link-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              </aside>
+            ) : null}
             {seoDecision?.productCta && seoDecision.productCta !== "none" ? (
               <ProductCta
                 product={seoDecision.productCta}

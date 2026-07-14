@@ -20,6 +20,13 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
   { path: "/terms", lastModified: "2026-07-10" },
 ];
 
+const ENGLISH_ONLY_STATIC_ROUTES: {
+  path: string;
+  lastModified: string;
+}[] = [
+  { path: "/deconstructing-christianity", lastModified: "2026-07-14" },
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static routes — lastModified real, sin priority/changeFrequency (ignorados por Google).
   // fullUrl() respects the configured locale prefix strategy.
@@ -32,6 +39,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     })),
   );
+
+  const englishOnlyEntries: MetadataRoute.Sitemap =
+    ENGLISH_ONLY_STATIC_ROUTES.map(({ path, lastModified }) => {
+      const url = fullUrl("en", path);
+      return {
+        url,
+        lastModified: new Date(lastModified),
+        alternates: {
+          languages: {
+            en: url,
+            "x-default": url,
+          },
+        },
+      };
+    });
 
   // Dynamic writing posts — each locale uses its own slug.
   const blogPosts = await prisma.post.findMany({
@@ -88,5 +110,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]);
 
-  return [...staticEntries, ...blogEntries, ...ebookEntries];
+  return [
+    ...staticEntries,
+    ...englishOnlyEntries,
+    ...blogEntries,
+    ...ebookEntries,
+  ];
 }

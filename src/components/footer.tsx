@@ -122,6 +122,16 @@ export function Footer() {
                       {navT("writing")}
                     </Link>
                   </li>
+                  {locale === "en" ? (
+                    <li>
+                      <Link
+                        href={href("/deconstructing-christianity")}
+                        className="transition-colors hover:text-white"
+                      >
+                        {navT("deconstructing-christianity-full")}
+                      </Link>
+                    </li>
+                  ) : null}
                   <li>
                     <Link href={href("/workbooks")} className="hover:text-white transition-colors">
                       {navT("workbooks")}

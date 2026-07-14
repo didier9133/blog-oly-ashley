@@ -9,9 +9,15 @@ interface ItemProps {
   title: string;
   url: string;
   external?: boolean;
+  compact?: boolean;
 }
 
-export function ItemNavBar({ title, url, external = false }: ItemProps) {
+export function ItemNavBar({
+  title,
+  url,
+  external = false,
+  compact = false,
+}: ItemProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -66,7 +72,11 @@ export function ItemNavBar({ title, url, external = false }: ItemProps) {
       onClick={handleClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={`font-[family-name:var(--font-lora)] text-[1rem] font-semibold tracking-[0.035em] transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground/60 after:transition-all ${
+      className={`relative font-[family-name:var(--font-lora)] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground/60 after:transition-all ${
+        compact
+          ? "whitespace-nowrap text-[0.82rem] tracking-[0.02em] xl:text-[1rem] xl:tracking-[0.035em]"
+          : "text-[1rem] tracking-[0.035em]"
+      } ${
         isActive
           ? "text-foreground after:w-full"
           : "text-foreground/75 hover:text-foreground after:w-0 hover:after:w-full"

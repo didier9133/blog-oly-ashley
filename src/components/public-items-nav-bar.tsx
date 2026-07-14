@@ -1,16 +1,12 @@
-import { data } from "@/const/navbar-options";
 import { ItemNavBar } from "./item-nav-bar";
 import { getLocale, getTranslations } from "next-intl/server";
 import { localizedHref } from "@/lib/url";
+import {
+  getPublicNavigationItems,
+  type PublicNavItem,
+} from "@/lib/public-navigation";
 
-type NavItem = {
-  title: string;
-  url: string;
-  isActive: boolean;
-  external?: boolean;
-};
-
-const titleToPath = (item: NavItem): string => {
+const titleToPath = (item: PublicNavItem): string => {
   if (item.external) return "merch";
   if (item.url === "/") return "home";
   if (item.url.includes("#newsletter")) return "subscribe";
@@ -20,7 +16,7 @@ const titleToPath = (item: NavItem): string => {
 export async function PublicItemsNavBar() {
   const locale = await getLocale();
   const t = await getTranslations("navigation");
-  const items = data.navMain as NavItem[];
+  const items = getPublicNavigationItems(locale);
 
   const itemsTranslated = items.map((item) => ({
     ...item,
@@ -29,9 +25,9 @@ export async function PublicItemsNavBar() {
   }));
 
   return (
-    <div className="hidden md:flex items-center gap-8">
+    <div className="hidden items-center gap-4 lg:flex xl:gap-8">
       {itemsTranslated.map((item) => (
-        <ItemNavBar key={item.title} {...item} />
+        <ItemNavBar key={item.title} {...item} compact />
       ))}
     </div>
   );

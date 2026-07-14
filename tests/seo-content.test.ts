@@ -1,5 +1,14 @@
 import { describe, expect, test } from "bun:test";
-import { localizedAlternates, transactionalRobots } from "../src/lib/seo";
+import {
+  localizedAlternates,
+  singleLocaleAlternates,
+  transactionalRobots,
+} from "../src/lib/seo";
+import {
+  DECONSTRUCTING_CHRISTIANITY_FAQS,
+  DECONSTRUCTING_CHRISTIANITY_PATH,
+  DECONSTRUCTING_CHRISTIANITY_TITLE,
+} from "../src/lib/deconstructing-christianity";
 import {
   getPostSeoDecision,
   getWorkbookSeo,
@@ -48,6 +57,37 @@ describe("bilingual SEO configuration", () => {
     ).toBe(false);
   });
 
+  test("keeps the English-only pillar canonical free of a false Spanish hreflang", () => {
+    const alternates = singleLocaleAlternates(
+      "en",
+      DECONSTRUCTING_CHRISTIANITY_PATH,
+    );
+    const languages = alternates.languages as Record<string, string>;
+
+    expect(String(alternates.canonical).endsWith(
+      "/en/deconstructing-christianity",
+    )).toBe(true);
+    expect(languages.en.endsWith("/en/deconstructing-christianity")).toBe(true);
+    expect(languages.es).toBe(undefined);
+    expect(languages["x-default"]).toBe(languages.en);
+  });
+
+  test("keeps pillar FAQ schema source content visible and answer-first", () => {
+    expect(DECONSTRUCTING_CHRISTIANITY_TITLE).toContain(
+      "Deconstructing Christianity",
+    );
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS.length).toBe(8);
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS.every(
+      (faq) => faq.question.endsWith("?") && faq.answer.length > 80,
+    )).toBe(true);
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS[0]?.answer).toContain(
+      "taking your own beliefs seriously",
+    );
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS.at(-1)).toMatchObject({
+      question: "What is The In-Between?",
+    });
+  });
+
   test("keeps Spanish acquisition informational and commercial language hypothetical", () => {
     expect(SPANISH_INFORMATIONAL_ACQUISITION[0].primary).toBe(
       "qué es la deconstrucción de la fe",
@@ -66,6 +106,10 @@ describe("bilingual SEO configuration", () => {
     expect(decision?.primaryKeyword?.es).toBe(
       "cómo reconstruir la fe después de la deconstrucción",
     );
+    expect(decision?.relatedGuide?.en?.href).toBe(
+      "/deconstructing-christianity",
+    );
+    expect(decision?.relatedGuide?.es).toBe(undefined);
   });
 
   test("never leaks English CTA destinations into Spanish articles", () => {

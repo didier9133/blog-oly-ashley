@@ -28,6 +28,22 @@ export function localizedLanguages(paths: Record<SupportedLocale, string>) {
   };
 }
 
+/** Build a canonical and hreflang set for content available in one language. */
+export function singleLocaleAlternates(
+  locale: SupportedLocale,
+  path: string,
+): NonNullable<Metadata["alternates"]> {
+  const url = fullUrl(locale, path);
+
+  return {
+    canonical: url,
+    languages: {
+      [locale]: url,
+      "x-default": url,
+    },
+  };
+}
+
 export const indexableRobots: Metadata["robots"] = {
   index: true,
   follow: true,

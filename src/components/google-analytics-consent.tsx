@@ -6,6 +6,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import {
   getAnalyticsConsent,
   setAnalyticsConsent,
+  shouldLoadGoogleAnalytics,
   type AnalyticsConsent,
 } from "@/lib/analytics";
 import { localizedHref } from "@/lib/url";
@@ -53,10 +54,14 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
   }
 
   const showDialog = ready && (consent === null || settingsOpen);
+  const analyticsEnabled = shouldLoadGoogleAnalytics(
+    consent,
+    process.env.NODE_ENV,
+  );
 
   return (
     <>
-      {consent === "granted" ? (
+      {analyticsEnabled ? (
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       ) : null}
 

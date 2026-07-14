@@ -15,6 +15,10 @@ export type AnalyticsProperties = Record<
 export type SeoAnalyticsEvent =
   | "blog_product_cta_view"
   | "blog_product_cta_click"
+  | "pillar_workbook_cta_view"
+  | "pillar_workbook_cta_click"
+  | "pillar_community_cta_view"
+  | "pillar_community_cta_click"
   | "related_post_click"
   | "community_cta_click"
   | "circle_cta_click"
@@ -71,6 +75,17 @@ export function sanitizeAnalyticsProperties(properties: AnalyticsProperties) {
       (entry) => entry[1] !== null && entry[1] !== undefined,
     ),
   ) as Record<string, AnalyticsPropertyValue>;
+}
+
+/**
+ * Keep localhost interactions out of the production GA4 property and avoid
+ * loading the third-party tag while Next.js development tooling is active.
+ */
+export function shouldLoadGoogleAnalytics(
+  consent: AnalyticsConsent | null,
+  environment: string | undefined,
+): boolean {
+  return consent === "granted" && environment === "production";
 }
 
 declare global {

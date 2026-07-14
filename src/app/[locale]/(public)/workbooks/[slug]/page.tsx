@@ -8,13 +8,14 @@ import {
 import { BookOpen, Clock, Star, Users } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import Link from "next/link";
 import Checkout from "@/components/checkout";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { BASE_URL, fullUrl } from "@/lib/url";
+import { BASE_URL, fullUrl, localizedHref } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
 import { isSupportedLocale } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
@@ -312,6 +313,24 @@ export default async function PageDetail({
                       <p className="mt-4 text-sm leading-relaxed font-sans text-muted-foreground">
                         {seo.intentSection.disclaimer}
                       </p>
+                      {locale === "en" &&
+                      book.slug_en === "rebuilding-reverence" ? (
+                        <p className="mt-5 text-sm leading-7 font-[family-name:var(--font-lora)] text-foreground/75">
+                          Still naming what this process means for you? Start
+                          with the guide{" "}
+                          <Link
+                            href={localizedHref(
+                              "en",
+                              "/deconstructing-christianity",
+                            )}
+                            className="text-foreground underline decoration-[#d8a08b] underline-offset-4 transition-colors hover:text-[#a86551] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            Deconstructing Christianity: What It Means and What
+                            Comes Next
+                          </Link>
+                          .
+                        </p>
+                      ) : null}
                     </section>
                   ) : null}
 
