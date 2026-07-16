@@ -664,7 +664,7 @@ export default async function DeconstructingChristianityPage({
               <Link
                 href={localizedHref(
                   "en",
-                  "/writing/deconstruction-and-beyond-a-story-of-loss-and-rebirth",
+                  "/writing/how-to-rebuild-faith-after-deconstruction",
                 )}
                 className="text-foreground underline decoration-primary/45 underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >

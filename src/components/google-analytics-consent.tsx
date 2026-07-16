@@ -17,7 +17,8 @@ const GA_MEASUREMENT_ID =
 const COPY = {
   en: {
     title: "Cookies & privacy",
-    body: "We use analytics to understand what content is useful to you and improve this site. We do not send your personal information.",
+    body: "With your permission, analytics helps us understand what resonates and improve the site. We never send your personal information.",
+    mobileBody: "Optional analytics to improve the site.",
     accept: "Accept",
     reject: "Decline",
     settings: "Cookies",
@@ -25,7 +26,8 @@ const COPY = {
   },
   es: {
     title: "Cookies y privacidad",
-    body: "Usamos analítica para entender qué contenido te resulta útil y mejorar este sitio. No enviamos tus datos personales.",
+    body: "Con tu permiso, la analítica nos ayuda a saber qué contenidos te acompañan y a mejorar el sitio. Nunca enviamos tus datos personales.",
+    mobileBody: "Analítica opcional para mejorar el sitio.",
     accept: "Aceptar",
     reject: "Rechazar",
     settings: "Cookies",
@@ -68,48 +70,62 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
       {showDialog ? (
         <section
           role="dialog"
-          aria-modal="true"
           aria-labelledby="analytics-consent-title"
-          className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-2xl border border-border bg-[#F9F8F6] p-5 shadow-2xl sm:p-6"
+          aria-describedby="analytics-consent-description"
+          className="analytics-consent-banner fixed inset-x-0 bottom-0 z-[90] border-t border-[#2b2b2b]/15 bg-[#f7f2ea] transition-[bottom] duration-300"
         >
-          <h2
-            id="analytics-consent-title"
-            className="font-[family-name:var(--font-cormorant-garamond)] text-2xl font-medium text-foreground"
-          >
-            {copy.title}
-          </h2>
-          <p className="mt-2 font-sans text-sm leading-relaxed text-foreground/75">
-            {copy.body}{" "}
-            <Link
-              href={localizedHref(language, "/privacy")}
-              className="underline underline-offset-4 hover:text-foreground"
-            >
-              {copy.privacy}
-            </Link>
-            .
-          </p>
-          <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-            <button
-              type="button"
-              onClick={() => choose("denied")}
-              className="min-h-11 border border-foreground/25 px-5 py-2.5 font-sans text-sm text-foreground transition-colors hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b77761]"
-            >
-              {copy.reject}
-            </button>
-            <button
-              type="button"
-              onClick={() => choose("granted")}
-              className="min-h-11 bg-[#8f513b] px-5 py-2.5 font-sans text-sm font-medium text-[#fffaf5] transition-colors hover:bg-[#784330] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f513b] focus-visible:ring-offset-2"
-            >
-              {copy.accept}
-            </button>
+          <div className="mx-auto grid max-w-[90rem] grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:flex sm:gap-5 sm:px-5 sm:py-3 lg:px-8">
+            <div className="min-w-0 flex-1 sm:flex sm:items-baseline sm:gap-3">
+              <h2
+                id="analytics-consent-title"
+                className="sr-only shrink-0 font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold leading-tight text-foreground sm:not-sr-only"
+              >
+                {copy.title}
+              </h2>
+              <p
+                id="analytics-consent-description"
+                className="font-sans text-[0.7rem] leading-[1.35] text-foreground/70 sm:text-sm"
+              >
+                <span className="sm:hidden">{copy.mobileBody}</span>
+                <span className="hidden sm:inline">{copy.body}</span>
+                <span aria-hidden="true" className="hidden sm:inline">
+                  {" "}
+                  ·{" "}
+                </span>
+                <span aria-hidden="true" className="sm:hidden">
+                  {" "}
+                </span>
+                <Link
+                  href={localizedHref(language, "/privacy")}
+                  className="whitespace-nowrap underline decoration-foreground/35 underline-offset-4 transition-colors hover:text-foreground"
+                >
+                  {copy.privacy}
+                </Link>
+              </p>
+            </div>
+            <div className="flex shrink-0 gap-1.5 sm:gap-2">
+              <button
+                type="button"
+                onClick={() => choose("denied")}
+                className="min-h-10 min-w-[4.5rem] border border-foreground/25 px-2 py-2 font-sans text-xs font-medium text-foreground transition-colors hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b77761] sm:min-w-[5.25rem] sm:px-4"
+              >
+                {copy.reject}
+              </button>
+              <button
+                type="button"
+                onClick={() => choose("granted")}
+                className="min-h-10 min-w-[4.5rem] bg-[#8f513b] px-2 py-2 font-sans text-xs font-semibold text-[#fffaf5] transition-colors hover:bg-[#784330] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f513b] focus-visible:ring-offset-2 sm:min-w-[5.25rem] sm:px-5"
+              >
+                {copy.accept}
+              </button>
+            </div>
           </div>
         </section>
       ) : ready ? (
         <button
           type="button"
           onClick={() => setSettingsOpen(true)}
-          className="fixed bottom-3 left-3 z-[90] rounded-full border border-border bg-[#F9F8F6] px-3 py-2 font-sans text-xs text-foreground/75 shadow-md transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b77761]"
+          className="analytics-consent-settings fixed bottom-3 left-3 z-[90] rounded-full border border-border bg-[#F9F8F6] px-3 py-2 font-sans text-xs text-foreground/75 shadow-md transition-[bottom,color] duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b77761]"
         >
           {copy.settings}
         </button>

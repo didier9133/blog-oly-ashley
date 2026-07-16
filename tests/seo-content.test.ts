@@ -100,7 +100,7 @@ describe("bilingual SEO configuration", () => {
 
   test("maps the priority article to one deterministic CTA", () => {
     const decision = getPostSeoDecision(
-      "deconstruction-and-beyond-a-story-of-loss-and-rebirth",
+      "how-to-rebuild-faith-after-deconstruction",
     );
     expect(decision?.productCta).toBe("rebuilding-reverence");
     expect(decision?.primaryKeyword?.es).toBe(
@@ -110,6 +110,38 @@ describe("bilingual SEO configuration", () => {
       "/deconstructing-christianity",
     );
     expect(decision?.relatedGuide?.es).toBe(undefined);
+  });
+
+  test("uses the approved keyword intent for the spiritual balance essay", () => {
+    const decision = getPostSeoDecision(
+      "finding-spiritual-balance-between-faith-and-material-life",
+    );
+
+    expect(decision?.productCta).toBe("rebuilding-reverence");
+    expect(decision?.primaryKeyword?.en).toBe(
+      "spiritual balance between faith and material life",
+    );
+    expect(decision?.seoTitle?.es).toContain(
+      "Equilibrio espiritual entre fe y vida material",
+    );
+  });
+
+  test("gives the LGBTQ+ faith essay an explicit bilingual H1 and SEO title", () => {
+    const decision = getPostSeoDecision(
+      "gay-christian-and-gods-unconditional-love",
+    );
+
+    expect(decision?.productCta).toBe("queer-and-called");
+    expect(decision?.displayTitle).toMatchObject({
+      en: "Gay, Christian, and Held by God’s Unconditional Love",
+      es: "Fe LGBTQ+ y el amor incondicional de Dios",
+    });
+    expect(decision?.seoTitle?.en).toBe(
+      "Gay Christian and God’s Unconditional Love | Ashley Leon",
+    );
+    expect(decision?.seoTitle?.es).toBe(
+      "Fe LGBTQ+ y amor incondicional de Dios | Ashley Leon",
+    );
   });
 
   test("never leaks English CTA destinations into Spanish articles", () => {

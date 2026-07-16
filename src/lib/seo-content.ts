@@ -215,6 +215,7 @@ type PostSeoDecision = {
   category: BlogCategory;
   categoryEs: (typeof BLOG_CATEGORIES_ES)[number];
   productCta: ProductCtaKey;
+  displayTitle?: Partial<Record<SupportedLocale, string>>;
   primaryKeyword?: Partial<Record<SupportedLocale, string>>;
   seoTitle?: Partial<Record<SupportedLocale, string>>;
   description?: Partial<Record<SupportedLocale, string>>;
@@ -233,7 +234,7 @@ type PostSeoDecision = {
 };
 
 export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
-  "deconstruction-and-beyond-a-story-of-loss-and-rebirth": {
+  "how-to-rebuild-faith-after-deconstruction": {
     category: "Rebuilding Faith",
     categoryEs: "Reconstrucción de la fe",
     productCta: "rebuilding-reverence",
@@ -260,15 +261,43 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       },
     },
   },
-  "seeking-first-again": {
+  "finding-spiritual-balance-between-faith-and-material-life": {
     category: "Rebuilding Faith",
     categoryEs: "Reconstrucción de la fe",
     productCta: "rebuilding-reverence",
+    primaryKeyword: {
+      en: "spiritual balance between faith and material life",
+      es: "equilibrio espiritual entre fe y vida material",
+    },
+    seoTitle: {
+      en: "Spiritual Balance Between Faith and Material Life | Ashley Leon",
+      es: "Equilibrio espiritual entre fe y vida material | Ashley Leon",
+    },
+    description: {
+      en: "A personal reflection on seeking God first while finding a healthier spiritual balance between faith, ambition, material life, and everyday responsibility.",
+      es: "Una reflexión personal sobre buscar a Dios primero y encontrar un equilibrio espiritual más sano entre la fe, la ambición, la vida material y las responsabilidades cotidianas.",
+    },
   },
-  "the-god-who-doesnt-play-by-our-rules": {
+  "gay-christian-and-gods-unconditional-love": {
     category: "Queer Faith & Identity",
     categoryEs: "Fe e identidad LGBTQ+",
     productCta: "queer-and-called",
+    displayTitle: {
+      en: "Gay, Christian, and Held by God’s Unconditional Love",
+      es: "Fe LGBTQ+ y el amor incondicional de Dios",
+    },
+    primaryKeyword: {
+      en: "gay Christian and God's unconditional love",
+      es: "fe LGBTQ+ y amor incondicional de Dios",
+    },
+    seoTitle: {
+      en: "Gay Christian and God’s Unconditional Love | Ashley Leon",
+      es: "Fe LGBTQ+ y amor incondicional de Dios | Ashley Leon",
+    },
+    description: {
+      en: "A queer Christian reflection on coming out, conditional religion, and learning to trust God’s unconditional love without abandoning your identity.",
+      es: "Una reflexión cristiana LGBTQ+ sobre salir del clóset, cuestionar la religión condicional y confiar en el amor incondicional de Dios sin abandonar tu identidad.",
+    },
   },
   "what-does-belonging-really-mean": {
     category: "Community & Belonging",

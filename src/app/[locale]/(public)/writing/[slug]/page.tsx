@@ -101,7 +101,7 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  const title = locale === "en" ? post.title_en : post.title_es;
+  const storedTitle = locale === "en" ? post.title_en : post.title_es;
   const content = locale === "en" ? post.content_en : post.content_es;
   const description = htmlExcerpt(content);
   const decision = getPostSeoDecision(
@@ -109,7 +109,10 @@ export async function generateMetadata({
     publicPostSlug(post.slug_es),
   );
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
-  const pageTitle = decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Leon`;
+  const title =
+    decision?.displayTitle?.[supportedLocale] ?? storedTitle;
+  const pageTitle =
+    decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Leon`;
   const seoDescription = decision?.description?.[supportedLocale] ?? description;
   const detailSlug = publicPostSlug(
     locale === "es" ? post.slug_es : post.slug_en,
@@ -206,12 +209,6 @@ export default async function BlogPostPage(props: { params: Params }) {
     },
   });
 
-  const postTraslated = {
-    ...post,
-    title: currentLanguage === "en" ? post.title_en : post.title_es,
-    content: currentLanguage === "en" ? post.content_en : post.content_es,
-  };
-
   const t = await getTranslations({ locale, namespace: "Writing" });
   const recentPostsLabel = t("recent-posts");
   const noPostsLabel = t("no-posts");
@@ -226,6 +223,13 @@ export default async function BlogPostPage(props: { params: Params }) {
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
+  const postTraslated = {
+    ...post,
+    title:
+      seoDecision?.displayTitle?.[supportedLocale] ??
+      (currentLanguage === "en" ? post.title_en : post.title_es),
+    content: currentLanguage === "en" ? post.content_en : post.content_es,
+  };
   const relatedGuide = seoDecision?.relatedGuide?.[supportedLocale];
   const wasUpdated =
     post.updatedAt.getTime() - post.createdAt.getTime() > 24 * 60 * 60 * 1000;

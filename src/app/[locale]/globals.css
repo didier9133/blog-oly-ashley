@@ -424,6 +424,16 @@
   }
 }
 
+@media (max-width: 639px) {
+  html[data-circle-cta-visible="true"] .analytics-consent-banner {
+    bottom: 6rem;
+  }
+
+  html[data-circle-cta-visible="true"] .analytics-consent-settings {
+    bottom: 7rem;
+  }
+}
+
 @layer components {
   .article-rich-text {
     color: color-mix(in oklab, var(--foreground) 86%, transparent);
