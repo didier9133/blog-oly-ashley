@@ -1,13 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl } from "@/lib/url";
+import { BASE_URL, fullUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
 import { CircleStickyCta } from "@/components/circle-sticky-cta";
 import { CircleFaq } from "@/components/circle-faq";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
+import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
 
 const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
 
@@ -18,8 +19,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Circle" });
-  const coverImage =
-    locale === "en" ? "/Rebuilding_Reverence.jpeg" : "/Reconstruyendo_la_Reverencia.jpeg";
+  const image = OFFER_OG_IMAGES.circle;
+  const imageUrl = `${BASE_URL}${image.path}`;
 
   return {
     title: t("metadata-title"),
@@ -28,13 +29,21 @@ export async function generateMetadata({
       title: t("metadata-title"),
       description: t("metadata-description"),
       url: fullUrl(locale, "/circle"),
-      images: [{ url: coverImage, width: 800, height: 1067, alt: "Rebuilding Reverence" }],
+      images: [
+        {
+          url: imageUrl,
+          width: image.width,
+          height: image.height,
+          alt: image.alt,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("metadata-title"),
       description: t("metadata-description"),
-      images: [coverImage],
+      images: [{ url: imageUrl, alt: image.alt }],
     },
     alternates: localizedAlternates(locale, { en: "/circle", es: "/circle" }),
   };

@@ -21,6 +21,7 @@ import { isSupportedLocale } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 import { getWorkbookSeo } from "@/lib/seo-content";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
+import { getWorkbookOgImage } from "@/lib/offer-og-images";
 
 export async function generateMetadata({
   params,
@@ -41,9 +42,12 @@ export async function generateMetadata({
   const description = seo?.description ?? (locale === "en" ? book.subtitle_en : book.subtitle_es);
   const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
-  const imageUrl = coverImage.startsWith("http")
-    ? coverImage
-    : `${BASE_URL}${coverImage}`;
+  const offerOgImage = getWorkbookOgImage(book.slug_en);
+  const imageUrl = offerOgImage
+    ? `${BASE_URL}${offerOgImage.path}`
+    : coverImage.startsWith("http")
+      ? coverImage
+      : `${BASE_URL}${coverImage}`;
 
   return {
     title: seo?.title ?? `${title} | Ashley Leon`,
@@ -52,13 +56,21 @@ export async function generateMetadata({
       title: seo?.title ?? `${title} | Ashley Leon`,
       description,
       url: fullUrl(locale, `/workbooks/${detailSlug}`),
-      images: [{ url: imageUrl, width: 800, height: 1067, alt: title }],
+      images: [
+        {
+          url: imageUrl,
+          width: offerOgImage?.width ?? 800,
+          height: offerOgImage?.height ?? 1067,
+          alt: offerOgImage?.alt ?? title,
+          type: offerOgImage ? "image/png" : undefined,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: seo?.title ?? `${title} | Ashley Leon`,
       description,
-      images: [imageUrl],
+      images: [{ url: imageUrl, alt: offerOgImage?.alt ?? title }],
     },
     alternates: localizedAlternates(locale, {
       en: `/workbooks/${book.slug_en}`,

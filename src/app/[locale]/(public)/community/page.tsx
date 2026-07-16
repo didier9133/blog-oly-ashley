@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
+import { fullUrl, BASE_URL } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
 import { localizedAlternates } from "@/lib/seo";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
+import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
 
 const COMMUNITY_URL =
   "https://www.gokollab.com/the-in-between-4dzfnm/home";
@@ -15,6 +16,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Community.metadata" });
+  const image = OFFER_OG_IMAGES.community;
+  const imageUrl = `${BASE_URL}${image.path}`;
 
   return {
     title: t("title"),
@@ -23,13 +26,21 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/community"),
-      images: [ogImageUrl(locale)],
+      images: [
+        {
+          url: imageUrl,
+          width: image.width,
+          height: image.height,
+          alt: image.alt,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: [ogImageUrl(locale)],
+      images: [{ url: imageUrl, alt: image.alt }],
     },
     alternates: localizedAlternates(locale, {
       en: "/community",

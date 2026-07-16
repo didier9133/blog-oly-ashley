@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import Checkout from "@/components/checkout";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
 import { localizedAlternates, transactionalRobots } from "@/lib/seo";
+import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
 
 const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
 const REGULAR_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_REGULAR_PRICE) || 297;
@@ -39,8 +40,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Circle" });
-  const coverImage = getCircleCheckoutImage(locale);
-  const imageUrl = `${BASE_URL}${coverImage.src}`;
+  const image = OFFER_OG_IMAGES.circle;
+  const imageUrl = `${BASE_URL}${image.path}`;
   const title = t("cohort-status.heading");
   const description = t("earlyRateNote", { regular: REGULAR_PRICE.toFixed(0) });
 
@@ -52,13 +53,21 @@ export async function generateMetadata({
       title,
       description,
       url: fullUrl(locale, "/circle/reserve"),
-      images: [{ url: imageUrl, width: 1024, height: 1536, alt: coverImage.alt }],
+      images: [
+        {
+          url: imageUrl,
+          width: image.width,
+          height: image.height,
+          alt: image.alt,
+          type: "image/png",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [{ url: imageUrl, alt: image.alt }],
     },
     alternates: localizedAlternates(locale, {
       en: "/circle/reserve",
