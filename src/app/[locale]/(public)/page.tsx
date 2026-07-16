@@ -200,7 +200,7 @@ export default async function Home() {
           <div className="min-[1280px]:min-w-0 min-[1280px]:flex-1">
             <section
               id="hero"
-              className="relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)]"
+              className="home-hero relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)] md:min-h-[46rem] md:max-h-[68rem]"
             >
               <div
                 aria-hidden
@@ -212,7 +212,7 @@ export default async function Home() {
                   fill
                   priority
                   sizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
-                  className="object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
+                  className="home-hero-media object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
                 />
               </div>
               <div
@@ -227,18 +227,20 @@ export default async function Home() {
                 aria-hidden
                 className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(250,246,240,0.02)_0%,rgba(250,246,240,0.12)_42%,rgba(246,234,226,0.78)_100%)] md:bg-[radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.6),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.16),transparent_38%,rgba(235,215,204,0.18)_100%)]"
               />
+              <div aria-hidden className="home-hero-texture absolute inset-0" />
               <div
                 aria-hidden
-                className="absolute bottom-0 right-[9%] hidden h-[82%] w-px bg-white/55 shadow-[18px_0_0_rgba(255,255,255,0.38),36px_0_0_rgba(255,255,255,0.24)] md:block"
+                className="absolute bottom-0 right-[9%] hidden h-[82%] w-px bg-white/65 shadow-[18px_0_0_rgba(255,255,255,0.42),36px_0_0_rgba(255,255,255,0.25)] md:block"
               />
 
               <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-8 px-4 pb-32 pt-[18svh] min-[390px]:pb-36 min-[390px]:pt-[20svh] sm:px-6 sm:pb-32 sm:pt-[38vh] md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:px-8 md:py-8 lg:px-12 lg:py-10">
                 <div className="max-w-[34rem] pb-7 md:col-span-6 md:pb-0">
-                  <span className="editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-block">
+                  <span className="home-hero-reveal home-hero-reveal-1 editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-flex items-center gap-4">
+                    <span aria-hidden className="h-px w-7 bg-primary/65" />
                     {t("hero-eyebrow")}
                   </span>
-                  <h1 className="mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-normal text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3rem,4.1vw,4.35rem)] md:tracking-normal xl:text-[clamp(3.2rem,4vw,4.75rem)]">
-                    {t("hero-title-one")}
+                  <h1 className="home-hero-reveal home-hero-reveal-2 mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-[-0.02em] text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3.15rem,4.25vw,4.75rem)] md:tracking-[-0.03em] xl:text-[clamp(3.45rem,4.2vw,5rem)]">
+                    {t("hero-title-one")} {" "}
                     <span className="block">
                       {t("hero-title-two")}{" "}
                       <em className="not-italic text-primary">
@@ -246,14 +248,14 @@ export default async function Home() {
                       </em>
                     </span>
                   </h1>
-                  <span className="editorial-rule-tick mt-5 block sm:mt-8 md:mt-5" />
-                  <p className="editorial-lede mt-4 max-w-[34ch] text-[0.95rem] leading-[1.42] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-5 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.55]">
+                  <span className="home-hero-rule mt-5 block sm:mt-8 md:mt-6" />
+                  <p className="home-hero-reveal home-hero-reveal-3 editorial-lede mt-4 max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-6 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
                     {t("hero-description")}
                   </p>
-                  <div className="mt-5 flex w-full max-w-[25rem] flex-col gap-2 sm:mt-9 sm:max-w-[28rem] sm:gap-4 md:mt-5 md:gap-2.5">
+                  <div className="home-hero-reveal home-hero-reveal-4 mt-5 flex w-full max-w-[25rem] flex-col gap-2 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[1.55fr_1fr] sm:gap-3 md:mt-7">
                     <Link
                       href={primaryWorkbookHref}
-                      className="group inline-flex min-h-9 items-center justify-between gap-3 bg-primary px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-primary-foreground transition-colors duration-500 hover:bg-primary/90 sm:min-h-12 sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 bg-primary px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-primary-foreground transition-[background-color,transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_14px_34px_-18px_rgba(92,45,31,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
                     >
                       <span className="min-w-0 text-balance">{t("cta-journals")}</span>
                       <span
@@ -265,7 +267,7 @@ export default async function Home() {
                     </Link>
                     <Link
                       href={writingHref}
-                      className="group inline-flex min-h-9 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/22 px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-foreground transition-colors duration-500 hover:border-primary hover:text-primary sm:min-h-12 sm:bg-transparent sm:px-7 sm:py-4 sm:text-[0.78rem] sm:tracking-[0.2em] md:min-h-11 md:py-3"
+                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/30 px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-foreground backdrop-blur-[2px] transition-[border-color,color,background-color,transform] duration-500 hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/55 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
                     >
                       <span className="min-w-0 text-balance">{t("cta-explore")}</span>
                       <span
@@ -277,6 +279,22 @@ export default async function Home() {
                     </Link>
                   </div>
                 </div>
+              </div>
+
+              <div className="home-hero-reveal home-hero-reveal-5 pointer-events-none absolute bottom-8 left-8 z-30 hidden items-center gap-4 md:flex lg:left-12">
+                <span aria-hidden className="relative block h-12 w-px overflow-hidden bg-foreground/15">
+                  <span className="home-hero-scroll-line absolute inset-x-0 top-0 h-5 bg-primary" />
+                </span>
+                <span className="font-[family-name:var(--font-lora)] text-[0.58rem] font-medium uppercase tracking-[0.28em] text-foreground/55">
+                  {t("hero-est")}
+                </span>
+              </div>
+
+              <div
+                aria-hidden
+                className="absolute bottom-10 right-[5.5%] z-30 hidden origin-bottom-right -rotate-90 font-[family-name:var(--font-lora)] text-[0.56rem] font-medium uppercase tracking-[0.38em] text-foreground/45 md:block"
+              >
+                Ashley Leon · Field Notes
               </div>
 
               <svg
@@ -368,7 +386,7 @@ export default async function Home() {
           </div>
 
           <aside
-            aria-label="Page navigation"
+            aria-label={t("sidebar-index")}
             className="hidden w-[260px] shrink-0 pr-4 sm:pr-6 md:pr-8 min-[1280px]:block min-[1280px]:pr-10"
           >
             <div className="sticky top-[5rem] pb-12 pt-[7.5rem] md:top-[5.5rem]">

@@ -67,36 +67,68 @@ export function HomeRecentWriting({
           {posts.length === 0 ? (
             <p className="editorial-body mt-12">{empty}</p>
           ) : (
-            <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 lg:mt-20">
+            <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2 xl:mt-20 xl:grid-cols-12 xl:gap-x-7">
               {posts.map((post, index) => (
-                <FadeIn key={post.id} delay={0.12 * index}>
+                <FadeIn
+                  key={post.id}
+                  delay={0.12 * index}
+                  className={
+                    index === 0
+                      ? "md:col-span-2 xl:col-span-6"
+                      : "md:col-span-1 xl:col-span-3"
+                  }
+                >
                   <article className="group h-full">
-                    <Link href={post.href} className="block">
-                      <div className="relative aspect-[4/5] overflow-hidden bg-sand">
+                    <Link
+                      href={post.href}
+                      className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                    >
+                      <div
+                        className={`relative overflow-hidden bg-sand ${
+                          index === 0 ? "aspect-[16/10]" : "aspect-[4/5]"
+                        }`}
+                      >
                         <Image
                           src={post.image || "/blog-hero.jpeg"}
                           alt={post.title}
                           fill
                           sizes="(min-width: 1024px) 28vw, (min-width: 768px) 33vw, 100vw"
-                          className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-breath)] group-hover:scale-[1.04]"
+                          className="object-cover transition-transform duration-[1600ms] ease-[var(--ease-breath)] group-hover:scale-[1.045]"
                         />
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(18,14,11,0.2),transparent_42%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                        />
+                        <span className="absolute bottom-0 left-0 bg-paper px-4 py-3 font-[family-name:var(--font-cormorant-garamond)] text-lg font-light italic text-primary">
+                          0{index + 1}
+                        </span>
                       </div>
                     </Link>
-                    <span className="editorial-list-num mt-7 block">
-                      0{index + 1}
-                    </span>
-                    <h3 className="editorial-display-s mt-3 text-balance text-foreground">
+                    <h3
+                      className={`mt-7 text-balance font-[family-name:var(--font-cormorant-garamond)] font-normal leading-[1.06] tracking-[-0.018em] text-foreground ${
+                        index === 0
+                          ? "text-[clamp(2rem,3.2vw,3.25rem)]"
+                          : "text-[clamp(1.6rem,2.3vw,2.25rem)]"
+                      }`}
+                    >
                       <Link
                         href={post.href}
-                        className="transition-colors duration-500 hover:text-primary"
+                        className="transition-colors duration-500 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                       >
                         {post.title}
                       </Link>
                     </h3>
-                    <p className="editorial-body mt-5 line-clamp-3 text-pretty">
+                    <p
+                      className={`editorial-body mt-5 text-pretty ${
+                        index === 0 ? "max-w-2xl line-clamp-2" : "line-clamp-3"
+                      }`}
+                    >
                       {htmlToPlainText(post.content)}
                     </p>
-                    <Link href={post.href} className="editorial-link mt-8">
+                    <Link
+                      href={post.href}
+                      className="editorial-link mt-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                    >
                       {readMore}
                       <span className="editorial-link-arrow">→</span>
                     </Link>
@@ -107,7 +139,10 @@ export function HomeRecentWriting({
           )}
 
           <FadeIn delay={0.15} className="mt-20 text-center">
-            <Link href={viewAllHref} className="editorial-link mx-auto">
+            <Link
+              href={viewAllHref}
+              className="editorial-link mx-auto focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            >
               {viewAll}
               <span className="editorial-link-arrow">→</span>
             </Link>

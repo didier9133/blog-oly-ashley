@@ -31,17 +31,30 @@ export function HomeSectionWhoFor({
             </h2>
           </FadeIn>
 
-          <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden border border-primary/20 bg-primary/20 md:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-12 md:items-start lg:mt-16 lg:gap-5">
             {quotes.map((item, index) => (
               <FadeIn
                 key={item.label}
                 delay={0.12 * index}
-                className="bg-[color-mix(in_oklab,var(--book)_82%,var(--paper))] p-7 sm:p-9"
+                className={`group relative overflow-hidden border border-primary/18 bg-[color-mix(in_oklab,var(--book)_82%,var(--paper))] p-7 transition-[transform,border-color,box-shadow] duration-700 hover:-translate-y-1 hover:border-primary/35 hover:shadow-[0_28px_70px_-48px_rgba(76,42,31,0.55)] sm:p-9 md:min-h-[20rem] ${
+                  index === 0
+                    ? "md:col-span-5 lg:min-h-[23rem]"
+                    : index === 1
+                      ? "md:col-span-3 md:mt-16 lg:min-h-[20rem]"
+                      : "md:col-span-4 md:mt-5 lg:min-h-[22rem]"
+                }`}
               >
-                <blockquote className="font-[family-name:var(--font-cormorant-garamond)] text-[1.55rem] font-light italic leading-tight text-foreground text-balance">
+                <span
+                  aria-hidden
+                  className="absolute -right-2 -top-7 font-[family-name:var(--font-cormorant-garamond)] text-[8rem] font-light italic leading-none text-primary/[0.08] transition-transform duration-700 group-hover:-translate-x-1 group-hover:translate-y-1"
+                >
+                  0{index + 1}
+                </span>
+                <span aria-hidden className="mb-10 block h-px w-9 bg-primary/70" />
+                <blockquote className="relative font-[family-name:var(--font-cormorant-garamond)] text-[1.6rem] font-light italic leading-[1.13] text-foreground text-balance lg:text-[clamp(1.65rem,2.1vw,2.25rem)]">
                   “{item.quote}”
                 </blockquote>
-                <span className="editorial-eyebrow-strong mt-8 block">
+                <span className="editorial-eyebrow-strong relative mt-10 block border-t border-foreground/10 pt-5">
                   {item.label}
                 </span>
               </FadeIn>

@@ -676,6 +676,103 @@
     text-wrap: pretty;
   }
 
+  .home-hero-texture {
+    opacity: 0.2;
+    background-image:
+      radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 72% 62%, rgba(77, 50, 38, 0.2) 0 0.7px, transparent 1.2px);
+    background-size: 15px 15px, 19px 19px;
+    mix-blend-mode: soft-light;
+  }
+
+  .home-hero-media {
+    animation: homeHeroImage 18s var(--ease-breath) both;
+    transform-origin: 62% 40%;
+  }
+
+  .home-hero-reveal {
+    animation: homeHeroReveal 1.05s var(--ease-breath) both;
+  }
+
+  .home-hero-reveal-1 {
+    animation-delay: 120ms;
+  }
+
+  .home-hero-reveal-2 {
+    animation-delay: 220ms;
+  }
+
+  .home-hero-reveal-3 {
+    animation-delay: 360ms;
+  }
+
+  .home-hero-reveal-4 {
+    animation-delay: 500ms;
+  }
+
+  .home-hero-reveal-5 {
+    animation-delay: 700ms;
+  }
+
+  .home-hero-rule {
+    width: 3rem;
+    height: 1px;
+    background: var(--primary);
+    animation: homeHeroRule 1.2s 420ms var(--ease-breath) both;
+    transform-origin: left center;
+  }
+
+  .home-hero-scroll-line {
+    animation: homeHeroScroll 2.4s 1.4s var(--ease-breath) infinite;
+  }
+
+  @keyframes homeHeroImage {
+    from {
+      transform: scale(1.035);
+      filter: saturate(0.92) contrast(0.98);
+    }
+    to {
+      transform: scale(1);
+      filter: saturate(1) contrast(1);
+    }
+  }
+
+  @keyframes homeHeroReveal {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes homeHeroRule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes homeHeroScroll {
+    0% {
+      opacity: 0;
+      transform: translateY(-140%);
+    }
+    25% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(260%);
+    }
+  }
+
   /* Hero image — bleed to the right edge of the viewport on lg+ */
   @media (min-width: 1024px) {
     .hero-bleed-right {
@@ -699,7 +796,11 @@
     .animate-bounce-down,
     .animate-scroll-line,
     .word-mask > span,
-    .hero-text {
+    .hero-text,
+    .home-hero-media,
+    .home-hero-reveal,
+    .home-hero-rule,
+    .home-hero-scroll-line {
       animation: none !important;
       transform: none !important;
       filter: none !important;
