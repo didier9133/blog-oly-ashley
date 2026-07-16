@@ -1,8 +1,10 @@
-# Ashley Leon
-> Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.
+# Ashley Diana Leon
+> Ashley Leon is a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach creating affirming resources for life after inherited religion.
+
+Ashley writes about faith deconstruction, queer spirituality, identity, emotional healing, belonging, and spiritual integration. Her educational resources are coaching-based and are not therapy or clinical care.
 
 ## Writing — Essays on faith, deconstruction & healing
-- [Writing](https://ashleydianaleon.com/en/writing): Essays from the in-between on faith deconstruction, identity, queerness, healing, and return.
+- [Writing](https://ashleydianaleon.com/en/writing): First-person essays on faith deconstruction, identity, queerness, healing, belonging, and return.
 - [Deconstructing Christianity](https://ashleydianaleon.com/en/deconstructing-christianity): An evergreen guide to honestly examining inherited Christian beliefs, why people deconstruct, what the process can feel like, and possible outcomes without a required ending.
 
 ## Workbooks
@@ -14,10 +16,12 @@
 - [The In-Between](https://ashleydianaleon.com/en/community): Ashley's free community for practicing the conviction that the false binary is the wound, with reflection, conversation, and belonging without a required conclusion.
 
 ## About the author
-- [About](https://ashleydianaleon.com/en/about): Ashley Leon — writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.
+- [About](https://ashleydianaleon.com/en/about): Ashley's first-person background, experience inside religion, Cuban-Colombian and queer identity, former missionary and seminary experience, and current scope of work.
 
 ## Key facts
-- Languages: English and Spanish (bilingual original content, not translations)
+- Languages: English and Spanish; each localized URL identifies its language and alternate version.
 - Primary topics: Queer spirituality, faith deconstruction, identity, healing, reverence, belonging
+- Name: Ashley Diana Leon; published name: Ashley Leon
+- Content scope: education, reflection, coaching-based resources, live workshops, and community; not therapy
 - Contact: support@ashleydianaleon.com
 - Sitemap: https://ashleydianaleon.com/sitemap.xml

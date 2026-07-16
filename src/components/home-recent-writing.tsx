@@ -2,13 +2,12 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
-import { htmlToPlainText } from "@/lib/plain-text";
 
 interface HomeRecentWritingPost {
   href: string;
   id: number;
   title: string;
-  content: string | null;
+  excerpt: string;
   image: string | null;
 }
 
@@ -123,7 +122,7 @@ export function HomeRecentWriting({
                         index === 0 ? "max-w-2xl line-clamp-2" : "line-clamp-3"
                       }`}
                     >
-                      {htmlToPlainText(post.content)}
+                      {post.excerpt}
                     </p>
                     <Link
                       href={post.href}

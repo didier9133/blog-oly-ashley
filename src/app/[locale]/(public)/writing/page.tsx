@@ -13,7 +13,7 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import NoPostsView from "@/components/empty-post";
 import { CategoryEnum } from "@/enums";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
@@ -35,7 +35,7 @@ const postSelect = {
   image: true,
   slug_en: true,
   slug_es: true,
-  updatedAt: true,
+  createdAt: true,
   author: { select: { firstName: true, lastName: true } },
 } as const;
 
@@ -46,7 +46,7 @@ type PostCard = {
   image: string;
   slug: string;
   href: string;
-  updatedAt: Date;
+  publishedAt: Date;
   authorFirstName: string;
   authorLastName: string;
 };
@@ -66,7 +66,7 @@ const toCard = (
     image: string;
     slug_en: string;
     slug_es: string;
-    updatedAt: Date;
+    createdAt: Date;
     author: { firstName: string; lastName: string };
   },
   currentLanguage: string,
@@ -84,7 +84,7 @@ const toCard = (
     currentLanguage,
     `/${PATH}/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
   ),
-  updatedAt: post.updatedAt,
+  publishedAt: post.createdAt,
   authorFirstName: post.author.firstName,
   authorLastName: post.author.lastName,
 });
@@ -117,12 +117,15 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page(props: { searchParams?: SearchParams }) {
+export default async function Page(props: {
+  params: Promise<{ locale: string }>;
+  searchParams?: SearchParams;
+}) {
   const searchParams = await props.searchParams;
   const page = parseInt(searchParams?.page ?? "1", 10);
-  const currentLanguage = await getLocale();
-  const t = await getTranslations("Writing");
-  const tPagination = await getTranslations("ui.pagination");
+  const { locale: currentLanguage } = await props.params;
+  const t = await getTranslations({ locale: currentLanguage, namespace: "Writing" });
+  const tPagination = await getTranslations({ locale: currentLanguage, namespace: "ui.pagination" });
 
   const total = await prisma.post.count({
     where: {
@@ -147,7 +150,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
         published: true,
         category: { name: CATEGORY },
       },
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       select: postSelect,
     }),
     prisma.post.findMany({
@@ -157,7 +160,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
       },
       skip,
       take: PAGE_SIZE,
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       select: postSelect,
     }),
   ]);
@@ -241,7 +244,7 @@ export default async function Page(props: { searchParams?: SearchParams }) {
                     <span className="font-medium">{`${firstPostCard.authorFirstName} ${firstPostCard.authorLastName}`}</span>
                     <span>•</span>
                     <span>
-                      {new Date(firstPostCard.updatedAt).toLocaleDateString(
+                      {new Date(firstPostCard.publishedAt).toLocaleDateString(
                         currentLanguage,
                         {
                           year: "numeric",

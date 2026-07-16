@@ -9,4 +9,12 @@ export const routing = defineRouting({
 
   // Use explicit locale URLs so social scrapers cache each language separately.
   localePrefix: "always",
+
+  // Locale is explicit in every public URL, so a response cookie is
+  // unnecessary and would make otherwise cacheable pages private.
+  localeCookie: false,
+
+  // Next.js metadata owns canonical/hreflang output. Disabling the middleware
+  // Link header prevents a second, conflicting x-default on localized pages.
+  alternateLinks: false,
 });

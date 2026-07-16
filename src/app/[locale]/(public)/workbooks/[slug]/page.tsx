@@ -22,6 +22,8 @@ import { workbookPriceCents } from "@/lib/workbook-pricing";
 import { getWorkbookSeo } from "@/lib/seo-content";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 import { getWorkbookOgImage } from "@/lib/offer-og-images";
+import { normalizeValidIsbn13 } from "@/lib/isbn";
+import { personRef } from "@/lib/schema-entities";
 
 export async function generateMetadata({
   params,
@@ -62,7 +64,7 @@ export async function generateMetadata({
           width: offerOgImage?.width ?? 800,
           height: offerOgImage?.height ?? 1067,
           alt: offerOgImage?.alt ?? title,
-          type: offerOgImage ? "image/png" : undefined,
+          type: offerOgImage?.contentType,
         },
       ],
     },
@@ -107,25 +109,29 @@ export default async function PageDetail({
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
   const seo = getWorkbookSeo(supportedLocale, book.slug_en);
   const intentHeadingId = `${book.slug_en}-intent-heading`;
+  const validIsbn = normalizeValidIsbn13(book.isbn);
 
   const bookSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Book",
+    "@id": `${pageUrl}#book`,
     name: bookTitle,
     description: seo?.description ?? bookDescription,
-    author: { "@type": "Person", name: book.author },
+    author: personRef,
     bookFormat: "https://schema.org/EBook",
     numberOfPages: book.pages,
     image: imageUrl,
-    isbn: book.isbn,
+    inLanguage: supportedLocale,
     url: pageUrl,
     offers: {
       "@type": "Offer",
       price: (priceCents / 100).toFixed(2),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
+      url: pageUrl,
     },
   };
+  if (validIsbn) bookSchema.isbn = validIsbn;
   if (book.rating && book.reviewCount) {
     bookSchema.aggregateRating = {
       "@type": "AggregateRating",
@@ -188,6 +194,7 @@ export default async function PageDetail({
                       }
                       alt={locale === "en" ? book.title_en : book.title_es}
                       fill
+                      priority
                       sizes="(max-width: 640px) 100vw, 50vw"
                       className="object-cover"
                     />
@@ -273,12 +280,14 @@ export default async function PageDetail({
                             : book.language_es}
                         </span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="font-medium text-muted-foreground">
-                          ISBN:
-                        </span>
-                        <span className="font-medium">{book.isbn}</span>
-                      </div>
+                      {validIsbn ? (
+                        <div className="flex items-center gap-3">
+                          <span className="font-medium text-muted-foreground">
+                            ISBN:
+                          </span>
+                          <span className="font-medium">{validIsbn}</span>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </CardContent>

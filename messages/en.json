@@ -18,8 +18,8 @@
     "deconstructing-christianity-full": "Deconstructing Christianity"
   },
   "metadata": {
-    "title": "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
-    "description": "Writing, workbooks, and live workshops for returning to what is sacred without self-abandonment.",
+    "title": "Faith After Deconstruction | Ashley Leon",
+    "description": "Essays, guided workbooks, and live workshops for rebuilding faith, identity, reverence, and belonging after religious deconstruction.",
     "keywords": "Ashley Leon, faith deconstruction, queer spirituality, identity, healing, reverence, workbooks, live workshops",
     "ogImageAlt": "Ashley Leon, writer and facilitator for faith, identity, and reverence after deconstruction"
   },
@@ -399,8 +399,8 @@
   },
   "About": {
     "metadata": {
-      "title": "About Ashley Leon | Writer, Coach & Workshop Facilitator on Faith & Identity",
-      "description": "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing."
+      "title": "About Ashley Leon | Faith Deconstruction Writer",
+      "description": "Meet Ashley Leon, a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach exploring faith and identity."
     },
     "eyebrow": "About",
     "title": "I'm Ashley.",
@@ -427,8 +427,8 @@
   },
   "Contact": {
     "metadata": {
-      "title": "Contact | Ashley Leon",
-      "description": "For collaborations, media, speaking, or just to say something real."
+      "title": "Contact Ashley Leon | Speaking & Collaborations",
+      "description": "Contact Ashley Leon for speaking, workshops, media, creative collaborations, or questions about her work on faith, identity, and deconstruction."
     },
     "eyebrow": "Contact",
     "title": "Reach out.",
@@ -779,7 +779,7 @@
   "Writing": {
     "metadata": {
       "title": "Essays on Faith, Deconstruction & Healing | Ashley Leon",
-      "description": "Essays from the in-between on faith, deconstruction, identity, queerness, healing, and return."
+      "description": "Read thoughtful essays on faith deconstruction, identity, queer spirituality, emotional healing, belonging, and the honest work of rebuilding."
     },
     "breadcrumb": "Home",
     "page-title": "Essays from the in-between",
@@ -794,7 +794,7 @@
   },
   "Workbooks": {
     "metadata-title": "Guided Workbooks for Faith & Identity | Ashley Leon",
-    "metadata-description": "Guided digital workbooks for rebuilding faith, identity, reverence, and belonging.",
+    "metadata-description": "Explore affirming digital workbooks with guided prompts and practices for rebuilding faith, identity, reverence, and belonging after deconstruction.",
     "breadcrumb": "Workbooks",
     "title": "Guided workbooks for the return.",
     "subtitle": "Two digital companions for rebuilding reverence, faith, and identity at your own pace.",
@@ -836,7 +836,7 @@
     "supportSection-home": "Go to homepage"
   },
   "Circle": {
-    "metadata-title": "Online Faith Deconstruction Group | Rebuilding Reverence Circle",
+    "metadata-title": "Faith Deconstruction Group | Rebuilding Reverence",
     "metadata-description": "A live four-week online group for people rebuilding faith, identity, trust, and belonging after religious deconstruction.",
     "eyebrow": "Live online faith deconstruction group",
     "reserveCta": "Reserve My Spot — ${price} →",

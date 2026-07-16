@@ -99,7 +99,7 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
             <button
               type="button"
               onClick={() => choose("granted")}
-              className="min-h-11 bg-[#d8a08b] px-5 py-2.5 font-sans text-sm text-white transition-colors hover:bg-[#c28c77] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b77761] focus-visible:ring-offset-2"
+              className="min-h-11 bg-[#8f513b] px-5 py-2.5 font-sans text-sm font-medium text-[#fffaf5] transition-colors hover:bg-[#784330] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f513b] focus-visible:ring-offset-2"
             >
               {copy.accept}
             </button>

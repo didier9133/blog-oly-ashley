@@ -18,6 +18,7 @@ import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL, localizedHref, ogImageUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
+import { personRef } from "@/lib/schema-entities";
 
 export const revalidate = 3600;
 
@@ -131,73 +132,47 @@ export default async function WorkbooksPage({
     name: t("metadata-title"),
     description: t("metadata-description"),
     url: fullUrl(locale, "/workbooks"),
-    mainEntity: orderedBooks.map((book) => ({
-      "@type": "Product",
-      name: locale === "en" ? book.title_en : book.title_es,
-      description: locale === "en" ? book.description_en : book.description_es,
-      image:
-        locale === "en"
-          ? `${BASE_URL}${book.coverImage_en}`
-          : `${BASE_URL}${book.coverImage_es}`,
-      brand: { "@type": "Brand", name: "Ashley Leon" },
-      offers: {
-        "@type": "Offer",
-        price: (workbookPriceCents(book.price) / 100).toFixed(2),
-        priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
-        url: fullUrl(
-          locale,
-          `/workbooks/${locale === "en" ? book.slug_en : book.slug_es}`,
-        ),
-      },
-    })),
-  };
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: orderedBooks.length,
+      itemListElement: orderedBooks.map((book, index) => {
+        const bookSlug = locale === "en" ? book.slug_en : book.slug_es;
+        const bookUrl = fullUrl(locale, `/workbooks/${bookSlug}`);
+        const bookImage =
+          locale === "en" ? book.coverImage_en : book.coverImage_es;
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: workbookFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: { "@type": "Answer", text: faq.a },
-    })),
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Book",
+            "@id": `${bookUrl}#book`,
+            name: locale === "en" ? book.title_en : book.title_es,
+            description:
+              locale === "en" ? book.description_en : book.description_es,
+            author: personRef,
+            bookFormat: "https://schema.org/EBook",
+            numberOfPages: book.pages,
+            image: bookImage.startsWith("http")
+              ? bookImage
+              : `${BASE_URL}${bookImage}`,
+            url: bookUrl,
+            offers: {
+              "@type": "Offer",
+              price: (workbookPriceCents(book.price) / 100).toFixed(2),
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              url: bookUrl,
+            },
+          },
+        };
+      }),
+    },
   };
 
   return (
     <>
       <JsonLd data={collectionSchema} />
-      <JsonLd data={faqSchema} />
-      {orderedBooks.map((book) => {
-        const bookTitle = locale === "en" ? book.title_en : book.title_es;
-        const bookImage =
-          locale === "en" ? book.coverImage_en : book.coverImage_es;
-        const bookSlug = locale === "en" ? book.slug_en : book.slug_es;
-        const imageUrl = bookImage.startsWith("http")
-          ? bookImage
-          : `${BASE_URL}${bookImage}`;
-
-        return (
-          <JsonLd
-            key={book.id}
-            data={{
-              "@context": "https://schema.org",
-              "@type": "Product",
-              name: bookTitle,
-              brand: { "@type": "Brand", name: "Ashley Leon" },
-              description:
-                locale === "en" ? book.description_en : book.description_es,
-              image: imageUrl,
-              url: fullUrl(locale, `/workbooks/${bookSlug}`),
-              offers: {
-                "@type": "Offer",
-                price: (workbookPriceCents(book.price) / 100).toFixed(2),
-                priceCurrency: "USD",
-                availability: "https://schema.org/InStock",
-              },
-            }}
-          />
-        );
-      })}
       <div className="min-h-screen font-[family-name:var(--font-cormorant-garamond)] bg-[#F9F8F6]">
         {/* Hero Section */}
         <div className="relative bg-[#f5f0eb] py-16 lg:py-24">
@@ -247,6 +222,7 @@ export default async function WorkbooksPage({
                         }
                         alt={title}
                         fill
+                        priority={isPrimary}
                         sizes="(max-width: 640px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                       />

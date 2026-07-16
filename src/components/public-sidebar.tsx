@@ -7,7 +7,7 @@ import {
   SidebarGroupContent,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
 import { localizedHref } from "@/lib/url";
 import {
@@ -23,10 +23,10 @@ const titleToPath = (item: PublicNavItem): string => {
 };
 
 export async function PublicSidebar({
+  locale,
   ...props
-}: React.ComponentProps<typeof Sidebar>): Promise<React.ReactElement> {
-  const locale = await getLocale();
-  const t = await getTranslations("navigation");
+}: React.ComponentProps<typeof Sidebar> & { locale: string }): Promise<React.ReactElement> {
+  const t = await getTranslations({ locale, namespace: "navigation" });
   const items = getPublicNavigationItems(locale);
 
   const itemsTranslated = items.map((item) => ({

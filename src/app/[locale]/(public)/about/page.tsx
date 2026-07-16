@@ -2,8 +2,9 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
+import { fullUrl, ogImageUrl } from "@/lib/url";
 import { localizedAlternates } from "@/lib/seo";
+import { personRef, personSchema, websiteRef } from "@/lib/schema-entities";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -41,43 +42,22 @@ export default async function Page({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "About" });
 
-  const ashleySchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Ashley Leon",
-    jobTitle: "Writer, Workshop Facilitator & Certified Holistic Mind-Body Coach",
-    url: fullUrl(locale, "/about"),
-    worksFor: {
-      "@type": "Organization",
-      name: "Ashley Leon",
-      url: BASE_URL,
-    },
-    sameAs: [
-      "https://www.instagram.com/ashleyleon",
-      "https://www.youtube.com/@ashleyleon",
-      "https://ashleyleon.substack.com",
-    ],
-  };
-
   const aboutPageSchema = {
     "@context": "https://schema.org",
-    "@type": "AboutPage",
+    "@type": "ProfilePage",
+    "@id": `${fullUrl(locale, "/about")}#profile-page`,
     name: t("metadata.title"),
     description: t("metadata.description"),
     url: fullUrl(locale, "/about"),
     inLanguage: locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Ashley Leon",
-      url: BASE_URL,
-    },
-    mainEntity: ashleySchema,
+    isPartOf: websiteRef,
+    mainEntity: personRef,
   };
 
   return (
     <>
       <JsonLd data={aboutPageSchema} />
-      <JsonLd data={ashleySchema} />
+      <JsonLd data={personSchema} />
       <main className="min-h-screen bg-[#F9F8F6] font-[family-name:var(--font-cormorant-garamond)] py-16 lg:py-24">
         <div className="container max-w-6xl mx-auto px-4">
           <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">

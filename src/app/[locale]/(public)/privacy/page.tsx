@@ -18,8 +18,8 @@ export async function generateMetadata({
         : "Privacy Policy | Ashley Leon",
     description:
       locale === "es"
-        ? "Política de privacidad de Ashley Leon."
-        : "Privacy policy for Ashley Leon.",
+        ? "Consulta cómo Ashley Leon recopila, utiliza, protege y gestiona los datos personales, las cookies y tus derechos de privacidad en este sitio."
+        : "Learn how Ashley Leon collects, uses, protects, and manages personal data, cookies, and your privacy rights when you use this website.",
     alternates: localizedAlternates(locale, { en: "/privacy", es: "/privacy" }),
   };
 }
@@ -36,8 +36,13 @@ const SECTION_KEYS = [
   "changes",
 ] as const;
 
-export default async function PrivacyPage() {
-  const t = await getTranslations("Privacy");
+export default async function PrivacyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Privacy" });
 
   return (
     <main className="min-h-screen px-4 py-10 sm:py-20">

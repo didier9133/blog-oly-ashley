@@ -14,7 +14,7 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import RichTextEditor from "@/components/rich-text-editor";
+import { ArticleRichText } from "@/components/article-rich-text";
 import ImageBlogDetail from "@/components/image-post-detail";
 import {
   RecentPostsList,
@@ -23,14 +23,15 @@ import {
 
 import { Slash } from "lucide-react";
 import { CategoryEnum } from "@/enums";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
-import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
+import { BASE_URL, fullUrl, localizedHref } from "@/lib/url";
 import { isSupportedLocale, localizedAlternates } from "@/lib/seo";
 import { getPostSeoDecision } from "@/lib/seo-content";
 import { ProductCta } from "@/components/product-cta";
 import { routing } from "@/i18n/routing";
 import { postSlugCandidates, publicPostSlug } from "@/lib/post-slugs";
+import { organizationRef, personRef } from "@/lib/schema-entities";
 type Params = Promise<{ locale: string; slug: string }>;
 
 const PATH = CategoryEnum.Blog;
@@ -144,8 +145,8 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage(props: { params: Params }) {
-  const currentLanguage = await getLocale();
   const { locale, slug } = await props.params;
+  const currentLanguage = locale;
   const slugCandidates = postSlugCandidates(slug);
   const category = await prisma.category.findFirst({
     where: {
@@ -211,7 +212,7 @@ export default async function BlogPostPage(props: { params: Params }) {
     content: currentLanguage === "en" ? post.content_en : post.content_es,
   };
 
-  const t = await getTranslations("Writing");
+  const t = await getTranslations({ locale, namespace: "Writing" });
   const recentPostsLabel = t("recent-posts");
   const noPostsLabel = t("no-posts");
 
@@ -226,6 +227,8 @@ export default async function BlogPostPage(props: { params: Params }) {
     publicPostSlug(post.slug_es),
   );
   const relatedGuide = seoDecision?.relatedGuide?.[supportedLocale];
+  const wasUpdated =
+    post.updatedAt.getTime() - post.createdAt.getTime() > 24 * 60 * 60 * 1000;
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
@@ -237,16 +240,8 @@ export default async function BlogPostPage(props: { params: Params }) {
     inLanguage: locale,
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
-    author: {
-      "@type": "Person",
-      name: authorName,
-      url: fullUrl(locale, "/about"),
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Ashley Leon",
-      logo: { "@type": "ImageObject", url: ogImageUrl(locale) },
-    },
+    author: { ...personRef, name: authorName },
+    publisher: organizationRef,
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   };
 
@@ -315,24 +310,32 @@ export default async function BlogPostPage(props: { params: Params }) {
           <h1 className="text-3xl font-bold mb-4 text-primary font-[family-name:var(--font-cormorant-garamond)]">
             {postTraslated.title}
           </h1>
-          <div className="text-muted-foreground text-sm mb-6 flex gap-4">
-            <span>
+          <div className="text-muted-foreground text-sm mb-6 flex flex-wrap gap-x-4 gap-y-1">
+            <time dateTime={post.createdAt.toISOString()}>
+              {currentLanguage === "es" ? "Publicado" : "Published"}{" "}
               {new Date(post.createdAt).toLocaleDateString(currentLanguage, {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               })}
-            </span>
+            </time>
+            {wasUpdated ? (
+              <time dateTime={post.updatedAt.toISOString()}>
+                {currentLanguage === "es" ? "Actualizado" : "Updated"}{" "}
+                {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </time>
+            ) : null}
             <span>·</span>
             <Link href={`/${locale}/about`} className="hover:underline">
               {authorName}
             </Link>
           </div>
-          <article className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed break-words transition-colors duration-300">
-            <RichTextEditor
-              content={postTraslated.content!}
-              isEditable={false}
-            />
+          <article className="max-w-none break-words">
+            <ArticleRichText content={postTraslated.content} />
             {relatedGuide ? (
               <aside
                 className="not-prose mt-12 border-y border-border bg-paper px-6 py-8 sm:px-8"
@@ -371,6 +374,23 @@ export default async function BlogPostPage(props: { params: Params }) {
                 primaryKeyword={seoDecision.primaryKeyword?.[supportedLocale]}
               />
             ) : null}
+            <aside className="not-prose mt-14 border-t border-border pt-8">
+              <p className="font-[family-name:var(--font-lora)] text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary">
+                {currentLanguage === "es" ? "Sobre la autora" : "About the author"}
+              </p>
+              <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-7 text-muted-foreground">
+                {currentLanguage === "es"
+                  ? "Ashley Leon es escritora cubano-colombiana, ex misionera, facilitadora de talleres y coach holística certificada de cuerpo-mente. Escribe sobre deconstrucción de fe, identidad, espiritualidad queer y sanación emocional."
+                  : "Ashley Leon is a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach. She writes about faith deconstruction, queer spirituality, identity, and emotional healing."}
+              </p>
+              <Link
+                href={localizedHref(locale, "/about")}
+                className="editorial-link mt-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              >
+                {currentLanguage === "es" ? "Conoce a Ashley" : "Meet Ashley"}
+                <span className="editorial-link-arrow" aria-hidden="true">→</span>
+              </Link>
+            </aside>
           </article>
         </div>
 

@@ -22,7 +22,7 @@ export function Footer() {
       >
         <Image
           src="/new_logo.webp"
-          alt="Background"
+          alt=""
           fill
           className="object-cover opacity-15"
           loading="lazy"

@@ -18,8 +18,8 @@ export async function generateMetadata({
         : "Terms of Service | Ashley Leon",
     description:
       locale === "es"
-        ? "Términos y condiciones de Ashley Leon."
-        : "Terms of service for Ashley Leon.",
+        ? "Lee los términos que regulan el uso del sitio de Ashley Leon, sus contenidos, compras digitales, propiedad intelectual y responsabilidades."
+        : "Read the terms governing use of Ashley Leon's website, its content, digital purchases, intellectual property, and user responsibilities.",
     alternates: localizedAlternates(locale, { en: "/terms", es: "/terms" }),
   };
 }
@@ -39,8 +39,13 @@ const SECTION_KEYS = [
   "changes",
 ] as const;
 
-export default async function TermsPage() {
-  const t = await getTranslations("Terms");
+export default async function TermsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Terms" });
 
   return (
     <main className="min-h-screen px-4 py-10 sm:py-20">

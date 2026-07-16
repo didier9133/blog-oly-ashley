@@ -18,8 +18,8 @@
     "deconstructing-christianity-full": "Deconstruyendo el cristianismo"
   },
   "metadata": {
-    "title": "Ashley Leon | Fe, identidad y reverencia después de la deconstrucción",
-    "description": "Ensayos, guías y experiencias en vivo para volver a lo sagrado sin tener que abandonarte.",
+    "title": "Fe después de la deconstrucción | Ashley Leon",
+    "description": "Ensayos, guías prácticas y experiencias en vivo para reconstruir la fe, la identidad, la reverencia y la pertenencia después de la deconstrucción.",
     "keywords": "Ashley Leon, deconstrucción de fe, identidad, sanación, reverencia, guías espirituales, experiencias en vivo, volver a lo sagrado",
     "ogImageAlt": "Ashley Leon, escritora y facilitadora sobre fe, identidad y reverencia después de la deconstrucción"
   },
@@ -399,8 +399,8 @@
   },
   "About": {
     "metadata": {
-      "title": "Sobre Ashley Leon | Escritora, coach y facilitadora sobre fe e identidad",
-      "description": "Ashley Leon es escritora, facilitadora de experiencias y coach holística cuerpo-mente certificada. Su trabajo vive en la intersección entre deconstrucción de fe, identidad, espiritualidad y sanación emocional."
+      "title": "Sobre Ashley Leon | Escritora sobre fe e identidad",
+      "description": "Ashley Leon es escritora cubano-colombiana, ex misionera, facilitadora y coach holística certificada. Explora fe, identidad y sanación emocional."
     },
     "eyebrow": "Sobre mí",
     "title": "Soy Ashley.",
@@ -427,8 +427,8 @@
   },
   "Contact": {
     "metadata": {
-      "title": "Contacto | Ashley Leon",
-      "description": "Para colaboraciones, prensa, charlas, o simplemente para decir algo real."
+      "title": "Contacta a Ashley Leon | Prensa y colaboraciones",
+      "description": "Contacta a Ashley Leon para charlas, talleres, prensa, colaboraciones creativas o preguntas sobre su trabajo de fe, identidad y deconstrucción."
     },
     "eyebrow": "Contacto",
     "title": "Escríbeme.",
@@ -779,7 +779,7 @@
   "Writing": {
     "metadata": {
       "title": "Ensayos sobre fe, deconstrucción y sanación | Ashley Leon",
-      "description": "Ensayos desde la transición sobre fe, deconstrucción, identidad, sanación y regreso."
+      "description": "Lee ensayos sobre deconstrucción de fe, identidad, espiritualidad queer, sanación emocional, pertenencia y el proceso honesto de reconstruir."
     },
     "breadcrumb": "Inicio",
     "page-title": "Ensayos desde la transición",
@@ -794,7 +794,7 @@
   },
   "Workbooks": {
     "metadata-title": "Guías digitales para fe e identidad | Ashley Leon",
-    "metadata-description": "Guías digitales para reconstruir fe, identidad y pertenencia.",
+    "metadata-description": "Explora guías digitales afirmativas con preguntas y prácticas para reconstruir la fe, la identidad, la reverencia y la pertenencia tras la deconstrucción.",
     "breadcrumb": "Guías",
     "title": "Guías para el regreso.",
     "subtitle": "Dos acompañantes digitales para reconstruir fe, identidad y pertenencia a tu propio ritmo.",
@@ -836,7 +836,7 @@
     "supportSection-home": "Ir al inicio"
   },
   "Circle": {
-    "metadata-title": "Experiencia grupal para reconstruir la fe | Rebuilding Reverence Circle",
+    "metadata-title": "Círculo para reconstruir la fe | Rebuilding Reverence",
     "metadata-description": "Una experiencia grupal en vivo de cuatro semanas para reconstruir la fe, la identidad y el sentido de pertenencia en compañía.",
     "eyebrow": "Experiencia grupal en vivo",
     "reserveCta": "Reservar mi lugar — ${price} →",

@@ -31,3 +31,21 @@ export function htmlToPlainText(html: string | null | undefined) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+export function htmlExcerpt(
+  html: string | null | undefined,
+  maxLength = 240,
+) {
+  const plainText = htmlToPlainText(html);
+
+  if (plainText.length <= maxLength) return plainText;
+
+  const truncated = plainText.slice(0, maxLength + 1);
+  const lastWordBoundary = truncated.lastIndexOf(" ");
+  const excerpt = truncated.slice(
+    0,
+    lastWordBoundary > maxLength * 0.75 ? lastWordBoundary : maxLength,
+  );
+
+  return `${excerpt.trimEnd()}…`;
+}

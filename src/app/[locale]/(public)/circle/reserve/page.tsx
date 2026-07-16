@@ -59,7 +59,7 @@ export async function generateMetadata({
           width: image.width,
           height: image.height,
           alt: image.alt,
-          type: "image/png",
+          type: image.contentType,
         },
       ],
     },

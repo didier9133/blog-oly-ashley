@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown, BookOpen, Heart, Waypoints } from "lucide-react";
+import { ArrowDown, Heart, Waypoints } from "lucide-react";
 
 import { JsonLd } from "@/components/json-ld";
 import { PillarCta } from "@/components/pillar-cta";
@@ -25,7 +25,8 @@ import {
   DECONSTRUCTING_CHRISTIANITY_TITLE,
 } from "@/lib/deconstructing-christianity";
 import { indexableRobots, singleLocaleAlternates } from "@/lib/seo";
-import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
+import { fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
+import { organizationRef, personRef } from "@/lib/schema-entities";
 
 const PAGE_URL = fullUrl("en", DECONSTRUCTING_CHRISTIANITY_PATH);
 const ABOUT_URL = fullUrl("en", "/about");
@@ -115,24 +116,8 @@ export default async function DeconstructingChristianityPage({
     inLanguage: "en-US",
     datePublished: PUBLISHED_DATE.toISOString(),
     dateModified: MODIFIED_DATE.toISOString(),
-    author: {
-      "@type": "Person",
-      "@id": `${ABOUT_URL}#person`,
-      name: "Ashley Leon",
-      url: ABOUT_URL,
-      jobTitle:
-        "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
-    },
-    publisher: {
-      "@type": "Organization",
-      "@id": `${BASE_URL}/#organization`,
-      name: "Ashley Leon",
-      url: BASE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: ogImageUrl("en"),
-      },
-    },
+    author: personRef,
+    publisher: organizationRef,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": PAGE_URL,
@@ -169,24 +154,10 @@ export default async function DeconstructingChristianityPage({
     ],
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: DECONSTRUCTING_CHRISTIANITY_FAQS.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
   return (
     <main className="bg-background text-foreground">
       <JsonLd data={articleSchema} />
       <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={faqSchema} />
 
       <section className="relative isolate overflow-hidden border-b border-border bg-paper">
         <div

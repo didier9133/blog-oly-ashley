@@ -9,6 +9,7 @@ import { CircleStickyCta } from "@/components/circle-sticky-cta";
 import { CircleFaq } from "@/components/circle-faq";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
+import { organizationRef } from "@/lib/schema-entities";
 
 const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
 
@@ -35,7 +36,7 @@ export async function generateMetadata({
           width: image.width,
           height: image.height,
           alt: image.alt,
-          type: "image/png",
+          type: image.contentType,
         },
       ],
     },
@@ -82,13 +83,12 @@ export default async function CirclePage({
   const courseSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Course",
+    "@id": `${fullUrl(locale, "/circle")}#course`,
     name: productName,
     description: t("metadata-description"),
-    provider: {
-      "@type": "Organization",
-      name: "Ashley Leon",
-      sameAs: fullUrl(locale, "/circle"),
-    },
+    url: fullUrl(locale, "/circle"),
+    inLanguage: locale,
+    provider: organizationRef,
     offers: {
       "@type": "Offer",
       price: EARLY_PRICE.toFixed(2),
@@ -96,38 +96,6 @@ export default async function CirclePage({
       availability: "https://schema.org/InStock",
       url: fullUrl(locale, "/circle"),
     },
-  };
-  const eventSchema: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: productName,
-    description: t("metadata-description"),
-    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    organizer: {
-      "@type": "Person",
-      name: "Ashley Leon",
-      url: fullUrl(locale, "/about"),
-    },
-    offers: {
-      "@type": "Offer",
-      price: EARLY_PRICE.toFixed(2),
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      url: fullUrl(locale, "/circle/reserve"),
-    },
-  };
-  const faqSchema: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.a,
-      },
-    })),
   };
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -141,8 +109,6 @@ export default async function CirclePage({
   return (
     <>
       <JsonLd data={courseSchema} />
-      <JsonLd data={eventSchema} />
-      <JsonLd data={faqSchema} />
       <JsonLd data={breadcrumbSchema} />
       <ViewItemAnalytics
         itemId="rebuilding-reverence-circle"

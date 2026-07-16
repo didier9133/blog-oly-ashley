@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { localizedAlternates } from "@/lib/seo";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
+import { websiteRef } from "@/lib/schema-entities";
 
 const COMMUNITY_URL =
   "https://www.gokollab.com/the-in-between-4dzfnm/home";
@@ -32,7 +33,7 @@ export async function generateMetadata({
           width: image.width,
           height: image.height,
           alt: image.alt,
-          type: "image/png",
+          type: image.contentType,
         },
       ],
     },
@@ -55,7 +56,7 @@ export default async function CommunityPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations("Community");
+  const t = await getTranslations({ locale, namespace: "Community" });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -64,11 +65,7 @@ export default async function CommunityPage({
     description: t("metadata.description"),
     url: fullUrl(locale, "/community"),
     inLanguage: locale,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Ashley Leon",
-      url: BASE_URL,
-    },
+    isPartOf: websiteRef,
   };
   const breadcrumbSchema = {
     "@context": "https://schema.org",

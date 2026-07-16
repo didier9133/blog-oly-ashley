@@ -5,7 +5,7 @@ export const DECONSTRUCTING_CHRISTIANITY_TITLE =
   "Deconstructing Christianity: What It Means and What Comes Next";
 
 export const DECONSTRUCTING_CHRISTIANITY_SEO_TITLE =
-  "Deconstructing Christianity: Meaning, Process & What Comes Next | Ashley Leon";
+  "Deconstructing Christianity: What Comes Next | Ashley Leon";
 
 export const DECONSTRUCTING_CHRISTIANITY_DESCRIPTION =
   "A compassionate guide to deconstructing Christianity: what faith deconstruction means, why it happens, what it can feel like, and what may come next.";

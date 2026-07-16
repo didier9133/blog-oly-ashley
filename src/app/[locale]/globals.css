@@ -424,6 +424,172 @@
   }
 }
 
+@layer components {
+  .article-rich-text {
+    color: color-mix(in oklab, var(--foreground) 86%, transparent);
+    font-family: var(--font-lora), Georgia, serif;
+    font-size: clamp(1rem, 0.97rem + 0.14vw, 1.075rem);
+    line-height: 1.86;
+    text-wrap: pretty;
+  }
+
+  .article-rich-text > :first-child {
+    margin-top: 0;
+  }
+
+  .article-rich-text > :last-child {
+    margin-bottom: 0;
+  }
+
+  .article-rich-text p {
+    margin: 0 0 1.4em;
+  }
+
+  .article-rich-text p:empty {
+    display: none;
+  }
+
+  .article-rich-text h1,
+  .article-rich-text h2,
+  .article-rich-text h3,
+  .article-rich-text h4 {
+    color: var(--foreground);
+    font-family: var(--font-cormorant-garamond), Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .article-rich-text h1,
+  .article-rich-text h2 {
+    margin: 2.35em 0 0.65em;
+    font-size: clamp(1.9rem, 1.55rem + 1.25vw, 2.65rem);
+  }
+
+  .article-rich-text h3 {
+    margin: 2em 0 0.6em;
+    font-size: clamp(1.55rem, 1.38rem + 0.7vw, 2rem);
+  }
+
+  .article-rich-text h4 {
+    margin: 1.8em 0 0.55em;
+    font-size: 1.35rem;
+  }
+
+  .article-rich-text ul,
+  .article-rich-text ol {
+    margin: 0.4rem 0 1.6rem;
+    padding-left: 1.45rem;
+  }
+
+  .article-rich-text ul {
+    list-style: disc;
+  }
+
+  .article-rich-text ol {
+    list-style: decimal;
+  }
+
+  .article-rich-text li {
+    margin: 0.45rem 0;
+    padding-left: 0.35rem;
+  }
+
+  .article-rich-text li::marker {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .article-rich-text blockquote {
+    margin: 2.35rem 0;
+    border-left: 2px solid color-mix(in oklab, var(--primary) 70%, transparent);
+    padding: 0.35rem 0 0.35rem clamp(1.15rem, 4vw, 1.75rem);
+    color: var(--foreground);
+    font-family: var(--font-cormorant-garamond), Georgia, serif;
+    font-size: clamp(1.45rem, 1.2rem + 0.85vw, 1.95rem);
+    font-style: italic;
+    line-height: 1.38;
+  }
+
+  .article-rich-text blockquote p {
+    margin-bottom: 0.7em;
+  }
+
+  .article-rich-text blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .article-rich-text a {
+    color: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(in oklab, var(--primary) 38%, transparent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: color 180ms ease, text-decoration-color 180ms ease;
+  }
+
+  .article-rich-text a:hover {
+    color: var(--primary);
+    text-decoration-color: var(--primary);
+  }
+
+  .article-rich-text strong {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  .article-rich-text mark {
+    border-radius: 0.15em;
+    background: color-mix(in oklab, var(--primary) 16%, var(--paper));
+    color: inherit;
+    padding: 0.06em 0.18em;
+  }
+
+  .article-rich-text code {
+    border-radius: 0.2rem;
+    background: color-mix(in oklab, var(--sand) 68%, transparent);
+    color: var(--foreground);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.86em;
+    padding: 0.15em 0.35em;
+  }
+
+  .article-rich-text pre {
+    margin: 2rem 0;
+    overflow-x: auto;
+    border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+    background: var(--paper);
+    padding: clamp(1.15rem, 4vw, 1.65rem);
+    color: var(--foreground);
+    font-family: var(--font-cormorant-garamond), Georgia, serif;
+    font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .article-rich-text pre code {
+    background: transparent;
+    font: inherit;
+    padding: 0;
+  }
+
+  .article-rich-text hr {
+    margin: 2.75rem 0;
+    height: 1px;
+    border: 0;
+    background: color-mix(in oklab, var(--foreground) 16%, transparent);
+  }
+
+  .article-rich-text img {
+    margin: 2.25rem auto;
+    height: auto;
+    max-width: 100%;
+    border-radius: 0.125rem;
+  }
+}
+
 @layer utilities {
   .editorial-eyebrow {
     font-family: var(--font-lora), Georgia, serif;
@@ -699,7 +865,7 @@
   }
 
   .home-hero-reveal-2 {
-    animation-delay: 220ms;
+    animation: none;
   }
 
   .home-hero-reveal-3 {
@@ -739,14 +905,10 @@
 
   @keyframes homeHeroReveal {
     from {
-      opacity: 0;
-      transform: translateY(1.25rem);
-      filter: blur(4px);
+      transform: translateY(0.65rem);
     }
     to {
-      opacity: 1;
       transform: translateY(0);
-      filter: blur(0);
     }
   }
 
@@ -824,6 +986,17 @@ body {
   body {
     background-color: var(--frame-bg);
     transition: background-color 0.6s var(--ease-rest);
+  }
+
+  /* Continue the hero's warm paper surface into ultra-wide gutters. */
+  .home-page::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0 0 auto;
+    height: clamp(46rem, calc(100svh - 4.75rem), 68rem);
+    background: #faf6f0;
+    pointer-events: none;
   }
 }
 

@@ -17,7 +17,6 @@ export const LanguageSelector = () => {
     if (lang === currentLanguage) return;
     if (lang === "es" && spanishVersionUnavailable) return;
 
-    document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax`;
     window.location.assign(localizedHref(lang, pathWithoutLocale));
   };
 
@@ -29,8 +28,8 @@ export const LanguageSelector = () => {
         disabled={spanishVersionUnavailable}
         aria-label={
           spanishVersionUnavailable
-            ? "Spanish version not available yet"
-            : "Switch to Spanish"
+            ? "ES — Spanish version not available yet"
+            : "ES — Switch to Spanish"
         }
         title={
           spanishVersionUnavailable
@@ -48,7 +47,7 @@ export const LanguageSelector = () => {
       <button
         type="button"
         onClick={() => handleLanguageChange("en")}
-        aria-label="Switch to English"
+        aria-label="EN — Switch to English"
         className={cn(
           "hover:text-foreground transition-colors",
           currentLanguage === "en" && "text-foreground font-semibold",

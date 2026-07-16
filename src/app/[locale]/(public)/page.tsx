@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { HomeCircleCta } from "@/components/home-circle-cta";
 import { HomeCommunityCta } from "@/components/home-community-cta";
@@ -10,22 +10,43 @@ import { HomeSidebar } from "@/components/home-sidebar";
 import { JsonLd } from "@/components/json-ld";
 import { CategoryEnum } from "@/enums";
 import prisma from "@/lib/prisma";
-import { fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
-import { getLocale, getTranslations } from "next-intl/server";
+import { fullUrl, localizedHref } from "@/lib/url";
+import { getTranslations } from "next-intl/server";
 import { publicPostSlug } from "@/lib/post-slugs";
+import { htmlExcerpt } from "@/lib/plain-text";
+import {
+  organizationSchema,
+  personRef,
+  personSchema,
+  websiteRef,
+  websiteSchema,
+} from "@/lib/schema-entities";
+import { routing } from "@/i18n/routing";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const HERO_IMAGE = "/ashley-hero-2026.jpeg";
 
-export default async function Home() {
-  const currentLanguage = await getLocale();
-  const t = await getTranslations("Home");
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: currentLanguage } = await params;
+  const t = await getTranslations({
+    locale: currentLanguage,
+    namespace: "Home",
+  });
 
   const [recentWriting, featuredBook] = await Promise.all([
     prisma.post.findMany({
       where: { published: true, category: { name: CategoryEnum.Blog } },
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       take: 3,
       select: {
         id: true,
@@ -77,7 +98,9 @@ export default async function Home() {
     ),
     id: post.id,
     title: currentLanguage === "en" ? post.title_en : post.title_es,
-    content: currentLanguage === "en" ? post.content_en : post.content_es,
+    excerpt: htmlExcerpt(
+      currentLanguage === "en" ? post.content_en : post.content_es,
+    ),
     image: post.image,
   }));
 
@@ -93,57 +116,6 @@ export default async function Home() {
   const circleHref = localizedHref(currentLanguage, "/circle");
   const communityHref = localizedHref(currentLanguage, "/community");
   const homeUrl = fullUrl(currentLanguage, "/");
-  const aboutUrl = fullUrl(currentLanguage, "/about");
-
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Ashley Leon",
-    url: homeUrl,
-    logo: {
-      "@type": "ImageObject",
-      url: ogImageUrl(currentLanguage),
-      width: 1200,
-      height: 630,
-    },
-    sameAs: [
-      "https://www.instagram.com/ashleyleon",
-      "https://www.youtube.com/@ashleyleon",
-      "https://ashleyleon.substack.com",
-    ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: "support@ashleydianaleon.com",
-      contactType: "customer support",
-    },
-  };
-
-  const webSiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Ashley Leon",
-    url: homeUrl,
-    inLanguage: ["en", "es"],
-    publisher: {
-      "@type": "Organization",
-      name: "Ashley Leon",
-    },
-  };
-
-  const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Ashley Leon",
-    url: aboutUrl,
-    jobTitle: "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
-    description:
-      "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
-    sameAs: [
-      "https://www.instagram.com/ashleyleon",
-      "https://www.youtube.com/@ashleyleon",
-      "https://ashleyleon.substack.com",
-    ],
-  };
 
   const aiSummaryEn =
     "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
@@ -156,47 +128,29 @@ export default async function Home() {
     name: "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
     url: homeUrl,
     inLanguage: currentLanguage,
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Ashley Leon",
-      url: homeUrl,
-    },
-    about: {
-      "@type": "Person",
-      name: "Ashley Leon",
-      description:
-        "Writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing.",
-      knowsAbout: [
-        "Faith deconstruction",
-        "Queer spirituality",
-        "Emotional healing",
-        "Guided workbooks",
-        "Live group workshops",
-        "Online community",
-        "Rebuilding Reverence",
-      ],
-    },
-    description: aiSummaryEn,
+    isPartOf: websiteRef,
+    about: personRef,
+    description: currentLanguage === "es" ? aiSummaryEs : aiSummaryEn,
   };
 
+  const heroDesktopSizes =
+    "(min-width: 1280px) calc(100vw - 300px), 100vw";
+  const { props: heroDesktopProps } = getImageProps({
+    src: HERO_IMAGE,
+    alt: "",
+    fill: true,
+    priority: true,
+    quality: 85,
+    sizes: heroDesktopSizes,
+  });
   return (
     <>
       <JsonLd data={organizationSchema} />
-      <JsonLd data={webSiteSchema} />
+      <JsonLd data={websiteSchema} />
       <JsonLd data={personSchema} />
       <JsonLd data={aiSummarySchema} />
-      <div className="sr-only" aria-hidden="false">
-        <p lang="en">{aiSummaryEn}</p>
-        <p lang="es">{aiSummaryEs}</p>
-      </div>
-      <link
-        rel="preload"
-        as="image"
-        imageSrcSet={`/_next/image?url=%2Fashley-hero-2026.jpeg&w=640&q=75 640w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=750&q=75 750w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1080&q=75 1080w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1200&q=75 1200w, /_next/image?url=%2Fashley-hero-2026.jpeg&w=1920&q=75 1920w`}
-        imageSizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
-      />
-      <main className="bg-background text-foreground">
-        <div className="mx-auto max-w-[1760px] min-[1280px]:flex min-[1280px]:gap-10">
+      <main className="home-page relative isolate bg-background text-foreground">
+        <div className="relative z-10 mx-auto max-w-[1760px] min-[1280px]:flex min-[1280px]:gap-10">
           <div className="min-[1280px]:min-w-0 min-[1280px]:flex-1">
             <section
               id="hero"
@@ -206,14 +160,24 @@ export default async function Home() {
                 aria-hidden
                 className="absolute inset-0 overflow-hidden"
               >
-                <Image
-                  src={HERO_IMAGE}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(min-width: 1280px) calc(100vw - 300px), 100vw"
-                  className="home-hero-media object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
-                />
+                <picture>
+                  <source
+                    media="(max-width: 767px)"
+                    srcSet={HERO_IMAGE}
+                  />
+                  <source
+                    media="(min-width: 768px)"
+                    srcSet={heroDesktopProps.srcSet}
+                    sizes={heroDesktopSizes}
+                  />
+                  <img
+                    {...heroDesktopProps}
+                    alt=""
+                    srcSet={undefined}
+                    sizes={undefined}
+                    className="home-hero-media object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
+                  />
+                </picture>
               </div>
               <div
                 aria-hidden
@@ -255,7 +219,7 @@ export default async function Home() {
                   <div className="home-hero-reveal home-hero-reveal-4 mt-5 flex w-full max-w-[25rem] flex-col gap-2 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[1.55fr_1fr] sm:gap-3 md:mt-7">
                     <Link
                       href={primaryWorkbookHref}
-                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 bg-primary px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-primary-foreground transition-[background-color,transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-[0_14px_34px_-18px_rgba(92,45,31,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
+                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 bg-[#8f513b] px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-[#fffaf5] transition-[background-color,transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:bg-[#784330] hover:shadow-[0_14px_34px_-18px_rgba(92,45,31,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
                     >
                       <span className="min-w-0 text-balance">{t("cta-journals")}</span>
                       <span
