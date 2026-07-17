@@ -11,7 +11,9 @@ import {
 } from "../src/lib/deconstructing-christianity";
 import {
   getPostSeoDecision,
+  getPostModifiedAt,
   getWorkbookSeo,
+  POST_SEO_DECISIONS,
   PRODUCT_CTAS,
   SPANISH_COMMERCIAL_CLUSTERS,
   SPANISH_INFORMATIONAL_ACQUISITION,
@@ -110,6 +112,11 @@ describe("bilingual SEO configuration", () => {
       "/deconstructing-christianity",
     );
     expect(decision?.relatedGuide?.es).toBe(undefined);
+    expect(decision?.displayTitle?.en).toContain(
+      "How to Rebuild Faith After Deconstruction",
+    );
+    expect(decision?.semanticRules?.en?.promote?.length).toBe(8);
+    expect(decision?.semanticRules?.es?.promote?.length).toBe(8);
   });
 
   test("uses the approved keyword intent for the spiritual balance essay", () => {
@@ -124,6 +131,8 @@ describe("bilingual SEO configuration", () => {
     expect(decision?.seoTitle?.es).toContain(
       "Equilibrio espiritual entre fe y vida material",
     );
+    expect(decision?.displayTitle?.en).toContain("Spiritual Balance");
+    expect(decision?.semanticRules?.en?.insertBefore?.length).toBe(3);
   });
 
   test("gives the LGBTQ+ faith essay an explicit bilingual H1 and SEO title", () => {
@@ -142,6 +151,55 @@ describe("bilingual SEO configuration", () => {
     expect(decision?.seoTitle?.es).toBe(
       "Fe LGBTQ+ y amor incondicional de Dios | Ashley Leon",
     );
+    expect(decision?.semanticRules?.en?.promote?.length).toBe(5);
+    expect(decision?.semanticRules?.es?.promote?.length).toBe(5);
+  });
+
+  test("gives grief, belonging, and advice handcrafted bilingual metadata", () => {
+    const grief = getPostSeoDecision(
+      "grief-after-miscarriage-and-the-life-you-imagined",
+    );
+    const belonging = getPostSeoDecision(
+      "que-significa-realmente-pertenecer",
+    );
+    const advice = getPostSeoDecision(
+      "dont-take-advice-from-someone-whose-life-you-dont-want",
+    );
+
+    expect(grief?.displayTitle?.es).toContain("duelo gestacional");
+    expect(grief?.description?.en).toContain("grief after miscarriage");
+    expect(grief?.semanticRules?.en?.insertBefore?.length).toBe(3);
+    expect(grief?.semanticRules?.es?.insertBefore?.length).toBe(3);
+    expect(belonging?.displayTitle?.es?.startsWith("¿")).toBe(true);
+    expect(belonging?.semanticRules?.en?.removeParagraphs).toContain(
+      "What Does Belonging Really Mean?",
+    );
+    expect(advice?.seoTitle?.en).toBe(
+      "Don’t Take Advice From Someone Whose Life You Don’t Want",
+    );
+    expect(advice?.description?.es).toContain("discernimiento");
+  });
+
+  test("keeps curated titles and descriptions concise", () => {
+    const decisions = new Set(Object.values(POST_SEO_DECISIONS));
+
+    for (const decision of decisions) {
+      for (const title of Object.values(decision.seoTitle ?? {})) {
+        expect(title.length <= 65).toBe(true);
+      }
+      for (const description of Object.values(decision.description ?? {})) {
+        expect(description.length <= 160).toBe(true);
+      }
+    }
+  });
+
+  test("uses the editorial revision date for updated essay metadata", () => {
+    expect(
+      getPostModifiedAt(
+        new Date("2025-01-01T00:00:00.000Z"),
+        "what-does-belonging-really-mean",
+      ).toISOString(),
+    ).toBe("2026-07-17T12:00:00.000Z");
   });
 
   test("never leaks English CTA destinations into Spanish articles", () => {

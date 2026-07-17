@@ -27,7 +27,10 @@ import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl, localizedHref } from "@/lib/url";
 import { isSupportedLocale, localizedAlternates } from "@/lib/seo";
-import { getPostSeoDecision } from "@/lib/seo-content";
+import {
+  getPostModifiedAt,
+  getPostSeoDecision,
+} from "@/lib/seo-content";
 import { ProductCta } from "@/components/product-cta";
 import { routing } from "@/i18n/routing";
 import { postSlugCandidates, publicPostSlug } from "@/lib/post-slugs";
@@ -108,6 +111,11 @@ export async function generateMetadata({
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
+  const modifiedAt = getPostModifiedAt(
+    post.updatedAt,
+    publicPostSlug(post.slug_en),
+    publicPostSlug(post.slug_es),
+  );
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
   const title =
     decision?.displayTitle?.[supportedLocale] ?? storedTitle;
@@ -126,12 +134,14 @@ export async function generateMetadata({
     description: seoDescription,
     openGraph: {
       type: "article",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
       title: pageTitle,
       description: seoDescription,
       url: fullUrl(locale, `/writing/${detailSlug}`),
       images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
       publishedTime: post.createdAt.toISOString(),
-      modifiedTime: post.updatedAt.toISOString(),
+      modifiedTime: modifiedAt.toISOString(),
       authors: [fullUrl(locale, "/about")],
     },
     twitter: {
@@ -213,13 +223,21 @@ export default async function BlogPostPage(props: { params: Params }) {
   const recentPostsLabel = t("recent-posts");
   const noPostsLabel = t("no-posts");
 
-  const authorName = `${post.author.firstName} ${post.author.lastName}`;
+  const authorName = [post.author.firstName, post.author.lastName]
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .join(" ");
   const pageUrl = fullUrl(locale, `/writing/${detailSlug}`);
   const imageUrl = post.image.startsWith("http")
     ? post.image
     : `${BASE_URL}${post.image}`;
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
   const seoDecision = getPostSeoDecision(
+    publicPostSlug(post.slug_en),
+    publicPostSlug(post.slug_es),
+  );
+  const modifiedAt = getPostModifiedAt(
+    post.updatedAt,
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
@@ -230,20 +248,26 @@ export default async function BlogPostPage(props: { params: Params }) {
       (currentLanguage === "en" ? post.title_en : post.title_es),
     content: currentLanguage === "en" ? post.content_en : post.content_es,
   };
+  const seoLead = seoDecision?.lead?.[supportedLocale];
+  const semanticRules = seoDecision?.semanticRules?.[supportedLocale];
+  const relatedReading = seoDecision?.relatedReading?.[supportedLocale];
   const relatedGuide = seoDecision?.relatedGuide?.[supportedLocale];
+  const articleDescription =
+    seoDecision?.description?.[supportedLocale] ??
+    htmlExcerpt(postTraslated.content);
   const wasUpdated =
-    post.updatedAt.getTime() - post.createdAt.getTime() > 24 * 60 * 60 * 1000;
+    modifiedAt.getTime() - post.createdAt.getTime() > 24 * 60 * 60 * 1000;
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: postTraslated.title,
-    description: htmlExcerpt(postTraslated.content),
+    description: articleDescription,
     image: imageUrl,
     url: pageUrl,
     inLanguage: locale,
     datePublished: post.createdAt.toISOString(),
-    dateModified: post.updatedAt.toISOString(),
+    dateModified: modifiedAt.toISOString(),
     author: { ...personRef, name: authorName },
     publisher: organizationRef,
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
@@ -324,9 +348,9 @@ export default async function BlogPostPage(props: { params: Params }) {
               })}
             </time>
             {wasUpdated ? (
-              <time dateTime={post.updatedAt.toISOString()}>
+              <time dateTime={modifiedAt.toISOString()}>
                 {currentLanguage === "es" ? "Actualizado" : "Updated"}{" "}
-                {new Date(post.updatedAt).toLocaleDateString(currentLanguage, {
+                {modifiedAt.toLocaleDateString(currentLanguage, {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
@@ -339,7 +363,36 @@ export default async function BlogPostPage(props: { params: Params }) {
             </Link>
           </div>
           <article className="max-w-none break-words">
-            <ArticleRichText content={postTraslated.content} />
+            {seoLead ? (
+              <p className="mb-10 border-l-2 border-primary/60 pl-5 font-[family-name:var(--font-lora)] text-lg leading-8 text-foreground/85 sm:pl-6 sm:text-xl sm:leading-9">
+                {seoLead}
+              </p>
+            ) : null}
+            <ArticleRichText
+              content={postTraslated.content}
+              semanticRules={semanticRules}
+            />
+            {relatedReading?.length ? (
+              <aside className="not-prose mt-10 border-l border-border pl-5">
+                <p className="font-[family-name:var(--font-lora)] text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary">
+                  {supportedLocale === "es"
+                    ? "Una reflexión relacionada"
+                    : "A related reflection"}
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {relatedReading.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={localizedHref(supportedLocale, item.href)}
+                        className="font-[family-name:var(--font-lora)] text-sm leading-6 text-foreground underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            ) : null}
             {relatedGuide ? (
               <aside
                 className="not-prose mt-12 border-y border-border bg-paper px-6 py-8 sm:px-8"

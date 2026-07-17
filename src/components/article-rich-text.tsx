@@ -1,21 +1,24 @@
 import "server-only";
 
-import DOMPurify from "isomorphic-dompurify";
+import {
+  prepareArticleHtml,
+  type ArticleSemanticRules,
+} from "@/lib/article-semantics";
 
 interface ArticleRichTextProps {
   content: string | null | undefined;
+  semanticRules?: ArticleSemanticRules;
 }
 
 /**
  * Render article copy in the initial server response so search engines and
  * answer engines can read the complete essay without executing JavaScript.
  */
-export function ArticleRichText({ content }: ArticleRichTextProps) {
-  const sanitizedContent = DOMPurify.sanitize(content ?? "", {
-    USE_PROFILES: { html: true },
-    FORBID_TAGS: ["embed", "form", "iframe", "input", "object", "script", "style"],
-    FORBID_ATTR: ["style"],
-  });
+export function ArticleRichText({
+  content,
+  semanticRules,
+}: ArticleRichTextProps) {
+  const sanitizedContent = prepareArticleHtml(content, semanticRules);
 
   return (
     <div

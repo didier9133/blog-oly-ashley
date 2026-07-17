@@ -1,4 +1,5 @@
 import type { SupportedLocale } from "@/lib/seo";
+import type { ArticleSemanticRules } from "@/lib/article-semantics";
 
 export type ProductCtaKey =
   | "rebuilding-reverence"
@@ -211,14 +212,26 @@ export const PRODUCT_CTAS: Record<
   },
 };
 
-type PostSeoDecision = {
+export type PostSeoDecision = {
   category: BlogCategory;
   categoryEs: (typeof BLOG_CATEGORIES_ES)[number];
   productCta: ProductCtaKey;
+  modifiedAt?: string;
   displayTitle?: Partial<Record<SupportedLocale, string>>;
+  lead?: Partial<Record<SupportedLocale, string>>;
   primaryKeyword?: Partial<Record<SupportedLocale, string>>;
   seoTitle?: Partial<Record<SupportedLocale, string>>;
   description?: Partial<Record<SupportedLocale, string>>;
+  semanticRules?: Partial<Record<SupportedLocale, ArticleSemanticRules>>;
+  relatedReading?: Partial<
+    Record<
+      SupportedLocale,
+      readonly {
+        href: string;
+        label: string;
+      }[]
+    >
+  >;
   relatedGuide?: Partial<
     Record<
       SupportedLocale,
@@ -233,22 +246,112 @@ type PostSeoDecision = {
   >;
 };
 
+const BELONGING_SEO_DECISION: PostSeoDecision = {
+  category: "Community & Belonging",
+  categoryEs: "Comunidad y pertenencia",
+  productCta: "community",
+  modifiedAt: "2026-07-17",
+  displayTitle: {
+    en: "What Does Belonging Really Mean?",
+    es: "¿Qué significa realmente pertenecer?",
+  },
+  lead: {
+    en: "Belonging is not the absence of discomfort. It is being able to remain present, honest, and connected without having to disappear in order to be accepted.",
+    es: "Pertenecer no significa vivir sin incomodidad. Es poder permanecer presente y en conexión, con honestidad, sin tener que desaparecer para que te acepten.",
+  },
+  primaryKeyword: {
+    en: "what does belonging mean",
+    es: "qué significa pertenecer",
+  },
+  seoTitle: {
+    en: "What Does Belonging Really Mean? | Ashley Leon",
+    es: "¿Qué significa realmente pertenecer? | Ashley Leon",
+  },
+  description: {
+    en: "A personal reflection on belonging, shame, discomfort, and learning to remain connected without disappearing to be accepted.",
+    es: "Una reflexión sobre pertenencia, vergüenza e incomodidad, y sobre cómo permanecer en conexión sin desaparecer para que te acepten.",
+  },
+  semanticRules: {
+    en: {
+      removeParagraphs: ["What Does Belonging Really Mean?"],
+      insertBefore: [
+        {
+          beforeText: "And here’s the wild part:",
+          headingText: "When Belonging Feels Unsafe",
+        },
+        {
+          beforeText: "And yet—there’s another part of me.",
+          headingText: "Rewriting What Belonging Means",
+        },
+      ],
+    },
+    es: {
+      removeParagraphs: ["Qué Significa Realmente Pertenecer?"],
+      insertBefore: [
+        {
+          beforeText: "Y lo curioso es esto:",
+          headingText: "Cuando pertenecer se siente inseguro",
+        },
+        {
+          beforeText: "Y sin embargo—hay otra parte de mí.",
+          headingText: "Reescribir lo que significa pertenecer",
+        },
+      ],
+    },
+  },
+};
+
 export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
   "how-to-rebuild-faith-after-deconstruction": {
     category: "Rebuilding Faith",
     categoryEs: "Reconstrucción de la fe",
     productCta: "rebuilding-reverence",
+    modifiedAt: "2026-07-17",
+    displayTitle: {
+      en: "How to Rebuild Faith After Deconstruction: A Story of Loss and Rebirth",
+      es: "Cómo reconstruir la fe después de la deconstrucción: una historia de pérdida y renacimiento",
+    },
+    lead: {
+      en: "Rebuilding faith after deconstruction is not about returning to the version of you who never questioned. It can be the slower work of keeping what is honest, releasing what required self-abandonment, and learning to trust the sacred again.",
+      es: "Reconstruir la fe después de la deconstrucción no consiste en volver a ser quien eras antes de cuestionarlo todo. Puede ser el trabajo lento de conservar lo verdadero, soltar lo que exigía abandonarte y aprender a confiar de nuevo en lo sagrado.",
+    },
     primaryKeyword: {
       en: "how to rebuild faith after deconstruction",
       es: "cómo reconstruir la fe después de la deconstrucción",
     },
     seoTitle: {
       en: "How to Rebuild Faith After Deconstruction | Ashley Leon",
-      es: "Cómo reconstruir la fe después de la deconstrucción | Ashley Leon",
+      es: "Reconstruir la fe después de la deconstrucción | Ashley Leon",
     },
     description: {
-      en: "A personal and practical reflection on life after faith deconstruction, rebuilding spiritual trust, and creating a sacred life without returning to self-abandonment.",
-      es: "Una reflexión personal sobre la vida después de la deconstrucción, la reconstrucción de la confianza espiritual y la búsqueda de una fe más honesta.",
+      en: "A personal reflection on rebuilding faith after deconstruction, releasing self-abandonment, and learning to trust the sacred again.",
+      es: "Una reflexión personal sobre reconstruir la fe después de la deconstrucción, soltar el autoabandono y volver a confiar en lo sagrado.",
+    },
+    semanticRules: {
+      en: {
+        promote: [
+          { sourceTag: "p", sourceText: "Life After Deconstruction: Where Do We Go Next?" },
+          { sourceTag: "p", sourceText: "Life Before Deconstruction" },
+          { sourceTag: "p", sourceText: "When It Started Cracking" },
+          { sourceTag: "p", sourceText: "What Deconstruction Cost Me" },
+          { sourceTag: "p", sourceText: "The “What Now?”" },
+          { sourceTag: "p", sourceText: "A New Way" },
+          { sourceTag: "p", sourceText: "Still Searching" },
+          { sourceTag: "p", sourceText: "The Question I Can’t Shake" },
+        ],
+      },
+      es: {
+        promote: [
+          { sourceTag: "h3", sourceText: "Vida Después de la Deconstrucción: ¿A Dónde Vamos Ahora?" },
+          { sourceTag: "h3", sourceText: "La Vida Antes de la Deconstrucción" },
+          { sourceTag: "h3", sourceText: "Cuando Empezó a Quebrarse" },
+          { sourceTag: "h3", sourceText: "Lo Que Me Costó la Deconstrucción" },
+          { sourceTag: "h3", sourceText: "El “¿Y Ahora Qué?”" },
+          { sourceTag: "h3", sourceText: "Un Nuevo Camino" },
+          { sourceTag: "h3", sourceText: "Aún Buscando" },
+          { sourceTag: "h3", sourceText: "La Pregunta Que No Puedo Soltar" },
+        ],
+      },
     },
     relatedGuide: {
       en: {
@@ -265,6 +368,15 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     category: "Rebuilding Faith",
     categoryEs: "Reconstrucción de la fe",
     productCta: "rebuilding-reverence",
+    modifiedAt: "2026-07-17",
+    displayTitle: {
+      en: "Seeking First Again: Spiritual Balance Between Faith and Material Life",
+      es: "Volver a buscar primero: equilibrio espiritual entre fe y vida material",
+    },
+    lead: {
+      en: "This is a reflection on holding spiritual devotion, ambition, money, and ordinary responsibility together—without treating any part of a human life as less sacred.",
+      es: "Esta es una reflexión sobre cómo sostener la devoción espiritual, la ambición, el dinero y las responsabilidades cotidianas sin tratar ninguna parte de la vida como menos sagrada.",
+    },
     primaryKeyword: {
       en: "spiritual balance between faith and material life",
       es: "equilibrio espiritual entre fe y vida material",
@@ -275,16 +387,155 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     description: {
       en: "A personal reflection on seeking God first while finding a healthier spiritual balance between faith, ambition, material life, and everyday responsibility.",
-      es: "Una reflexión personal sobre buscar a Dios primero y encontrar un equilibrio espiritual más sano entre la fe, la ambición, la vida material y las responsabilidades cotidianas.",
+      es: "Una reflexión sobre buscar a Dios primero sin abandonar la ambición, la estabilidad material ni las responsabilidades de la vida cotidiana.",
+    },
+    semanticRules: {
+      en: {
+        insertBefore: [
+          {
+            beforeText: "What I’ve been noticing lately is how healing often works like a pendulum.",
+            headingText: "When Healing Swings Like a Pendulum",
+            match: "startsWith",
+          },
+          {
+            beforeText: "Today, it feels like the tables have completely turned.",
+            headingText: "When Material Security Takes Over",
+            match: "startsWith",
+          },
+          {
+            beforeText: "And lately, I’ve been wondering… what if I have it backwards?",
+            headingText: "Finding Spiritual Balance Again",
+          },
+        ],
+      },
+      es: {
+        insertBefore: [
+          {
+            beforeText: "Lo que he estado notando últimamente es cómo la sanación a menudo funciona como un péndulo.",
+            headingText: "Cuando la sanación se mueve como un péndulo",
+            match: "startsWith",
+          },
+          {
+            beforeText: "Hoy, parece que las mesas se han volteado por completo.",
+            headingText: "Cuando la seguridad material ocupa el centro",
+            match: "startsWith",
+          },
+          {
+            beforeText: "Y últimamente, me he estado preguntando… ¿y si lo tengo al revés?",
+            headingText: "Volver a encontrar equilibrio espiritual",
+          },
+        ],
+      },
+    },
+    relatedReading: {
+      en: [
+        {
+          href: "/writing/how-to-rebuild-faith-after-deconstruction",
+          label: "Continue with how faith can be rebuilt after deconstruction",
+        },
+      ],
+      es: [
+        {
+          href: "/writing/como-reconstruir-la-fe-despues-de-la-deconstruccion",
+          label: "Continúa con una reflexión sobre reconstruir la fe después de la deconstrucción",
+        },
+      ],
+    },
+  },
+  "grief-after-miscarriage-and-the-life-you-imagined": {
+    category: "Community & Belonging",
+    categoryEs: "Comunidad y pertenencia",
+    productCta: "newsletter",
+    modifiedAt: "2026-07-17",
+    displayTitle: {
+      en: "Missing What Never Was: Grief After Miscarriage",
+      es: "Extrañar lo que nunca fue: duelo gestacional",
+    },
+    lead: {
+      en: "Grief after miscarriage does not only belong to the life that was lost. Sometimes it also lives in the future you imagined, the relationship you expected, and the body that still remembers.",
+      es: "El duelo gestacional no vive únicamente en la vida que se perdió. A veces también habita el futuro que imaginaste, la relación que esperabas y el cuerpo que todavía recuerda.",
+    },
+    primaryKeyword: {
+      en: "grief after miscarriage",
+      es: "duelo gestacional",
+    },
+    seoTitle: {
+      en: "Grief After Miscarriage: The Life You Imagined | Ashley Leon",
+      es: "Duelo gestacional por la vida que imaginaste | Ashley Leon",
+    },
+    description: {
+      en: "A personal reflection on grief after miscarriage, the future you imagined, and giving your body permission to mourn what never came to be.",
+      es: "Una reflexión íntima sobre el duelo gestacional, la vida que imaginaste y el permiso de llorar lo que no llegó a suceder.",
+    },
+    semanticRules: {
+      en: {
+        insertBefore: [
+          {
+            beforeText:
+              "There are days I go back to the imagination I had of what my baby was going to be like.",
+            headingText: "Grieving the Life I Imagined",
+            match: "startsWith",
+          },
+          {
+            beforeText: "And yet I still hold the tension.",
+            headingText: "Holding Two Truths at Once",
+            match: "startsWith",
+          },
+          {
+            beforeText: "What I do know is this:",
+            headingText: "Giving Grief Permission to Exist",
+            match: "startsWith",
+          },
+        ],
+      },
+      es: {
+        insertBefore: [
+          {
+            beforeText:
+              "Hay días en los que regreso a la imaginación que tenía de cómo iba a ser mi bebé.",
+            headingText: "Llorar la vida que imaginé",
+            match: "startsWith",
+          },
+          {
+            beforeText: "Y aun así sigo sosteniendo la tensión.",
+            headingText: "Sostener dos verdades a la vez",
+            match: "startsWith",
+          },
+          {
+            beforeText: "Lo que sí sé es esto:",
+            headingText: "Darle permiso al duelo para existir",
+            match: "startsWith",
+          },
+        ],
+      },
+    },
+    relatedReading: {
+      en: [
+        {
+          href: "/writing/what-does-belonging-really-mean",
+          label: "Read a reflection on what belonging can mean",
+        },
+      ],
+      es: [
+        {
+          href: "/writing/que-significa-realmente-pertenecer",
+          label: "Lee una reflexión sobre lo que significa pertenecer",
+        },
+      ],
     },
   },
   "gay-christian-and-gods-unconditional-love": {
     category: "Queer Faith & Identity",
     categoryEs: "Fe e identidad LGBTQ+",
     productCta: "queer-and-called",
+    modifiedAt: "2026-07-17",
     displayTitle: {
       en: "Gay, Christian, and Held by God’s Unconditional Love",
       es: "Fe LGBTQ+ y el amor incondicional de Dios",
+    },
+    lead: {
+      en: "Being gay and Christian is not a contradiction that must be solved. This is a reflection on conditional religion, coming out, and receiving God’s love without abandoning yourself.",
+      es: "Ser LGBTQ+ y vivir la fe no es una contradicción que tengas que resolver. Esta es una reflexión sobre la religión condicional, salir del clóset y recibir el amor de Dios sin abandonarte.",
     },
     primaryKeyword: {
       en: "gay Christian and God's unconditional love",
@@ -298,16 +549,91 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       en: "A queer Christian reflection on coming out, conditional religion, and learning to trust God’s unconditional love without abandoning your identity.",
       es: "Una reflexión cristiana LGBTQ+ sobre salir del clóset, cuestionar la religión condicional y confiar en el amor incondicional de Dios sin abandonar tu identidad.",
     },
+    semanticRules: {
+      en: {
+        promote: [
+          { sourceTag: "p", sourceText: "What Kind of God Do You Believe In?" },
+          { sourceTag: "p", sourceText: "A Conditional God Feels Familiar" },
+          { sourceTag: "p", sourceText: "The First Blueprint for Love" },
+          { sourceTag: "p", sourceText: "The Unconditional God" },
+          { sourceTag: "p", sourceText: "A Question for You" },
+        ],
+      },
+      es: {
+        promote: [
+          { sourceTag: "p", sourceText: "¿En qué tipo de Dios crees?" },
+          { sourceTag: "p", sourceText: "Un Dios condicional se siente familiar" },
+          { sourceTag: "p", sourceText: "El primer molde de amor" },
+          { sourceTag: "p", sourceText: "El Dios incondicional" },
+          { sourceTag: "p", sourceText: "Una pregunta para ti" },
+        ],
+      },
+    },
   },
-  "what-does-belonging-really-mean": {
+  "what-does-belonging-really-mean": BELONGING_SEO_DECISION,
+  "que-significa-realmente-pertenecer": BELONGING_SEO_DECISION,
+  "dont-take-advice-from-someone-whose-life-you-dont-want": {
     category: "Community & Belonging",
     categoryEs: "Comunidad y pertenencia",
-    productCta: "community",
-  },
-  "que-significa-realmente-pertenecer": {
-    category: "Community & Belonging",
-    categoryEs: "Comunidad y pertenencia",
-    productCta: "community",
+    productCta: "newsletter",
+    modifiedAt: "2026-07-17",
+    lead: {
+      en: "Advice deserves discernment, not automatic obedience or automatic dismissal. The question is not only whether you want someone’s life, but whether the truth they offer bears good fruit in yours.",
+      es: "Los consejos merecen discernimiento, no obediencia automática ni rechazo inmediato. La pregunta no es solo si deseas la vida de alguien, sino si la verdad que ofrece da buen fruto en la tuya.",
+    },
+    primaryKeyword: {
+      en: "don't take advice from someone whose life you don't want",
+      es: "de quién aceptar consejos",
+    },
+    seoTitle: {
+      en: "Don’t Take Advice From Someone Whose Life You Don’t Want",
+      es: "¿De quién deberías aceptar consejos? | Ashley Leon",
+    },
+    description: {
+      en: "A reflection on whose advice to trust, how inherited beliefs shape us, and staying open to wisdom without surrendering discernment.",
+      es: "Una reflexión sobre qué consejos escuchar, cómo nos forman las creencias heredadas y cómo abrirnos a la sabiduría sin renunciar al discernimiento.",
+    },
+    semanticRules: {
+      en: {
+        insertBefore: [
+          {
+            beforeText: "But here’s the tension I’ve been sitting with lately:",
+            headingText: "When a Helpful Filter Becomes a Wall",
+            match: "startsWith",
+          },
+          {
+            beforeText: "So then the question becomes:",
+            headingText: "Discernment Without Dismissing People",
+          },
+        ],
+      },
+      es: {
+        insertBefore: [
+          {
+            beforeText: "Pero aquí está la tensión con la que he estado sentada últimamente:",
+            headingText: "Cuando un filtro útil se convierte en un muro",
+          },
+          {
+            beforeText: "Entonces la pregunta se vuelve:",
+            headingText: "Discernir sin descartar a las personas",
+          },
+        ],
+      },
+    },
+    relatedReading: {
+      en: [
+        {
+          href: "/writing/what-does-belonging-really-mean",
+          label: "Continue with a reflection on belonging and discomfort",
+        },
+      ],
+      es: [
+        {
+          href: "/writing/que-significa-realmente-pertenecer",
+          label: "Continúa con una reflexión sobre pertenencia e incomodidad",
+        },
+      ],
+    },
   },
 };
 
@@ -315,6 +641,16 @@ export function getPostSeoDecision(...slugs: (string | null | undefined)[]) {
   for (const slug of slugs) {
     if (slug && POST_SEO_DECISIONS[slug]) return POST_SEO_DECISIONS[slug];
   }
+}
+
+export function getPostModifiedAt(
+  fallback: Date,
+  ...slugs: (string | null | undefined)[]
+) {
+  const modifiedAt = getPostSeoDecision(...slugs)?.modifiedAt;
+  return modifiedAt
+    ? new Date(`${modifiedAt}T12:00:00.000Z`)
+    : fallback;
 }
 
 type WorkbookIntentSection = {

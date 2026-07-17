@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { fullUrl } from "@/lib/url";
 import { localizedLanguages } from "@/lib/seo";
 import { publicPostSlug } from "@/lib/post-slugs";
+import { getPostModifiedAt } from "@/lib/seo-content";
 
 const LOCALES = ["es", "en"] as const;
 
@@ -72,10 +73,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           en: `/writing/${publicPostSlug(post.slug_en)}`,
           es: `/writing/${publicPostSlug(post.slug_es)}`,
         };
+        const lastModified = getPostModifiedAt(
+          post.updatedAt,
+          publicPostSlug(post.slug_en),
+          publicPostSlug(post.slug_es),
+        );
 
         return {
           url: fullUrl(locale, paths[locale]),
-          lastModified: post.updatedAt,
+          lastModified,
           alternates: { languages: localizedLanguages(paths) },
         };
       }),
