@@ -18,6 +18,7 @@
     "noFallthroughCasesInSwitch": false,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "isolatedModules": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "typeRoots": [
@@ -26,6 +27,7 @@
   },
   "exclude": [
     "node_modules",
-    "cdk.out"
+    "cdk.out",
+    "test"
   ]
 }

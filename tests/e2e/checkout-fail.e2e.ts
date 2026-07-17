@@ -4,6 +4,7 @@ import {
   waitForEventsRecorded,
 } from "../helpers/checkout-api";
 
+// Playwright discovers *.e2e.ts files; Bun's unit-test runner does not.
 const WORKBOOK_SLUG =
   process.env.E2E_WORKBOOK_SLUG ?? "reconstruyendo-la-reverencia";
 const BASE_URL = process.env.E2E_BASE_URL ?? "http://localhost:3000";

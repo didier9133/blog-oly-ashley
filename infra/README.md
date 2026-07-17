@@ -1,7 +1,10 @@
-# Welcome to your CDK TypeScript project
+# Ashley Leon AWS infrastructure
 
-You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`InfraStack`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+This CDK project defines the storage and image-delivery infrastructure used by
+the application. `InfraStack` provisions public and private S3 storage, a
+CloudFront distribution, and scoped IAM credentials for uploads and downloads.
+It can also reference an existing public images bucket through
+`AWS_S3_BUCKET_NAME` instead of creating a new one.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 

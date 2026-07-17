@@ -205,9 +205,17 @@ export function PromotedBook({
             </FadeIn>
 
             <FadeIn delay={0.4} className="mt-10">
-              <Link href={href} className="editorial-link">
-                {cta}
-                <span className="editorial-link-arrow">→</span>
+              <Link
+                href={href}
+                className="group inline-flex min-h-12 w-full items-center justify-between gap-3 bg-[#8f513b] px-4 py-4 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.1em] text-[#fffaf5] shadow-[0_16px_36px_-24px_rgba(91,48,33,0.9)] transition-[background-color,box-shadow,transform] duration-500 hover:-translate-y-0.5 hover:bg-[#784330] hover:shadow-[0_20px_42px_-22px_rgba(91,48,33,0.9)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:w-fit sm:gap-6 sm:px-6 sm:text-[0.72rem] sm:tracking-[0.18em]"
+              >
+                <span className="min-w-0 whitespace-nowrap">{cta}</span>
+                <span
+                  aria-hidden
+                  className="transition-transform duration-500 group-hover:translate-x-1.5"
+                >
+                  →
+                </span>
               </Link>
             </FadeIn>
           </div>

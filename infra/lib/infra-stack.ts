@@ -5,12 +5,17 @@ import * as iam from "aws-cdk-lib/aws-iam";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 
+export interface InfraStackProps extends cdk.StackProps {
+  existingImagesBucketName?: string;
+}
+
 export class InfraStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: InfraStackProps) {
     super(scope, id, props);
 
     // Importar el bucket existente de imágenes (NO lo recrea)
-    const existingBucketName = process.env.AWS_S3_BUCKET_NAME || "";
+    const existingBucketName =
+      props?.existingImagesBucketName ?? process.env.AWS_S3_BUCKET_NAME ?? "";
     const imagesBucket = existingBucketName
       ? s3.Bucket.fromBucketName(this, "ImagesBucket", existingBucketName)
       : new s3.Bucket(this, "ImagesBucket", {
@@ -47,7 +52,7 @@ export class InfraStack extends cdk.Stack {
       "ImagesDistribution",
       {
         defaultBehavior: {
-          origin: new origins.S3Origin(imagesBucket, {
+          origin: origins.S3BucketOrigin.withOriginAccessIdentity(imagesBucket, {
             originAccessIdentity: oai,
           }),
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,

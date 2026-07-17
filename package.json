@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate --no-engine && next build",
+    "test": "bun test",
+    "test:e2e": "playwright test",
     "start": "next start -p 3000",
     "lint": "next lint"
   },
