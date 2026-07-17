@@ -25,3 +25,31 @@ Ashley writes about faith deconstruction, queer spirituality, identity, emotiona
 - Content scope: education, reflection, coaching-based resources, live workshops, and community; not therapy
 - Contact: support@ashleydianaleon.com
 - Sitemap: https://ashleydianaleon.com/sitemap.xml
+
+## Versión en español
+> Ashley Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Crea recursos afirmativos para quienes están replanteando la fe que recibieron.
+
+Ashley escribe sobre deconstrucción de la fe, espiritualidad queer, identidad, sanación emocional, pertenencia e integración espiritual. Sus recursos son educativos y de acompañamiento; no sustituyen la terapia ni la atención clínica.
+
+### Ensayos sobre fe, deconstrucción y sanación
+- [Ensayos](https://ashleydianaleon.com/es/writing): Reflexiones en primera persona sobre deconstrucción de la fe, identidad, espiritualidad queer, sanación, pertenencia y el proceso de volver a construir.
+- [Deconstruir el cristianismo](https://ashleydianaleon.com/es/deconstructing-christianity): Una guía de consulta para entender qué significa revisar las creencias cristianas heredadas, por qué sucede, cómo puede vivirse y qué caminos pueden abrirse después.
+
+### Guías
+- [Rebuilding Reverence](https://ashleydianaleon.com/es/workbooks/reconstruyendo-la-reverencia): La propuesta principal de Ashley, una guía práctica de 30 días para reconstruir la fe y recuperar la reverencia sin dejarte de lado.
+- [Queer & Called](https://ashleydianaleon.com/es/workbooks/queer-y-llamados): Una guía afirmativa de 30 días para integrar la fe, la identidad LGBTQ+, la voz propia y el sentido de pertenencia.
+
+### Círculo y comunidad
+- [The Circle](https://ashleydianaleon.com/es/circle): Un proceso grupal en vivo de cuatro semanas y hasta 15 personas para reconstruir la fe en compañía.
+- [The In-Between](https://ashleydianaleon.com/es/community): La comunidad gratuita de Ashley para conversar con honestidad, reflexionar y encontrar pertenencia sin que nadie exija una conclusión determinada.
+
+### Sobre la autora
+- [Sobre Ashley](https://ashleydianaleon.com/es/about): Su historia en primera persona, su experiencia dentro de la religión, su identidad cubano-colombiana y queer, su etapa como misionera y seminarista y el trabajo que realiza hoy.
+
+### Datos clave
+- Idiomas: inglés y español; cada URL localizada identifica su idioma y enlaza a la versión alternativa.
+- Temas principales: espiritualidad queer, deconstrucción de la fe, identidad, sanación emocional, reverencia y pertenencia.
+- Nombre: Ashley Diana Leon; nombre con el que publica: Ashley Leon.
+- Alcance: educación, reflexión, recursos de acompañamiento, talleres en vivo y comunidad; no es terapia.
+- Contacto: support@ashleydianaleon.com
+- Sitemap: https://ashleydianaleon.com/sitemap.xml

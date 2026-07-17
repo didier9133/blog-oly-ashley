@@ -52,7 +52,7 @@ export function ComboboxDemo({
   const searchParams = useSearchParams();
   const t = useTranslations("categories");
   const t_subcategories = useTranslations(
-    `subcategories.${categoryName.toLowerCase()}`
+    `subcategories.${categoryName.toLowerCase()}`,
   );
 
   React.useEffect(() => {
@@ -89,6 +89,7 @@ export function ComboboxDemo({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          aria-label={t("select")}
           className="max-w-[350px] w-full justify-between dark:hover:text-white"
         >
           {value
@@ -98,7 +99,7 @@ export function ComboboxDemo({
                     subCategories
                       .find((sub) => sub.id.toString() === value)
                       ?.name.replace(/&/g, "and") as keyof typeof DICTIONARY
-                  ]
+                  ],
                 )
               : t("select")
             : `${t("select")}...`}
@@ -108,7 +109,7 @@ export function ComboboxDemo({
       <PopoverContent className="p-0">
         <Command>
           <CommandInput placeholder={`${t("search")}...`} />
-          <CommandList>
+          <CommandList label={t("suggestions")}>
             <CommandEmpty>{t("empty")}</CommandEmpty>
             <CommandGroup>
               {subCategories.map((sub) => (
@@ -124,13 +125,13 @@ export function ComboboxDemo({
                   {t_subcategories(
                     DICTIONARY[
                       sub.name.replace(/&/g, "and") as keyof typeof DICTIONARY
-                    ]
+                    ],
                   )}
 
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === sub.id.toString() ? "opacity-100" : "opacity-0"
+                      value === sub.id.toString() ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>

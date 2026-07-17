@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import { data } from "@/const/navbar-options";
 import { useUser } from "@clerk/nextjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
 
 type NavItem = {
@@ -35,6 +35,15 @@ export function AppSidebar({
 }: React.ComponentProps<typeof Sidebar>): React.ReactElement {
   const { user, isLoaded } = useUser();
   const t = useTranslations("navigation");
+  const locale = useLocale();
+  const isSpanish = locale === "es";
+  const sidebarTitle = isSpanish ? "Menú de administración" : "Admin menu";
+  const sidebarDescription = isSpanish
+    ? "Muestra el menú de administración en dispositivos móviles."
+    : "Displays the admin menu on mobile devices.";
+  const toggleLabel = isSpanish
+    ? "Mostrar u ocultar el menú de administración"
+    : "Show or hide the admin menu";
 
   const isAdmin = isLoaded && Boolean(user?.publicMetadata?.isAdmin);
   const items = (isAdmin ? data.navAdmin : data.navMain) as NavItem[];
@@ -42,13 +51,23 @@ export function AppSidebar({
   const itemsTranslated = items.map((item) => ({
     ...item,
     title: t(titleToPath(item)),
+    url: item.external
+      ? item.url
+      : item.url === "/"
+        ? `/${locale}`
+        : `/${locale}${item.url}`,
   }));
 
   return (
-    <Sidebar {...props} className="border-l-0 shadow-2xl">
+    <Sidebar
+      {...props}
+      mobileTitle={sidebarTitle}
+      mobileDescription={sidebarDescription}
+      className="border-l-0 shadow-2xl"
+    >
       <SidebarHeader className="h-20 border-b border-border/50 bg-[#F9F8F6] px-6">
         <div className="flex justify-start items-center h-full w-full">
-          <Link href="/" className="flex-shrink-0">
+          <Link href={`/${locale}`} className="flex-shrink-0">
             <span className="font-[family-name:var(--font-great-vibes)] text-3xl font-medium text-foreground tracking-tight">
               Ashley Leon
             </span>
@@ -66,7 +85,7 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
+      <SidebarRail aria-label={toggleLabel} title={toggleLabel} />
     </Sidebar>
   );
 }

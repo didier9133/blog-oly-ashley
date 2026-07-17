@@ -17,8 +17,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import PreloadSuccessPayment from "@/components/preload-succes-payment";
-import { transactionalRobots } from "@/lib/seo";
+import { localizedOpenGraph, transactionalRobots } from "@/lib/seo";
 import { PurchaseAnalytics } from "@/components/ecommerce-analytics";
+import { fullUrl, ogImageUrl } from "@/lib/url";
 
 interface SuccessPageProps {
   params: Promise<{
@@ -32,10 +33,45 @@ interface SuccessPageProps {
   }>;
 }
 
-export const metadata: Metadata = {
-  title: "Reservation complete | Ashley Leon",
-  robots: transactionalRobots,
-};
+export async function generateMetadata({
+  params,
+}: Pick<SuccessPageProps, "params">): Promise<Metadata> {
+  const { locale } = await params;
+  const title =
+    locale === "es"
+      ? "Reserva confirmada | Ashley Leon"
+      : "Reservation complete | Ashley Leon";
+  const description =
+    locale === "es"
+      ? "Tu lugar en The Rebuilding Reverence Circle quedó reservado. Revisa tu correo para conocer los próximos pasos."
+      : "Your place in The Rebuilding Reverence Circle is reserved. Check your email for the next steps.";
+  const image = ogImageUrl(locale);
+  const imageAlt =
+    locale === "es"
+      ? "Ashley Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
+      : "Ashley Leon beside the message “Returning to yourself is returning to the sacred”";
+
+  return {
+    title,
+    description,
+    robots: transactionalRobots,
+    alternates: { canonical: fullUrl(locale, "/circle/success") },
+    openGraph: {
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
+      url: fullUrl(locale, "/circle/success"),
+      images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
+    },
+  };
+}
 
 async function SuccessContent({
   locale,
@@ -286,7 +322,7 @@ async function SuccessContent({
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }
+                        },
                       )}
                     </dd>
                   </div>

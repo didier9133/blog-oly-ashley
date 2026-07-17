@@ -10,13 +10,13 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import Checkout from "@/components/checkout";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/prisma";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl, localizedHref } from "@/lib/url";
-import { localizedAlternates } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { isSupportedLocale } from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 import { getWorkbookSeo } from "@/lib/seo-content";
@@ -24,6 +24,10 @@ import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 import { getWorkbookOgImage } from "@/lib/offer-og-images";
 import { normalizeValidIsbn13 } from "@/lib/isbn";
 import { personRef } from "@/lib/schema-entities";
+import {
+  getWorkbookContent,
+  getWorkbookCoverImage,
+} from "@/lib/workbook-content";
 
 export async function generateMetadata({
   params,
@@ -38,24 +42,29 @@ export async function generateMetadata({
   });
   if (!book) return notFound();
 
-  const title = locale === "en" ? book.title_en : book.title_es;
   const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const content = getWorkbookContent(book, supportedLocale);
+  const title = content.title;
   const seo = getWorkbookSeo(supportedLocale, book.slug_en);
-  const description = seo?.description ?? (locale === "en" ? book.subtitle_en : book.subtitle_es);
-  const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
+  const metadataTitle = seo?.title ?? `${title} | Ashley Leon`;
+  const description = seo?.description ?? content.subtitle;
+  const coverImage = getWorkbookCoverImage(book, supportedLocale);
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
-  const offerOgImage = getWorkbookOgImage(book.slug_en);
+  const offerOgImage = getWorkbookOgImage(book.slug_en, supportedLocale);
   const imageUrl = offerOgImage
     ? `${BASE_URL}${offerOgImage.path}`
     : coverImage.startsWith("http")
       ? coverImage
       : `${BASE_URL}${coverImage}`;
+  const imageAlt = offerOgImage?.alt ?? title;
 
   return {
-    title: seo?.title ?? `${title} | Ashley Leon`,
+    title: metadataTitle,
     description,
     openGraph: {
-      title: seo?.title ?? `${title} | Ashley Leon`,
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title: metadataTitle,
       description,
       url: fullUrl(locale, `/workbooks/${detailSlug}`),
       images: [
@@ -63,16 +72,21 @@ export async function generateMetadata({
           url: imageUrl,
           width: offerOgImage?.width ?? 800,
           height: offerOgImage?.height ?? 1067,
-          alt: offerOgImage?.alt ?? title,
+          alt: imageAlt,
           type: offerOgImage?.contentType,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: seo?.title ?? `${title} | Ashley Leon`,
+      title: metadataTitle,
       description,
-      images: [{ url: imageUrl, alt: offerOgImage?.alt ?? title }],
+      images: [
+        {
+          url: imageUrl,
+          alt: imageAlt,
+        },
+      ],
     },
     alternates: localizedAlternates(locale, {
       en: `/workbooks/${book.slug_en}`,
@@ -94,29 +108,48 @@ export default async function PageDetail({
     },
   });
   if (!book) return notFound();
+  const canonicalSlug = locale === "en" ? book.slug_en : book.slug_es;
+  if (slug !== canonicalSlug) {
+    permanentRedirect(
+      localizedHref(locale, `/workbooks/${canonicalSlug}`),
+    );
+  }
   const t = await getTranslations({ locale, namespace: "Workbooks" });
 
-  const bookTitle = locale === "en" ? book.title_en : book.title_es;
-  const bookDescription =
-    locale === "en" ? book.description_en : book.description_es;
-  const coverImage = locale === "en" ? book.coverImage_en : book.coverImage_es;
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const content = getWorkbookContent(book, supportedLocale);
+  const bookTitle = content.title;
+  const bookDescription = content.description;
+  const coverImage = getWorkbookCoverImage(book, supportedLocale);
   const imageUrl = coverImage.startsWith("http")
     ? coverImage
     : `${BASE_URL}${coverImage}`;
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
   const pageUrl = fullUrl(locale, `/workbooks/${detailSlug}`);
   const priceCents = workbookPriceCents(book.price);
-  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
   const seo = getWorkbookSeo(supportedLocale, book.slug_en);
   const intentHeadingId = `${book.slug_en}-intent-heading`;
   const validIsbn = normalizeValidIsbn13(book.isbn);
+  const reviewLabel =
+    supportedLocale === "es"
+      ? book.reviewCount === 1
+        ? "reseña"
+        : "reseñas"
+      : book.reviewCount === 1
+        ? "review"
+        : "reviews";
 
   const bookSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": "Book",
+    "@type": ["Book", "Product"],
     "@id": `${pageUrl}#book`,
     name: bookTitle,
-    description: seo?.description ?? bookDescription,
+    sku: book.slug_en,
+    brand: { "@type": "Brand", name: "Ashley Leon" },
+    description:
+      supportedLocale === "es"
+        ? bookDescription
+        : (seo?.description ?? bookDescription),
     author: personRef,
     bookFormat: "https://schema.org/EBook",
     numberOfPages: book.pages,
@@ -143,8 +176,18 @@ export default async function PageDetail({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
-      { "@type": "ListItem", position: 2, name: locale === "es" ? "Guías" : "Workbooks", item: fullUrl(locale, "/workbooks") },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: locale === "es" ? "Inicio" : "Home",
+        item: fullUrl(locale, ""),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: locale === "es" ? "Guías" : "Workbooks",
+        item: fullUrl(locale, "/workbooks"),
+      },
       { "@type": "ListItem", position: 3, name: bookTitle, item: pageUrl },
     ],
   };
@@ -170,10 +213,12 @@ export default async function PageDetail({
                 {t("new-release")}
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground italic leading-tight transition-all duration-700 ease-out hover:tracking-wide mb-6">
-                {locale === "en" ? book.title_en : book.title_es}
+                {bookTitle}
               </h1>
               <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] max-w-2xl mx-auto">
-                {seo?.supportingLine ?? (locale === "en" ? book.subtitle_en : book.subtitle_es)}
+                {supportedLocale === "es"
+                  ? content.subtitle
+                  : (seo?.supportingLine ?? content.subtitle)}
               </p>
             </div>
           </div>
@@ -187,12 +232,12 @@ export default async function PageDetail({
                 <CardContent className="p-0">
                   <div className="aspect-[3/4] bg-[#f5f0eb] flex items-center justify-center relative">
                     <Image
-                      src={
-                        locale === "en"
-                          ? book.coverImage_en
-                          : book.coverImage_es
+                      src={coverImage}
+                      alt={
+                        supportedLocale === "es"
+                          ? `Portada de ${bookTitle}`
+                          : `Cover of ${bookTitle}`
                       }
-                      alt={locale === "en" ? book.title_en : book.title_es}
                       fill
                       priority
                       sizes="(max-width: 640px) 100vw, 50vw"
@@ -222,14 +267,12 @@ export default async function PageDetail({
                       {book.rating}
                     </span>
                     <span className="text-muted-foreground">
-                      ({book.reviewCount} {"reseñas"})
+                      ({book.reviewCount} {reviewLabel})
                     </span>
                   </div>
                   <blockquote className="italic text-lg font-[family-name:var(--font-lora)] text-foreground/90 leading-relaxed border-l-2 border-[#d8a08b] pl-4">
                     &ldquo;
-                    {locale === "en"
-                      ? book.featured_review_en
-                      : book.featured_review_es}
+                    {content.featuredReview}
                     &rdquo;
                   </blockquote>
                   <p className="text-sm font-sans text-muted-foreground mt-4 font-medium">
@@ -268,17 +311,11 @@ export default async function PageDetail({
                       </div>
                       <div className="flex items-center gap-3">
                         <Users className="h-5 w-5 text-[#d8a08b]" />
-                        <span className="font-medium">
-                          {locale === "en" ? book.format_en : book.format_es}
-                        </span>
+                        <span className="font-medium">{content.format}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <Clock className="h-5 w-5 text-[#d8a08b]" />
-                        <span className="font-medium">
-                          {locale === "en"
-                            ? book.language_en
-                            : book.language_es}
-                        </span>
+                        <span className="font-medium">{content.language}</span>
                       </div>
                       {validIsbn ? (
                         <div className="flex items-center gap-3">
@@ -300,6 +337,7 @@ export default async function PageDetail({
                     ebook_s3key={
                       locale === "en" ? book.s3Key_en : book.s3Key_es
                     }
+                    productName={bookTitle}
                   />
                 </CardContent>
               </Card>
@@ -311,9 +349,7 @@ export default async function PageDetail({
                       {t("about-title")}
                     </h2>
                     <p className="leading-relaxed font-[family-name:var(--font-lora)] text-foreground/80 text-base">
-                      {locale === "en"
-                        ? book.description_en
-                        : book.description_es}
+                      {bookDescription}
                     </p>
                   </div>
 
@@ -334,20 +370,21 @@ export default async function PageDetail({
                       <p className="mt-4 text-sm leading-relaxed font-sans text-muted-foreground">
                         {seo.intentSection.disclaimer}
                       </p>
-                      {locale === "en" &&
-                      book.slug_en === "rebuilding-reverence" ? (
+                      {book.slug_en === "rebuilding-reverence" ? (
                         <p className="mt-5 text-sm leading-7 font-[family-name:var(--font-lora)] text-foreground/75">
-                          Still naming what this process means for you? Start
-                          with the guide{" "}
+                          {supportedLocale === "es"
+                            ? "¿Todavía estás tratando de ponerle nombre a este proceso? Empieza con la guía "
+                            : "Still naming what this process means for you? Start with the guide "}
                           <Link
                             href={localizedHref(
-                              "en",
+                              supportedLocale,
                               "/deconstructing-christianity",
                             )}
                             className="text-foreground underline decoration-[#d8a08b] underline-offset-4 transition-colors hover:text-[#a86551] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            Deconstructing Christianity: What It Means and What
-                            Comes Next
+                            {supportedLocale === "es"
+                              ? "Deconstruir el cristianismo: qué significa y qué viene después"
+                              : "Deconstructing Christianity: What It Means and What Comes Next"}
                           </Link>
                           .
                         </p>
@@ -360,10 +397,7 @@ export default async function PageDetail({
                       {t("features-title")}
                     </h2>
                     <ul className="space-y-3 font-[family-name:var(--font-lora)] text-foreground/80">
-                      {(locale === "en"
-                        ? book.features_en
-                        : book.features_es
-                      ).map((feature, index) => (
+                      {content.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <span className="text-[#d8a08b] mt-1 text-lg">•</span>
                           <span className="leading-relaxed">{feature}</span>

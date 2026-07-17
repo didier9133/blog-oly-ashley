@@ -17,14 +17,18 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, BASE_URL, localizedHref } from "@/lib/url";
+import { fullUrl, BASE_URL, localizedHref, ogImageUrl } from "@/lib/url";
 import { htmlToPlainText } from "@/lib/plain-text";
-import { localizedAlternates } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { publicPostSlug } from "@/lib/post-slugs";
+import { resolveSpanishPostContent } from "@/lib/spanish-post-content";
+import { getPostSeoDecision } from "@/lib/seo-content";
 type SearchParams = Promise<{ page?: string }>;
 const CATEGORY = CategoryEnum.Blog;
 const PATH = "writing";
 const EXCERPT_MAX = 280;
+const FIRST_PAGE_SIZE = 7;
+const FOLLOWING_PAGE_SIZE = 6;
 
 const postSelect = {
   id: true,
@@ -70,50 +74,94 @@ const toCard = (
     author: { firstName: string; lastName: string };
   },
   currentLanguage: string,
-): PostCard => ({
-  id: post.id,
-  title: currentLanguage === "en" ? post.title_en : post.title_es,
-  excerpt: buildExcerpt(
-    currentLanguage === "en" ? post.content_en : post.content_es,
-  ),
-  image: post.image,
-  slug: publicPostSlug(
-    currentLanguage === "es" ? post.slug_es : post.slug_en,
-  ),
-  href: localizedHref(
-    currentLanguage,
-    `/${PATH}/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
-  ),
-  publishedAt: post.createdAt,
-  authorFirstName: post.author.firstName,
-  authorLastName: post.author.lastName,
-});
+): PostCard => {
+  const decision = getPostSeoDecision(
+    publicPostSlug(post.slug_en),
+    publicPostSlug(post.slug_es),
+  );
+  const locale = currentLanguage === "es" ? "es" : "en";
+  const content =
+    locale === "es"
+      ? resolveSpanishPostContent(post.slug_en, post.content_es)
+      : post.content_en;
+
+  return {
+    id: post.id,
+    title:
+      decision?.displayTitle?.[locale] ??
+      (locale === "en" ? post.title_en : post.title_es),
+    excerpt: buildExcerpt(content),
+    image: post.image,
+    slug: publicPostSlug(locale === "es" ? post.slug_es : post.slug_en),
+    href: localizedHref(
+      currentLanguage,
+      `/${PATH}/${publicPostSlug(locale === "es" ? post.slug_es : post.slug_en)}`,
+    ),
+    publishedAt: post.createdAt,
+    authorFirstName: post.author.firstName,
+    authorLastName: post.author.lastName,
+  };
+};
 
 export const revalidate = 3600;
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams?: SearchParams;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const query = await searchParams;
   const t = await getTranslations({ locale, namespace: "Writing.metadata" });
+  const tSite = await getTranslations({ locale, namespace: "metadata" });
+  const parsedPage = Number.parseInt(query?.page ?? "1", 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 1 ? parsedPage : 1;
+  const baseTitle = t("title");
+  const title =
+    page > 1
+      ? locale === "es"
+        ? `Ensayos sobre fe y deconstrucción — Página ${page} | Ashley Leon`
+        : `Essays on Faith and Deconstruction — Page ${page} | Ashley Leon`
+      : baseTitle;
+  const description = t("description");
+  const path = page > 1 ? `/writing?page=${page}` : "/writing";
+  const image =
+    locale === "es"
+      ? {
+          url: ogImageUrl(locale),
+          width: 1200,
+          height: 630,
+          alt: tSite("ogImageAlt"),
+          type: "image/jpeg",
+        }
+      : {
+          url: `${BASE_URL}/blog-hero.webp`,
+          width: 1920,
+          height: 1080,
+          alt: "Hands writing on a laptop beside a reflection journal",
+          type: "image/webp",
+        };
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: fullUrl(locale, "/writing"),
-      images: [`${BASE_URL}/blog-hero.webp`],
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
+      url: fullUrl(locale, path),
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
+      title,
+      description,
+      images: [{ url: image.url, alt: image.alt }],
     },
-    alternates: localizedAlternates(locale, { en: "/writing", es: "/writing" }),
+    alternates: localizedAlternates(locale, { en: path, es: path }),
   };
 }
 
@@ -124,8 +172,14 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const page = parseInt(searchParams?.page ?? "1", 10);
   const { locale: currentLanguage } = await props.params;
-  const t = await getTranslations({ locale: currentLanguage, namespace: "Writing" });
-  const tPagination = await getTranslations({ locale: currentLanguage, namespace: "ui.pagination" });
+  const t = await getTranslations({
+    locale: currentLanguage,
+    namespace: "Writing",
+  });
+  const tPagination = await getTranslations({
+    locale: currentLanguage,
+    namespace: "ui.pagination",
+  });
 
   const total = await prisma.post.count({
     where: {
@@ -135,58 +189,79 @@ export default async function Page(props: {
       },
     },
   });
-  const PAGE_SIZE = page === 1 ? 7 : 6;
-  const totalPages = Math.ceil(total / PAGE_SIZE);
+  const totalPages =
+    total === 0
+      ? 0
+      : total <= FIRST_PAGE_SIZE
+        ? 1
+        : 1 +
+          Math.ceil((total - FIRST_PAGE_SIZE) / FOLLOWING_PAGE_SIZE);
 
-  if (page < 1 || isNaN(page) || page > totalPages) {
+  if (
+    page < 1 ||
+    isNaN(page) ||
+    (totalPages === 0 ? page !== 1 : page > totalPages)
+  ) {
     notFound();
   }
 
-  const skip = (page - 1) * PAGE_SIZE;
+  const pageSize = page === 1 ? FIRST_PAGE_SIZE : FOLLOWING_PAGE_SIZE;
+  const skip =
+    page === 1
+      ? 0
+      : FIRST_PAGE_SIZE + (page - 2) * FOLLOWING_PAGE_SIZE;
 
   const [firstPost, posts] = await Promise.all([
-    prisma.post.findFirst({
-      where: {
-        published: true,
-        category: { name: CATEGORY },
-      },
-      orderBy: { createdAt: "desc" },
-      select: postSelect,
-    }),
+    page === 1
+      ? prisma.post.findFirst({
+          where: {
+            published: true,
+            category: { name: CATEGORY },
+          },
+          orderBy: { createdAt: "desc" },
+          select: postSelect,
+        })
+      : Promise.resolve(null),
     prisma.post.findMany({
       where: {
         published: true,
         category: { name: CATEGORY },
       },
       skip,
-      take: PAGE_SIZE,
+      take: pageSize,
       orderBy: { createdAt: "desc" },
       select: postSelect,
     }),
   ]);
 
-  if (!firstPost) {
+  if (total === 0 || (page === 1 && !firstPost)) {
     return <NoPostsView />;
   }
 
-  const firstPostCard = toCard(firstPost, currentLanguage);
-  const postsWithoutFirstCards: PostCard[] = posts
-    .filter((post) => post.id !== firstPost.id)
+  const firstPostCard = firstPost
+    ? toCard(firstPost, currentLanguage)
+    : undefined;
+  const listCards: PostCard[] = posts
+    .filter((post) => post.id !== firstPost?.id)
     .map((post) => toCard(post, currentLanguage));
+  const schemaCards = firstPostCard
+    ? [firstPostCard, ...listCards]
+    : listCards;
 
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Writing",
-    url: fullUrl(currentLanguage, "/writing"),
-    itemListElement: [firstPostCard, ...postsWithoutFirstCards].map(
-      (p, i) => ({
-        "@type": "ListItem",
-        position: (page - 1) * PAGE_SIZE + i + 1,
-        url: fullUrl(currentLanguage, `/writing/${p.slug}`),
-        name: p.title,
-      }),
+    name: currentLanguage === "es" ? "Ensayos" : "Writing",
+    url: fullUrl(
+      currentLanguage,
+      page > 1 ? `/writing?page=${page}` : "/writing",
     ),
+    itemListElement: schemaCards.map((p, i) => ({
+      "@type": "ListItem",
+      position: skip + i + 1,
+      url: fullUrl(currentLanguage, `/writing/${p.slug}`),
+      name: p.title,
+    })),
   };
 
   return (
@@ -202,7 +277,8 @@ export default async function Page(props: {
           <h1 className="sr-only">{t("page-title")}</h1>
 
           {/* FEATURED POST HERO */}
-          <section className="w-full max-w-6xl mx-auto px-6 pt-12 pb-16">
+          {firstPostCard ? (
+            <section className="w-full max-w-6xl mx-auto px-6 pt-12 pb-16">
             <div className="flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">
               {/* Image Side */}
               <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
@@ -212,7 +288,12 @@ export default async function Page(props: {
                 >
                   <Image
                     src={firstPostCard.image || "/blog-hero.webp"}
-                    alt={firstPostCard.title || "Featured post"}
+                    alt={
+                      firstPostCard.title ||
+                      (currentLanguage === "es"
+                        ? "Artículo destacado"
+                        : "Featured post")
+                    }
                     fill
                     className="object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-1000 ease-out"
                     priority
@@ -226,10 +307,7 @@ export default async function Page(props: {
                   <span className="text-[#d8a08b] text-sm uppercase tracking-[0.2em] font-bold mb-6 block font-sans">
                     {t("featured-post")}
                   </span>
-                  <Link
-                    href={firstPostCard.href}
-                    className="group"
-                  >
+                  <Link href={firstPostCard.href} className="group">
                     <h2 className="text-4xl sm:text-5xl font-light mb-6 text-foreground italic leading-tight group-hover:text-[#d8a08b] transition-colors duration-300">
                       {firstPostCard.title}
                     </h2>
@@ -280,14 +358,17 @@ export default async function Page(props: {
                 </div>
               </div>
             </div>
-          </section>
+            </section>
+          ) : null}
 
           {/* Divider */}
-          <div className="w-full max-w-4xl mx-auto h-px bg-border/50 mb-10"></div>
+          {firstPostCard ? (
+            <div className="w-full max-w-4xl mx-auto h-px bg-border/50 mb-10" />
+          ) : null}
 
           {/* Lista de posts */}
           <section className="w-full max-w-4xl grid grid-cols-1 gap-8 px-6 my-10 sm:grid-cols-2 md:grid-cols-3 md:px-0">
-            {postsWithoutFirstCards.map((post, index) => (
+            {listCards.map((post, index) => (
               <article className="group h-full" key={post.id}>
                 <Link href={post.href} className="block">
                   <div className="relative aspect-[4/5] overflow-hidden bg-sand">

@@ -46,7 +46,7 @@ export default function CircleWelcomeEmailTemplate({
       <Head />
       <Preview>
         {isSpanish
-          ? "Bienvenida a The Circle de Rebuilding Reverence. Aquí tienes el grupo y tu guía."
+          ? "Ya formas parte de The Circle. Aquí tienes el acceso al grupo y tu guía."
           : "Welcome to Rebuilding Reverence Circle. Here are your community and journal links."}
       </Preview>
       <Body style={main}>
@@ -58,27 +58,25 @@ export default function CircleWelcomeEmailTemplate({
                 {firstName === "there" ? "Hola," : `Hola ${firstName},`}
               </Text>
               <Text style={bodyText}>
-                Bienvenida a The Circle de Rebuilding Reverence. Me alegra mucho
-                que estés aquí.
+                Qué alegría tenerte en The Circle.
               </Text>
               <Text style={bodyText}>
                 Durante las próximas cuatro semanas vamos a reconstruir nuestra
-                relación con lo sagrado, juntas. No desde el miedo. No desde la
-                exigencia. No desde esa versión de la fe que muchas aprendimos a
-                sostener a costa de nosotras mismas.
+                relación con lo sagrado en compañía. No desde el miedo ni la
+                exigencia, sino desde una fe en la que no tengas que dejarte de
+                lado.
               </Text>
               <Text style={bodyText}>
-                Este es un espacio para volver con honestidad.
+                Este es un espacio para volver a ti con honestidad.
               </Text>
               <Text style={bodyText}>
                 Para hacer preguntas reales. Para dejar de fingir certezas. Para
-                mirar de frente esa tensión entre la fe que recibiste y la fe
-                que estás aprendiendo a construir ahora.
+                mirar con honestidad la distancia entre la fe que recibiste y
+                la que estás aprendiendo a construir ahora.
               </Text>
               <Text style={bodyText}>
                 Si alguna vez sentiste que estabas entre lo que te enseñaron y
-                lo que tu alma ya no podía seguir repitiendo, llegaste al lugar
-                correcto.
+                lo que ya no podías seguir repitiendo, este espacio es para ti.
               </Text>
               <Text style={intro}>Esto es lo que puedes hacer ahora:</Text>
               <Section style={steps}>
@@ -109,11 +107,11 @@ export default function CircleWelcomeEmailTemplate({
                 <Text style={stepText}>
                   <strong>3. Preséntate dentro del grupo</strong>
                   <br />
-                  No tiene que ser algo largo. Tu nombre y qué te trajo hasta
-                  aquí es más que suficiente.
+                  No tiene que ser algo largo. Con tu nombre y lo que te trajo
+                  hasta aquí basta.
                 </Text>
                 <Text style={stepText}>
-                  <strong>4. Mantente atenta a tu fecha de inicio</strong>
+                  <strong>4. Mantente pendiente de la fecha de inicio</strong>
                   <br />
                   The Circle comenzará cuando lleguemos a 15 personas. Apenas el
                   grupo esté completo, recibirás un correo con la fecha oficial
@@ -123,21 +121,21 @@ export default function CircleWelcomeEmailTemplate({
               </Section>
               <Text style={bodyText}>
                 Antes de empezar, quiero decirte algo con honestidad: este no es
-                un espacio donde voy a entregarte respuestas cerradas.
+                un espacio para darte respuestas definitivas.
               </Text>
               <Text style={bodyText}>
-                Es un espacio para sentarnos juntas en lo real.
+                Es un espacio para mirar de frente lo que estás viviendo.
               </Text>
               <Text style={bodyText}>
-                En la tensión entre fe y duda. Entre estructura y libertad.
-                Entre pertenecer y convertirte en quien eres.
+                Entre la fe y la duda. Entre la estructura y la libertad. Entre
+                el deseo de pertenecer y la necesidad de ser tú sin esconderte.
               </Text>
               <Text style={bodyText}>
                 Y desde ahí, empezar a distinguir qué es verdad para ti, no solo
                 qué te dijeron que tenía que serlo.
               </Text>
               <Text style={bodyText}>
-                De verdad me honra acompañarte en este proceso.
+                Me honra poder acompañarte en este proceso.
               </Text>
               <Text style={signature}>
                 Con amor,
@@ -145,7 +143,7 @@ export default function CircleWelcomeEmailTemplate({
                 Ashley
               </Text>
               <Text style={fallbackText}>
-                Si alguno de los botones no abre, usa estos enlaces:
+                Si alguno de los botones no funciona, usa estos enlaces:
                 <br />
                 Grupo:{" "}
                 <Link

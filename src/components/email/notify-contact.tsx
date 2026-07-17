@@ -31,59 +31,60 @@ const OwnerNotificationTemplate = ({
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-          <Heading style={h1}>📩 Nuevo Contacto Recibido</Heading>
+          <Heading style={h1}>📩 Nuevo mensaje de contacto</Heading>
           <Text style={timestamp}>Recibido el {submittedAt}</Text>
         </Section>
 
         <Section style={content}>
           <Text style={greeting}>
-            Hi Ashley — a new message just came through from your contact form.
+            Hola, Ashley. Acaba de llegar un mensaje desde el formulario de
+            contacto.
           </Text>
 
           <Section style={contactInfoSection}>
-            <Text style={sectionTitle}>Información del Contacto:</Text>
+            <Text style={sectionTitle}>Información de contacto</Text>
             <div style={contactDetails}>
               <Text style={contactItem}>
                 <strong>Nombre:</strong> {customerName}
               </Text>
               <Text style={contactItem}>
-                <strong>Email:</strong> {customerEmail}
+                <strong>Correo:</strong> {customerEmail}
               </Text>
             </div>
           </Section>
 
           <Section style={messageSection}>
-            <Text style={sectionTitle}>Mensaje:</Text>
+            <Text style={sectionTitle}>Mensaje</Text>
             <Text style={customerMessage}>{`"${message}"`}</Text>
           </Section>
 
           <Hr style={divider} />
 
           <Section style={actionSection}>
-            <Text style={actionTitle}>Acciones Sugeridas:</Text>
+            <Text style={actionTitle}>Siguientes pasos</Text>
             <div style={actionList}>
               <Text style={actionItem}>
-                • Responder dentro de las próximas 24-48 horas
+                • Responder durante las próximas 24–48 horas
               </Text>
               <Text style={actionItem}>
-                • Revisar si es una consulta sobre productos específicos
+                • Comprobar si la consulta se refiere a un producto
               </Text>
               <Text style={actionItem}>
-                • Considerar si requiere seguimiento personalizado
+                • Valorar si necesita seguimiento personalizado
               </Text>
             </div>
           </Section>
 
           <Text style={reminder}>
-            Recuerden que ya se envió una respuesta automática a {customerName}{" "}
-            confirmando que su mensaje fue recibido.
+            Ya se envió una respuesta automática a {customerName} para confirmar
+            la recepción del mensaje.
           </Text>
         </Section>
 
         <Section style={footer}>
           <Text style={footerText}>
-            Esta notificación fue generada automáticamente por el sistema de
-            contacto de su sitio web.
+            Esta notificación se generó automáticamente desde el formulario de
+            contacto de tu sitio web.
           </Text>
         </Section>
       </Container>

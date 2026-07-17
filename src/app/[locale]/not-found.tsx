@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Heart, Coffee, House } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function NotFound() {
   const t = useTranslations("NotFound");
+  const locale = useLocale();
   return (
     <div className="font-[family-name:var(--font-lora)]">
       {/* Main Content */}
@@ -24,7 +25,7 @@ export default function NotFound() {
             </div>
             <Image
               src="/meditation.png"
-              alt="404 Not Found Illustration"
+              alt={t("imageAlt")}
               width={200}
               height={200}
               className="mx-auto mb-4"
@@ -50,7 +51,7 @@ export default function NotFound() {
 
           {/* Action Buttons */}
           <div className="flex justify-center items-center">
-            <Link href="/">
+            <Link href={`/${locale}`}>
               <Button size="lg">
                 <House className="h-5 w-5 mr-2" />
                 {t("returnHome")}

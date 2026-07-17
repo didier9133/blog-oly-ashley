@@ -37,7 +37,7 @@ export async function sendCircleWelcomeEmail({
       to: [email],
       subject:
         locale === "es"
-          ? "Ya estás dentro. Bienvenida a The Circle de Rebuilding Reverence"
+          ? "Ya formas parte de The Circle: aquí tienes todo para comenzar"
           : "You're in. Here's everything you need for Rebuilding Reverence Circle",
       html: emailHtml,
     });

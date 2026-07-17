@@ -27,6 +27,7 @@ const CTA_EVENTS: Record<
 
 export function PillarCta({
   kind,
+  locale,
   href,
   eyebrow,
   title,
@@ -36,6 +37,7 @@ export function PillarCta({
   className,
 }: {
   kind: PillarCtaKind;
+  locale: "en" | "es";
   href: string;
   eyebrow: string;
   title: string;
@@ -53,9 +55,9 @@ export function PillarCta({
       cta_destination:
         kind === "workbook" ? "rebuilding-reverence" : "the-in-between",
       cta_placement: placement,
-      locale: "en",
+      locale,
     }),
-    [kind, placement],
+    [kind, locale, placement],
   );
 
   useEffect(() => {

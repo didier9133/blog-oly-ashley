@@ -15,16 +15,29 @@ export const ASHLEY_SAME_AS = [
 export const organizationRef = {
   "@type": "Organization",
   "@id": SCHEMA_ENTITY_IDS.organization,
+  name: "Ashley Leon",
+  url: BASE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/apple-touch-icon-adl.png`,
+    width: 180,
+    height: 180,
+  },
 } as const;
 
 export const personRef = {
   "@type": "Person",
   "@id": SCHEMA_ENTITY_IDS.person,
+  name: "Ashley Diana Leon",
+  url: fullUrl("en", "/about"),
+  image: `${BASE_URL}/profile4.jpeg`,
 } as const;
 
 export const websiteRef = {
   "@type": "WebSite",
   "@id": SCHEMA_ENTITY_IDS.website,
+  name: "Ashley Leon",
+  url: BASE_URL,
 } as const;
 
 export const organizationSchema = {
@@ -49,6 +62,19 @@ export const organizationSchema = {
   },
 } as const;
 
+export function getOrganizationSchema(locale: string) {
+  if (locale !== "es") return organizationSchema;
+
+  return {
+    ...organizationSchema,
+    contactPoint: {
+      ...organizationSchema.contactPoint,
+      contactType: "atención al cliente",
+      availableLanguage: ["español", "inglés"],
+    },
+  } as const;
+}
+
 export const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -71,6 +97,26 @@ export const personSchema = {
     "Guided reflective practice",
   ],
 } as const;
+
+export function getPersonSchema(locale: string) {
+  if (locale !== "es") return personSchema;
+
+  return {
+    ...personSchema,
+    url: fullUrl("es", "/about"),
+    jobTitle:
+      "Escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral",
+    description:
+      "Escritora cubano-colombiana, exmisionera y facilitadora de talleres que explora la deconstrucción de la fe, la espiritualidad queer, la identidad y la sanación emocional.",
+    knowsAbout: [
+      "Deconstrucción de la fe",
+      "Espiritualidad queer",
+      "Sanación emocional",
+      "Integración espiritual",
+      "Prácticas guiadas de reflexión",
+    ],
+  } as const;
+}
 
 export const websiteSchema = {
   "@context": "https://schema.org",

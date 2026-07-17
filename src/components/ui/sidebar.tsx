@@ -153,6 +153,8 @@ function Sidebar({
   side = "left",
   variant = "sidebar",
   collapsible = "offcanvas",
+  mobileTitle = "Sidebar",
+  mobileDescription = "Displays the mobile sidebar.",
   className,
   children,
   ...props
@@ -160,6 +162,8 @@ function Sidebar({
   side?: "left" | "right";
   variant?: "sidebar" | "floating" | "inset";
   collapsible?: "offcanvas" | "icon" | "none";
+  mobileTitle?: React.ReactNode;
+  mobileDescription?: React.ReactNode;
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
@@ -194,8 +198,8 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            <SheetTitle>{mobileTitle}</SheetTitle>
+            <SheetDescription>{mobileDescription}</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
@@ -255,6 +259,7 @@ function SidebarTrigger({
   className,
   children,
   onClick,
+  "aria-label": ariaLabel,
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
@@ -265,6 +270,7 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="sm"
+      aria-label={ariaLabel}
       className={cn(
         "h-9 w-9 rounded-none border border-foreground/15 bg-transparent p-0 text-foreground/75 hover:border-foreground/35 hover:bg-transparent hover:text-foreground focus-visible:ring-1 focus-visible:ring-foreground/30",
         className,
@@ -276,17 +282,14 @@ function SidebarTrigger({
       {...props}
     >
       {children ?? <SidebarMenuMark />}
-      <span className="sr-only">Toggle Sidebar</span>
+      <span className="sr-only">{ariaLabel ?? "Toggle sidebar"}</span>
     </Button>
   );
 }
 
 function SidebarMenuMark() {
   return (
-    <span
-      aria-hidden="true"
-      className="flex h-4 w-5 flex-col justify-between"
-    >
+    <span aria-hidden="true" className="flex h-4 w-5 flex-col justify-between">
       <span className="block h-px w-full bg-current" />
       <span className="block h-px w-full bg-current" />
       <span className="block h-px w-full bg-current" />

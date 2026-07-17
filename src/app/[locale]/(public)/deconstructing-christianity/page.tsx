@@ -15,27 +15,45 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
-  DECONSTRUCTING_CHRISTIANITY_DESCRIPTION,
-  DECONSTRUCTING_CHRISTIANITY_FAQS,
   DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT,
   DECONSTRUCTING_CHRISTIANITY_PATH,
   DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT,
-  DECONSTRUCTING_CHRISTIANITY_SECTIONS,
-  DECONSTRUCTING_CHRISTIANITY_SEO_TITLE,
-  DECONSTRUCTING_CHRISTIANITY_TITLE,
+  getDeconstructingChristianityContent,
 } from "@/lib/deconstructing-christianity";
-import { indexableRobots, singleLocaleAlternates } from "@/lib/seo";
-import { fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
+import {
+  indexableRobots,
+  isSupportedLocale,
+  localizedAlternates,
+} from "@/lib/seo";
+import { BASE_URL, fullUrl, localizedHref, ogImageUrl } from "@/lib/url";
 import { organizationRef, personRef } from "@/lib/schema-entities";
 
-const PAGE_URL = fullUrl("en", DECONSTRUCTING_CHRISTIANITY_PATH);
-const ABOUT_URL = fullUrl("en", "/about");
 const PUBLISHED_DATE = new Date(
   `${DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT}T12:00:00.000Z`,
 );
 const MODIFIED_DATE = new Date(
   `${DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT}T12:00:00.000Z`,
 );
+
+function getGuideOgImage(locale: "en" | "es") {
+  if (locale === "es") {
+    return {
+      url: `${BASE_URL}/og-deconstructing-christianity-es-v1.png`,
+      width: 1730,
+      height: 909,
+      type: "image/png",
+      alt: "Ashley Leon junto al título «Deconstruir el cristianismo»",
+    };
+  }
+
+  return {
+    url: ogImageUrl("en"),
+    width: 1200,
+    height: 630,
+    type: "image/jpeg",
+    alt: "Ashley Leon beside the message “Returning to yourself is returning to the sacred”",
+  };
+}
 
 export async function generateMetadata({
   params,
@@ -44,50 +62,55 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
-  if (locale !== "en") {
+  if (!isSupportedLocale(locale)) {
     return {
-      title: "Page not available in Spanish | Ashley Leon",
+      title: "Page not found | Ashley Leon",
       robots: { index: false, follow: false },
     };
   }
 
-  const image = ogImageUrl("en");
+  const content = getDeconstructingChristianityContent(locale);
+  const image = getGuideOgImage(locale);
+  const pageUrl = fullUrl(locale, DECONSTRUCTING_CHRISTIANITY_PATH);
+  const aboutUrl = fullUrl(locale, "/about");
 
   return {
-    title: DECONSTRUCTING_CHRISTIANITY_SEO_TITLE,
-    description: DECONSTRUCTING_CHRISTIANITY_DESCRIPTION,
-    authors: [{ name: "Ashley Leon", url: ABOUT_URL }],
+    title: content.seoTitle,
+    description: content.description,
+    authors: [{ name: "Ashley Leon", url: aboutUrl }],
     creator: "Ashley Leon",
     publisher: "Ashley Leon",
     robots: indexableRobots,
-    alternates: singleLocaleAlternates(
-      "en",
-      DECONSTRUCTING_CHRISTIANITY_PATH,
-    ),
+    alternates: localizedAlternates(locale, {
+      en: DECONSTRUCTING_CHRISTIANITY_PATH,
+      es: DECONSTRUCTING_CHRISTIANITY_PATH,
+    }),
     openGraph: {
       type: "article",
-      locale: "en_US",
+      locale: content.ogLocale,
+      alternateLocale: [content.alternateOgLocale],
       siteName: "Ashley Leon",
-      url: PAGE_URL,
-      title: DECONSTRUCTING_CHRISTIANITY_SEO_TITLE,
-      description: DECONSTRUCTING_CHRISTIANITY_DESCRIPTION,
+      url: pageUrl,
+      title: content.seoTitle,
+      description: content.description,
       publishedTime: PUBLISHED_DATE.toISOString(),
       modifiedTime: MODIFIED_DATE.toISOString(),
-      authors: [ABOUT_URL],
+      authors: [aboutUrl],
       images: [
         {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: "Ashley Leon — a guide to deconstructing Christianity",
+          url: image.url,
+          width: image.width,
+          height: image.height,
+          alt: image.alt,
+          type: image.type,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: DECONSTRUCTING_CHRISTIANITY_SEO_TITLE,
-      description: DECONSTRUCTING_CHRISTIANITY_DESCRIPTION,
-      images: [image],
+      title: content.seoTitle,
+      description: content.description,
+      images: [{ url: image.url, alt: image.alt }],
     },
   };
 }
@@ -98,39 +121,41 @@ export default async function DeconstructingChristianityPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (locale !== "en") notFound();
+  if (!isSupportedLocale(locale)) notFound();
+
+  const content = getDeconstructingChristianityContent(locale);
+  const pageUrl = fullUrl(locale, DECONSTRUCTING_CHRISTIANITY_PATH);
+  const ogImage = getGuideOgImage(locale);
 
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "@id": `${PAGE_URL}#article`,
-    headline: DECONSTRUCTING_CHRISTIANITY_TITLE,
-    description: DECONSTRUCTING_CHRISTIANITY_DESCRIPTION,
+    "@id": `${pageUrl}#article`,
+    headline: content.title,
+    description: content.description,
     image: {
       "@type": "ImageObject",
-      url: ogImageUrl("en"),
-      width: 1200,
-      height: 630,
+      url: ogImage.url,
+      width: ogImage.width,
+      height: ogImage.height,
+      caption: ogImage.alt,
     },
-    url: PAGE_URL,
-    inLanguage: "en-US",
+    url: pageUrl,
+    inLanguage: content.inLanguage,
     datePublished: PUBLISHED_DATE.toISOString(),
     dateModified: MODIFIED_DATE.toISOString(),
     author: personRef,
     publisher: organizationRef,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": PAGE_URL,
+      "@id": pageUrl,
     },
     about: [
-      { "@type": "Thing", name: "Christian deconstruction" },
-      { "@type": "Thing", name: "Faith deconstruction" },
-      { "@type": "Thing", name: "Religious deconstruction" },
+      ...content.schemaAbout.map(({ name }) => ({ "@type": "Thing", name })),
       {
         "@type": "DefinedTerm",
         name: "The In-Between",
-        description:
-          "The conviction that the false binary is the wound — not either side of it.",
+        description: content.inBetweenSchemaDescription,
       },
     ],
   };
@@ -142,22 +167,38 @@ export default async function DeconstructingChristianityPage({
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
-        item: fullUrl("en", "/"),
+        name: content.breadcrumbHome,
+        item: fullUrl(locale, "/"),
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Deconstructing Christianity",
-        item: PAGE_URL,
+        name: content.breadcrumbPage,
+        item: pageUrl,
       },
     ],
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${pageUrl}#faq`,
+    inLanguage: content.inLanguage,
+    mainEntity: content.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 
   return (
     <main className="bg-background text-foreground">
       <JsonLd data={articleSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
 
       <section className="relative isolate overflow-hidden border-b border-border bg-paper">
         <div
@@ -174,16 +215,20 @@ export default async function DeconstructingChristianityPage({
         />
 
         <div className="relative mx-auto max-w-[88rem] px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-10 md:px-8 lg:px-12 lg:pb-24">
-          <Breadcrumb>
+          <Breadcrumb
+            aria-label={locale === "es" ? "Ruta de navegación" : "Breadcrumb"}
+          >
             <BreadcrumbList className="font-[family-name:var(--font-lora)] text-xs uppercase tracking-[0.12em]">
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href={localizedHref("en", "/")}>Home</Link>
+                  <Link href={localizedHref(locale, "/")}>
+                    {content.breadcrumbHome}
+                  </Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Deconstructing Christianity</BreadcrumbPage>
+                <BreadcrumbPage>{content.breadcrumbPage}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -191,30 +236,24 @@ export default async function DeconstructingChristianityPage({
           <div className="mt-14 grid grid-cols-1 gap-12 lg:mt-20 lg:grid-cols-12 lg:items-end lg:gap-14">
             <div className="lg:col-span-8">
               <p className="editorial-eyebrow text-primary">
-                A compassionate guide to faith deconstruction
+                {content.eyebrow}
               </p>
               <h1 className="mt-6 max-w-[15ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(3rem,7.6vw,6.6rem)] font-light leading-[0.92] tracking-[-0.035em] text-balance">
-                Deconstructing Christianity:
+                {content.headlineLead}
                 <span className="mt-2 block italic text-primary">
-                  What It Means and What Comes Next
+                  {content.headlineEmphasis}
                 </span>
               </h1>
               <div className="mt-9 max-w-3xl border-l border-primary pl-5 sm:pl-7">
                 <p className="font-[family-name:var(--font-lora)] text-lg leading-8 text-foreground/85 sm:text-xl sm:leading-9">
-                  Deconstructing Christianity is the process of honestly
-                  examining the beliefs, teachings, and structures you inherited
-                  — asking what still feels true, what needs to be reinterpreted,
-                  and what may need to be released. There is no single correct
-                  ending. You might stay. You might rebuild something different.
-                  You might walk away. Wherever you land, the process itself can
-                  be sacred.
+                  {content.introduction}
                 </p>
               </div>
               <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2 font-[family-name:var(--font-lora)] text-sm text-muted-foreground">
                 <span>
-                  By{" "}
+                  {content.by}{" "}
                   <Link
-                    href={localizedHref("en", "/about")}
+                    href={localizedHref(locale, "/about")}
                     rel="author"
                     className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
@@ -223,10 +262,10 @@ export default async function DeconstructingChristianityPage({
                 </span>
                 <span aria-hidden="true">·</span>
                 <time dateTime={DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT}>
-                  July 13, 2026
+                  {content.publishedDate}
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>Evergreen guide</span>
+                <span>{content.evergreen}</span>
               </div>
             </div>
 
@@ -237,18 +276,16 @@ export default async function DeconstructingChristianityPage({
                 strokeWidth={1.25}
               />
               <p className="mt-5 font-[family-name:var(--font-cormorant-garamond)] text-2xl font-light italic leading-snug">
-                A guide for questioning without being told where your questions
-                must lead.
+                {content.asideLead}
               </p>
               <p className="mt-4 font-[family-name:var(--font-lora)] text-sm leading-6 text-muted-foreground">
-                This page offers education and reflection, not a diagnosis,
-                theological verdict, or substitute for professional care.
+                {content.disclaimer}
               </p>
               <a
                 href="#meaning"
                 className="mt-7 inline-flex min-h-11 items-center gap-2 font-[family-name:var(--font-lora)] text-xs font-semibold uppercase tracking-[0.18em] text-primary underline decoration-primary/35 underline-offset-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                Begin the guide
+                {content.begin}
                 <ArrowDown aria-hidden="true" className="h-4 w-4" />
               </a>
             </aside>
@@ -259,12 +296,12 @@ export default async function DeconstructingChristianityPage({
       <div className="mx-auto grid max-w-[88rem] grid-cols-1 gap-12 px-4 py-16 sm:px-6 md:px-8 lg:grid-cols-[14rem_minmax(0,48rem)] lg:gap-16 lg:px-12 lg:py-24 xl:gap-24">
         <aside className="hidden lg:block">
           <nav
-            aria-label="On this page"
+            aria-label={content.onThisPage}
             className="sticky top-28 border-l border-border pl-6"
           >
-            <p className="editorial-eyebrow-strong">In this guide</p>
+            <p className="editorial-eyebrow-strong">{content.inThisGuide}</p>
             <ol className="mt-6 space-y-4">
-              {DECONSTRUCTING_CHRISTIANITY_SECTIONS.map((section, index) => (
+              {content.sections.map((section, index) => (
                 <li key={section.id}>
                   <a
                     href={`#${section.id}`}
@@ -286,12 +323,7 @@ export default async function DeconstructingChristianityPage({
 
         <article className="min-w-0">
           <p className="font-[family-name:var(--font-lora)] text-lg leading-8 text-muted-foreground sm:text-xl sm:leading-9">
-            People often arrive at deconstruction looking for a definition and
-            discover they are also looking for permission: permission to ask a
-            question without rushing to an answer, to name harm without reducing
-            an entire life to harm, and to change without deciding immediately
-            what the change will be called. This guide offers language for that
-            process while leaving the direction of it in your hands.
+            {content.opening}
           </p>
 
           <section
@@ -300,51 +332,19 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="01" id="meaning-heading">
-              What does deconstructing Christianity mean?
+              {content.meaning.heading}
             </SectionHeading>
-            <Answer>
-              Christian deconstruction is the primary lens of this guide. It
-              focuses specifically on beliefs, authority structures, and
-              practices inherited within Christianity. Faith deconstruction and
-              religious deconstruction are broader terms for a similar pattern
-              of honest examination across faith traditions.
-            </Answer>
-            <Body>
-              To deconstruct is to examine rather than automatically accept or
-              automatically reject. It can involve asking where a belief came
-              from, how it has been interpreted, who benefits from it, how it
-              affects real lives, and whether it still aligns with conscience,
-              experience, love, or justice.
-            </Body>
-            <Body>
-              People use the language differently, so these are helpful working
-              distinctions rather than rigid categories:
-            </Body>
+            <Answer>{content.meaning.answer}</Answer>
+            <Body>{content.meaning.beforeDefinitions}</Body>
+            <Body>{content.meaning.definitionsIntro}</Body>
             <dl className="mt-8 divide-y divide-border border-y border-border">
-              <DefinitionRow term="Faith deconstruction">
-                A broader term for examining beliefs, spiritual practices, and
-                sources of authority inherited through a faith tradition.
-              </DefinitionRow>
-              <DefinitionRow term="Religious deconstruction">
-                Another broad term that can include religious institutions,
-                systems, culture, and belonging—not only personal belief.
-              </DefinitionRow>
-              <DefinitionRow term="Christian deconstruction">
-                The specific focus here, grounded in Ashley&apos;s lived
-                experience. It may examine scripture, doctrine, leadership,
-                community, or practice without assuming that every part will be
-                discarded.
-              </DefinitionRow>
+              {content.meaning.definitions.map((definition) => (
+                <DefinitionRow key={definition.term} term={definition.term}>
+                  {definition.description}
+                </DefinitionRow>
+              ))}
             </dl>
-            <Body>
-              These terms overlap, but they are not interchangeable without
-              distinction. This page stays centered on Christian deconstruction,
-              where Ashley&apos;s own story and credibility are rooted, while
-              acknowledging that people from other traditions may experience a
-              structurally similar process. None of the phrases is a clinical
-              label: the process can be intellectual, emotional, spiritual,
-              relational, and embodied—often more than one at once.
-            </Body>
+            <Body>{content.meaning.conclusion}</Body>
           </section>
 
           <section
@@ -353,39 +353,12 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="02" id="why-heading">
-              Why do people deconstruct their faith?
+              {content.why.heading}
             </SectionHeading>
-            <Answer>
-              People may begin deconstructing when inherited teachings no longer
-              align with lived experience, conscience, identity, evidence, or
-              their understanding of love and justice. For some, religious harm
-              is part of the story; for others, the process begins with
-              questions, change, or a need for greater integrity.
-            </Answer>
-            <Body>
-              There is no single event a person must experience before their
-              questions count. Deconstruction may begin slowly—with a teaching
-              that no longer makes sense—or suddenly, after a rupture in trust.
-              Three tensions are especially central to Ashley&apos;s work:
-            </Body>
+            <Answer>{content.why.answer}</Answer>
+            <Body>{content.why.introduction}</Body>
             <div className="mt-8 border-y border-border">
-              {[
-                {
-                  title: "Institutional control beneath unconditional language",
-                  description:
-                    "Seeing the gap between the language of unconditional love and the lived reality of conditions, obedience, and hierarchy—sometimes while still inside the institution.",
-                },
-                {
-                  title: "Being told identity disqualifies belonging",
-                  description:
-                    "Experiencing love, spiritual investment, blessing, or protection as conditional because of sexuality, gender, identity, or another part of oneself.",
-                },
-                {
-                  title: "The material and spiritual false binary",
-                  description:
-                    "Being taught that caring about money, stability, the body, or an actual human life is somehow less spiritual—and discovering that forced split was never the point.",
-                },
-              ].map((item, index) => (
+              {content.why.tensions.map((item, index) => (
                 <div
                   key={item.title}
                   className="grid gap-2 border-b border-border py-6 last:border-b-0 sm:grid-cols-[2.5rem_13rem_1fr] sm:gap-4"
@@ -406,25 +379,12 @@ export default async function DeconstructingChristianityPage({
               ))}
             </div>
             <blockquote className="my-10 border-l border-primary pl-6 font-[family-name:var(--font-cormorant-garamond)] text-2xl font-light italic leading-snug text-foreground sm:text-3xl">
-              “I remember telling someone I trusted — someone discipling me —
-              that I’d fallen in love with a woman. Her response has stayed with
-              me for over a decade: that God would still love me, but I would no
-              longer be blessed. That I was no longer under God’s protection.
-              That there was no longer a point investing in me spiritually if I
-              was going to be “disobedient” in this one area. I was nineteen. I
-              believed her, because a conditional God was the only God I’d ever
-              been introduced to.”
+              {content.why.quote}
               <footer className="mt-5 font-[family-name:var(--font-lora)] text-xs not-italic uppercase tracking-[0.18em] text-muted-foreground">
-                Ashley Leon · a moment from her own deconstruction
+                {content.why.quoteAttribution}
               </footer>
             </blockquote>
-            <Body>
-              This moment is one reason the focus here is Christian
-              deconstruction rather than a generalized account of every faith
-              tradition. It shows how questions can begin in the gap between
-              unconditional love as an ideal and conditional belonging as a
-              lived reality.
-            </Body>
+            <Body>{content.why.conclusion}</Body>
           </section>
 
           <section
@@ -433,37 +393,17 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 mt-16 bg-book px-6 py-12 sm:px-10 sm:py-14"
           >
             <SectionHeading number="03" id="in-between-heading">
-              The In-Between: the false binary is the wound
+              {content.inBetween.heading}
             </SectionHeading>
-            <Answer>
-              The In-Between names the conviction that the false binary itself
-              is the wound — not either side of it. Most people are taught they
-              must choose: stay devout or leave entirely, be spiritual or be
-              practical, be gay or be godly, be certain or be lost. The
-              In-Between is the belief that this forced choosing is the injury,
-              and that healing means learning to live undivided in the tension,
-              rather than collapsing into either extreme.
-            </Answer>
+            <Answer>{content.inBetween.answer}</Answer>
             <blockquote className="my-10 border-l border-primary pl-6 font-[family-name:var(--font-cormorant-garamond)] text-3xl font-light italic leading-tight text-foreground sm:text-4xl">
-              “The conviction that the false binary is the wound — not either
-              side of it.”
+              {content.inBetween.quote}
               <footer className="mt-5 font-[family-name:var(--font-lora)] text-xs not-italic uppercase tracking-[0.18em] text-muted-foreground">
-                Ashley Leon · The In-Between
+                {content.inBetween.quoteAttribution}
               </footer>
             </blockquote>
-            <Body>
-              Primarily, The In-Between is a framework and teaching lens—the
-              intellectual and spiritual core of Ashley&apos;s writing and
-              teaching. It is also the name of her free community, where people
-              can practice living this out together.
-            </Body>
-            <Body>
-              It is not a compromise position or “meeting in the middle.” A
-              person can hold real convictions inside the tension: Ashley does
-              not believe sexuality separates someone from God, and she does not
-              believe love should ever be transactional. The In-Between is about
-              refusing false binaries, not refusing to have convictions.
-            </Body>
+            <Body>{content.inBetween.framework}</Body>
+            <Body>{content.inBetween.conviction}</Body>
           </section>
 
           <section
@@ -472,58 +412,29 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="04" id="experience-heading">
-              What can faith deconstruction feel like?
+              {content.experience.heading}
             </SectionHeading>
-            <Answer>
-              Faith deconstruction can involve grief—including grief for the
-              life imagined or relationships expected to last—alongside relief,
-              disorientation, anger, loneliness, and guilt for still caring
-              about ordinary needs such as stability, money, or the body. More
-              than one feeling can be true at once.
-            </Answer>
-            <Body>
-              A belief system can hold more than ideas. It can hold family
-              history, holidays, music, friendship, vocation, language, and a
-              picture of who you are. Examining it may therefore feel less like
-              changing an opinion and more like renegotiating an entire world.
-            </Body>
+            <Answer>{content.experience.answer}</Answer>
+            <Body>{content.experience.introduction}</Body>
             <div className="mt-9 grid gap-6 sm:grid-cols-2">
               <ExperienceCard
                 icon={<Heart aria-hidden="true" className="h-6 w-6" />}
-                title="Emotionally"
-                items={[
-                  "Grief can include things that never fully happened",
-                  "Relief, disorientation, and anger may coexist",
-                  "The body may carry feelings before words arrive",
-                ]}
+                title={content.experience.cards[0].title}
+                items={content.experience.cards[0].items}
               />
               <ExperienceCard
                 icon={<Waypoints aria-hidden="true" className="h-6 w-6" />}
-                title="Relationally"
-                items={[
-                  "Family or friendships may feel newly complicated",
-                  "A person may feel they belong nowhere",
-                  "That shame can exist even without active rejection",
-                ]}
+                title={content.experience.cards[1].title}
+                items={content.experience.cards[1].items}
               />
             </div>
             <blockquote className="my-10 border-l border-primary pl-6 font-[family-name:var(--font-cormorant-garamond)] text-2xl font-light italic leading-snug text-foreground sm:text-3xl">
-              “It’s okay to grieve something that didn’t happen. You can grieve
-              the story your mind thought was going to unfold. Sometimes the
-              moment I get quiet with myself, the tears just come — like my body
-              has been waiting for me to feel it.”
+              {content.experience.quote}
               <footer className="mt-5 font-[family-name:var(--font-lora)] text-xs not-italic uppercase tracking-[0.18em] text-muted-foreground">
-                Ashley Leon
+                {content.experience.quoteAttribution}
               </footer>
             </blockquote>
-            <Body>
-              The shame of feeling like you do not belong anywhere deserves to
-              be named directly, even when no one is actively rejecting you.
-              These are possibilities, not stages: relief does not erase grief,
-              missing a community does not decide whether returning is right,
-              and keeping a practice does not invalidate the questions that
-              changed it.
-            </Body>
+            <Body>{content.experience.conclusion}</Body>
           </section>
 
           <section
@@ -532,31 +443,12 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="05" id="leaving-heading">
-              Does deconstruction always mean leaving Christianity?
+              {content.leaving.heading}
             </SectionHeading>
-            <Answer>
-              No. Deconstruction is a process of examination, not a
-              predetermined conclusion. Some people remain Christian with
-              changed beliefs, some reconstruct a different spiritual life,
-              some leave Christianity, and others stay in an unresolved or
-              evolving middle.
-            </Answer>
-            <Body>
-              One person may still use Christian language but relate to it in a
-              new way. Another may keep ritual while releasing doctrine. Someone
-              else may leave religion entirely. A person can also remain unsure
-              for a long time without that uncertainty being a failure. Staying,
-              rebuilding, walking away, and living without a final label are
-              presented here with equal weight and equal respect; none is treated
-              as the smarter or more evolved ending.
-            </Body>
+            <Answer>{content.leaving.answer}</Answer>
+            <Body>{content.leaving.introduction}</Body>
             <div className="mt-9 border-y border-border">
-              {[
-                ["Stay", "Continue identifying as Christian with changed beliefs or practices."],
-                ["Rebuild", "Build a different relationship to spirituality, community, or the sacred."],
-                ["Walk away", "Step away from Christianity or religion without needing to reject every part of the past."],
-                ["Live in The In-Between", "Use no final label while beliefs, language, and belonging continue to evolve."],
-              ].map(([title, description], index) => (
+              {content.leaving.outcomes.map(({ title, description }, index) => (
                 <div
                   key={title}
                   className="grid gap-2 border-b border-border py-6 last:border-b-0 sm:grid-cols-[2.5rem_8rem_1fr] sm:gap-4"
@@ -576,13 +468,7 @@ export default async function DeconstructingChristianityPage({
                 </div>
               ))}
             </div>
-            <Body>
-              Some people choose the self-description “deconstructed Christian.”
-              Ashley does not use that label for herself; she describes her own
-              position as living in The In-Between. The phrase can describe a
-              process or be chosen as a personal identity, but it should not be
-              assigned to someone or replace one fixed identity with another.
-            </Body>
+            <Body>{content.leaving.conclusion}</Body>
           </section>
 
           <section
@@ -591,28 +477,13 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="06" id="religious-harm-heading">
-              Can religious harm be part of faith deconstruction?
+              {content.religiousHarm.heading}
             </SectionHeading>
-            <Answer>
-              Yes, religious harm can be part of deconstruction for some people,
-              but it is not the only reason people question faith and it should
-              not be assumed in every story. Harm may come from teachings,
-              exclusion, coercion, spiritual authority, unsafe leadership, or
-              pressure to abandon important parts of oneself.
-            </Answer>
-            <Body>
-              Naming harm can clarify why certain beliefs or environments no
-              longer feel safe. It can also be difficult when the same tradition
-              carried beauty, relationship, or meaning. Both realities can be
-              true without canceling each other out.
-            </Body>
+            <Answer>{content.religiousHarm.answer}</Answer>
+            <Body>{content.religiousHarm.explanation}</Body>
             <div className="mt-8 border-l-2 border-accent bg-accent/[0.08] px-6 py-6">
               <p className="font-[family-name:var(--font-lora)] text-sm leading-7 text-foreground/80">
-                A guide, community, or workbook can support reflection, but none
-                can diagnose or treat trauma. If distress is affecting your
-                safety or daily life, consider seeking a qualified professional
-                whose care respects your identity, agency, and spiritual
-                boundaries.
+                {content.religiousHarm.careNote}
               </p>
             </div>
           </section>
@@ -623,66 +494,40 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="07" id="next-heading">
-              What may come next after faith deconstruction?
+              {content.next.heading}
             </SectionHeading>
-            <Answer>
-              There is no universal timeline or correct next step after faith
-              deconstruction. A helpful next move may be to slow down, name what
-              feels true, set boundaries, explore reflective practices, find
-              safer community, or seek qualified professional support when
-              distress or trauma is present.
-            </Answer>
+            <Answer>{content.next.answer}</Answer>
             <ol className="mt-9 space-y-0 border-y border-border">
-              <NextStep
-                number="01"
-                title="Release the deadline"
-                description="You do not have to resolve your theology, identity, relationships, and future at the same time. Let the next honest question be enough."
-              />
-              <NextStep
-                number="02"
-                title="Name what is true now"
-                description="Write down what you know, what you no longer believe, what you miss, and what remains uncertain. Temporary language is still useful language."
-              />
-              <NextStep
-                number="03"
-                title="Create boundaries that protect attention"
-                description="Decide which conversations feel constructive, which environments feel safe, and what you are not available to defend or explain."
-              />
-              <NextStep
-                number="04"
-                title="Choose reflection without forcing an outcome"
-                description="Journaling, reading, rest, ritual, movement, or conversation can help you listen for your own values rather than reproduce someone else's answer."
-              />
-              <NextStep
-                number="05"
-                title="Find support that respects your agency"
-                description="Look for friends, community, facilitators, or qualified professionals who can stay present without deciding the destination for you."
-              />
+              {content.next.steps.map((step, index) => (
+                <NextStep
+                  key={step.title}
+                  number={String(index + 1).padStart(2, "0")}
+                  title={step.title}
+                  description={step.description}
+                />
+              ))}
             </ol>
             <Body>
-              Ashley&apos;s essay{" "}
+              {content.next.essayPrefix}{" "}
               <Link
-                href={localizedHref(
-                  "en",
-                  "/writing/how-to-rebuild-faith-after-deconstruction",
-                )}
+                href={localizedHref(locale, content.next.essayHref)}
                 className="text-foreground underline decoration-primary/45 underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                “Deconstruction and Beyond: A Story of Loss and Rebirth”
+                {content.next.essayTitle}
               </Link>{" "}
-              offers a more personal reflection on what rebuilding can look like
-              when it is allowed to be honest and unfinished.
+              {content.next.essaySuffix}
             </Body>
           </section>
 
           <PillarCta
             kind="workbook"
+            locale={locale}
             placement="after-next-steps"
-            href={localizedHref("en", "/workbooks/rebuilding-reverence")}
-            eyebrow="A reflective next step"
-            title="Explore what remains meaningful—without rushing toward a conclusion."
-            description="If you want a companion for exploring what still feels meaningful — without rushing toward an answer — Rebuilding Reverence offers reflective prompts for listening to yourself, naming what’s true, and moving forward with intention, whatever that ends up looking like for you."
-            label="Explore Rebuilding Reverence"
+            href={localizedHref(locale, content.workbookCta.href)}
+            eyebrow={content.workbookCta.eyebrow}
+            title={content.workbookCta.title}
+            description={content.workbookCta.description}
+            label={content.workbookCta.label}
             className="mt-16"
           />
 
@@ -692,14 +537,13 @@ export default async function DeconstructingChristianityPage({
             className="scroll-mt-28 border-t border-border pt-14 mt-16"
           >
             <SectionHeading number="08" id="faq-heading">
-              Questions people ask about deconstructing Christianity
+              {content.faqHeading}
             </SectionHeading>
             <p className="mt-6 font-[family-name:var(--font-lora)] text-base leading-7 text-muted-foreground">
-              Short answers to common questions, with room for each person&apos;s
-              experience to remain more complex than a definition.
+              {content.faqIntro}
             </p>
             <div className="mt-9 divide-y divide-border border-y border-border">
-              {DECONSTRUCTING_CHRISTIANITY_FAQS.map((faq, index) => (
+              {content.faqs.map((faq, index) => (
                 <details key={faq.question} className="group">
                   <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-5 font-[family-name:var(--font-cormorant-garamond)] text-xl font-medium leading-tight marker:content-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden sm:text-2xl">
                     <span className="flex items-baseline gap-4">
@@ -732,31 +576,34 @@ export default async function DeconstructingChristianityPage({
           >
             <Image
               src="/profile4.jpeg"
-              alt="Ashley Leon"
+              alt={
+                locale === "es"
+                  ? "Retrato de Ashley Leon"
+                  : "Portrait of Ashley Leon"
+              }
               width={240}
               height={300}
               sizes="128px"
               className="aspect-[4/5] w-32 object-cover object-[center_60%]"
             />
             <div>
-              <p className="editorial-eyebrow text-primary">About the author</p>
+              <p className="editorial-eyebrow text-primary">
+                {content.authorEyebrow}
+              </p>
               <h2
                 id="author-heading"
                 className="mt-3 font-[family-name:var(--font-cormorant-garamond)] text-3xl font-light"
               >
-                Ashley Leon
+                {content.authorName}
               </h2>
               <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-7 text-muted-foreground">
-                Ashley is a writer, workshop facilitator, and certified holistic
-                mind-body coach working at the intersection of faith
-                deconstruction, queer spirituality, and emotional healing. Her
-                work is affirming, non-doctrinal, and coaching-based—not therapy.
+                {content.authorBio}
               </p>
               <Link
-                href={localizedHref("en", "/about")}
+                href={localizedHref(locale, "/about")}
                 className="editorial-link mt-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                More about Ashley
+                {content.authorLinkLabel}
                 <span className="editorial-link-arrow" aria-hidden="true">
                   →
                 </span>
@@ -766,12 +613,13 @@ export default async function DeconstructingChristianityPage({
 
           <PillarCta
             kind="community"
+            locale={locale}
             placement="article-footer"
-            href={localizedHref("en", "/community")}
-            eyebrow="You do not have to name it alone"
-            title="Practice living undivided in the tension—with company."
-            description="The In-Between is a free community for practicing the conviction that the false choice itself is the wound. It offers honest reflection, real conversation, and belonging without a required conclusion."
-            label="Join The In-Between"
+            href={localizedHref(locale, content.communityCta.href)}
+            eyebrow={content.communityCta.eyebrow}
+            title={content.communityCta.title}
+            description={content.communityCta.description}
+            label={content.communityCta.label}
             className="mt-16"
           />
         </article>
@@ -849,7 +697,7 @@ function ExperienceCard({
 }: {
   icon: React.ReactNode;
   title: string;
-  items: string[];
+  items: readonly string[];
 }) {
   return (
     <div className="border border-border bg-paper p-6">

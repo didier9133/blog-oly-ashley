@@ -4,28 +4,23 @@ import { fullUrl } from "@/lib/url";
 import { localizedLanguages } from "@/lib/seo";
 import { publicPostSlug } from "@/lib/post-slugs";
 import { getPostModifiedAt } from "@/lib/seo-content";
+import { getWorkbookModifiedAt } from "@/lib/workbook-content";
 
 const LOCALES = ["es", "en"] as const;
 
 // Fechas reales de última modificación por ruta.
 // Actualizar manualmente cuando cambie contenido estático significativo.
 const STATIC_ROUTES: { path: string; lastModified: string }[] = [
-  { path: "", lastModified: "2026-07-10" },
-  { path: "/about", lastModified: "2026-07-10" },
-  { path: "/writing", lastModified: "2026-07-10" },
-  { path: "/workbooks", lastModified: "2026-07-10" },
-  { path: "/circle", lastModified: "2026-07-10" },
-  { path: "/community", lastModified: "2026-07-10" },
-  { path: "/contact", lastModified: "2026-07-10" },
-  { path: "/privacy", lastModified: "2026-07-10" },
-  { path: "/terms", lastModified: "2026-07-10" },
-];
-
-const ENGLISH_ONLY_STATIC_ROUTES: {
-  path: string;
-  lastModified: string;
-}[] = [
-  { path: "/deconstructing-christianity", lastModified: "2026-07-14" },
+  { path: "", lastModified: "2026-07-17" },
+  { path: "/about", lastModified: "2026-07-17" },
+  { path: "/writing", lastModified: "2026-07-17" },
+  { path: "/workbooks", lastModified: "2026-07-17" },
+  { path: "/circle", lastModified: "2026-07-17" },
+  { path: "/community", lastModified: "2026-07-17" },
+  { path: "/contact", lastModified: "2026-07-17" },
+  { path: "/privacy", lastModified: "2026-07-17" },
+  { path: "/terms", lastModified: "2026-07-17" },
+  { path: "/deconstructing-christianity", lastModified: "2026-07-17" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -41,21 +36,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  const englishOnlyEntries: MetadataRoute.Sitemap =
-    ENGLISH_ONLY_STATIC_ROUTES.map(({ path, lastModified }) => {
-      const url = fullUrl("en", path);
-      return {
-        url,
-        lastModified: new Date(lastModified),
-        alternates: {
-          languages: {
-            en: url,
-            "x-default": url,
-          },
-        },
-      };
-    });
-
   // Dynamic writing posts — each locale uses its own slug.
   const blogPosts = await prisma.post.findMany({
     where: {
@@ -67,24 +47,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   const blogEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
-    blogPosts
-      .map((post) => {
-        const paths = {
-          en: `/writing/${publicPostSlug(post.slug_en)}`,
-          es: `/writing/${publicPostSlug(post.slug_es)}`,
-        };
-        const lastModified = getPostModifiedAt(
-          post.updatedAt,
-          publicPostSlug(post.slug_en),
-          publicPostSlug(post.slug_es),
-        );
+    blogPosts.map((post) => {
+      const paths = {
+        en: `/writing/${publicPostSlug(post.slug_en)}`,
+        es: `/writing/${publicPostSlug(post.slug_es)}`,
+      };
+      const lastModified = getPostModifiedAt(
+        post.updatedAt,
+        publicPostSlug(post.slug_en),
+        publicPostSlug(post.slug_es),
+      );
 
-        return {
-          url: fullUrl(locale, paths[locale]),
-          lastModified,
-          alternates: { languages: localizedLanguages(paths) },
-        };
-      }),
+      return {
+        url: fullUrl(locale, paths[locale]),
+        lastModified,
+        alternates: { languages: localizedLanguages(paths) },
+      };
+    }),
   );
 
   // Dynamic ebook detail pages — each locale uses its own slug
@@ -96,7 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ebookEntries: MetadataRoute.Sitemap = books.flatMap((book) => [
     {
       url: fullUrl("en", `/workbooks/${book.slug_en}`),
-      lastModified: book.updatedAt,
+      lastModified: getWorkbookModifiedAt(book.updatedAt, book.slug_en, "en"),
       alternates: {
         languages: localizedLanguages({
           en: `/workbooks/${book.slug_en}`,
@@ -106,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: fullUrl("es", `/workbooks/${book.slug_es}`),
-      lastModified: book.updatedAt,
+      lastModified: getWorkbookModifiedAt(book.updatedAt, book.slug_en, "es"),
       alternates: {
         languages: localizedLanguages({
           en: `/workbooks/${book.slug_en}`,
@@ -116,10 +95,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]);
 
-  return [
-    ...staticEntries,
-    ...englishOnlyEntries,
-    ...blogEntries,
-    ...ebookEntries,
-  ];
+  return [...staticEntries, ...blogEntries, ...ebookEntries];
 }

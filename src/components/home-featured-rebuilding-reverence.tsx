@@ -6,6 +6,7 @@ import {
 
 interface HomeFeaturedRebuildingReverenceProps {
   book: PromotedBookData | null;
+  locale: "en" | "es";
   eyebrow: string;
   tagline: string;
   blurbStart: string;
@@ -17,6 +18,7 @@ interface HomeFeaturedRebuildingReverenceProps {
 
 export function HomeFeaturedRebuildingReverence({
   book,
+  locale,
   eyebrow,
   tagline,
   blurbStart,
@@ -35,6 +37,7 @@ export function HomeFeaturedRebuildingReverence({
       <div className="relative mx-auto max-w-[1760px] px-4 sm:px-6 md:px-8 lg:px-12">
         <PromotedBook
           book={book}
+          locale={locale}
           eyebrow={eyebrow}
           tagline={tagline}
           blurbStart={blurbStart}
@@ -42,7 +45,7 @@ export function HomeFeaturedRebuildingReverence({
           blurbEnd={blurbEnd}
           cta={cta}
           emptyState={emptyState}
-          fallbackHref="/workbooks"
+          fallbackHref={`/${locale}/workbooks`}
           className="bg-transparent"
         />
       </div>

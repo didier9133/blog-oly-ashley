@@ -4,6 +4,9 @@ import path from "node:path";
 import fs from "node:fs";
 import { POST_SLUG_REDIRECTS } from "./src/lib/post-slugs";
 
+const isPreviewDeployment =
+  Boolean(process.env.VERCEL_ENV) && process.env.VERCEL_ENV !== "production";
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
@@ -32,6 +35,9 @@ const securityHeaders = [
       "form-action 'self'",
     ].join("; "),
   },
+  ...(isPreviewDeployment
+    ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]
+    : []),
 ];
 
 /**

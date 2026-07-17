@@ -15,13 +15,19 @@ import { getTranslations } from "next-intl/server";
 import { publicPostSlug } from "@/lib/post-slugs";
 import { htmlExcerpt } from "@/lib/plain-text";
 import {
-  organizationSchema,
+  getOrganizationSchema,
   personRef,
-  personSchema,
+  getPersonSchema,
   websiteRef,
   websiteSchema,
 } from "@/lib/schema-entities";
 import { routing } from "@/i18n/routing";
+import {
+  getWorkbookContent,
+  getWorkbookCoverImage,
+} from "@/lib/workbook-content";
+import { resolveSpanishPostContent } from "@/lib/spanish-post-content";
+import { getPostSeoDecision } from "@/lib/seo-content";
 
 export const revalidate = 3600;
 export const dynamic = "force-static";
@@ -38,6 +44,7 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale: currentLanguage } = await params;
+  const contentLocale = currentLanguage === "es" ? "es" : "en";
   const t = await getTranslations({
     locale: currentLanguage,
     namespace: "Home",
@@ -69,40 +76,46 @@ export default async function Home({
     }),
   ]);
 
-  const promotedBook = featuredBook
-    ? {
-        title:
-          currentLanguage === "en"
-            ? featuredBook.title_en
-            : featuredBook.title_es,
-        subtitle:
-          currentLanguage === "en"
-            ? featuredBook.subtitle_en
-            : featuredBook.subtitle_es,
-        coverImage:
-          currentLanguage === "en"
-            ? featuredBook.coverImage_en
-            : featuredBook.coverImage_es,
-        slug:
-          currentLanguage === "en"
-            ? featuredBook.slug_en
-            : featuredBook.slug_es,
-        locale: currentLanguage === "en" ? ("en" as const) : ("es" as const),
-      }
+  const featuredBookContent = featuredBook
+    ? getWorkbookContent(featuredBook, contentLocale)
     : null;
+  const promotedBook =
+    featuredBook && featuredBookContent
+      ? {
+          title: featuredBookContent.title,
+          subtitle: featuredBookContent.subtitle,
+          coverImage: getWorkbookCoverImage(featuredBook, contentLocale),
+          slug:
+            currentLanguage === "en"
+              ? featuredBook.slug_en
+              : featuredBook.slug_es,
+          locale: currentLanguage === "en" ? ("en" as const) : ("es" as const),
+        }
+      : null;
 
-  const writingPosts = recentWriting.map((post) => ({
-    href: localizedHref(
-      currentLanguage,
-      `/writing/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
-    ),
-    id: post.id,
-    title: currentLanguage === "en" ? post.title_en : post.title_es,
-    excerpt: htmlExcerpt(
-      currentLanguage === "en" ? post.content_en : post.content_es,
-    ),
-    image: post.image,
-  }));
+  const writingPosts = recentWriting.map((post) => {
+    const decision = getPostSeoDecision(
+      publicPostSlug(post.slug_en),
+      publicPostSlug(post.slug_es),
+    );
+
+    return {
+      href: localizedHref(
+        currentLanguage,
+        `/writing/${publicPostSlug(currentLanguage === "es" ? post.slug_es : post.slug_en)}`,
+      ),
+      id: post.id,
+      title:
+        decision?.displayTitle?.[contentLocale] ??
+        (currentLanguage === "en" ? post.title_en : post.title_es),
+      excerpt: htmlExcerpt(
+        currentLanguage === "en"
+          ? post.content_en
+          : resolveSpanishPostContent(post.slug_en, post.content_es),
+      ),
+      image: post.image,
+    };
+  });
 
   const primaryWorkbookPath =
     currentLanguage === "en"
@@ -120,12 +133,15 @@ export default async function Home({
   const aiSummaryEn =
     "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
   const aiSummaryEs =
-    "Ashley Leon es escritora, facilitadora de talleres y coach holística certificada de cuerpo-mente. Crea recursos para personas atravesando deconstrucción de fe, identidad, pertenencia y sanación después de la religión. Su oferta principal es Rebuilding Reverence, una guía práctica guiada de 30 días por $33. También facilita The Rebuilding Reverence Circle, una experiencia grupal en vivo de 4 semanas con cupo de 15 personas, una comunidad privada llamada The In-Between y una segunda guía práctica sobre fe, identidad y llamado. Su trabajo es honesto, no doctrinal y basado en coaching, no terapia.";
+    "Ashley Leon es escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral. Crea recursos para quienes están replanteando su fe, explorando su identidad y su sentido de pertenencia, o buscando sanar después de experiencias religiosas. Su propuesta principal es Rebuilding Reverence, una guía digital de 30 días con un precio de 33 USD. También facilita The Rebuilding Reverence Circle, un proceso grupal en vivo de cuatro semanas para un máximo de 15 personas; dirige una comunidad privada llamada The In-Between; y ofrece una segunda guía, Queer & Called. Su trabajo es afirmativo y no doctrinal, y ofrece acompañamiento educativo y reflexivo; no es terapia.";
 
   const aiSummarySchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
+    name:
+      currentLanguage === "es"
+        ? "Ashley Leon | Reconstruir la fe, la identidad y la reverencia después de la deconstrucción"
+        : "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
     url: homeUrl,
     inLanguage: currentLanguage,
     isPartOf: websiteRef,
@@ -133,8 +149,7 @@ export default async function Home({
     description: currentLanguage === "es" ? aiSummaryEs : aiSummaryEn,
   };
 
-  const heroDesktopSizes =
-    "(min-width: 1280px) calc(100vw - 300px), 100vw";
+  const heroDesktopSizes = "(min-width: 1280px) calc(100vw - 300px), 100vw";
   const { props: heroDesktopProps } = getImageProps({
     src: HERO_IMAGE,
     alt: "",
@@ -145,9 +160,9 @@ export default async function Home({
   });
   return (
     <>
-      <JsonLd data={organizationSchema} />
+      <JsonLd data={getOrganizationSchema(currentLanguage)} />
       <JsonLd data={websiteSchema} />
-      <JsonLd data={personSchema} />
+      <JsonLd data={getPersonSchema(currentLanguage)} />
       <JsonLd data={aiSummarySchema} />
       <main className="home-page relative isolate bg-background text-foreground">
         <div className="relative z-10 mx-auto max-w-[1760px] min-[1280px]:flex min-[1280px]:gap-10">
@@ -156,15 +171,9 @@ export default async function Home({
               id="hero"
               className="home-hero relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)] md:min-h-[46rem] md:max-h-[68rem]"
             >
-              <div
-                aria-hidden
-                className="absolute inset-0 overflow-hidden"
-              >
+              <div aria-hidden className="absolute inset-0 overflow-hidden">
                 <picture>
-                  <source
-                    media="(max-width: 767px)"
-                    srcSet={HERO_IMAGE}
-                  />
+                  <source media="(max-width: 767px)" srcSet={HERO_IMAGE} />
                   <source
                     media="(min-width: 768px)"
                     srcSet={heroDesktopProps.srcSet}
@@ -204,7 +213,7 @@ export default async function Home({
                     {t("hero-eyebrow")}
                   </span>
                   <h1 className="home-hero-reveal home-hero-reveal-2 mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-[-0.02em] text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3.15rem,4.25vw,4.75rem)] md:tracking-[-0.03em] xl:text-[clamp(3.45rem,4.2vw,5rem)]">
-                    {t("hero-title-one")} {" "}
+                    {t("hero-title-one")}{" "}
                     <span className="block">
                       {t("hero-title-two")}{" "}
                       <em className="not-italic text-primary">
@@ -221,7 +230,9 @@ export default async function Home({
                       href={primaryWorkbookHref}
                       className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 bg-[#8f513b] px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-[#fffaf5] transition-[background-color,transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:bg-[#784330] hover:shadow-[0_14px_34px_-18px_rgba(92,45,31,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
                     >
-                      <span className="min-w-0 text-balance">{t("cta-journals")}</span>
+                      <span className="min-w-0 text-balance">
+                        {t("cta-journals")}
+                      </span>
                       <span
                         aria-hidden
                         className="transition-transform duration-500 group-hover:translate-x-1.5"
@@ -233,7 +244,9 @@ export default async function Home({
                       href={writingHref}
                       className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/30 px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-foreground backdrop-blur-[2px] transition-[border-color,color,background-color,transform] duration-500 hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/55 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
                     >
-                      <span className="min-w-0 text-balance">{t("cta-explore")}</span>
+                      <span className="min-w-0 text-balance">
+                        {t("cta-explore")}
+                      </span>
                       <span
                         aria-hidden
                         className="transition-transform duration-500 group-hover:translate-x-1.5"
@@ -246,7 +259,10 @@ export default async function Home({
               </div>
 
               <div className="home-hero-reveal home-hero-reveal-5 pointer-events-none absolute bottom-8 left-8 z-30 hidden items-center gap-4 md:flex lg:left-12">
-                <span aria-hidden className="relative block h-12 w-px overflow-hidden bg-foreground/15">
+                <span
+                  aria-hidden
+                  className="relative block h-12 w-px overflow-hidden bg-foreground/15"
+                >
                   <span className="home-hero-scroll-line absolute inset-x-0 top-0 h-5 bg-primary" />
                 </span>
                 <span className="font-[family-name:var(--font-lora)] text-[0.58rem] font-medium uppercase tracking-[0.28em] text-foreground/55">
@@ -258,7 +274,8 @@ export default async function Home({
                 aria-hidden
                 className="absolute bottom-10 right-[5.5%] z-30 hidden origin-bottom-right -rotate-90 font-[family-name:var(--font-lora)] text-[0.56rem] font-medium uppercase tracking-[0.38em] text-foreground/45 md:block"
               >
-                Ashley Leon · Field Notes
+                Ashley Leon ·{" "}
+                {currentLanguage === "es" ? "Notas de campo" : "Field Notes"}
               </div>
 
               <svg
@@ -310,6 +327,7 @@ export default async function Home({
             <span id="book" className="sr-only" aria-hidden="true" />
             <HomeFeaturedRebuildingReverence
               book={promotedBook}
+              locale={contentLocale}
               eyebrow={t("book-eyebrow")}
               tagline={t("book-tagline")}
               blurbStart={t("book-blurb-start")}

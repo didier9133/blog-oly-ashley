@@ -1,11 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import {
   localizedAlternates,
-  singleLocaleAlternates,
+  localizedOpenGraph,
   transactionalRobots,
 } from "../src/lib/seo";
+import { configuredNumber } from "../src/lib/circle-config";
 import {
+  DECONSTRUCTING_CHRISTIANITY_CONTENT,
   DECONSTRUCTING_CHRISTIANITY_FAQS,
+  DECONSTRUCTING_CHRISTIANITY_FAQS_ES,
   DECONSTRUCTING_CHRISTIANITY_PATH,
   DECONSTRUCTING_CHRISTIANITY_TITLE,
 } from "../src/lib/deconstructing-christianity";
@@ -26,17 +29,31 @@ describe("bilingual SEO configuration", () => {
       es: "/workbooks/reconstruyendo-la-reverencia",
     });
 
-    expect(String(alternates.canonical).endsWith(
-      "/es/workbooks/reconstruyendo-la-reverencia",
-    )).toBe(true);
+    expect(
+      String(alternates.canonical).endsWith(
+        "/es/workbooks/reconstruyendo-la-reverencia",
+      ),
+    ).toBe(true);
     const languages = alternates.languages as Record<string, string>;
-    expect(languages.en.endsWith("/en/workbooks/rebuilding-reverence")).toBe(true);
-    expect(languages.es.endsWith(
-      "/es/workbooks/reconstruyendo-la-reverencia",
-    )).toBe(true);
-    expect(languages["x-default"].endsWith(
-      "/en/workbooks/rebuilding-reverence",
-    )).toBe(true);
+    expect(languages.en.endsWith("/en/workbooks/rebuilding-reverence")).toBe(
+      true,
+    );
+    expect(
+      languages.es.endsWith("/es/workbooks/reconstruyendo-la-reverencia"),
+    ).toBe(true);
+    expect(
+      languages["x-default"].endsWith("/en/workbooks/rebuilding-reverence"),
+    ).toBe(true);
+  });
+
+  test("keeps social locale metadata and zero-capacity Circle settings exact", () => {
+    expect(localizedOpenGraph("es")).toMatchObject({
+      locale: "es_ES",
+      alternateLocale: ["en_US"],
+      siteName: "Ashley Leon",
+    });
+    expect(configuredNumber("0", 10)).toBe(0);
+    expect(configuredNumber("", 10)).toBe(10);
   });
 
   test("uses distinct English and Spanish commercial metadata", () => {
@@ -52,25 +69,25 @@ describe("bilingual SEO configuration", () => {
     );
     expect(spanish?.title).toContain("Guía para reconstruir la fe");
     expect(spanish?.intentSection?.title).toBe(
-      "Una guía para acompañar el daño religioso con reflexión y cuidado",
+      "Una guía para comprender el daño religioso con reflexión y cuidado",
     );
     expect(
       spanish?.intentSection?.title.toLowerCase().includes("libro de trabajo"),
     ).toBe(false);
   });
 
-  test("keeps the English-only pillar canonical free of a false Spanish hreflang", () => {
-    const alternates = singleLocaleAlternates(
-      "en",
-      DECONSTRUCTING_CHRISTIANITY_PATH,
-    );
+  test("publishes reciprocal English and Spanish alternates for the pillar", () => {
+    const alternates = localizedAlternates("en", {
+      en: DECONSTRUCTING_CHRISTIANITY_PATH,
+      es: DECONSTRUCTING_CHRISTIANITY_PATH,
+    });
     const languages = alternates.languages as Record<string, string>;
 
-    expect(String(alternates.canonical).endsWith(
-      "/en/deconstructing-christianity",
-    )).toBe(true);
+    expect(
+      String(alternates.canonical).endsWith("/en/deconstructing-christianity"),
+    ).toBe(true);
     expect(languages.en.endsWith("/en/deconstructing-christianity")).toBe(true);
-    expect(languages.es).toBe(undefined);
+    expect(languages.es.endsWith("/es/deconstructing-christianity")).toBe(true);
     expect(languages["x-default"]).toBe(languages.en);
   });
 
@@ -79,15 +96,43 @@ describe("bilingual SEO configuration", () => {
       "Deconstructing Christianity",
     );
     expect(DECONSTRUCTING_CHRISTIANITY_FAQS.length).toBe(8);
-    expect(DECONSTRUCTING_CHRISTIANITY_FAQS.every(
-      (faq) => faq.question.endsWith("?") && faq.answer.length > 80,
-    )).toBe(true);
+    expect(
+      DECONSTRUCTING_CHRISTIANITY_FAQS.every(
+        (faq) => faq.question.endsWith("?") && faq.answer.length > 80,
+      ),
+    ).toBe(true);
     expect(DECONSTRUCTING_CHRISTIANITY_FAQS[0]?.answer).toContain(
       "taking your own beliefs seriously",
     );
     expect(DECONSTRUCTING_CHRISTIANITY_FAQS.at(-1)).toMatchObject({
       question: "What is The In-Between?",
     });
+  });
+
+  test("keeps the Spanish pillar FAQ idiomatic and complete", () => {
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS_ES.length).toBe(8);
+    expect(
+      DECONSTRUCTING_CHRISTIANITY_FAQS_ES.every(
+        (faq) =>
+          faq.question.startsWith("¿") &&
+          faq.question.endsWith("?") &&
+          faq.answer.length > 80,
+      ),
+    ).toBe(true);
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS_ES[0]?.answer).toContain(
+      "mirar con honestidad",
+    );
+    expect(DECONSTRUCTING_CHRISTIANITY_FAQS_ES.at(-1)).toMatchObject({
+      question: "¿Qué es The In-Between?",
+    });
+    expect(
+      DECONSTRUCTING_CHRISTIANITY_FAQS_ES.some((faq) =>
+        faq.answer.includes("el falso binario es la herida"),
+      ),
+    ).toBe(false);
+    expect(DECONSTRUCTING_CHRISTIANITY_CONTENT.es.workbookCta.href).toBe(
+      "/workbooks/reconstruyendo-la-reverencia",
+    );
   });
 
   test("keeps Spanish acquisition informational and commercial language hypothetical", () => {
@@ -111,7 +156,10 @@ describe("bilingual SEO configuration", () => {
     expect(decision?.relatedGuide?.en?.href).toBe(
       "/deconstructing-christianity",
     );
-    expect(decision?.relatedGuide?.es).toBe(undefined);
+    expect(decision?.relatedGuide?.es).toMatchObject({
+      href: "/deconstructing-christianity",
+      title: "¿Qué significa deconstruir el cristianismo?",
+    });
     expect(decision?.displayTitle?.en).toContain(
       "How to Rebuild Faith After Deconstruction",
     );
@@ -159,9 +207,7 @@ describe("bilingual SEO configuration", () => {
     const grief = getPostSeoDecision(
       "grief-after-miscarriage-and-the-life-you-imagined",
     );
-    const belonging = getPostSeoDecision(
-      "que-significa-realmente-pertenecer",
-    );
+    const belonging = getPostSeoDecision("que-significa-realmente-pertenecer");
     const advice = getPostSeoDecision(
       "dont-take-advice-from-someone-whose-life-you-dont-want",
     );

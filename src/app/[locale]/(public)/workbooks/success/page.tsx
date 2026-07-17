@@ -17,8 +17,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import PreloadSuccessPayment from "@/components/preload-succes-payment";
-import { transactionalRobots } from "@/lib/seo";
+import { localizedOpenGraph, transactionalRobots } from "@/lib/seo";
 import { PurchaseAnalytics } from "@/components/ecommerce-analytics";
+import { fullUrl, ogImageUrl } from "@/lib/url";
 
 interface SuccessPageProps {
   params: Promise<{
@@ -32,10 +33,45 @@ interface SuccessPageProps {
   }>;
 }
 
-export const metadata: Metadata = {
-  title: "Purchase complete | Ashley Leon",
-  robots: transactionalRobots,
-};
+export async function generateMetadata({
+  params,
+}: Pick<SuccessPageProps, "params">): Promise<Metadata> {
+  const { locale } = await params;
+  const title =
+    locale === "es"
+      ? "Compra confirmada | Ashley Leon"
+      : "Purchase complete | Ashley Leon";
+  const description =
+    locale === "es"
+      ? "Tu compra fue confirmada. Revisa tu correo para descargar la guía y consultar los próximos pasos."
+      : "Your purchase is confirmed. Check your email to download the guide and review the next steps.";
+  const image = ogImageUrl(locale);
+  const imageAlt =
+    locale === "es"
+      ? "Ashley Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
+      : "Ashley Leon beside the message “Returning to yourself is returning to the sacred”";
+
+  return {
+    title,
+    description,
+    robots: transactionalRobots,
+    alternates: { canonical: fullUrl(locale, "/workbooks/success") },
+    openGraph: {
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
+      url: fullUrl(locale, "/workbooks/success"),
+      images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
+    },
+  };
+}
 
 async function SuccessContent({
   locale,
@@ -281,7 +317,7 @@ async function SuccessContent({
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        }
+                        },
                       )}
                     </dd>
                   </div>

@@ -21,19 +21,22 @@ describe("footer localization", () => {
     expect(spanishMessages.footer).toMatchObject({
       "newsletter-label": "Carta de Ashley",
       "subscribe-label": "Quiero recibirla",
-      "stay-in-loop": "Una carta para cuando algo merece ser compartido.",
+      "stay-in-loop":
+        "Una carta que llega cuando hay algo que merece ser compartido.",
       "newsletter-desc":
-        "Reflexiones sobre fe, identidad y lo sagrado. Llegan sin calendario: solo cuando hay algo honesto que pueda acompañarte.",
+        "Reflexiones sobre fe, identidad y lo sagrado, sin calendario fijo: solo cuando tenga algo honesto que compartir contigo.",
       "brand-desc":
-        "Ensayos, guías y encuentros en vivo para reconstruir la fe, recuperar la reverencia y volver a lo sagrado sin dejarte atrás.",
-      explore: "Explora",
+        "Ensayos, guías y encuentros en vivo para reconstruir la fe, recuperar la reverencia y volver a lo sagrado sin renunciar a quien eres.",
+      explore: "Para empezar",
       company: "Más sobre Ashley",
-      "based-in": "Escribiendo desde la transición",
+      "based-in": "Escribiendo desde lo que todavía está tomando forma",
     });
   });
 
   test("renders server-side footer translations with the route locale", () => {
-    expect(footerSource).toContain('getTranslations({ locale, namespace: "footer" })');
+    expect(footerSource).toContain(
+      'getTranslations({ locale, namespace: "footer" })',
+    );
     expect(footerSource).toContain(
       'getTranslations({ locale, namespace: "navigation" })',
     );

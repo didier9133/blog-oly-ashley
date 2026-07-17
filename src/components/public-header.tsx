@@ -27,7 +27,7 @@ export function PublicHeader({ locale }: { locale: string }) {
         <div className="flex items-center justify-end gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
           <LanguageSelector />
           <SidebarTrigger
-            aria-label="Abrir menú"
+            aria-label={locale === "es" ? "Abrir el menú" : "Open menu"}
             className="-mr-1 lg:hidden"
           />
         </div>

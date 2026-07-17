@@ -16,9 +16,17 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, BASE_URL, localizedHref, ogImageUrl } from "@/lib/url";
-import { localizedAlternates } from "@/lib/seo";
+import {
+  isSupportedLocale,
+  localizedAlternates,
+  localizedOpenGraph,
+} from "@/lib/seo";
 import { workbookPriceCents } from "@/lib/workbook-pricing";
 import { personRef } from "@/lib/schema-entities";
+import {
+  getWorkbookContent,
+  getWorkbookCoverImage,
+} from "@/lib/workbook-content";
 
 export const revalidate = 3600;
 
@@ -29,21 +37,36 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Workbooks" });
+  const tSite = await getTranslations({ locale, namespace: "metadata" });
+  const title = t("metadata-title");
+  const description = t("metadata-description");
+  const image = ogImageUrl(locale);
+  const imageAlt = tSite("ogImageAlt");
 
   return {
-    title: t("metadata-title"),
-    description: t("metadata-description"),
+    title,
+    description,
     openGraph: {
-      title: t("metadata-title"),
-      description: t("metadata-description"),
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
       url: fullUrl(locale, "/workbooks"),
-      images: [ogImageUrl(locale)],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: "image/jpeg",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("metadata-title"),
-      description: t("metadata-description"),
-      images: [ogImageUrl(locale)],
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, {
       en: "/workbooks",
@@ -59,6 +82,7 @@ export default async function WorkbooksPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Workbooks" });
+  const contentLocale = isSupportedLocale(locale) ? locale : "en";
 
   const books = await prisma.book.findMany({
     orderBy: { createdAt: "desc" },
@@ -106,23 +130,23 @@ export default async function WorkbooksPage({
       : [
           {
             q: "¿Es un libro físico o digital?",
-            a: "Es una guía práctica digital guiada que puedes comenzar de inmediato.",
+            a: "Es una guía digital que puedes empezar hoy.",
           },
           {
-            q: "¿Necesito seguir siendo religiosa para usarlo?",
-            a: "No. Es para cualquier persona en El proceso: saliendo, cuestionando, reconstruyendo o en un lugar todavía sin nombre.",
+            q: "¿Necesito seguir siendo parte de una religión para usarla?",
+            a: "No. Puedes acercarte a estas guías si estás dejando una tradición, cuestionando lo que aprendiste, reconstruyendo tu fe o atravesando un momento que todavía no sabes cómo nombrar.",
           },
           {
-            q: "¿Afirma a las personas LGBTQ+?",
-            a: "Completamente. Todo de ti pertenece aquí: tu cuerpo, tu sexualidad y tus preguntas.",
+            q: "¿Son guías afirmativas para personas LGBTQ+?",
+            a: "Sí. Aquí hay espacio para todo lo que eres: tu cuerpo, tu sexualidad, tu identidad y tus preguntas.",
           },
           {
             q: "¿Esto es terapia?",
-            a: "No. Ashley es coach holística certificada de cuerpo-mente, no terapeuta licenciada. Este es un recurso reflexivo y basado en coaching.",
+            a: "No. Es acompañamiento, no terapia ni un sustituto de la atención profesional.",
           },
           {
-            q: "¿Tengo que elegir entre mi fe y mi identidad para usar esta guía?",
-            a: "No. Esta guía habla de integración, no de elegir. Es un espacio no doctrinal para reconciliar tu historia, tu fe y quien eres sin tener que esconderte.",
+            q: "¿Tengo que elegir entre mi fe y mi identidad para usar Queer & Called?",
+            a: "No. La guía propone integrar tu historia, tu fe y tu identidad sin pedirte que escondas ninguna parte de ti. No sigue una doctrina ni exige que pertenezcas a una tradición.",
           },
         ];
 
@@ -136,10 +160,10 @@ export default async function WorkbooksPage({
       "@type": "ItemList",
       numberOfItems: orderedBooks.length,
       itemListElement: orderedBooks.map((book, index) => {
+        const content = getWorkbookContent(book, contentLocale);
         const bookSlug = locale === "en" ? book.slug_en : book.slug_es;
         const bookUrl = fullUrl(locale, `/workbooks/${bookSlug}`);
-        const bookImage =
-          locale === "en" ? book.coverImage_en : book.coverImage_es;
+        const bookImage = getWorkbookCoverImage(book, contentLocale);
 
         return {
           "@type": "ListItem",
@@ -147,11 +171,11 @@ export default async function WorkbooksPage({
           item: {
             "@type": "Book",
             "@id": `${bookUrl}#book`,
-            name: locale === "en" ? book.title_en : book.title_es,
-            description:
-              locale === "en" ? book.description_en : book.description_es,
+            name: content.title,
+            description: content.description,
             author: personRef,
             bookFormat: "https://schema.org/EBook",
+            inLanguage: contentLocale,
             numberOfPages: book.pages,
             image: bookImage.startsWith("http")
               ? bookImage
@@ -195,17 +219,16 @@ export default async function WorkbooksPage({
         <div className="container mx-auto px-4 py-12 lg:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {orderedBooks.map((book) => {
-              const title = locale === "en" ? book.title_en : book.title_es;
-              const subtitle =
-                locale === "en" ? book.subtitle_en : book.subtitle_es;
-              const bookSlug =
-                locale === "en" ? book.slug_en : book.slug_es;
+              const content = getWorkbookContent(book, contentLocale);
+              const title = content.title;
+              const subtitle = content.subtitle;
+              const bookSlug = locale === "en" ? book.slug_en : book.slug_es;
               const isPrimary =
                 book.slug_en === "rebuilding-reverence" ||
                 book.slug_es === "reconstruyendo-la-reverencia";
 
-              const description =
-                locale === "en" ? book.description_en : book.description_es;
+              const description = content.description;
+              const coverImage = getWorkbookCoverImage(book, contentLocale);
 
               return (
                 <Card
@@ -215,12 +238,12 @@ export default async function WorkbooksPage({
                   <CardHeader className="p-0">
                     <div className="relative aspect-[3/4] overflow-hidden bg-[#f5f0eb]">
                       <Image
-                        src={
-                          locale === "en"
-                            ? book.coverImage_en
-                            : book.coverImage_es
+                        src={coverImage}
+                        alt={
+                          locale === "es"
+                            ? `Portada de ${title}`
+                            : `Cover of ${title}`
                         }
-                        alt={title}
                         fill
                         priority={isPrimary}
                         sizes="(max-width: 640px) 100vw, 50vw"
@@ -285,7 +308,7 @@ export default async function WorkbooksPage({
                         </span>
                       </div>
                       <p className="text-xs text-muted-foreground font-sans">
-                        {locale === "en" ? "Digital format" : "Formato digital"}
+                        {locale === "en" ? "Digital format" : content.format}
                       </p>
                     </div>
 
@@ -293,10 +316,12 @@ export default async function WorkbooksPage({
                       asChild
                       className="group/btn h-auto min-h-11 w-full rounded-sm bg-[#d8a08b] px-4 py-3 text-center font-[family-name:var(--font-lora)] text-sm leading-snug whitespace-normal text-white shadow-sm transition-all duration-300 hover:bg-[#c28c77] sm:w-auto sm:max-w-[16rem] sm:px-5 sm:text-base"
                     >
-                      <Link href={localizedHref(locale, `/workbooks/${bookSlug}`)}>
+                      <Link
+                        href={localizedHref(locale, `/workbooks/${bookSlug}`)}
+                      >
                         {locale === "en"
                           ? `Get ${title} — $33`
-                          : `Obtener ${title} — $33`}
+                          : `Comprar ${title} — $33`}
                         <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                       </Link>
                     </Button>
@@ -310,14 +335,13 @@ export default async function WorkbooksPage({
         <section className="container mx-auto px-4 pb-20 lg:pb-28">
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-8 text-center text-3xl font-light italic text-foreground sm:text-4xl">
-              {locale === "en" ? "Workbook questions." : "Preguntas sobre las guías prácticas."}
+              {locale === "en"
+                ? "Workbook questions."
+                : "Preguntas frecuentes sobre las guías."}
             </h2>
             <div className="space-y-5">
               {workbookFaqs.map((faq) => (
-                <div
-                  key={faq.q}
-                  className="border-t border-border/70 pt-5"
-                >
+                <div key={faq.q} className="border-t border-border/70 pt-5">
                   <h3 className="font-[family-name:var(--font-lora)] text-base font-semibold text-foreground">
                     {faq.q}
                   </h3>

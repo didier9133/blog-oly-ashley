@@ -26,15 +26,20 @@ import { CategoryEnum } from "@/enums";
 import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl, localizedHref } from "@/lib/url";
-import { isSupportedLocale, localizedAlternates } from "@/lib/seo";
 import {
-  getPostModifiedAt,
-  getPostSeoDecision,
-} from "@/lib/seo-content";
+  isSupportedLocale,
+  localizedAlternates,
+  localizedOpenGraph,
+} from "@/lib/seo";
+import { getPostModifiedAt, getPostSeoDecision } from "@/lib/seo-content";
 import { ProductCta } from "@/components/product-cta";
 import { routing } from "@/i18n/routing";
 import { postSlugCandidates, publicPostSlug } from "@/lib/post-slugs";
 import { organizationRef, personRef } from "@/lib/schema-entities";
+import {
+  getSpanishPostContent,
+  resolveSpanishPostContent,
+} from "@/lib/spanish-post-content";
 type Params = Promise<{ locale: string; slug: string }>;
 
 const PATH = CategoryEnum.Blog;
@@ -104,8 +109,16 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  const storedTitle = locale === "en" ? post.title_en : post.title_es;
-  const content = locale === "en" ? post.content_en : post.content_es;
+  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
+  const storedTitle = supportedLocale === "en" ? post.title_en : post.title_es;
+  const storedSpanishContent =
+    getSpanishPostContent(post.slug_en) ?? post.content_es;
+  const content =
+    supportedLocale === "es"
+      ? resolveSpanishPostContent(post.slug_en, post.content_es)
+      : post.content_en;
+  const hasLocalizedContent =
+    supportedLocale !== "es" || Boolean(storedSpanishContent?.trim());
   const description = htmlExcerpt(content);
   const decision = getPostSeoDecision(
     publicPostSlug(post.slug_en),
@@ -116,39 +129,49 @@ export async function generateMetadata({
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
-  const supportedLocale = isSupportedLocale(locale) ? locale : "en";
-  const title =
-    decision?.displayTitle?.[supportedLocale] ?? storedTitle;
+  const title = decision?.displayTitle?.[supportedLocale] ?? storedTitle;
   const pageTitle =
     decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Leon`;
-  const seoDescription = decision?.description?.[supportedLocale] ?? description;
+  const seoDescription =
+    decision?.description?.[supportedLocale] ?? description;
   const detailSlug = publicPostSlug(
     locale === "es" ? post.slug_es : post.slug_en,
   );
   const imageUrl = post.image.startsWith("http")
     ? post.image
     : `${BASE_URL}${post.image}`;
+  const imageAlt =
+    supportedLocale === "es"
+      ? `Imagen del ensayo «${title}»`
+      : `Image for the essay “${title}”`;
+  const articleSection =
+    supportedLocale === "es" ? decision?.categoryEs : decision?.category;
+  const primaryKeyword = decision?.primaryKeyword?.[supportedLocale];
 
   return {
     title: pageTitle,
     description: seoDescription,
+    robots: hasLocalizedContent
+      ? undefined
+      : { index: false, follow: true },
     openGraph: {
+      ...localizedOpenGraph(locale),
       type: "article",
-      locale: locale === "es" ? "es_ES" : "en_US",
-      alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
       title: pageTitle,
       description: seoDescription,
       url: fullUrl(locale, `/writing/${detailSlug}`),
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: imageAlt }],
       publishedTime: post.createdAt.toISOString(),
       modifiedTime: modifiedAt.toISOString(),
       authors: [fullUrl(locale, "/about")],
+      section: articleSection,
+      tags: primaryKeyword ? [primaryKeyword] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description: seoDescription,
-      images: [imageUrl],
+      images: [{ url: imageUrl, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, {
       en: `/writing/${publicPostSlug(post.slug_en)}`,
@@ -241,12 +264,17 @@ export default async function BlogPostPage(props: { params: Params }) {
     publicPostSlug(post.slug_en),
     publicPostSlug(post.slug_es),
   );
+  const editorialSpanishContent =
+    supportedLocale === "es" ? getSpanishPostContent(post.slug_en) : undefined;
   const postTraslated = {
     ...post,
     title:
       seoDecision?.displayTitle?.[supportedLocale] ??
       (currentLanguage === "en" ? post.title_en : post.title_es),
-    content: currentLanguage === "en" ? post.content_en : post.content_es,
+    content:
+      supportedLocale === "en"
+        ? post.content_en
+        : resolveSpanishPostContent(post.slug_en, post.content_es),
   };
   const seoLead = seoDecision?.lead?.[supportedLocale];
   const semanticRules = seoDecision?.semanticRules?.[supportedLocale];
@@ -270,6 +298,11 @@ export default async function BlogPostPage(props: { params: Params }) {
     dateModified: modifiedAt.toISOString(),
     author: { ...personRef, name: authorName },
     publisher: organizationRef,
+    articleSection:
+      supportedLocale === "es"
+        ? seoDecision?.categoryEs
+        : seoDecision?.category,
+    keywords: seoDecision?.primaryKeyword?.[supportedLocale],
     mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   };
 
@@ -280,13 +313,13 @@ export default async function BlogPostPage(props: { params: Params }) {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: locale === "es" ? "Inicio" : "Home",
         item: fullUrl(locale, ""),
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Writing",
+        name: locale === "es" ? "Ensayos" : "Writing",
         item: fullUrl(locale, "/writing"),
       },
       {
@@ -306,7 +339,10 @@ export default async function BlogPostPage(props: { params: Params }) {
         {/* Contenido principal */}
         <div className="w-full md:w-[75%]">
           {/* breadcrumbs */}
-          <Breadcrumb className="mb-8">
+          <Breadcrumb
+            aria-label={locale === "es" ? "Ruta de navegación" : "Breadcrumb"}
+            className="mb-8"
+          >
             <BreadcrumbList>
               <BreadcrumbItem>
                 <Link href={localizedHref(locale, "/")}>{t("breadcrumb")}</Link>
@@ -370,7 +406,9 @@ export default async function BlogPostPage(props: { params: Params }) {
             ) : null}
             <ArticleRichText
               content={postTraslated.content}
-              semanticRules={semanticRules}
+              semanticRules={
+                editorialSpanishContent ? undefined : semanticRules
+              }
             />
             {relatedReading?.length ? (
               <aside className="not-prose mt-10 border-l border-border pl-5">
@@ -427,17 +465,23 @@ export default async function BlogPostPage(props: { params: Params }) {
                 placement="end"
                 locale={supportedLocale}
                 articleSlug={detailSlug}
-                articleCategory={supportedLocale === "es" ? seoDecision.categoryEs : seoDecision.category}
+                articleCategory={
+                  supportedLocale === "es"
+                    ? seoDecision.categoryEs
+                    : seoDecision.category
+                }
                 primaryKeyword={seoDecision.primaryKeyword?.[supportedLocale]}
               />
             ) : null}
             <aside className="not-prose mt-14 border-t border-border pt-8">
               <p className="font-[family-name:var(--font-lora)] text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary">
-                {currentLanguage === "es" ? "Sobre la autora" : "About the author"}
+                {currentLanguage === "es"
+                  ? "Sobre la autora"
+                  : "About the author"}
               </p>
               <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-7 text-muted-foreground">
                 {currentLanguage === "es"
-                  ? "Ashley Leon es escritora cubano-colombiana, ex misionera, facilitadora de talleres y coach holística certificada de cuerpo-mente. Escribe sobre deconstrucción de fe, identidad, espiritualidad queer y sanación emocional."
+                  ? "Ashley Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Escribe sobre la deconstrucción de la fe, la identidad, la espiritualidad queer y la sanación emocional."
                   : "Ashley Leon is a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach. She writes about faith deconstruction, queer spirituality, identity, and emotional healing."}
               </p>
               <Link
@@ -445,7 +489,9 @@ export default async function BlogPostPage(props: { params: Params }) {
                 className="editorial-link mt-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
               >
                 {currentLanguage === "es" ? "Conoce a Ashley" : "Meet Ashley"}
-                <span className="editorial-link-arrow" aria-hidden="true">→</span>
+                <span className="editorial-link-arrow" aria-hidden="true">
+                  →
+                </span>
               </Link>
             </aside>
           </article>
@@ -475,11 +521,20 @@ export default async function BlogPostPage(props: { params: Params }) {
               }
             >
               <RecentPostsList
-                posts={recentPosts.map((recentPost) => ({
-                  ...recentPost,
-                  slug_en: publicPostSlug(recentPost.slug_en),
-                  slug_es: publicPostSlug(recentPost.slug_es),
-                }))}
+                posts={recentPosts.map((recentPost) => {
+                  const decision = getPostSeoDecision(
+                    publicPostSlug(recentPost.slug_en),
+                    publicPostSlug(recentPost.slug_es),
+                  );
+
+                  return {
+                    ...recentPost,
+                    title_en: decision?.displayTitle?.en ?? recentPost.title_en,
+                    title_es: decision?.displayTitle?.es ?? recentPost.title_es,
+                    slug_en: publicPostSlug(recentPost.slug_en),
+                    slug_es: publicPostSlug(recentPost.slug_es),
+                  };
+                })}
                 currentSubcategoryId={post.subcategoryId}
                 currentLanguage={currentLanguage}
                 pathPrefix="writing"

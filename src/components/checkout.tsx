@@ -265,7 +265,11 @@ export default function Checkout({
   return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance }}
+      options={{
+        clientSecret,
+        appearance,
+        locale: language === "es" ? "es" : "en",
+      }}
       key={clientSecret}
     >
       <CheckoutForm

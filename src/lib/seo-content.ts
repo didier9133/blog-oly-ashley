@@ -27,7 +27,7 @@ export const BLOG_CATEGORIES = [
 export const BLOG_CATEGORIES_ES = [
   "Deconstrucción de la fe",
   "Reconstrucción de la fe",
-  "Trauma religioso y heridas de iglesia",
+  "Trauma religioso y heridas causadas por la iglesia",
   "Fe e identidad LGBTQ+",
   "Comunidad y pertenencia",
 ] as const;
@@ -171,11 +171,11 @@ export const PRODUCT_CTAS: Record<
   es: {
     "rebuilding-reverence": {
       href: "/workbooks/reconstruyendo-la-reverencia",
-      eyebrow: "Continúa el proceso",
-      title: "Un siguiente paso para reconstruir después de la deconstrucción.",
+      eyebrow: "Para seguir reconstruyendo",
+      title: "¿Qué viene después de deconstruir la fe?",
       description:
-        "Rebuilding Reverence es una guía práctica de 30 días para cuestionar creencias heredadas, reconstruir la confianza espiritual y volver a lo sagrado sin abandonarte.",
-      label: "Explorar Rebuilding Reverence",
+        "Rebuilding Reverence es una guía práctica de 30 días para revisar las creencias que heredaste, recuperar la confianza espiritual y acercarte de nuevo a lo sagrado sin dejarte de lado.",
+      label: "Conocer Rebuilding Reverence",
     },
     "queer-and-called": {
       href: "/workbooks/queer-y-llamados",
@@ -187,11 +187,11 @@ export const PRODUCT_CTAS: Record<
     },
     circle: {
       href: "/circle",
-      eyebrow: "Atravesar el proceso en compañía",
+      eyebrow: "Vivir el proceso en compañía",
       title: "No tienes que reconstruir tu fe en soledad.",
       description:
-        "The Rebuilding Reverence Circle es una experiencia grupal en vivo de cuatro semanas para personas que están atravesando la deconstrucción de la fe.",
-      label: "Explorar The Circle",
+        "The Rebuilding Reverence Circle es un proceso grupal en vivo de cuatro semanas para quienes están deconstruyendo su fe.",
+      label: "Conocer The Circle",
     },
     community: {
       href: "/community",
@@ -204,9 +204,9 @@ export const PRODUCT_CTAS: Record<
     newsletter: {
       href: "/writing#newsletter",
       eyebrow: "Sigamos en contacto",
-      title: "Recibe nuevas reflexiones desde la transición.",
+      title: "Recibe nuevas reflexiones para esos momentos de transición.",
       description:
-        "Historias, afirmaciones y reflexiones enviadas cuando hay algo que de verdad merece ser dicho.",
+        "Historias, afirmaciones y reflexiones que te escribiré cuando tenga algo honesto que compartir.",
       label: "Suscribirme",
     },
   },
@@ -257,7 +257,7 @@ const BELONGING_SEO_DECISION: PostSeoDecision = {
   },
   lead: {
     en: "Belonging is not the absence of discomfort. It is being able to remain present, honest, and connected without having to disappear in order to be accepted.",
-    es: "Pertenecer no significa vivir sin incomodidad. Es poder permanecer presente y en conexión, con honestidad, sin tener que desaparecer para que te acepten.",
+    es: "Pertenecer no significa vivir sin incomodidad. Es poder estar presente, relacionarte con honestidad y seguir siendo tú, sin borrarte para que te acepten.",
   },
   primaryKeyword: {
     en: "what does belonging mean",
@@ -269,7 +269,7 @@ const BELONGING_SEO_DECISION: PostSeoDecision = {
   },
   description: {
     en: "A personal reflection on belonging, shame, discomfort, and learning to remain connected without disappearing to be accepted.",
-    es: "Una reflexión sobre pertenencia, vergüenza e incomodidad, y sobre cómo permanecer en conexión sin desaparecer para que te acepten.",
+    es: "Una reflexión sobre la pertenencia, la vergüenza y la incomodidad, y sobre cómo cuidar nuestros vínculos sin borrarnos para ser aceptados.",
   },
   semanticRules: {
     en: {
@@ -290,11 +290,11 @@ const BELONGING_SEO_DECISION: PostSeoDecision = {
       insertBefore: [
         {
           beforeText: "Y lo curioso es esto:",
-          headingText: "Cuando pertenecer se siente inseguro",
+          headingText: "Cuando pertenecer deja de sentirse seguro",
         },
         {
           beforeText: "Y sin embargo—hay otra parte de mí.",
-          headingText: "Reescribir lo que significa pertenecer",
+          headingText: "Cambiar lo que entendemos por pertenecer",
         },
       ],
     },
@@ -313,7 +313,7 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     lead: {
       en: "Rebuilding faith after deconstruction is not about returning to the version of you who never questioned. It can be the slower work of keeping what is honest, releasing what required self-abandonment, and learning to trust the sacred again.",
-      es: "Reconstruir la fe después de la deconstrucción no consiste en volver a ser quien eras antes de cuestionarlo todo. Puede ser el trabajo lento de conservar lo verdadero, soltar lo que exigía abandonarte y aprender a confiar de nuevo en lo sagrado.",
+      es: "Reconstruir la fe después de la deconstrucción no consiste en volver a ser quien eras antes de cuestionarlo todo. Puede ser el proceso pausado de conservar lo verdadero, soltar lo que exigía abandonarte y aprender a confiar de nuevo en lo sagrado.",
     },
     primaryKeyword: {
       en: "how to rebuild faith after deconstruction",
@@ -325,12 +325,15 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     description: {
       en: "A personal reflection on rebuilding faith after deconstruction, releasing self-abandonment, and learning to trust the sacred again.",
-      es: "Una reflexión personal sobre reconstruir la fe después de la deconstrucción, soltar el autoabandono y volver a confiar en lo sagrado.",
+      es: "Una reflexión sobre cómo reconstruir la fe después de la deconstrucción, soltar lo que te exigía abandonarte y volver a confiar en lo sagrado.",
     },
     semanticRules: {
       en: {
         promote: [
-          { sourceTag: "p", sourceText: "Life After Deconstruction: Where Do We Go Next?" },
+          {
+            sourceTag: "p",
+            sourceText: "Life After Deconstruction: Where Do We Go Next?",
+          },
           { sourceTag: "p", sourceText: "Life Before Deconstruction" },
           { sourceTag: "p", sourceText: "When It Started Cracking" },
           { sourceTag: "p", sourceText: "What Deconstruction Cost Me" },
@@ -342,7 +345,11 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       },
       es: {
         promote: [
-          { sourceTag: "h3", sourceText: "Vida Después de la Deconstrucción: ¿A Dónde Vamos Ahora?" },
+          {
+            sourceTag: "h3",
+            sourceText:
+              "Vida Después de la Deconstrucción: ¿A Dónde Vamos Ahora?",
+          },
           { sourceTag: "h3", sourceText: "La Vida Antes de la Deconstrucción" },
           { sourceTag: "h3", sourceText: "Cuando Empezó a Quebrarse" },
           { sourceTag: "h3", sourceText: "Lo Que Me Costó la Deconstrucción" },
@@ -362,6 +369,14 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
           "Read the complete guide to faith deconstruction, why it happens, what it can feel like, and the different directions it may take.",
         label: "Read the deconstruction guide",
       },
+      es: {
+        href: "/deconstructing-christianity",
+        eyebrow: "Empieza por lo esencial",
+        title: "¿Qué significa deconstruir el cristianismo?",
+        description:
+          "Lee la guía completa para entender qué es deconstruir la fe, por qué sucede, cómo se vive y qué caminos pueden abrirse después.",
+        label: "Leer la guía sobre deconstrucción",
+      },
     },
   },
   "finding-spiritual-balance-between-faith-and-material-life": {
@@ -371,11 +386,11 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     modifiedAt: "2026-07-17",
     displayTitle: {
       en: "Seeking First Again: Spiritual Balance Between Faith and Material Life",
-      es: "Volver a buscar primero: equilibrio espiritual entre fe y vida material",
+      es: "Volver a poner lo espiritual en el centro: equilibrio entre fe y vida material",
     },
     lead: {
       en: "This is a reflection on holding spiritual devotion, ambition, money, and ordinary responsibility together—without treating any part of a human life as less sacred.",
-      es: "Esta es una reflexión sobre cómo sostener la devoción espiritual, la ambición, el dinero y las responsabilidades cotidianas sin tratar ninguna parte de la vida como menos sagrada.",
+      es: "Esta reflexión explora cómo integrar la vida espiritual, la ambición, el dinero y las responsabilidades cotidianas sin tratar ninguna parte de la vida como menos sagrada que otra.",
     },
     primaryKeyword: {
       en: "spiritual balance between faith and material life",
@@ -393,17 +408,20 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       en: {
         insertBefore: [
           {
-            beforeText: "What I’ve been noticing lately is how healing often works like a pendulum.",
+            beforeText:
+              "What I’ve been noticing lately is how healing often works like a pendulum.",
             headingText: "When Healing Swings Like a Pendulum",
             match: "startsWith",
           },
           {
-            beforeText: "Today, it feels like the tables have completely turned.",
+            beforeText:
+              "Today, it feels like the tables have completely turned.",
             headingText: "When Material Security Takes Over",
             match: "startsWith",
           },
           {
-            beforeText: "And lately, I’ve been wondering… what if I have it backwards?",
+            beforeText:
+              "And lately, I’ve been wondering… what if I have it backwards?",
             headingText: "Finding Spiritual Balance Again",
           },
         ],
@@ -411,17 +429,20 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: {
         insertBefore: [
           {
-            beforeText: "Lo que he estado notando últimamente es cómo la sanación a menudo funciona como un péndulo.",
+            beforeText:
+              "Lo que he estado notando últimamente es cómo la sanación a menudo funciona como un péndulo.",
             headingText: "Cuando la sanación se mueve como un péndulo",
             match: "startsWith",
           },
           {
-            beforeText: "Hoy, parece que las mesas se han volteado por completo.",
+            beforeText:
+              "Hoy, parece que las mesas se han volteado por completo.",
             headingText: "Cuando la seguridad material ocupa el centro",
             match: "startsWith",
           },
           {
-            beforeText: "Y últimamente, me he estado preguntando… ¿y si lo tengo al revés?",
+            beforeText:
+              "Y últimamente, me he estado preguntando… ¿y si lo tengo al revés?",
             headingText: "Volver a encontrar equilibrio espiritual",
           },
         ],
@@ -437,7 +458,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: [
         {
           href: "/writing/como-reconstruir-la-fe-despues-de-la-deconstruccion",
-          label: "Continúa con una reflexión sobre reconstruir la fe después de la deconstrucción",
+          label:
+            "Continúa con una reflexión sobre reconstruir la fe después de la deconstrucción",
         },
       ],
     },
@@ -465,7 +487,7 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     description: {
       en: "A personal reflection on grief after miscarriage, the future you imagined, and giving your body permission to mourn what never came to be.",
-      es: "Una reflexión íntima sobre el duelo gestacional, la vida que imaginaste y el permiso de llorar lo que no llegó a suceder.",
+      es: "Una reflexión íntima sobre el duelo gestacional, la vida que imaginaste y cómo dar lugar al dolor que permanece en la memoria, el futuro y el cuerpo.",
     },
     semanticRules: {
       en: {
@@ -498,12 +520,12 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
           },
           {
             beforeText: "Y aun así sigo sosteniendo la tensión.",
-            headingText: "Sostener dos verdades a la vez",
+            headingText: "Dar lugar a dos verdades a la vez",
             match: "startsWith",
           },
           {
             beforeText: "Lo que sí sé es esto:",
-            headingText: "Darle permiso al duelo para existir",
+            headingText: "Dejar que el duelo tenga su lugar",
             match: "startsWith",
           },
         ],
@@ -535,7 +557,7 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     lead: {
       en: "Being gay and Christian is not a contradiction that must be solved. This is a reflection on conditional religion, coming out, and receiving God’s love without abandoning yourself.",
-      es: "Ser LGBTQ+ y vivir la fe no es una contradicción que tengas que resolver. Esta es una reflexión sobre la religión condicional, salir del clóset y recibir el amor de Dios sin abandonarte.",
+      es: "Ser LGBTQ+ y vivir la fe no es una contradicción que tengas que resolver. Esta es una reflexión sobre una fe vivida bajo condiciones, salir del clóset y recibir el amor de Dios sin abandonarte.",
     },
     primaryKeyword: {
       en: "gay Christian and God's unconditional love",
@@ -547,7 +569,7 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     description: {
       en: "A queer Christian reflection on coming out, conditional religion, and learning to trust God’s unconditional love without abandoning your identity.",
-      es: "Una reflexión cristiana LGBTQ+ sobre salir del clóset, cuestionar la religión condicional y confiar en el amor incondicional de Dios sin abandonar tu identidad.",
+      es: "Una reflexión sobre fe e identidad LGBTQ+, salir del clóset, cuestionar el amor condicionado en la religión y confiar en el amor incondicional de Dios.",
     },
     semanticRules: {
       en: {
@@ -562,7 +584,10 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: {
         promote: [
           { sourceTag: "p", sourceText: "¿En qué tipo de Dios crees?" },
-          { sourceTag: "p", sourceText: "Un Dios condicional se siente familiar" },
+          {
+            sourceTag: "p",
+            sourceText: "Un Dios condicional se siente familiar",
+          },
           { sourceTag: "p", sourceText: "El primer molde de amor" },
           { sourceTag: "p", sourceText: "El Dios incondicional" },
           { sourceTag: "p", sourceText: "Una pregunta para ti" },
@@ -610,7 +635,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: {
         insertBefore: [
           {
-            beforeText: "Pero aquí está la tensión con la que he estado sentada últimamente:",
+            beforeText:
+              "Pero aquí está la tensión con la que he estado sentada últimamente:",
             headingText: "Cuando un filtro útil se convierte en un muro",
           },
           {
@@ -648,9 +674,7 @@ export function getPostModifiedAt(
   ...slugs: (string | null | undefined)[]
 ) {
   const modifiedAt = getPostSeoDecision(...slugs)?.modifiedAt;
-  return modifiedAt
-    ? new Date(`${modifiedAt}T12:00:00.000Z`)
-    : fallback;
+  return modifiedAt ? new Date(`${modifiedAt}T12:00:00.000Z`) : fallback;
 }
 
 type WorkbookIntentSection = {
@@ -674,35 +698,45 @@ export function getWorkbookSeo(
     "rebuilding-reverence": {
       en: {
         title: "Religious Trauma Workbook | Rebuilding Reverence",
-        description: "A guided 30-day religious trauma workbook for reflecting on religious harm, inherited beliefs, spiritual burnout, and rebuilding trust without abandoning yourself.",
-        supportingLine: "A guided 30-day religious trauma workbook for reflection after religious harm.",
+        description:
+          "A guided 30-day religious trauma workbook for reflecting on religious harm, inherited beliefs, spiritual burnout, and rebuilding trust without abandoning yourself.",
+        supportingLine:
+          "A guided 30-day religious trauma workbook for reflection after religious harm.",
         intentSection: {
           title: "A Religious Trauma Workbook for Gentle Reflection",
           body: "Rebuilding Reverence is a guided 30-day religious trauma workbook for people examining inherited beliefs, spiritual burnout, church hurt, and the ways religious experiences may still shape the body, identity, and sense of trust. Through reflective prompts and gentle practices, it offers space to name what happened, listen to your inner wisdom, and explore what a more honest relationship with faith or the sacred could look like.",
-          disclaimer: "This workbook is an educational and reflective resource. It does not diagnose or treat trauma and is not a substitute for therapy or other professional care.",
+          disclaimer:
+            "This workbook is an educational and reflective resource. It does not diagnose or treat trauma and is not a substitute for therapy or other professional care.",
         },
       },
       es: {
         title: "Guía para reconstruir la fe | Rebuilding Reverence",
-        description: "Una guía práctica de 30 días para cuestionar creencias heredadas, procesar el daño religioso y reconstruir una fe más honesta sin abandonarte.",
-        supportingLine: "Una guía práctica de 30 días para acompañar el daño religioso y reconstruir una fe más honesta.",
+        description:
+          "Una guía práctica de 30 días para cuestionar creencias heredadas, procesar el daño religioso y reconstruir una fe más honesta sin abandonarte.",
+        supportingLine:
+          "Una guía práctica de 30 días para comprender el impacto del daño religioso y reconstruir una fe más honesta.",
         intentSection: {
-          title: "Una guía para acompañar el daño religioso con reflexión y cuidado",
-          body: "Rebuilding Reverence es una guía práctica de 30 días para quienes desean comprender cómo las creencias heredadas, el cansancio espiritual, las heridas de iglesia o las experiencias religiosas difíciles siguen influyendo en su cuerpo, su identidad y su capacidad de confiar. Con preguntas guiadas y prácticas amables, ofrece un espacio para nombrar lo vivido, volver a escuchar tu brújula interna y explorar cómo sería una relación más honesta con la fe o lo sagrado.",
-          disclaimer: "Es un recurso educativo y de reflexión. No diagnostica ni trata el trauma, ni sustituye la terapia u otra atención profesional.",
+          title:
+            "Una guía para comprender el daño religioso con reflexión y cuidado",
+          body: "Rebuilding Reverence es una guía práctica de 30 días para comprender cómo las creencias heredadas, el cansancio espiritual, el daño vivido en la iglesia o las experiencias religiosas difíciles siguen influyendo en tu cuerpo, tu identidad y tu capacidad de confiar. Con preguntas y prácticas amables, te ayuda a nombrar lo vivido, volver a escuchar tu brújula interna y explorar una relación más honesta con la fe o lo sagrado.",
+          disclaimer:
+            "Es un recurso educativo y de reflexión. No diagnostica ni trata el trauma, ni sustituye la terapia u otra atención profesional.",
         },
       },
     },
     "queer-and-called": {
       en: {
         title: "LGBTQ Christian Workbook | Queer & Called by Ashley Leon",
-        description: "A guided 30-day workbook for exploring LGBTQ identity, faith, spiritual belonging, voice, and wholeness without having to choose between them.",
+        description:
+          "A guided 30-day workbook for exploring LGBTQ identity, faith, spiritual belonging, voice, and wholeness without having to choose between them.",
         supportingLine: "An affirming LGBTQ faith and identity workbook.",
       },
       es: {
         title: "Guía de fe e identidad LGBTQ+ | Queer & Called",
-        description: "Una guía afirmativa de 30 días para explorar tu fe, tu identidad LGBTQ+, tu voz y tu sentido de pertenencia sin tener que elegir entre ellos.",
-        supportingLine: "Una guía afirmativa para reconciliar tu fe, tu identidad y tu voz.",
+        description:
+          "Una guía afirmativa de 30 días para explorar tu fe, tu identidad LGBTQ+, tu voz y tu pertenencia sin esconder ni dejar fuera ninguna parte de quien eres.",
+        supportingLine:
+          "Una guía afirmativa para integrar tu fe y tu identidad sin apagar tu voz.",
       },
     },
   };

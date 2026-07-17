@@ -14,6 +14,7 @@ export interface PromotedBookData {
 
 interface PromotedBookProps {
   book: PromotedBookData | null;
+  locale: "en" | "es";
   eyebrow: string;
   tagline: string;
   blurbStart: string;
@@ -28,6 +29,7 @@ interface PromotedBookProps {
 
 export function PromotedBook({
   book,
+  locale,
   eyebrow,
   tagline,
   blurbStart,
@@ -46,7 +48,7 @@ export function PromotedBook({
 
   return (
     <section
-      aria-label="Featured offering"
+      aria-label={locale === "es" ? "Guía destacada" : "Featured offering"}
       className={cn(
         "relative overflow-hidden",
         isCompact && "flex h-full items-center",
@@ -59,7 +61,11 @@ export function PromotedBook({
             <span className="editorial-eyebrow">{eyebrow}</span>
           </FadeIn>
 
-          <FadeIn delay={0.15} duration={1.1} className="mx-auto w-full max-w-[200px] sm:max-w-[220px]">
+          <FadeIn
+            delay={0.15}
+            duration={1.1}
+            className="mx-auto w-full max-w-[200px] sm:max-w-[220px]"
+          >
             <div className="relative mx-auto w-full">
               <div
                 aria-hidden
@@ -83,7 +89,7 @@ export function PromotedBook({
                       {tagline}
                     </span>
                     <span className="mt-3 font-[family-name:var(--font-cormorant-garamond)] text-lg italic text-foreground/60">
-                      Coming soon
+                      {locale === "es" ? "Próximamente" : "Coming soon"}
                     </span>
                   </div>
                 )}
@@ -158,7 +164,7 @@ export function PromotedBook({
                   <div className="flex h-full w-full flex-col items-center justify-center bg-paper px-6 text-center">
                     <span className="editorial-eyebrow">{tagline}</span>
                     <span className="mt-4 font-[family-name:var(--font-cormorant-garamond)] text-2xl italic text-foreground/60">
-                      Coming soon
+                      {locale === "es" ? "Próximamente" : "Coming soon"}
                     </span>
                   </div>
                 )}
@@ -168,7 +174,9 @@ export function PromotedBook({
 
           <div className="md:col-span-7 lg:col-span-7">
             <FadeIn delay={0.1}>
-              <span className="editorial-eyebrow tracking-[0.34em]">{eyebrow}</span>
+              <span className="editorial-eyebrow tracking-[0.34em]">
+                {eyebrow}
+              </span>
             </FadeIn>
 
             <FadeIn delay={0.2}>

@@ -56,12 +56,14 @@ export default function TestUploadClient() {
 
   return (
     <div className="container mx-auto p-8 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-6">🧪 Test de Subida S3 Privado</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        🧪 Prueba de carga privada en S3
+      </h1>
 
       <div className="space-y-6">
         {/* Upload Section */}
         <div className="border rounded-lg p-6 space-y-4">
-          <h2 className="text-xl font-semibold">1. Seleccionar Archivo</h2>
+          <h2 className="text-xl font-semibold">1. Seleccionar un archivo</h2>
 
           <input
             type="file"
@@ -86,7 +88,7 @@ export default function TestUploadClient() {
             disabled={!file || uploading}
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            {uploading ? "Subiendo..." : "Subir a S3 Privado"}
+            {uploading ? "Subiendo…" : "Subir de forma privada a S3"}
           </button>
 
           {error && (
@@ -100,11 +102,13 @@ export default function TestUploadClient() {
         {s3Key && (
           <div className="border rounded-lg p-6 space-y-4 bg-green-50">
             <h2 className="text-xl font-semibold text-green-800">
-              ✅ Subida Exitosa
+              ✅ Carga completada
             </h2>
 
             <div>
-              <p className="text-sm font-semibold text-gray-700">S3 Key:</p>
+              <p className="text-sm font-semibold text-gray-700">
+                Clave de S3:
+              </p>
               <code className="block bg-gray-100 p-2 rounded text-xs break-all">
                 {s3Key}
               </code>
@@ -112,7 +116,7 @@ export default function TestUploadClient() {
 
             <div>
               <p className="text-sm font-semibold text-gray-700">
-                URL Prefirmada (válida 2 días):
+                Enlace temporal de descarga (válido durante 2 días):
               </p>
               <code className="block bg-gray-100 p-2 rounded text-xs break-all">
                 {downloadUrl}
@@ -123,7 +127,7 @@ export default function TestUploadClient() {
               onClick={handleDownload}
               className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
             >
-              📥 Descargar Archivo
+              📥 Descargar archivo
             </button>
           </div>
         )}

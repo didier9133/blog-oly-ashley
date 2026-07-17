@@ -8,7 +8,11 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { BASE_URL, fullUrl, ogImageUrl } from "@/lib/url";
-import { indexableRobots, localizedAlternates } from "@/lib/seo";
+import {
+  indexableRobots,
+  localizedAlternates,
+  localizedOpenGraph,
+} from "@/lib/seo";
 
 // Analytics
 import { Analytics } from "@vercel/analytics/next";
@@ -59,22 +63,25 @@ export async function generateMetadata({
   const description = t("description");
   const ogImageAlt = t("ogImageAlt");
   const localeOgImage = ogImageUrl(locale);
+  const keywords = t("keywords")
+    .split(",")
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
 
   return {
     metadataBase: new URL(BASE_URL),
     title,
     description,
+    keywords,
     authors: [{ name: "Ashley Leon" }],
     creator: "Ashley Leon",
     publisher: "Ashley Leon",
     robots: indexableRobots,
     alternates: localizedAlternates(locale, { en: "/", es: "/" }),
     openGraph: {
+      ...localizedOpenGraph(locale),
       type: "website",
-      locale: locale === "es" ? "es_ES" : "en_US",
-      alternateLocale: locale === "es" ? ["en_US"] : ["es_ES"],
       url: fullUrl(locale, "/"),
-      siteName: "Ashley Leon",
       title,
       description,
       images: [
@@ -130,7 +137,12 @@ export default async function RootLayout({
         />
         <link rel="icon" href="/favicon-adl.ico" sizes="any" />
         <link rel="icon" href="/favicon-adl.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon-adl-96x96.png" sizes="96x96" type="image/png" />
+        <link
+          rel="icon"
+          href="/favicon-adl-96x96.png"
+          sizes="96x96"
+          type="image/png"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -151,7 +163,13 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MaxListenersBump />
-          <Toaster position="top-right" richColors />
+          <Toaster
+            position="top-right"
+            richColors
+            containerAriaLabel={
+              locale === "es" ? "Notificaciones" : "Notifications"
+            }
+          />
           {children}
           <GoogleAnalyticsConsent locale={locale} />
           <Analytics />

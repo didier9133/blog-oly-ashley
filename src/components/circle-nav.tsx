@@ -7,6 +7,7 @@ export type NavItem = { id: string; label: string };
 
 interface CircleNavProps {
   items: NavItem[];
+  ariaLabel?: string;
   reserveLabel?: string;
   reserveHref?: string;
   sectionHrefPrefix?: string;
@@ -15,6 +16,7 @@ interface CircleNavProps {
 
 export function CircleNav({
   items,
+  ariaLabel = "Circle sections",
   reserveLabel,
   reserveHref,
   sectionHrefPrefix,
@@ -67,10 +69,7 @@ export function CircleNav({
     return () => observer.disconnect();
   }, [items]);
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
-  ) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     if (sectionHrefPrefix) {
       e.preventDefault();
       window.location.assign(`${sectionHrefPrefix}#${id}`);
@@ -86,7 +85,7 @@ export function CircleNav({
 
   return (
     <nav
-      aria-label="Circle sections"
+      aria-label={ariaLabel}
       className={cn(
         "fixed inset-x-0 z-40 transition-all duration-300",
         "top-16 sm:top-[4.5rem] md:top-[4.75rem]",

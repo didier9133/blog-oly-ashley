@@ -52,9 +52,7 @@ const ContactEmailTemplate = async ({
             <Text style={closing}>
               {t("gratitude")}
               <br />
-              <strong>Ashley Leon</strong>
-              <br />
-              {t("signature")}
+              <strong>{t("signature")}</strong>
             </Text>
           </Section>
 

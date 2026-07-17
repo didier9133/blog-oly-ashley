@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fullUrl, BASE_URL } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
-import { localizedAlternates } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
 import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
 import { websiteRef } from "@/lib/schema-entities";
 
-const COMMUNITY_URL =
-  "https://www.gokollab.com/the-in-between-4dzfnm/home";
+const COMMUNITY_URL = "https://www.gokollab.com/the-in-between-4dzfnm/home";
 
 export async function generateMetadata({
   params,
@@ -19,11 +18,17 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Community.metadata" });
   const image = OFFER_OG_IMAGES.community;
   const imageUrl = `${BASE_URL}${image.path}`;
+  const imageAlt =
+    locale === "es"
+      ? "The In-Between, una comunidad privada para conversar con honestidad, reflexionar y encontrar pertenencia"
+      : image.alt;
 
   return {
     title: t("title"),
     description: t("description"),
     openGraph: {
+      ...localizedOpenGraph(locale),
+      type: "website",
       title: t("title"),
       description: t("description"),
       url: fullUrl(locale, "/community"),
@@ -32,7 +37,7 @@ export async function generateMetadata({
           url: imageUrl,
           width: image.width,
           height: image.height,
-          alt: image.alt,
+          alt: imageAlt,
           type: image.contentType,
         },
       ],
@@ -41,7 +46,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: [{ url: imageUrl, alt: image.alt }],
+      images: [{ url: imageUrl, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, {
       en: "/community",
@@ -71,8 +76,18 @@ export default async function CommunityPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
-      { "@type": "ListItem", position: 2, name: "The In-Between", item: fullUrl(locale, "/community") },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: locale === "es" ? "Inicio" : "Home",
+        item: fullUrl(locale, ""),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "The In-Between",
+        item: fullUrl(locale, "/community"),
+      },
     ],
   };
 

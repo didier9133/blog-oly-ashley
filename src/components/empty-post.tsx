@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Plus, Sparkles, Coffee, Heart, NotebookPen } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 interface NoPostsViewProps {
@@ -11,6 +11,7 @@ interface NoPostsViewProps {
 
 export default function NoPostsView({ isAdmin = false }: NoPostsViewProps) {
   const t = useTranslations("NotPostFound");
+  const locale = useLocale();
   return (
     <div className="font-[family-name:var(--font-lora)]">
       <main className="flex-1 flex items-center justify-center px-4 py-16">
@@ -33,10 +34,10 @@ export default function NoPostsView({ isAdmin = false }: NoPostsViewProps) {
 
           <div className="space-y-4 mb-8">
             <h1 className="text-4xl md:text-5xl font-light tracking-wide font-[family-name:var(--font-cormorant-garamond)]">
-              {t("title")}
+              {t(isAdmin ? "title" : "publicTitle")}
             </h1>
             <p className="text-lg font-light max-w-md mx-auto leading-relaxed">
-              {t("message")}
+              {t(isAdmin ? "message" : "publicMessage")}
             </p>
           </div>
 
@@ -48,7 +49,7 @@ export default function NoPostsView({ isAdmin = false }: NoPostsViewProps) {
 
           {isAdmin && (
             <div className="flex justify-center items-center">
-              <Link href="/dashboard/create">
+              <Link href={`/${locale}/dashboard/create`}>
                 <Button size="lg">
                   <Plus className="h-5 w-5 mr-2 group-hover:rotate-90 transition-transform duration-200" />
                   {t("create")}

@@ -21,7 +21,7 @@
     "title": "Faith After Deconstruction | Ashley Leon",
     "description": "Essays, guided workbooks, and live workshops for rebuilding faith, identity, reverence, and belonging after religious deconstruction.",
     "keywords": "Ashley Leon, faith deconstruction, queer spirituality, identity, healing, reverence, workbooks, live workshops",
-    "ogImageAlt": "Ashley Leon, writer and facilitator for faith, identity, and reverence after deconstruction"
+    "ogImageAlt": "Ashley Leon beside the message “Returning to yourself is returning to the sacred”"
   },
   "footer": {
     "newsletter-label": "Newsletter",
@@ -114,6 +114,17 @@
       },
       "card": {
         "postInfo": "Post information"
+      },
+      "recipe": {
+        "title": "Recipe details for rich results",
+        "ingredientsLabel": "Ingredients (one per line)",
+        "ingredientsPlaceholder": "1 cup flour\n2 eggs\n1 tsp salt",
+        "instructionsLabel": "Instructions (one step per line)",
+        "instructionsPlaceholder": "Mix the dry ingredients\nAdd the eggs and stir\nBake at 180°C for 30 minutes",
+        "yieldLabel": "Yield",
+        "yieldPlaceholder": "4 servings",
+        "prepTimeLabel": "Preparation time",
+        "cookTimeLabel": "Cooking time"
       },
       "fields": {
         "title": {
@@ -279,6 +290,7 @@
     "recipes": "Recipes",
     "select": "Select a category",
     "search": "Search",
+    "suggestions": "Suggestions",
     "empty": "No categories found."
   },
   "subcategories": {
@@ -490,11 +502,14 @@
     "title": "Something's wrong here.",
     "message": "This is a 404 error, which means you've clicked on a bad link or entered an invalid URL.",
     "subtleQuote": "\"The page you are looking for does not exist, but the journey continues.\"",
+    "imageAlt": "Page not found illustration",
     "returnHome": "Return to Home"
   },
   "NotPostFound": {
     "title": "No posts",
     "message": "The canvas is blank, waiting for the first brushstrokes of your creativity",
+    "publicTitle": "No essays have been published yet",
+    "publicMessage": "Come back soon to read the first one.",
     "subtleQuote": "\"Every great story begins with a blank page\"",
     "create": "Create your first post"
   },

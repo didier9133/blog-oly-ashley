@@ -3,7 +3,7 @@
 import { data } from "@/const/navbar-options";
 import { ItemNavBar } from "./item-nav-bar";
 import { useUser } from "@clerk/nextjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 type NavItem = {
   title: string;
@@ -22,6 +22,7 @@ const titleToPath = (item: NavItem): string => {
 export function ItemsNavBar() {
   const { user, isLoaded } = useUser();
   const t = useTranslations("navigation");
+  const locale = useLocale();
 
   // Mientras Clerk carga el user, asumimos no-admin para evitar CLS:
   // el nav se monta con el set base (navMain) y solo cambia si es admin.
@@ -31,6 +32,11 @@ export function ItemsNavBar() {
   const itemsTranslated = items.map((item) => ({
     ...item,
     title: t(titleToPath(item)),
+    url: item.external
+      ? item.url
+      : item.url === "/"
+        ? `/${locale}`
+        : `/${locale}${item.url}`,
   }));
 
   return (

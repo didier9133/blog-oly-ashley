@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
 import { fullUrl, ogImageUrl } from "@/lib/url";
-import { localizedAlternates } from "@/lib/seo";
-import { personRef, personSchema, websiteRef } from "@/lib/schema-entities";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
+import { getPersonSchema, personRef, websiteRef } from "@/lib/schema-entities";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -13,22 +13,39 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "About.metadata" });
+  const [t, tSite] = await Promise.all([
+    getTranslations({ locale, namespace: "About.metadata" }),
+    getTranslations({ locale, namespace: "metadata" }),
+  ]);
+  const title = t("title");
+  const description = t("description");
+  const image = ogImageUrl(locale);
+  const imageAlt = tSite("ogImageAlt");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     openGraph: {
-      title: t("title"),
-      description: t("description"),
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
       url: fullUrl(locale, "/about"),
-      images: [ogImageUrl(locale)],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: "image/jpeg",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-      images: [ogImageUrl(locale)],
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, { en: "/about", es: "/about" }),
   };
@@ -57,7 +74,7 @@ export default async function Page({
   return (
     <>
       <JsonLd data={aboutPageSchema} />
-      <JsonLd data={personSchema} />
+      <JsonLd data={getPersonSchema(locale)} />
       <main className="min-h-screen bg-[#F9F8F6] font-[family-name:var(--font-cormorant-garamond)] py-16 lg:py-24">
         <div className="container max-w-6xl mx-auto px-4">
           <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">

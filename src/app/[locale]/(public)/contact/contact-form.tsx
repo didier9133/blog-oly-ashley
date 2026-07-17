@@ -26,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { sendContactEmail } from "@/app/[locale]/actions/contact";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const createFormContactSchema = (t: { (key: string): string }) =>
   z.object({
@@ -41,6 +41,7 @@ const createFormContactSchema = (t: { (key: string): string }) =>
 export default function ContactForm() {
   const t_validation = useTranslations("Contact.validation");
   const t = useTranslations("Contact");
+  const locale = useLocale();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formContactSchema = createFormContactSchema(t_validation);
@@ -157,7 +158,7 @@ export default function ContactForm() {
 
             <CardFooter className="flex justify-end border-t border-border/50 p-8 bg-[#f5f0eb]/30">
               <div className="flex space-x-4">
-                <Link href="/">
+                <Link href={`/${locale}`}>
                   <Button
                     type="button"
                     variant="outline"

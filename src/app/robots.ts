@@ -1,25 +1,20 @@
 import type { MetadataRoute } from "next";
+import { BASE_URL } from "@/lib/url";
 
-const BASE_URL = "https://ashleydianaleon.com";
 const PUBLIC_BLOCKLIST = [
-  "/dashboard/",
-  "/en/dashboard/",
-  "/es/dashboard/",
+  "/dashboard",
+  "/en/dashboard",
+  "/es/dashboard",
   "/api/",
-  "/test-upload",
-  "/en/test-upload",
-  "/es/test-upload",
-  "/recipes",
-  "/es/recipes",
-  "/circle/success",
-  "/es/circle/success",
-  "/workbooks/success",
-  "/es/workbooks/success",
-  "/our-love",
-  "/es/our-love",
 ];
 
 export default function robots(): MetadataRoute.Robots {
+  if (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
+    return {
+      rules: { userAgent: "*", disallow: "/" },
+    };
+  }
+
   return {
     rules: [
       {

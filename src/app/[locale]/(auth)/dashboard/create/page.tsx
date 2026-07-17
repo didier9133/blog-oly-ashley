@@ -480,15 +480,9 @@ export default function CreatePostPage() {
       await saveNewPost(data);
       toast.dismiss();
       toast.success(t("toast.create.success"));
-    } catch (error) {
-      let errorMessage = t("toast.create.error");
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      } else if (typeof error === "string") {
-        errorMessage = error;
-      }
+    } catch {
       toast.dismiss();
-      toast.error(errorMessage);
+      toast.error(t("toast.create.error"));
     } finally {
       setImagePreview("");
       setVideoPreview("");
@@ -983,44 +977,46 @@ export default function CreatePostPage() {
             {isRecipePostVisible && (
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle>Recipe Details (SEO Rich Results)</CardTitle>
+                  <CardTitle>{t("recipe.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">
-                      Ingredients (one per line)
+                      {t("recipe.ingredientsLabel")}
                     </label>
                     <Textarea
                       value={recipeIngredients}
                       onChange={(e) => setRecipeIngredients(e.target.value)}
-                      placeholder={"1 cup flour\n2 eggs\n1 tsp salt"}
+                      placeholder={t("recipe.ingredientsPlaceholder")}
                       rows={6}
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">
-                      Instructions (one step per line)
+                      {t("recipe.instructionsLabel")}
                     </label>
                     <Textarea
                       value={recipeInstructions}
                       onChange={(e) => setRecipeInstructions(e.target.value)}
-                      placeholder={
-                        "Mix dry ingredients\nAdd eggs and stir\nBake at 180°C for 30 min"
-                      }
+                      placeholder={t("recipe.instructionsPlaceholder")}
                       rows={6}
                     />
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Yield</label>
+                      <label className="text-sm font-medium">
+                        {t("recipe.yieldLabel")}
+                      </label>
                       <Input
                         value={recipeYield}
                         onChange={(e) => setRecipeYield(e.target.value)}
-                        placeholder="4 servings"
+                        placeholder={t("recipe.yieldPlaceholder")}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Prep Time</label>
+                      <label className="text-sm font-medium">
+                        {t("recipe.prepTimeLabel")}
+                      </label>
                       <Input
                         value={recipePrepTime}
                         onChange={(e) => setRecipePrepTime(e.target.value)}
@@ -1028,7 +1024,9 @@ export default function CreatePostPage() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Cook Time</label>
+                      <label className="text-sm font-medium">
+                        {t("recipe.cookTimeLabel")}
+                      </label>
                       <Input
                         value={recipeCookTime}
                         onChange={(e) => setRecipeCookTime(e.target.value)}

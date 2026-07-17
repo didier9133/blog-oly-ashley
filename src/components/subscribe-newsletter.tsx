@@ -65,14 +65,16 @@ export function FormSubscribeNewsletter({
 
   return (
     <div id="newsletter-form" className={cn("w-full", className)}>
-      {showLabel && (
-        <label
-          htmlFor="newsletter-email"
-          className="block uppercase tracking-widest text-xs font-bold text-muted-foreground mb-4 text-center"
-        >
-          {t("newsletter-label")}
-        </label>
-      )}
+      <label
+        htmlFor="newsletter-email"
+        className={
+          showLabel
+            ? "block uppercase tracking-widest text-xs font-bold text-muted-foreground mb-4 text-center"
+            : "sr-only"
+        }
+      >
+        {showLabel ? t("newsletter-label") : t("placeholder")}
+      </label>
 
       <div className="w-full max-w-md mx-auto">
         <form

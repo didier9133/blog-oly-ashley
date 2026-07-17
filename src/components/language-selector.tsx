@@ -10,12 +10,9 @@ export const LanguageSelector = () => {
   const pathname = usePathname();
   const pathWithoutLocale =
     (pathname ?? "/").replace(/^\/(en|es)(?=\/|$)/, "") || "/";
-  const spanishVersionUnavailable =
-    pathWithoutLocale === "/deconstructing-christianity";
 
   const handleLanguageChange = (lang: "en" | "es") => {
     if (lang === currentLanguage) return;
-    if (lang === "es" && spanishVersionUnavailable) return;
 
     window.location.assign(localizedHref(lang, pathWithoutLocale));
   };
@@ -25,19 +22,13 @@ export const LanguageSelector = () => {
       <button
         type="button"
         onClick={() => handleLanguageChange("es")}
-        disabled={spanishVersionUnavailable}
         aria-label={
-          spanishVersionUnavailable
-            ? "ES — Spanish version not available yet"
-            : "ES — Switch to Spanish"
-        }
-        title={
-          spanishVersionUnavailable
-            ? "Spanish version not available yet"
-            : undefined
+          currentLanguage === "es"
+            ? "Español, idioma actual"
+            : "Switch to Spanish"
         }
         className={cn(
-          "hover:text-foreground transition-colors disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:text-foreground/60",
+          "hover:text-foreground transition-colors",
           currentLanguage === "es" && "text-foreground font-semibold",
         )}
       >
@@ -47,7 +38,11 @@ export const LanguageSelector = () => {
       <button
         type="button"
         onClick={() => handleLanguageChange("en")}
-        aria-label="EN — Switch to English"
+        aria-label={
+          currentLanguage === "es"
+            ? "Cambiar a inglés"
+            : "English, current language"
+        }
         className={cn(
           "hover:text-foreground transition-colors",
           currentLanguage === "en" && "text-foreground font-semibold",

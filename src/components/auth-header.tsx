@@ -6,14 +6,16 @@ import { Button } from "./ui/button";
 import { User } from "lucide-react";
 import { LanguageSelector } from "./language-selector";
 
-export async function AuthHeader() {
+export async function AuthHeader({ locale }: { locale: string }) {
+  const isSpanish = locale === "es";
+
   return (
     <header className="sticky top-0 z-50 flex h-16 sm:h-[4.5rem] md:h-[4.75rem] shrink-0 items-center border-b border-foreground/[0.08] bg-[#F9F8F6]">
       <nav className="w-full flex items-center justify-between gap-2 sm:gap-4 md:gap-6 lg:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 mx-auto max-w-[1760px]">
         <Link
-          href="/"
+          href={`/${locale}`}
           className="flex-shrink-0 min-w-0 md:hidden"
-          aria-label="Ashley Leon — Inicio"
+          aria-label={isSpanish ? "Ashley Leon — Inicio" : "Ashley Leon — Home"}
         >
           <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] sm:text-[1.75rem] font-medium text-foreground tracking-tighter leading-none whitespace-nowrap">
             Ashley Leon
@@ -31,7 +33,7 @@ export async function AuthHeader() {
               <Button
                 variant={"ghost"}
                 size="icon"
-                aria-label="Iniciar sesión"
+                aria-label={isSpanish ? "Iniciar sesión" : "Sign in"}
                 className="rounded-full hover:bg-foreground/5 h-10 w-10"
               >
                 <User className="w-5 h-5 text-foreground/80" />
@@ -53,7 +55,7 @@ export async function AuthHeader() {
           </SignedIn>
 
           <SidebarTrigger
-            aria-label="Abrir menú"
+            aria-label={isSpanish ? "Abrir menú" : "Open menu"}
             className="md:hidden -mr-1"
           />
         </div>

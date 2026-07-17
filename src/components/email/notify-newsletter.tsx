@@ -37,14 +37,14 @@ const OwnerNewsletterNotificationTemplate = ({
 
         <Section style={content}>
           <Text style={greeting}>
-            Alguien se suscribió desde el sitio web. Agrégalo manualmente en
-            Substack.
+            Alguien se suscribió desde el sitio web. Añade la dirección
+            manualmente en Substack.
           </Text>
 
           <Section style={infoSection}>
             <Text style={sectionTitle}>Detalles</Text>
             <Text style={infoItem}>
-              <strong>Email:</strong> {email}
+              <strong>Correo:</strong> {email}
             </Text>
             {source ? (
               <Text style={infoItem}>
@@ -63,10 +63,10 @@ const OwnerNewsletterNotificationTemplate = ({
           <Section style={actionSection}>
             <Text style={sectionTitle}>Acciones</Text>
             <Text style={actionItem}>
-              • Agregar este email como suscriptor/a en Substack
+              • Añadir esta dirección a la lista de suscriptores de Substack
             </Text>
             <Text style={actionItem}>
-              • Marcarlo como “handled” en el dashboard (si aplica)
+              • Marcarla como «procesada» en el panel (si corresponde)
             </Text>
             <Text style={actionItem}>• Si ya existe, ignorar este aviso</Text>
           </Section>

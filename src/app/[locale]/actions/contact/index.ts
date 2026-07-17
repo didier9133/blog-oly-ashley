@@ -51,7 +51,7 @@ export async function notifyContactFormSubmission(params: {
   await resend.emails.send({
     from: `Ashley Leon <notify@${emailDomain}>`,
     to: NOTIFICATION_EMAIL,
-    subject: `New contact message from ${params.name}`,
+    subject: `Nuevo mensaje de contacto de ${params.name}`,
     react: OwnerNotificationTemplate({
       customerEmail: params.email,
       customerName: params.name,

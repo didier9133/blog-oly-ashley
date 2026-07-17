@@ -2,16 +2,19 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { BASE_URL, fullUrl } from "@/lib/url";
-import { localizedAlternates } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { CircleNav, type NavItem } from "@/components/circle-nav";
 import { CircleStickyCta } from "@/components/circle-sticky-cta";
 import { CircleFaq } from "@/components/circle-faq";
 import { ViewItemAnalytics } from "@/components/ecommerce-analytics";
-import { OFFER_OG_IMAGES } from "@/lib/offer-og-images";
+import { getCircleOgImage } from "@/lib/offer-og-images";
 import { organizationRef } from "@/lib/schema-entities";
-
-const EARLY_PRICE = Number(process.env.NEXT_PUBLIC_CIRCLE_EARLY_PRICE) || 197;
+import {
+  CIRCLE_EARLY_PRICE,
+  CIRCLE_IS_AVAILABLE,
+  CIRCLE_SPOTS_REMAINING,
+} from "@/lib/circle-config";
 
 export async function generateMetadata({
   params,
@@ -20,13 +23,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Circle" });
-  const image = OFFER_OG_IMAGES.circle;
+  const image = getCircleOgImage(locale);
   const imageUrl = `${BASE_URL}${image.path}`;
+  const imageAlt =
+    locale === "es"
+      ? "The Rebuilding Reverence Circle, un proceso grupal en vivo de cuatro semanas para reconstruir la fe en compañía"
+      : image.alt;
 
   return {
     title: t("metadata-title"),
     description: t("metadata-description"),
     openGraph: {
+      ...localizedOpenGraph(locale),
+      type: "website",
       title: t("metadata-title"),
       description: t("metadata-description"),
       url: fullUrl(locale, "/circle"),
@@ -35,7 +44,7 @@ export async function generateMetadata({
           url: imageUrl,
           width: image.width,
           height: image.height,
-          alt: image.alt,
+          alt: imageAlt,
           type: image.contentType,
         },
       ],
@@ -44,7 +53,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: t("metadata-title"),
       description: t("metadata-description"),
-      images: [{ url: imageUrl, alt: image.alt }],
+      images: [{ url: imageUrl, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, { en: "/circle", es: "/circle" }),
   };
@@ -63,7 +72,7 @@ export default async function CirclePage({
   const t = await getTranslations({ locale, namespace: "Circle" });
 
   const productName = t("hero.title");
-  const price = EARLY_PRICE.toFixed(0);
+  const price = CIRCLE_EARLY_PRICE.toFixed(0);
 
   const openingLines = t.raw("opening.lines") as string[];
   const weeks = t.raw("four-weeks.weeks") as WeekItem[];
@@ -91,9 +100,15 @@ export default async function CirclePage({
     provider: organizationRef,
     offers: {
       "@type": "Offer",
-      price: EARLY_PRICE.toFixed(2),
+      price: CIRCLE_EARLY_PRICE.toFixed(2),
       priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
+      availability: CIRCLE_IS_AVAILABLE
+        ? "https://schema.org/InStock"
+        : "https://schema.org/SoldOut",
+      inventoryLevel: {
+        "@type": "QuantitativeValue",
+        value: CIRCLE_SPOTS_REMAINING,
+      },
       url: fullUrl(locale, "/circle"),
     },
   };
@@ -101,8 +116,18 @@ export default async function CirclePage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: locale === "es" ? "Inicio" : "Home", item: fullUrl(locale, "") },
-      { "@type": "ListItem", position: 2, name: productName, item: fullUrl(locale, "/circle") },
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: locale === "es" ? "Inicio" : "Home",
+        item: fullUrl(locale, ""),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: productName,
+        item: fullUrl(locale, "/circle"),
+      },
     ],
   };
 
@@ -115,12 +140,15 @@ export default async function CirclePage({
         itemName={productName}
         itemCategory="live-group"
         locale={locale}
-        value={EARLY_PRICE}
+        value={CIRCLE_EARLY_PRICE}
         currency="USD"
       />
       <div id="nav-sentinel" aria-hidden className="h-px w-px" />
       <CircleNav
         items={navItems}
+        ariaLabel={
+          locale === "es" ? "Secciones de The Circle" : "Circle sections"
+        }
         reserveLabel={t("nav.reserveCta", { price })}
         reserveHref={`/${locale}/circle/reserve`}
       />
@@ -149,16 +177,22 @@ export default async function CirclePage({
           <div className="max-w-2xl mx-auto px-4 text-center space-y-3 font-[family-name:var(--font-lora)] text-foreground/80 text-lg leading-relaxed">
             {openingLines.map((line, i) =>
               line === "A circle." || line === "Un círculo." ? (
-                <p key={i} className="text-2xl sm:text-3xl font-light text-foreground italic">
+                <p
+                  key={i}
+                  className="text-2xl sm:text-3xl font-light text-foreground italic"
+                >
                   {line}
                 </p>
               ) : i === openingLines.length - 1 ? (
-                <p key={i} className="text-xl font-light text-foreground italic pt-2">
+                <p
+                  key={i}
+                  className="text-xl font-light text-foreground italic pt-2"
+                >
                   {line}
                 </p>
               ) : (
                 <p key={i}>{line}</p>
-              )
+              ),
             )}
           </div>
         </section>
@@ -200,14 +234,20 @@ export default async function CirclePage({
         </section>
 
         {/* The Four Weeks */}
-        <section id="weeks" className="bg-[#f5f0eb] py-16 lg:py-20 scroll-mt-24">
+        <section
+          id="weeks"
+          className="bg-[#f5f0eb] py-16 lg:py-20 scroll-mt-24"
+        >
           <div className="max-w-3xl mx-auto px-4">
             <h2 className="text-3xl sm:text-4xl font-light text-foreground italic mb-8 text-center">
               {t("four-weeks.heading")}
             </h2>
             <div className="grid sm:grid-cols-2 gap-6">
               {weeks.map((w, i) => (
-                <Card key={i} className="border-border/50 shadow-sm rounded-sm bg-card">
+                <Card
+                  key={i}
+                  className="border-border/50 shadow-sm rounded-sm bg-card"
+                >
                   <CardContent className="p-6">
                     <h3 className="text-xl font-light text-foreground italic mb-2">
                       {w.name}
@@ -232,15 +272,22 @@ export default async function CirclePage({
               <p>{t("who-for.paragraph1")}</p>
               <p>{t("who-for.paragraph2")}</p>
               <p>{t("who-for.paragraph3")}</p>
-              <p className="text-2xl font-light text-foreground italic">{t("who-for.truth")}</p>
+              <p className="text-2xl font-light text-foreground italic">
+                {t("who-for.truth")}
+              </p>
               <p>{t("who-for.paragraph4")}</p>
-              <p className="text-2xl font-light text-foreground italic">{t("who-for.belong")}</p>
+              <p className="text-2xl font-light text-foreground italic">
+                {t("who-for.belong")}
+              </p>
             </div>
           </div>
         </section>
 
         {/* Ashley's promise */}
-        <section id="promise" className="bg-[#f5f0eb] py-16 lg:py-20 scroll-mt-24">
+        <section
+          id="promise"
+          className="bg-[#f5f0eb] py-16 lg:py-20 scroll-mt-24"
+        >
           <div className="max-w-3xl mx-auto px-4">
             <h2 className="text-3xl sm:text-4xl font-light text-foreground italic mb-8 text-center">
               {t("ashley-promise.heading")}
@@ -265,7 +312,9 @@ export default async function CirclePage({
             <div className="space-y-6 font-[family-name:var(--font-lora)] text-foreground/80 text-lg leading-relaxed">
               <p>{t("enrollment.paragraph1")}</p>
               <p>{t("enrollment.paragraph2")}</p>
-              <p className="font-medium text-foreground">{t("enrollment.intro")}</p>
+              <p className="font-medium text-foreground">
+                {t("enrollment.intro")}
+              </p>
               <ol className="space-y-4 list-none">
                 {enrollmentSteps.map((step, i) => (
                   <li key={i} className="flex items-start gap-4">

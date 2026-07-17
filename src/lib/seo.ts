@@ -28,6 +28,17 @@ export function localizedLanguages(paths: Record<SupportedLocale, string>) {
   };
 }
 
+/** Keep Open Graph language metadata consistent on every localized page. */
+export function localizedOpenGraph(locale: string) {
+  const currentLocale = isSupportedLocale(locale) ? locale : "en";
+
+  return {
+    locale: currentLocale === "es" ? "es_ES" : "en_US",
+    alternateLocale: currentLocale === "es" ? ["en_US"] : ["es_ES"],
+    siteName: "Ashley Leon",
+  };
+}
+
 /** Build a canonical and hreflang set for content available in one language. */
 export function singleLocaleAlternates(
   locale: SupportedLocale,

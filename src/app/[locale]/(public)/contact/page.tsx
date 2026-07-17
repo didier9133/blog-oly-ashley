@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { fullUrl, BASE_URL, ogImageUrl } from "@/lib/url";
 import { JsonLd } from "@/components/json-ld";
-import { localizedAlternates } from "@/lib/seo";
+import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import ContactForm from "./contact-form";
 
 export async function generateMetadata({
@@ -11,22 +11,39 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Contact.metadata" });
+  const [t, tSite] = await Promise.all([
+    getTranslations({ locale, namespace: "Contact.metadata" }),
+    getTranslations({ locale, namespace: "metadata" }),
+  ]);
+  const title = t("title");
+  const description = t("description");
+  const image = ogImageUrl(locale);
+  const imageAlt = tSite("ogImageAlt");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
     openGraph: {
-      title: t("title"),
-      description: t("description"),
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
       url: fullUrl(locale, "/contact"),
-      images: [ogImageUrl(locale)],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: "image/jpeg",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-      images: [ogImageUrl(locale)],
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
     },
     alternates: localizedAlternates(locale, { en: "/contact", es: "/contact" }),
   };

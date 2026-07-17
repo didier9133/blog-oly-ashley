@@ -9,9 +9,16 @@ const CIRCLE_PRODUCT_TYPE = "live_session";
 const CIRCLE_S3_KEY = "live-sessions/rebuilding-reverence-circle";
 const CIRCLE_COMMUNITY_LINK =
   "https://www.gokollab.com/rebuilding-reverence-gcz6xl/home";
-const REBUILDING_REVERENCE_JOURNAL_S3_KEY =
-  "ebooks/1761430103993_Rebuilding_Reverence.pdf";
-const REBUILDING_REVERENCE_JOURNAL_FILE_NAME = "Rebuilding Reverence Journal";
+const CIRCLE_GUIDE_BY_LOCALE = {
+  en: {
+    s3Key: "ebooks/1761430103993_Rebuilding_Reverence.pdf",
+    fileName: "Rebuilding Reverence Journal",
+  },
+  es: {
+    s3Key: "ebooks/1761430437440_Reconstruyendo_la_Reverencia.pdf",
+    fileName: "Guía de Rebuilding Reverence",
+  },
+} as const;
 const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
 const COMMUNITY_LINK_BY_S3_KEY: Record<string, string> = {
   "ebooks/1761430103993_Rebuilding_Reverence.pdf":
@@ -117,9 +124,10 @@ export async function finalizePaidPaymentIntent(
       emailClaimed = true;
 
       if (isCirclePurchase(purchase.productType, purchase.s3Key)) {
+        const circleGuide = CIRCLE_GUIDE_BY_LOCALE[language];
         const journalLink = await createDownloadUrl(
-          REBUILDING_REVERENCE_JOURNAL_S3_KEY,
-          REBUILDING_REVERENCE_JOURNAL_FILE_NAME,
+          circleGuide.s3Key,
+          circleGuide.fileName,
           SEVEN_DAYS_IN_SECONDS,
         );
 

@@ -3,7 +3,12 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
-import { localizedAlternates } from "@/lib/seo";
+import {
+  indexableRobots,
+  localizedAlternates,
+  localizedOpenGraph,
+} from "@/lib/seo";
+import { fullUrl, ogImageUrl } from "@/lib/url";
 
 export async function generateMetadata({
   params,
@@ -11,15 +16,44 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  const title =
+    locale === "es"
+      ? "Política de privacidad | Ashley Leon"
+      : "Privacy Policy | Ashley Leon";
+  const description =
+    locale === "es"
+      ? "Consulta cómo Ashley Leon recopila, utiliza, protege y gestiona los datos personales, las cookies y tus derechos de privacidad en este sitio."
+      : "Learn how Ashley Leon collects, uses, protects, and manages personal data, cookies, and your privacy rights when you use this website.";
+  const image = ogImageUrl(locale);
+  const imageAlt = t("ogImageAlt");
+
   return {
-    title:
-      locale === "es"
-        ? "Política de Privacidad | Ashley Leon"
-        : "Privacy Policy | Ashley Leon",
-    description:
-      locale === "es"
-        ? "Consulta cómo Ashley Leon recopila, utiliza, protege y gestiona los datos personales, las cookies y tus derechos de privacidad en este sitio."
-        : "Learn how Ashley Leon collects, uses, protects, and manages personal data, cookies, and your privacy rights when you use this website.",
+    title,
+    description,
+    robots: indexableRobots,
+    openGraph: {
+      ...localizedOpenGraph(locale),
+      type: "website",
+      title,
+      description,
+      url: fullUrl(locale, "/privacy"),
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: "image/jpeg",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [{ url: image, alt: imageAlt }],
+    },
     alternates: localizedAlternates(locale, { en: "/privacy", es: "/privacy" }),
   };
 }
@@ -91,7 +125,7 @@ export default async function PrivacyPage({
 
         <div className="mt-12 pt-8 border-t border-border">
           <Link
-            href="/"
+            href={`/${locale}`}
             className="text-sm uppercase tracking-wide text-muted-foreground hover:text-primary transition-colors"
           >
             {t("backHome")}
