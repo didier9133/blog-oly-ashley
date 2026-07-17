@@ -2,15 +2,16 @@ import Image from "next/image";
 import { FormSubscribeNewsletter } from "@/components/subscribe-newsletter";
 import Link from "next/link";
 import { Instagram, Youtube, Mail } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 import { localizedHref } from "@/lib/url";
 
-export function Footer() {
+export async function Footer({ locale }: { locale: string }) {
   const currentYear = new Date().getFullYear();
-  const locale = useLocale();
-  const t = useTranslations("footer");
-  const navT = useTranslations("navigation");
+  const [t, navT] = await Promise.all([
+    getTranslations({ locale, namespace: "footer" }),
+    getTranslations({ locale, namespace: "navigation" }),
+  ]);
   const href = (path: string) => localizedHref(locale, path);
 
   return (

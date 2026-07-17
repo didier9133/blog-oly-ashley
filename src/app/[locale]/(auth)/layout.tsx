@@ -4,11 +4,15 @@ import { AuthHeader } from "@/components/auth-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Footer } from "@/components/footer";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+
   return (
     <ClerkProvider>
       <SidebarProvider defaultOpen={false}>
@@ -19,7 +23,7 @@ export default function AuthLayout({
         <SidebarInset>
           <AuthHeader />
           {children}
-          <Footer />
+          <Footer locale={locale} />
         </SidebarInset>
       </SidebarProvider>
     </ClerkProvider>

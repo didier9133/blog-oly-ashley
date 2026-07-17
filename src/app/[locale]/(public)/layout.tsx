@@ -24,7 +24,7 @@ export default async function PublicLayout({
         <PublicHeader locale={locale} />
         {children}
         <ScrollToTop />
-        <Footer />
+        <Footer locale={locale} />
       </SidebarInset>
     </SidebarProvider>
   );
