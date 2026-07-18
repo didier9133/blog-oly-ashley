@@ -34,7 +34,7 @@ describe("footer localization", () => {
       "subscribe-label": "Envíame la guía",
       "stay-in-loop": "¿Qué conflicto interno estás viviendo?",
       "newsletter-desc":
-        "Si estás cuestionando tu fe, atravesando un proceso de deconstrucción o intentando comprender las heridas que dejó tu experiencia en la iglesia, esta guía gratuita en inglés de 9 páginas te ayudará a ponerle nombre al conflicto interno que más se parece a lo que estás viviendo hoy.",
+        "Si estás cuestionando tu fe, atravesando un proceso de deconstrucción o intentando comprender las heridas que dejó tu experiencia en la iglesia, esta guía gratuita de 9 páginas te ayudará a ponerle nombre al conflicto interno que más se parece a lo que estás viviendo hoy.",
       "lead-magnet-details":
         "PDF de 9 páginas · enlace privado válido por 48 horas",
       "lead-magnet-consent":
