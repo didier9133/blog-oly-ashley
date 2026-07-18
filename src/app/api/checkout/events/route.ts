@@ -1,20 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { recordPaymentEvent } from "@/lib/checkout-events";
 import prisma from "@/lib/prisma";
-
-type CheckoutEventBody = {
-  eventType?: string;
-  stripePaymentIntent?: string | null;
-  customerEmail?: string | null;
-  customerName?: string | null;
-  amount?: number | null;
-  currency?: string | null;
-  productName?: string | null;
-  productType?: string | null;
-  status?: string | null;
-  failureCode?: string | null;
-  failureMessage?: string | null;
-};
+import {
+  checkoutEventInputSchema,
+  MAX_CHECKOUT_EVENT_BODY_BYTES,
+} from "@/lib/checkout-event-input";
+import { getStripeLivemodeFromSecretKey } from "@/lib/stripe-mode";
 
 export async function GET(req: NextRequest) {
   const isE2EStateEnabled = process.env.E2E_ENABLE_CHECKOUT_STATE === "1";
@@ -56,22 +47,38 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    let body: CheckoutEventBody;
+    const contentLength = Number(req.headers.get("content-length") ?? "0");
+    if (
+      Number.isFinite(contentLength) &&
+      contentLength > MAX_CHECKOUT_EVENT_BODY_BYTES
+    ) {
+      return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+    }
+
+    const rawBody = await req.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_CHECKOUT_EVENT_BODY_BYTES) {
+      return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+    }
+
+    let input: unknown;
     try {
-      body = (await req.json()) as CheckoutEventBody;
+      input = JSON.parse(rawBody);
     } catch {
       return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    if (!body.eventType) {
+    const parsed = checkoutEventInputSchema.safeParse(input);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "Missing eventType" },
+        { error: "Invalid checkout event" },
         { status: 400 },
       );
     }
+    const body = parsed.data;
 
     await recordPaymentEvent({
       eventType: body.eventType,
+      stripeLivemode: getStripeLivemodeFromSecretKey(),
       stripePaymentIntent: body.stripePaymentIntent,
       customerEmail: body.customerEmail,
       customerName: body.customerName,

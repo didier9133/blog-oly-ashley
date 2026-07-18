@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { Check, LoaderCircle } from "lucide-react";
 
 interface FormSubscribeNewsletterProps {
   className?: string;
@@ -25,6 +26,8 @@ export function FormSubscribeNewsletter({
   const t = useTranslations("footer");
   const locale = useLocale();
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDelivered, setIsDelivered] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -48,18 +51,26 @@ export function FormSubscribeNewsletter({
     }
 
     const toastId = toast.loading(t("toast-loading"));
+    setIsSubmitting(true);
 
     try {
-      await subscribeToNewsletter(email, { source: "footer" });
+      await subscribeToNewsletter(email, {
+        locale: locale === "es" ? "es" : "en",
+        source: "footer",
+        sourceUrl: window.location.href,
+      });
       trackAnalyticsEvent("newsletter_signup", {
         source_location: "footer",
         locale,
       });
       toast.success(t("toast-success"), { id: toastId });
       setEmail("");
+      setIsDelivered(true);
     } catch (err) {
       console.error(err);
       toast.error(t("toast-error"), { id: toastId });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,7 +87,18 @@ export function FormSubscribeNewsletter({
         {showLabel ? t("newsletter-label") : t("placeholder")}
       </label>
 
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full max-w-xl mx-auto">
+        {isDelivered ? (
+          <div
+            className="flex min-h-14 items-center justify-center gap-3 rounded-sm border border-[#f7f2e8]/35 bg-[#f7f2e8]/10 px-5 py-3 text-left text-sm text-[#fffaf2]"
+            role="status"
+          >
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f7f2e8] text-[#62684f]">
+              <Check className="size-4" aria-hidden="true" />
+            </span>
+            <span>{t("delivery-confirmation")}</span>
+          </div>
+        ) : (
         <form
           onSubmit={onSubmit}
           className="flex flex-col sm:flex-row w-full gap-3 items-center sm:items-stretch"
@@ -89,6 +111,7 @@ export function FormSubscribeNewsletter({
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("placeholder")}
             required
+            disabled={isSubmitting}
             autoComplete="email"
             inputMode="email"
             className={cn(
@@ -100,6 +123,7 @@ export function FormSubscribeNewsletter({
           />
           <Button
             type="submit"
+            disabled={isSubmitting}
             className={cn(
               "h-14 w-full sm:w-auto px-8 uppercase tracking-widest text-xs font-bold transition-all shadow-sm rounded-sm",
               variant === "default"
@@ -107,9 +131,20 @@ export function FormSubscribeNewsletter({
                 : "bg-[#e8e3dd] hover:bg-white text-[#4a4f3d]",
             )}
           >
-            {t("subscribe-label")}
+            {isSubmitting ? (
+              <>
+                <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
+                <span>{t("sending-label")}</span>
+              </>
+            ) : (
+              t("subscribe-label")
+            )}
           </Button>
         </form>
+        )}
+        <p className="mt-3 text-center text-[11px] leading-relaxed text-[#f7f2e8]/70">
+          {t("lead-magnet-consent")}
+        </p>
       </div>
     </div>
   );

@@ -12,48 +12,55 @@ import {
 const OwnerNewsletterNotificationTemplate = ({
   email,
   source,
+  sourceUrl,
   locale,
-  submittedAt = new Date().toLocaleString("es-ES", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  submittedAt = new Date().toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
   }),
 }: {
   email: string;
   source?: string;
+  sourceUrl?: string;
   locale?: string;
   submittedAt?: string;
 }) => (
-  <Html>
+  <Html lang="en">
     <Head />
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-          <Heading style={h1}>📰 Nueva suscripción (pendiente)</Heading>
-          <Text style={timestamp}>Recibido el {submittedAt}</Text>
+          <Heading style={h1}>New free guide signup</Heading>
+          <Text style={timestamp}>Received {submittedAt}</Text>
         </Section>
 
         <Section style={content}>
           <Text style={greeting}>
-            Alguien se suscribió desde el sitio web. Añade la dirección
-            manualmente en Substack.
+            Someone requested the free guide from the website. Add this address
+            to Substack if it is not already on the list.
           </Text>
 
           <Section style={infoSection}>
-            <Text style={sectionTitle}>Detalles</Text>
+            <Text style={sectionTitle}>Signup details</Text>
             <Text style={infoItem}>
-              <strong>Correo:</strong> {email}
+              <strong>Email:</strong> {email}
             </Text>
             {source ? (
               <Text style={infoItem}>
-                <strong>Origen:</strong> {source}
+                <strong>Form:</strong> {source}
+              </Text>
+            ) : null}
+            {sourceUrl ? (
+              <Text style={infoItem}>
+                <strong>Source URL:</strong>{" "}
+                <a href={sourceUrl} style={sourceLink}>
+                  {sourceUrl}
+                </a>
               </Text>
             ) : null}
             {locale ? (
               <Text style={infoItem}>
-                <strong>Idioma:</strong> {locale}
+                <strong>Site locale:</strong> {locale}
               </Text>
             ) : null}
           </Section>
@@ -61,19 +68,15 @@ const OwnerNewsletterNotificationTemplate = ({
           <Hr style={divider} />
 
           <Section style={actionSection}>
-            <Text style={sectionTitle}>Acciones</Text>
-            <Text style={actionItem}>
-              • Añadir esta dirección a la lista de suscriptores de Substack
-            </Text>
-            <Text style={actionItem}>
-              • Marcarla como «procesada» en el panel (si corresponde)
-            </Text>
-            <Text style={actionItem}>• Si ya existe, ignorar este aviso</Text>
+            <Text style={sectionTitle}>Next steps</Text>
+            <Text style={actionItem}>• Add the address to Substack</Text>
+            <Text style={actionItem}>• Mark it as handled in the dashboard</Text>
+            <Text style={actionItem}>• Ignore this notice if it already exists</Text>
           </Section>
 
           <Text style={footerNote}>
-            Esta notificación fue generada automáticamente por el formulario de
-            suscripción del sitio.
+            This notification was generated automatically by the free guide
+            form on the website.
           </Text>
         </Section>
       </Container>
@@ -149,6 +152,12 @@ const infoItem = {
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "6px 0",
+};
+
+const sourceLink = {
+  color: "#9c5f49",
+  textDecoration: "underline",
+  wordBreak: "break-all" as const,
 };
 
 const divider = {
