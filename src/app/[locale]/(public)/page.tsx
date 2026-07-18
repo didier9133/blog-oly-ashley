@@ -190,7 +190,7 @@ export default async function Home({
               </div>
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,246,240,0.66)_0%,rgba(250,246,240,0.44)_42%,rgba(250,246,240,0.12)_68%,rgba(250,246,240,0)_100%)] md:hidden"
+                className="home-hero-mobile-scrim absolute inset-0 md:hidden"
               />
               <div
                 aria-hidden
@@ -198,7 +198,7 @@ export default async function Home({
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(250,246,240,0.02)_0%,rgba(250,246,240,0.12)_42%,rgba(246,234,226,0.78)_100%)] md:bg-[radial-gradient(circle_at_24%_28%,rgba(255,255,255,0.6),transparent_32%),linear-gradient(to_bottom,rgba(255,255,255,0.16),transparent_38%,rgba(235,215,204,0.18)_100%)]"
+                className="home-hero-depth absolute inset-0"
               />
               <div aria-hidden className="home-hero-texture absolute inset-0" />
               <div
@@ -216,15 +216,17 @@ export default async function Home({
                     {t("hero-title-one")}{" "}
                     <span className="block">
                       {t("hero-title-two")}{" "}
-                      <em className="not-italic text-primary">
+                      <em className="home-hero-highlight not-italic">
                         {t("hero-title-highlight")}
                       </em>
                     </span>
                   </h1>
                   <span className="home-hero-rule mt-5 block sm:mt-8 md:mt-6" />
-                  <p className="home-hero-reveal home-hero-reveal-3 editorial-lede mt-4 max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-6 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
-                    {t("hero-description")}
-                  </p>
+                  <div className="home-hero-lede-shell home-hero-reveal home-hero-reveal-3 mt-4 w-full max-w-[30rem] sm:mt-8 sm:max-w-[34rem] md:mt-6 md:max-w-none">
+                    <p className="editorial-lede max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
+                      {t("hero-description")}
+                    </p>
+                  </div>
                   <div className="home-hero-reveal home-hero-reveal-4 mt-6 flex w-full max-w-[30rem] flex-col gap-2.5 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] sm:gap-3 md:mt-7">
                     <Link
                       href={primaryWorkbookHref}
