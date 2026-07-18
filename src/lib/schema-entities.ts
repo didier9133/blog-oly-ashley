@@ -7,8 +7,9 @@ export const SCHEMA_ENTITY_IDS = {
 } as const;
 
 export const ASHLEY_SAME_AS = [
-  "https://www.instagram.com/ashleyleon",
-  "https://www.youtube.com/@ashleyleon",
+  "https://www.instagram.com/ashleydianaleon",
+  "https://www.facebook.com/ashley.leon.684699",
+  "https://www.youtube.com/@ashleydianaleon",
   "https://ashleyleon.substack.com",
 ] as const;
 

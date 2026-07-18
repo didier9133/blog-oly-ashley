@@ -60,4 +60,18 @@ describe("footer localization", () => {
     expect(publicLayoutSource).toContain("<Footer locale={locale} />");
     expect(authLayoutSource).toContain("<Footer locale={locale} />");
   });
+
+  test("uses Ashley's current social profiles without tracking parameters", () => {
+    expect(footerSource).toContain(
+      'href="https://www.instagram.com/ashleydianaleon"',
+    );
+    expect(footerSource).toContain(
+      'href="https://www.facebook.com/ashley.leon.684699"',
+    );
+    expect(footerSource).toContain(
+      'href="https://www.youtube.com/@ashleydianaleon"',
+    );
+    expect(footerSource.includes("utm_source")).toBe(false);
+    expect(footerSource.includes("mibextid")).toBe(false);
+  });
 });

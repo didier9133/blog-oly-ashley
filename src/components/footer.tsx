@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FormSubscribeNewsletter } from "@/components/subscribe-newsletter";
 import Link from "next/link";
-import { Download, Instagram, Youtube, Mail } from "lucide-react";
+import { Download, Facebook, Instagram, Youtube, Mail } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 import { localizedHref } from "@/lib/url";
@@ -82,13 +82,19 @@ export async function Footer({ locale }: { locale: string }) {
 
               <div className="flex items-center gap-5 pt-4">
                 <SocialLink
-                  href="https://www.instagram.com/ashleyleon"
+                  href="https://www.instagram.com/ashleydianaleon"
                   label={t("social.instagram")}
                 >
                   <Instagram className="w-5 h-5" />
                 </SocialLink>
                 <SocialLink
-                  href="https://www.youtube.com/@ashleyleon"
+                  href="https://www.facebook.com/ashley.leon.684699"
+                  label={t("social.facebook")}
+                >
+                  <Facebook className="w-5 h-5" />
+                </SocialLink>
+                <SocialLink
+                  href="https://www.youtube.com/@ashleydianaleon"
                   label={t("social.youtube")}
                 >
                   <Youtube className="w-5 h-5" />
