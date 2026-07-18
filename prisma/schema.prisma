@@ -104,6 +104,7 @@ model Purchase {
 model PaymentEvent {
   id                  String   @id @default(cuid())
   stripeEventId       String?  @unique
+  stripeLivemode      Boolean?
   eventType           String
   stripePaymentIntent String?
   stripeChargeId      String?
@@ -124,6 +125,7 @@ model PaymentEvent {
   @@index([stripePaymentIntent])
   @@index([customerEmail])
   @@index([createdAt])
+  @@index([stripeLivemode, createdAt])
 }
 
 model Book {
@@ -168,6 +170,7 @@ model NewsletterSignup {
   email     String    @unique
   locale    String?
   source    String?
+  sourceUrl String?
   handledAt DateTime?
   notes     String?
   createdAt DateTime  @default(now())

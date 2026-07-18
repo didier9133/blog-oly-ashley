@@ -3,10 +3,11 @@
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export function SubstackHeroSubscribe() {
   const t = useTranslations("subscribeHero");
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -21,7 +22,11 @@ export function SubstackHeroSubscribe() {
     const toastId = toast.loading(t("toast-loading"));
 
     try {
-      await subscribeToNewsletter(email, { source: "hero" });
+      await subscribeToNewsletter(email, {
+        locale: locale === "es" ? "es" : "en",
+        source: "hero",
+        sourceUrl: window.location.href,
+      });
       toast.success(t("toast-success"), { id: toastId });
       setEmail("");
     } catch (err) {

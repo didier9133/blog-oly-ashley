@@ -20,11 +20,14 @@ describe("footer localization", () => {
   test("keeps the Spanish newsletter transcreation", () => {
     expect(spanishMessages.footer).toMatchObject({
       "newsletter-label": "Carta de Ashley",
-      "subscribe-label": "Quiero recibirla",
-      "stay-in-loop":
-        "Una carta que llega cuando hay algo que merece ser compartido.",
+      "subscribe-label": "Envíame la guía",
+      "stay-in-loop": "Which Binary Are You Standing In?",
       "newsletter-desc":
-        "Reflexiones sobre fe, identidad y lo sagrado, sin calendario fijo: solo cuando tenga algo honesto que compartir contigo.",
+        "Una breve guía en inglés para reconocer la tensión que ya estás habitando. Encuentra la pregunta que más se parece a tu vida hoy y empieza por ahí.",
+      "lead-magnet-details":
+        "PDF de 9 páginas · enlace privado válido por 48 horas",
+      "lead-magnet-consent":
+        "Recibe la guía gratuita y las reflexiones ocasionales de Ashley. Sin spam; cancela cuando quieras.",
       "brand-desc":
         "Ensayos, guías y encuentros en vivo para reconstruir la fe, recuperar la reverencia y volver a lo sagrado sin renunciar a quien eres.",
       explore: "Para empezar",

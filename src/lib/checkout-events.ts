@@ -14,6 +14,7 @@ export const PRODUCT_NAME_DICTIONARY: Record<string, string> = {
 
 type RecordPaymentEventInput = {
   stripeEventId?: string;
+  stripeLivemode?: boolean | null;
   eventType: string;
   stripePaymentIntent?: string | null;
   stripeChargeId?: string | null;
@@ -42,6 +43,8 @@ function normalizeProductName(value: unknown) {
 export async function recordPaymentEvent(input: RecordPaymentEventInput) {
   const data = {
     stripeEventId: input.stripeEventId ?? undefined,
+    stripeLivemode:
+      input.stripeLivemode === undefined ? undefined : input.stripeLivemode,
     eventType: input.eventType,
     stripePaymentIntent: input.stripePaymentIntent ?? undefined,
     stripeChargeId: input.stripeChargeId ?? undefined,
@@ -90,6 +93,7 @@ export function paymentIntentEventData(
 
   return {
     stripeEventId,
+    stripeLivemode: paymentIntent.livemode,
     eventType,
     stripePaymentIntent: paymentIntent.id,
     customerEmail: metadata.customerEmail ?? paymentIntent.receipt_email,
@@ -126,6 +130,7 @@ export function chargeEventData(
 
   return {
     stripeEventId,
+    stripeLivemode: charge.livemode,
     eventType,
     stripePaymentIntent:
       typeof charge.payment_intent === "string"

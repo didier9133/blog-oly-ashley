@@ -19,6 +19,7 @@ export type NewsletterSignupRow = {
   id: string;
   email: string;
   source: string | null;
+  sourceUrl: string | null;
   locale: string | null;
   createdAt: Date;
   handledAt: Date | null;
@@ -59,6 +60,7 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
             <TableHead>{t("th-email")}</TableHead>
             <TableHead>{t("th-status")}</TableHead>
             <TableHead>{t("th-source")}</TableHead>
+            <TableHead>{t("th-url")}</TableHead>
             <TableHead>{t("th-locale")}</TableHead>
             <TableHead>{t("th-date")}</TableHead>
             <TableHead className="text-right">{t("th-actions")}</TableHead>
@@ -82,6 +84,21 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {r.source || t("empty")}
+                </TableCell>
+                <TableCell className="max-w-64 text-muted-foreground">
+                  {r.sourceUrl ? (
+                    <a
+                      href={r.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block truncate underline-offset-4 hover:underline"
+                      title={r.sourceUrl}
+                    >
+                      {r.sourceUrl}
+                    </a>
+                  ) : (
+                    t("empty")
+                  )}
                 </TableCell>
                 <TableCell className="text-muted-foreground">
                   {r.locale || t("empty")}
@@ -113,7 +130,7 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={6} className="h-24 text-center">
+              <TableCell colSpan={7} className="h-24 text-center">
                 {t("empty-state")}
               </TableCell>
             </TableRow>

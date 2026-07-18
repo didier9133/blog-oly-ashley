@@ -105,6 +105,8 @@ export default function CheckoutForm({
           customerName: values.name.trim(),
           amount: paymentIntent?.amount,
           currency: paymentIntent?.currency,
+          productName,
+          productType,
           status: paymentIntent?.status,
           failureCode: failure?.code,
           failureMessage: failure?.message,
