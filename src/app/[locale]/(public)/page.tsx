@@ -225,31 +225,31 @@ export default async function Home({
                   <p className="home-hero-reveal home-hero-reveal-3 editorial-lede mt-4 max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:mt-8 sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:mt-6 md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
                     {t("hero-description")}
                   </p>
-                  <div className="home-hero-reveal home-hero-reveal-4 mt-5 flex w-full max-w-[25rem] flex-col gap-2 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[1.55fr_1fr] sm:gap-3 md:mt-7">
+                  <div className="home-hero-reveal home-hero-reveal-4 mt-6 flex w-full max-w-[30rem] flex-col gap-2.5 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] sm:gap-3 md:mt-7">
                     <Link
                       href={primaryWorkbookHref}
-                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 bg-[#8f513b] px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-[#fffaf5] transition-[background-color,transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:bg-[#784330] hover:shadow-[0_14px_34px_-18px_rgba(92,45,31,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
+                      className="home-hero-button group inline-flex min-h-14 w-full items-center justify-between gap-4 overflow-hidden border border-[#7d4432] bg-[#8f513b] px-5 py-3.5 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-[#fffaf5] shadow-[0_12px_30px_-18px_rgba(92,45,31,0.9)] transition-[background-color,border-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-[#6f3b2c] hover:bg-[#784330] hover:shadow-[0_18px_38px_-20px_rgba(92,45,31,0.95)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
                     >
-                      <span className="min-w-0 text-balance">
+                      <span className="min-w-0 flex-1 text-left text-balance">
                         {t("cta-journals")}
                       </span>
                       <span
                         aria-hidden
-                        className="transition-transform duration-500 group-hover:translate-x-1.5"
+                        className="grid size-8 shrink-0 place-items-center rounded-full border border-[#fffaf5]/25 bg-[#fffaf5]/10 text-base leading-none transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-[#fffaf5]/45 group-hover:bg-[#fffaf5]/18 sm:size-7"
                       >
                         →
                       </span>
                     </Link>
                     <Link
                       href={writingHref}
-                      className="home-hero-button group inline-flex min-h-9 flex-1 items-center justify-between gap-3 border border-primary/45 bg-[#fbf7f1]/30 px-4 py-2.5 font-[family-name:var(--font-lora)] text-[0.66rem] font-bold uppercase leading-tight tracking-[0.12em] text-foreground backdrop-blur-[2px] transition-[border-color,color,background-color,transform] duration-500 hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/55 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-12 sm:px-6 sm:py-4 sm:text-[0.69rem] sm:tracking-[0.16em] md:min-h-11 md:py-3"
+                      className="home-hero-button group inline-flex min-h-[3.25rem] w-full items-center justify-between gap-4 border border-primary/50 bg-[#fbf7f1]/55 px-5 py-3 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-foreground shadow-[inset_0_0_0_1px_rgba(255,255,255,0.32)] backdrop-blur-[3px] transition-[border-color,color,background-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/80 hover:text-primary hover:shadow-[0_12px_28px_-22px_rgba(92,45,31,0.75)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
                     >
-                      <span className="min-w-0 text-balance">
+                      <span className="min-w-0 flex-1 text-left text-balance">
                         {t("cta-explore")}
                       </span>
                       <span
                         aria-hidden
-                        className="transition-transform duration-500 group-hover:translate-x-1.5"
+                        className="grid size-8 shrink-0 place-items-center rounded-full border border-primary/25 bg-[#fbf7f1]/35 text-base leading-none text-primary transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-primary/50 group-hover:bg-white/45 sm:size-7"
                       >
                         →
                       </span>
