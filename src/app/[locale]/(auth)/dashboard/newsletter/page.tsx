@@ -4,10 +4,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { NewsletterTable } from "./newsletter-table";
-import { getTranslations } from "next-intl/server";
+import { formatDate } from "@/lib/format-date";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function Page() {
-  const t = await getTranslations("dashboard.newsletterPage");
+  const [t, locale] = await Promise.all([
+    getTranslations("dashboard.newsletterPage"),
+    getLocale(),
+  ]);
   const { userId } = await auth();
 
   // Middleware debería proteger /dashboard, pero igual evitamos un crash.
@@ -32,6 +36,15 @@ export default async function Page() {
   });
 
   const pendingCount = rows.filter((r) => !r.handledAt).length;
+  const tableRows = rows.map((row) => ({
+    id: row.id,
+    email: row.email,
+    source: row.source,
+    sourceUrl: row.sourceUrl,
+    locale: row.locale,
+    createdAtLabel: formatDate(row.createdAt, locale),
+    handled: Boolean(row.handledAt),
+  }));
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-lora)]">
@@ -57,7 +70,7 @@ export default async function Page() {
             <CardTitle>{t("latest")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <NewsletterTable rows={rows} />
+            <NewsletterTable rows={tableRows} />
           </CardContent>
         </Card>
       </div>

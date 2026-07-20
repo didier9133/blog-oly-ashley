@@ -16,6 +16,7 @@ import { deletePost } from "@/app/[locale]/actions/posts";
 import { toast } from "sonner";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
+import { formatDate } from "@/lib/format-date";
 
 export type DashboardPost = {
   category: {
@@ -53,7 +54,10 @@ const statusColors = {
   draft: "bg-yellow-100 text-yellow-800",
 };
 
-export function createPostColumns(t: TFn): ColumnDef<DashboardPost>[] {
+export function createPostColumns(
+  t: TFn,
+  locale: string,
+): ColumnDef<DashboardPost>[] {
   const statusLabels = {
     published: t("status.published"),
     draft: t("status.draft"),
@@ -146,13 +150,7 @@ export function createPostColumns(t: TFn): ColumnDef<DashboardPost>[] {
     {
       accessorKey: "fecha",
       header: t("th.date"),
-      cell: ({ row }) => (
-        <>
-          {row.original.updatedAt instanceof Date
-            ? row.original.updatedAt.toLocaleDateString()
-            : new Date(row.original.updatedAt).toLocaleDateString()}
-        </>
-      ),
+      cell: ({ row }) => formatDate(row.original.updatedAt, locale),
     },
     {
       accessorKey: "acciones",

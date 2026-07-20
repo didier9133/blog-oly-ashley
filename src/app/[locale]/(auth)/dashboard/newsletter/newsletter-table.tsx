@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -21,12 +22,13 @@ export type NewsletterSignupRow = {
   source: string | null;
   sourceUrl: string | null;
   locale: string | null;
-  createdAt: Date;
-  handledAt: Date | null;
+  createdAtLabel: string;
+  handled: boolean;
 };
 
 export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
   const t = useTranslations("dashboard.newsletter");
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const onMarkHandled = (email: string) => {
@@ -36,8 +38,9 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
       try {
         await markHandledAction({ email });
         toast.success(t("toast-mark-success"), { id: toastId });
+        router.refresh();
       } catch (err) {
-        console.error(err);
+        console.warn("Could not mark newsletter signup as handled", err);
         toast.error(t("toast-mark-error"), { id: toastId });
       }
     });
@@ -72,7 +75,7 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
               <TableRow key={r.id}>
                 <TableCell className="font-medium">{r.email}</TableCell>
                 <TableCell>
-                  {r.handledAt ? (
+                  {r.handled ? (
                     <Badge className="bg-green-100 text-green-800">
                       {t("status-handled")}
                     </Badge>
@@ -104,9 +107,7 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
                   {r.locale || t("empty")}
                 </TableCell>
                 <TableCell>
-                  {r.createdAt instanceof Date
-                    ? r.createdAt.toLocaleDateString()
-                    : new Date(r.createdAt).toLocaleDateString()}
+                  {r.createdAtLabel}
                 </TableCell>
                 <TableCell className="text-right space-x-2">
                   <Button
@@ -121,7 +122,7 @@ export function NewsletterTable({ rows }: { rows: NewsletterSignupRow[] }) {
                     variant="default"
                     size="sm"
                     onClick={() => onMarkHandled(r.email)}
-                    disabled={isPending || !!r.handledAt}
+                    disabled={isPending || r.handled}
                   >
                     {t("mark")}
                   </Button>

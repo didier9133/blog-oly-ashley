@@ -12,6 +12,15 @@
 
 # testing
 /coverage
+/tmp/
+
+# local generation and QA artifacts
+**/__pycache__/
+*.py[cod]
+.~*
+*.inspect.ndjson
+/outputs/**/qa/
+/outputs/**/qa-*/
 
 # next.js
 /.next/

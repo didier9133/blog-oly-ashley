@@ -6,6 +6,7 @@ import { POST_SLUG_REDIRECTS } from "./src/lib/post-slugs";
 
 const isPreviewDeployment =
   Boolean(process.env.VERCEL_ENV) && process.env.VERCEL_ENV !== "production";
+const isProductionBuild = process.env.NODE_ENV === "production";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -86,6 +87,11 @@ class CopyToOutputPlugin {
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // Next 15's development Webpack build can reference SWR vendor chunks
+  // without emitting them when Clerk and the dashboard compile together.
+  // Transpile this small dependency chain into the application bundle so it
+  // shares Next's React instance and cannot leave missing generated files.
+  transpilePackages: ["swr", "use-sync-external-store", "dequal"],
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [60, 75, 85],
@@ -140,24 +146,29 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
-      {
-        source: "/_next/static/(.*)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/(.*)\\.(ico|svg|png|jpg|jpeg|gif|webp|avif|woff2)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
+      ...(isProductionBuild
+        ? [
+            {
+              source: "/_next/static/(.*)",
+              headers: [
+                {
+                  key: "Cache-Control",
+                  value: "public, max-age=31536000, immutable",
+                },
+              ],
+            },
+            {
+              source:
+                "/(.*)\\.(ico|svg|png|jpg|jpeg|gif|webp|avif|woff2)",
+              headers: [
+                {
+                  key: "Cache-Control",
+                  value: "public, max-age=31536000, immutable",
+                },
+              ],
+            },
+          ]
+        : []),
     ];
   },
 

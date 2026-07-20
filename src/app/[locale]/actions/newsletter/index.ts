@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { z } from "zod";
 import OwnerNewsletterNotificationTemplate from "@/components/email/notify-newsletter";
 import LeadMagnetEmailTemplate from "@/components/email/lead-magnet-email-template";
+import LeadMagnetFollowupEmailTemplate from "@/components/email/lead-magnet-followup-email-template";
 import { render } from "@react-email/render";
 import { Resend } from "resend";
 import { headers } from "next/headers";
@@ -13,14 +14,72 @@ import {
 } from "@/lib/server/notification-emails";
 import {
   LEAD_MAGNET_EMAIL_SUBJECT,
+  LEAD_MAGNET_FOLLOWUP_DELAY_MS,
+  LEAD_MAGNET_FOLLOWUP_SUBJECT,
   type LeadMagnetLocale,
 } from "@/lib/lead-magnet";
 import { createLeadMagnetDownloadUrl } from "@/lib/server/lead-magnet-download";
+import { fullUrl } from "@/lib/url";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const NOTIFICATION_EMAIL = NEWSLETTER_NOTIFICATION_EMAIL;
+
+function getFollowupLinks() {
+  return {
+    communityLink: fullUrl("en", "/community/join"),
+    workbookLink: fullUrl("en", "/workbooks/rebuilding-reverence"),
+  };
+}
+
+async function scheduleLeadMagnetFollowup({
+  signupId,
+  email,
+  downloadLink,
+}: {
+  signupId: string;
+  email: string;
+  downloadLink: string;
+}) {
+  if (!resend) return false;
+
+  const scheduledAt = new Date(Date.now() + LEAD_MAGNET_FOLLOWUP_DELAY_MS);
+  const { communityLink, workbookLink } = getFollowupLinks();
+  const followupHtml = await render(
+    LeadMagnetFollowupEmailTemplate({
+      downloadLink,
+      communityLink,
+      workbookLink,
+      supportEmail: SUPPORT_EMAIL,
+    }),
+  );
+
+  const scheduled = await resend.emails.send(
+    {
+      from: `Ashley Leon <${SUPPORT_EMAIL}>`,
+      to: [email],
+      replyTo: SUPPORT_EMAIL,
+      subject: LEAD_MAGNET_FOLLOWUP_SUBJECT,
+      html: followupHtml,
+      scheduledAt: scheduledAt.toISOString(),
+    },
+    {
+      // Resend retains idempotency keys for 24 hours, matching this follow-up
+      // window and protecting retries or repeated form submissions.
+      idempotencyKey: `lead-magnet-followup/${signupId}`,
+    },
+  );
+
+  if (scheduled.error || !scheduled.data?.id) {
+    throw new Error(
+      scheduled.error?.message ??
+        "Resend no devolvió el identificador del correo programado.",
+    );
+  }
+
+  return true;
+}
 
 function isHttpUrl(value: string) {
   try {
@@ -93,7 +152,12 @@ export async function subscribeToNewsletter(
   }
 
   const downloadLink = await createLeadMagnetDownloadUrl();
-  const emailHtml = await render(LeadMagnetEmailTemplate({ downloadLink }));
+  const emailHtml = await render(
+    LeadMagnetEmailTemplate({
+      downloadLink,
+      supportEmail: SUPPORT_EMAIL,
+    }),
+  );
 
   const [delivery, notification] = await Promise.all([
     resend.emails.send({
@@ -128,11 +192,26 @@ export async function subscribeToNewsletter(
     );
   }
 
+  let followupScheduled = false;
+
+  try {
+    followupScheduled = await scheduleLeadMagnetFollowup({
+      signupId: signup.id,
+      email: normalizedEmail,
+      downloadLink,
+    });
+  } catch (error) {
+    // A follow-up failure must never turn a successful guide delivery into an
+    // error for the subscriber.
+    console.error("No se pudo programar el seguimiento de la guía:", error);
+  }
+
   return {
     success: true,
     saved: true,
     delivered: true,
     notified: !notification.error,
+    followupScheduled,
     signupId: signup.id,
   };
 }

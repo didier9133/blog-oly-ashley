@@ -10,10 +10,10 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import { SUPPORT_EMAIL } from "@/lib/server/notification-emails";
 
 type LeadMagnetEmailTemplateProps = {
   downloadLink: string;
+  supportEmail: string;
 };
 
 const COPY = {
@@ -29,7 +29,8 @@ const COPY = {
   cta: "Download your free guide",
   expiry:
     "Your private download link is valid for 48 hours. Save the PDF to your device before it expires.",
-  fallback: "If the button does not open, copy this link into your browser:",
+  fallback: "If the button does not open, use this backup link:",
+  fallbackCta: "Open the secure download link →",
   newsletter:
     "You’ll also receive my occasional reflections on faith, identity, belonging, and what remains sacred—only when there is something worth saying.",
   support: "Questions? Reply to this email or write to",
@@ -38,6 +39,7 @@ const COPY = {
 
 export default function LeadMagnetEmailTemplate({
   downloadLink,
+  supportEmail,
 }: LeadMagnetEmailTemplateProps) {
   const copy = COPY;
 
@@ -71,7 +73,7 @@ export default function LeadMagnetEmailTemplate({
             <Text style={fallbackText}>{copy.fallback}</Text>
             <Text style={linkText}>
               <a href={downloadLink} style={link}>
-                {downloadLink}
+                {copy.fallbackCta}
               </a>
             </Text>
 
@@ -79,8 +81,8 @@ export default function LeadMagnetEmailTemplate({
             <Text style={newsletterText}>{copy.newsletter}</Text>
             <Text style={supportText}>
               {copy.support}{" "}
-              <a href={`mailto:${SUPPORT_EMAIL}`} style={link}>
-                {SUPPORT_EMAIL}
+              <a href={`mailto:${supportEmail}`} style={link}>
+                {supportEmail}
               </a>
               .
             </Text>

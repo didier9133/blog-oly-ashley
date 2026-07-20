@@ -12,3 +12,8 @@ export type LeadMagnetLocale = "en" | "es";
 
 export const LEAD_MAGNET_EMAIL_SUBJECT =
   "Your free guide is here: Which Binary Are You Standing In?";
+
+export const LEAD_MAGNET_FOLLOWUP_DELAY_MS = 24 * 60 * 60 * 1000;
+
+export const LEAD_MAGNET_FOLLOWUP_SUBJECT =
+  "A gentle next step after your guide";
