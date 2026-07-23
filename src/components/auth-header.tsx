@@ -5,6 +5,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { User } from "lucide-react";
 import { LanguageSelector } from "./language-selector";
+import { BrandWordmark } from "@/components/brand-wordmark";
 
 export async function AuthHeader({ locale }: { locale: string }) {
   const isSpanish = locale === "es";
@@ -15,11 +16,13 @@ export async function AuthHeader({ locale }: { locale: string }) {
         <Link
           href={`/${locale}`}
           className="flex-shrink-0 min-w-0 md:hidden"
-          aria-label={isSpanish ? "Ashley Leon — Inicio" : "Ashley Leon — Home"}
+          aria-label={
+            isSpanish
+              ? "ADL por Ashley Leon — Inicio"
+              : "ADL by Ashley Leon — Home"
+          }
         >
-          <span className="font-[family-name:var(--font-great-vibes)] text-[1.5rem] sm:text-[1.75rem] font-medium text-foreground tracking-tighter leading-none whitespace-nowrap">
-            Ashley Leon
-          </span>
+          <BrandWordmark className="text-[1.8rem] sm:text-[2.05rem]" />
         </Link>
 
         <div className="hidden md:flex flex-1 justify-start min-w-0">

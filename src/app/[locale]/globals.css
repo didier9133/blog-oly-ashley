@@ -864,9 +864,9 @@
   .home-hero-mobile-scrim {
     background: linear-gradient(
       90deg,
-      rgba(250, 246, 240, 0.66) 0%,
-      rgba(250, 246, 240, 0.44) 42%,
-      rgba(250, 246, 240, 0.12) 68%,
+      rgba(250, 246, 240, 0.72) 0%,
+      rgba(250, 246, 240, 0.56) 43%,
+      rgba(250, 246, 240, 0.18) 72%,
       transparent 100%
     );
   }

@@ -36,7 +36,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-const HERO_IMAGE = "/ashley-hero-2026.jpeg";
+const HERO_IMAGE = "/adl-hero-human-stock.jpg";
 
 export default async function Home({
   params,
@@ -171,22 +171,27 @@ export default async function Home({
               id="hero"
               className="home-hero relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)] md:min-h-[46rem] md:max-h-[68rem]"
             >
-              <div aria-hidden className="absolute inset-0 overflow-hidden">
-                <picture>
-                  <source media="(max-width: 767px)" srcSet={HERO_IMAGE} />
-                  <source
-                    media="(min-width: 768px)"
-                    srcSet={heroDesktopProps.srcSet}
-                    sizes={heroDesktopSizes}
-                  />
-                  <img
-                    {...heroDesktopProps}
-                    alt=""
-                    srcSet={undefined}
-                    sizes={undefined}
-                    className="home-hero-media object-cover object-[57%_center] min-[390px]:object-[59%_center] sm:object-[72%_center] md:object-[61%_44%] xl:object-[61%_43%]"
-                  />
-                </picture>
+              <div
+                aria-hidden
+                className="absolute inset-0 overflow-hidden"
+              >
+                <div className="relative size-full origin-center scale-[1.04] translate-x-[2%] md:scale-[1.07] md:translate-x-[4%]">
+                  <picture className="block size-full -scale-x-100">
+                    <source media="(max-width: 767px)" srcSet={HERO_IMAGE} />
+                    <source
+                      media="(min-width: 768px)"
+                      srcSet={heroDesktopProps.srcSet}
+                      sizes={heroDesktopSizes}
+                    />
+                    <img
+                      {...heroDesktopProps}
+                      alt=""
+                      srcSet={undefined}
+                      sizes={undefined}
+                      className="home-hero-media object-cover object-[54%_center] sm:object-[56%_center] md:object-center"
+                    />
+                  </picture>
+                </div>
               </div>
               <div
                 aria-hidden
@@ -194,7 +199,7 @@ export default async function Home({
               />
               <div
                 aria-hidden
-                className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(250,246,240,0.94)_0%,rgba(250,246,240,0.84)_28%,rgba(250,246,240,0.24)_46%,rgba(250,246,240,0.02)_64%,rgba(250,246,240,0.08)_82%,rgba(250,246,240,0.42)_100%)] md:block"
+                className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(250,246,240,0.96)_0%,rgba(250,246,240,0.88)_29%,rgba(250,246,240,0.48)_47%,rgba(250,246,240,0.05)_67%,rgba(250,246,240,0.02)_100%)] md:block"
               />
               <div
                 aria-hidden
@@ -276,7 +281,7 @@ export default async function Home({
                 aria-hidden
                 className="absolute bottom-10 right-[5.5%] z-30 hidden origin-bottom-right -rotate-90 font-[family-name:var(--font-lora)] text-[0.56rem] font-medium uppercase tracking-[0.38em] text-foreground/45 md:block"
               >
-                Ashley Leon ·{" "}
+                ADL ·{" "}
                 {currentLanguage === "es" ? "Notas de campo" : "Field Notes"}
               </div>
 

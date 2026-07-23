@@ -15,6 +15,7 @@ import { data } from "@/const/navbar-options";
 import { useUser } from "@clerk/nextjs";
 import { useLocale, useTranslations } from "next-intl";
 import { SidebarNavMenu } from "@/components/sidebar-nav-menu";
+import { BrandWordmark } from "@/components/brand-wordmark";
 
 type NavItem = {
   title: string;
@@ -67,10 +68,16 @@ export function AppSidebar({
     >
       <SidebarHeader className="h-20 border-b border-border/50 bg-[#F9F8F6] px-6">
         <div className="flex justify-start items-center h-full w-full">
-          <Link href={`/${locale}`} className="flex-shrink-0">
-            <span className="font-[family-name:var(--font-great-vibes)] text-3xl font-medium text-foreground tracking-tight">
-              Ashley Leon
-            </span>
+          <Link
+            href={`/${locale}`}
+            className="flex-shrink-0"
+            aria-label={
+              isSpanish
+                ? "ADL por Ashley Leon — Inicio"
+                : "ADL by Ashley Leon — Home"
+            }
+          >
+            <BrandWordmark className="text-[2.15rem]" />
           </Link>
         </div>
       </SidebarHeader>

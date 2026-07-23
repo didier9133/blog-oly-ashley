@@ -22,21 +22,16 @@ const PRICE_CENTS = CIRCLE_EARLY_PRICE * 100;
 const PRODUCT_S3KEY = "live-sessions/rebuilding-reverence-circle";
 const PRODUCT_TYPE = "live_session";
 const SUCCESS_PATH = "/circle/success";
-const CIRCLE_CHECKOUT_IMAGES = {
-  en: {
-    src: "/circle-checkout-en.png",
-    alt: "The Rebuilding Reverence Circle live group experience",
-  },
-  es: {
-    src: "/circle-checkout-es-v3.png",
-    alt: "Proceso grupal en vivo para reconstruir la fe",
-  },
-} as const;
+const CIRCLE_RESERVE_IMAGE = "/adl-circle-community-clean.jpg";
 
 function getCircleCheckoutImage(locale: string) {
-  return locale === "es"
-    ? CIRCLE_CHECKOUT_IMAGES.es
-    : CIRCLE_CHECKOUT_IMAGES.en;
+  return {
+    src: CIRCLE_RESERVE_IMAGE,
+    alt:
+      locale === "es"
+        ? "Tres mujeres conversando durante una experiencia grupal de The Circle"
+        : "Three women in conversation during a Rebuilding Reverence Circle group experience",
+  };
 }
 
 export async function generateMetadata({
@@ -168,13 +163,13 @@ export default async function ReservePage({
               <div className="space-y-6">
                 <Card className="overflow-hidden border-border/50 shadow-md rounded-sm bg-card">
                   <CardContent className="p-0">
-                    <div className="aspect-[2/3] bg-[#f5f0eb] flex items-center justify-center relative">
+                    <div className="relative aspect-[3/2] overflow-hidden bg-[#f5f0eb]">
                       <Image
                         src={coverImage.src}
                         alt={coverImage.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-contain"
+                        className="object-cover object-[center_18%]"
                       />
                     </div>
                   </CardContent>

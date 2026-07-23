@@ -5,6 +5,7 @@ import { Download, Facebook, Instagram, Youtube, Mail } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 import { localizedHref } from "@/lib/url";
+import { BrandWordmark } from "@/components/brand-wordmark";
 
 export async function Footer({ locale }: { locale: string }) {
   const currentYear = new Date().getFullYear();
@@ -73,8 +74,8 @@ export async function Footer({ locale }: { locale: string }) {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 mb-16">
             {/* Brand Column */}
             <div className="md:col-span-12 lg:col-span-6 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <h3 className="font-[family-name:var(--font-great-vibes)] text-4xl text-white">
-                Ashley Leon
+              <h3>
+                <BrandWordmark className="text-[3.25rem] !text-white" />
               </h3>
               <p className="text-sm leading-relaxed font-sans max-w-md text-white/70">
                 {t("brand-desc")}

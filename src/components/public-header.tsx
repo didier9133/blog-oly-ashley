@@ -3,6 +3,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { PublicItemsNavBar } from "./public-items-nav-bar";
 import { LanguageSelector } from "./language-selector";
 import { localizedHref } from "@/lib/url";
+import { BrandWordmark } from "@/components/brand-wordmark";
 
 export function PublicHeader({ locale }: { locale: string }) {
   return (
@@ -12,12 +13,12 @@ export function PublicHeader({ locale }: { locale: string }) {
           href={localizedHref(locale, "/")}
           className="min-w-0 flex-shrink-0"
           aria-label={
-            locale === "es" ? "Ashley Leon — Inicio" : "Ashley Leon — Home"
+            locale === "es"
+              ? "ADL por Ashley Leon — Inicio"
+              : "ADL by Ashley Leon — Home"
           }
         >
-          <span className="whitespace-nowrap font-[family-name:var(--font-great-vibes)] text-[1.5rem] font-medium leading-none tracking-tighter text-foreground sm:text-[1.75rem] lg:text-[1.45rem] xl:text-[1.7rem]">
-            Ashley Leon
-          </span>
+          <BrandWordmark className="text-[1.8rem] sm:text-[2.05rem] lg:text-[1.85rem] xl:text-[2.05rem]" />
         </Link>
 
         <div className="hidden min-w-0 flex-1 justify-start lg:flex">
