@@ -36,7 +36,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-const HERO_IMAGE = "/adl-hero-human-stock.jpg";
+const HERO_IMAGE = "/ashley-leon-hero.jpg";
 
 export default async function Home({
   params,
@@ -149,7 +149,8 @@ export default async function Home({
     description: currentLanguage === "es" ? aiSummaryEs : aiSummaryEn,
   };
 
-  const heroDesktopSizes = "(min-width: 1280px) calc(100vw - 300px), 100vw";
+  const heroDesktopSizes =
+    "(min-width: 1760px) 1126px, (min-width: 1600px) 64vw, (min-width: 768px) 68vw, 100vw";
   const { props: heroDesktopProps } = getImageProps({
     src: HERO_IMAGE,
     alt: "",
@@ -165,223 +166,200 @@ export default async function Home({
       <JsonLd data={getPersonSchema(currentLanguage)} />
       <JsonLd data={aiSummarySchema} />
       <main className="home-page relative isolate bg-background text-foreground">
-        <div className="relative z-10 mx-auto max-w-[1760px] min-[1280px]:flex min-[1280px]:gap-10">
-          <div className="min-[1280px]:min-w-0 min-[1280px]:flex-1">
-            <section
-              id="hero"
-              className="home-hero relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)] md:min-h-[46rem] md:max-h-[68rem]"
-            >
-              <div
-                aria-hidden
-                className="absolute inset-0 overflow-hidden"
-              >
-                <div className="relative size-full origin-center scale-[1.04] translate-x-[2%] md:scale-[1.07] md:translate-x-[4%]">
-                  <picture className="block size-full -scale-x-100">
-                    <source media="(max-width: 767px)" srcSet={HERO_IMAGE} />
-                    <source
-                      media="(min-width: 768px)"
-                      srcSet={heroDesktopProps.srcSet}
-                      sizes={heroDesktopSizes}
-                    />
-                    <img
-                      {...heroDesktopProps}
-                      alt=""
-                      srcSet={undefined}
-                      sizes={undefined}
-                      className="home-hero-media object-cover object-[54%_center] sm:object-[56%_center] md:object-center"
-                    />
-                  </picture>
-                </div>
-              </div>
-              <div
-                aria-hidden
-                className="home-hero-mobile-scrim absolute inset-0 md:hidden"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(250,246,240,0.96)_0%,rgba(250,246,240,0.88)_29%,rgba(250,246,240,0.48)_47%,rgba(250,246,240,0.05)_67%,rgba(250,246,240,0.02)_100%)] md:block"
-              />
-              <div
-                aria-hidden
-                className="home-hero-depth absolute inset-0"
-              />
-              <div aria-hidden className="home-hero-texture absolute inset-0" />
-              <div
-                aria-hidden
-                className="absolute bottom-0 right-[9%] hidden h-[82%] w-px bg-white/65 shadow-[18px_0_0_rgba(255,255,255,0.42),36px_0_0_rgba(255,255,255,0.25)] md:block"
-              />
-
-              <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-8 px-4 pb-32 pt-[18svh] min-[390px]:pb-36 min-[390px]:pt-[20svh] sm:px-6 sm:pb-32 sm:pt-[38vh] md:h-full md:min-h-0 md:grid-cols-12 md:items-center md:px-8 md:py-8 lg:px-12 lg:py-10">
-                <div className="max-w-[34rem] pb-7 md:col-span-6 md:pb-0">
-                  <span className="home-hero-reveal home-hero-reveal-1 editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-flex items-center gap-4">
-                    <span aria-hidden className="h-px w-7 bg-primary/65" />
-                    {t("hero-eyebrow")}
-                  </span>
-                  <h1 className="home-hero-reveal home-hero-reveal-2 mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-[-0.02em] text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3.15rem,4.25vw,4.75rem)] md:tracking-[-0.03em] xl:text-[clamp(3.45rem,4.2vw,5rem)]">
-                    {t("hero-title-one")}{" "}
-                    <span className="block">
-                      {t("hero-title-two")}{" "}
-                      <em className="home-hero-highlight not-italic">
-                        {t("hero-title-highlight")}
-                      </em>
-                    </span>
-                  </h1>
-                  <span className="home-hero-rule mt-5 block sm:mt-8 md:mt-6" />
-                  <div className="home-hero-lede-shell home-hero-reveal home-hero-reveal-3 mt-4 w-full max-w-[30rem] sm:mt-8 sm:max-w-[34rem] md:mt-6 md:max-w-none">
-                    <p className="editorial-lede max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
-                      {t("hero-description")}
-                    </p>
-                  </div>
-                  <div className="home-hero-reveal home-hero-reveal-4 mt-6 flex w-full max-w-[30rem] flex-col gap-2.5 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] sm:gap-3 md:mt-7">
-                    <Link
-                      href={primaryWorkbookHref}
-                      className="home-hero-button group inline-flex min-h-14 w-full items-center justify-between gap-4 overflow-hidden border border-[#7d4432] bg-[#8f513b] px-5 py-3.5 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-[#fffaf5] shadow-[0_12px_30px_-18px_rgba(92,45,31,0.9)] transition-[background-color,border-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-[#6f3b2c] hover:bg-[#784330] hover:shadow-[0_18px_38px_-20px_rgba(92,45,31,0.95)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
-                    >
-                      <span className="min-w-0 flex-1 text-left text-balance">
-                        {t("cta-journals")}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="grid size-8 shrink-0 place-items-center rounded-full border border-[#fffaf5]/25 bg-[#fffaf5]/10 text-base leading-none transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-[#fffaf5]/45 group-hover:bg-[#fffaf5]/18 sm:size-7"
-                      >
-                        →
-                      </span>
-                    </Link>
-                    <Link
-                      href={writingHref}
-                      className="home-hero-button group inline-flex min-h-[3.25rem] w-full items-center justify-between gap-4 border border-primary/50 bg-[#fbf7f1]/55 px-5 py-3 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-foreground shadow-[inset_0_0_0_1px_rgba(255,255,255,0.32)] backdrop-blur-[3px] transition-[border-color,color,background-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/80 hover:text-primary hover:shadow-[0_12px_28px_-22px_rgba(92,45,31,0.75)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
-                    >
-                      <span className="min-w-0 flex-1 text-left text-balance">
-                        {t("cta-explore")}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="grid size-8 shrink-0 place-items-center rounded-full border border-primary/25 bg-[#fbf7f1]/35 text-base leading-none text-primary transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-primary/50 group-hover:bg-white/45 sm:size-7"
-                      >
-                        →
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div className="home-hero-reveal home-hero-reveal-5 pointer-events-none absolute bottom-8 left-8 z-30 hidden items-center gap-4 md:flex lg:left-12">
-                <span
-                  aria-hidden
-                  className="relative block h-12 w-px overflow-hidden bg-foreground/15"
-                >
-                  <span className="home-hero-scroll-line absolute inset-x-0 top-0 h-5 bg-primary" />
-                </span>
-                <span className="font-[family-name:var(--font-lora)] text-[0.58rem] font-medium uppercase tracking-[0.28em] text-foreground/55">
-                  {t("hero-est")}
-                </span>
-              </div>
-
-              <div
-                aria-hidden
-                className="absolute bottom-10 right-[5.5%] z-30 hidden origin-bottom-right -rotate-90 font-[family-name:var(--font-lora)] text-[0.56rem] font-medium uppercase tracking-[0.38em] text-foreground/45 md:block"
-              >
-                ADL ·{" "}
-                {currentLanguage === "es" ? "Notas de campo" : "Field Notes"}
-              </div>
-
-              <svg
-                className="pointer-events-none absolute bottom-[-46px] left-0 z-20 h-[100px] w-full sm:bottom-[-1px] sm:h-[150px] md:hidden"
-                viewBox="0 0 1440 180"
-                preserveAspectRatio="none"
-                fill="var(--book)"
-                aria-hidden="true"
-              >
-                <path d="M0,126 C290,48 628,20 990,72 C1168,98 1306,139 1440,152 L1440,180 L0,180 Z" />
-              </svg>
-            </section>
-
-            <HomeSectionWhoFor
-              eyebrow={t("who-eyebrow")}
-              title={t("who-title")}
-              quotes={[
-                { quote: t("who-quote-1"), label: t("who-label-1") },
-                { quote: t("who-quote-2"), label: t("who-label-2") },
-                { quote: t("who-quote-3"), label: t("who-label-3") },
-              ]}
-            />
-
-            <HomeManifesto
-              eyebrow={t("manifesto-eyebrow")}
-              title={t("manifesto-title")}
-              quote={t("paragraph-description-two")}
-              workLabel={t("manifesto-work-label")}
-              body={t("paragraph-description")}
-              closing={`${t("paragraph-description-three")} ${t(
-                "paragraph-description-four",
-              )}`}
-              pillars={[
-                {
-                  title: t("manifesto-pillar-1-title"),
-                  desc: t("manifesto-pillar-1-desc"),
-                },
-                {
-                  title: t("manifesto-pillar-2-title"),
-                  desc: t("manifesto-pillar-2-desc"),
-                },
-                {
-                  title: t("manifesto-pillar-3-title"),
-                  desc: t("manifesto-pillar-3-desc"),
-                },
-              ]}
-            />
-
-            <span id="book" className="sr-only" aria-hidden="true" />
-            <HomeFeaturedRebuildingReverence
-              book={promotedBook}
-              locale={contentLocale}
-              eyebrow={t("book-eyebrow")}
-              tagline={t("book-tagline")}
-              blurbStart={t("book-blurb-start")}
-              blurbHighlight={t("book-blurb-highlight")}
-              blurbEnd={t("book-blurb-end")}
-              cta={t("book-cta")}
-              emptyState={t("book-empty")}
-            />
-
-            <span id="find" className="sr-only" aria-hidden="true" />
-            <HomeCircleCta
-              eyebrow={t("circle-eyebrow")}
-              title={t("circle-title")}
-              description={t("circle-description")}
-              cta={t("circle-cta")}
-              href={circleHref}
-            />
-
-            <HomeCommunityCta
-              eyebrow={t("community-eyebrow")}
-              title={t("community-title")}
-              description={t("community-description")}
-              cta={t("community-cta")}
-              href={communityHref}
-            />
-
-            <span id="fresh" className="sr-only" aria-hidden="true" />
-            <HomeRecentWriting
-              eyebrow={t("fresh-eyebrow")}
-              title={t("fresh-title-two")}
-              description={t("paragraph-fresh")}
-              posts={writingPosts}
-              empty={t("writing-empty")}
-              readMore={t("btn-fresh")}
-              viewAll={t("fresh-view-all")}
-              viewAllHref={writingHref}
-            />
-          </div>
-
-          <aside
-            aria-label={t("sidebar-index")}
-            className="hidden w-[260px] shrink-0 pr-4 sm:pr-6 md:pr-8 min-[1280px]:block min-[1280px]:pr-10"
+        <div className="relative z-10 mx-auto max-w-[1760px]">
+          <section
+            id="hero"
+            className="home-hero relative isolate -mt-16 overflow-hidden bg-[#f7f1eb] sm:-mt-[72px] md:mt-0 md:h-[calc(100svh-4.75rem)] md:min-h-[46rem] md:max-h-[68rem]"
           >
-            <div className="sticky top-[5rem] pb-12 pt-[7.5rem] md:top-[5.5rem]">
-              <HomeSidebar />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-[52svh] min-h-[24rem] overflow-hidden md:inset-y-0 md:left-[32%] md:right-0 md:h-auto md:min-h-0 min-[1600px]:left-[36%]"
+            >
+              <picture className="block size-full">
+                <img
+                  {...heroDesktopProps}
+                  alt=""
+                  className="home-hero-media home-hero-portrait object-cover"
+                />
+              </picture>
             </div>
-          </aside>
+            <div
+              aria-hidden
+              className="home-hero-mobile-paper absolute inset-x-0 top-[38svh] bottom-0 md:hidden"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(250,246,240,0.97)_0%,rgba(250,246,240,0.9)_27%,rgba(250,246,240,0.48)_45%,rgba(250,246,240,0.06)_64%,rgba(250,246,240,0.02)_100%)] md:block"
+            />
+            <div aria-hidden className="home-hero-depth absolute inset-0" />
+            <div aria-hidden className="home-hero-texture absolute inset-0" />
+
+            <div className="relative z-30 grid min-h-[calc(100svh-4rem)] grid-cols-1 items-start gap-8 px-4 pb-24 pt-[43svh] min-[390px]:pt-[44svh] sm:px-6 sm:pb-28 sm:pt-[45svh] md:h-full md:min-h-0 md:grid-cols-12 md:px-8 md:pb-10 md:pt-8 lg:px-12 lg:pb-12 lg:pt-8">
+              <div className="max-w-[36rem] pb-7 md:col-span-6 md:pb-0 xl:col-span-5">
+                <span className="home-hero-reveal home-hero-reveal-1 editorial-eyebrow hero-eyebrow-contrast hidden sm:inline-flex items-center gap-4">
+                  <span aria-hidden className="h-px w-7 bg-primary/65" />
+                  {t("hero-eyebrow")}
+                </span>
+                <h1 className="home-hero-reveal home-hero-reveal-2 mt-5 max-w-[12ch] font-[family-name:var(--font-cormorant-garamond)] text-[clamp(2.45rem,11vw,2.85rem)] font-light leading-[0.92] tracking-[-0.02em] text-foreground text-balance sm:mt-6 sm:max-w-none sm:text-[clamp(3.2rem,5.8vw,5.35rem)] md:text-[clamp(3.15rem,4.25vw,4.75rem)] md:tracking-[-0.03em] xl:text-[clamp(3.45rem,4.2vw,5rem)]">
+                  {t("hero-title-one")}{" "}
+                  <span className="block">
+                    {t("hero-title-two")}{" "}
+                    <em className="home-hero-highlight not-italic">
+                      {t("hero-title-highlight")}
+                    </em>
+                  </span>
+                </h1>
+                <span className="home-hero-rule mt-5 block sm:mt-8 md:mt-6" />
+                <div className="home-hero-lede-shell home-hero-reveal home-hero-reveal-3 mt-4 w-full max-w-[30rem] sm:mt-8 sm:max-w-[34rem] md:mt-6 md:max-w-none">
+                  <p className="editorial-lede max-w-[35ch] text-[0.95rem] leading-[1.42] text-pretty sm:text-[clamp(1.0625rem,1.4vw,1.25rem)] sm:leading-[1.65] md:text-[clamp(1rem,1.05vw,1.125rem)] md:leading-[1.62]">
+                    {t("hero-description")}
+                  </p>
+                </div>
+                <div className="home-hero-reveal home-hero-reveal-4 mt-6 flex w-full max-w-[30rem] flex-col gap-2.5 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] sm:gap-3 md:mt-7">
+                  <Link
+                    href={primaryWorkbookHref}
+                    className="home-hero-button group inline-flex min-h-14 w-full items-center justify-between gap-4 overflow-hidden border border-[#7d4432] bg-[#8f513b] px-5 py-3.5 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-[#fffaf5] shadow-[0_12px_30px_-18px_rgba(92,45,31,0.9)] transition-[background-color,border-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-[#6f3b2c] hover:bg-[#784330] hover:shadow-[0_18px_38px_-20px_rgba(92,45,31,0.95)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
+                  >
+                    <span className="min-w-0 flex-1 text-left text-balance">
+                      {t("cta-journals")}
+                    </span>
+                    <span
+                      aria-hidden
+                      className="grid size-8 shrink-0 place-items-center rounded-full border border-[#fffaf5]/25 bg-[#fffaf5]/10 text-base leading-none transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-[#fffaf5]/45 group-hover:bg-[#fffaf5]/18 sm:size-7"
+                    >
+                      →
+                    </span>
+                  </Link>
+                  <Link
+                    href={writingHref}
+                    className="home-hero-button group inline-flex min-h-[3.25rem] w-full items-center justify-between gap-4 border border-primary/50 bg-[#fbf7f1]/55 px-5 py-3 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-foreground shadow-[inset_0_0_0_1px_rgba(255,255,255,0.32)] backdrop-blur-[3px] transition-[border-color,color,background-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-primary hover:bg-[#fbf7f1]/80 hover:text-primary hover:shadow-[0_12px_28px_-22px_rgba(92,45,31,0.75)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"
+                  >
+                    <span className="min-w-0 flex-1 text-left text-balance">
+                      {t("cta-explore")}
+                    </span>
+                    <span
+                      aria-hidden
+                      className="grid size-8 shrink-0 place-items-center rounded-full border border-primary/25 bg-[#fbf7f1]/35 text-base leading-none text-primary transition-[background-color,border-color,transform] duration-500 group-hover:translate-x-0.5 group-hover:border-primary/50 group-hover:bg-white/45 sm:size-7"
+                    >
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="home-hero-reveal home-hero-reveal-5 pointer-events-none absolute bottom-8 left-8 z-30 hidden items-center gap-4 md:flex lg:left-12">
+              <span
+                aria-hidden
+                className="relative block h-12 w-px overflow-hidden bg-foreground/15"
+              >
+                <span className="home-hero-scroll-line absolute inset-x-0 top-0 h-5 bg-primary" />
+              </span>
+              <span className="font-[family-name:var(--font-lora)] text-[0.58rem] font-medium uppercase tracking-[0.28em] text-foreground/55">
+                {t("hero-est")}
+              </span>
+            </div>
+
+            <svg
+              className="pointer-events-none absolute bottom-[-46px] left-0 z-20 h-[100px] w-full sm:bottom-[-1px] sm:h-[150px] md:hidden"
+              viewBox="0 0 1440 180"
+              preserveAspectRatio="none"
+              fill="var(--book)"
+              aria-hidden="true"
+            >
+              <path d="M0,126 C290,48 628,20 990,72 C1168,98 1306,139 1440,152 L1440,180 L0,180 Z" />
+            </svg>
+          </section>
+
+          <div className="min-[1280px]:flex min-[1280px]:gap-10">
+            <div className="min-[1280px]:min-w-0 min-[1280px]:flex-1">
+              <HomeSectionWhoFor
+                eyebrow={t("who-eyebrow")}
+                title={t("who-title")}
+                quotes={[
+                  { quote: t("who-quote-1"), label: t("who-label-1") },
+                  { quote: t("who-quote-2"), label: t("who-label-2") },
+                  { quote: t("who-quote-3"), label: t("who-label-3") },
+                ]}
+              />
+
+              <HomeManifesto
+                eyebrow={t("manifesto-eyebrow")}
+                title={t("manifesto-title")}
+                quote={t("paragraph-description-two")}
+                workLabel={t("manifesto-work-label")}
+                body={t("paragraph-description")}
+                closing={`${t("paragraph-description-three")} ${t(
+                  "paragraph-description-four",
+                )}`}
+                pillars={[
+                  {
+                    title: t("manifesto-pillar-1-title"),
+                    desc: t("manifesto-pillar-1-desc"),
+                  },
+                  {
+                    title: t("manifesto-pillar-2-title"),
+                    desc: t("manifesto-pillar-2-desc"),
+                  },
+                  {
+                    title: t("manifesto-pillar-3-title"),
+                    desc: t("manifesto-pillar-3-desc"),
+                  },
+                ]}
+              />
+
+              <span id="book" className="sr-only" aria-hidden="true" />
+              <HomeFeaturedRebuildingReverence
+                book={promotedBook}
+                locale={contentLocale}
+                eyebrow={t("book-eyebrow")}
+                tagline={t("book-tagline")}
+                blurbStart={t("book-blurb-start")}
+                blurbHighlight={t("book-blurb-highlight")}
+                blurbEnd={t("book-blurb-end")}
+                cta={t("book-cta")}
+                emptyState={t("book-empty")}
+              />
+
+              <span id="find" className="sr-only" aria-hidden="true" />
+              <HomeCircleCta
+                eyebrow={t("circle-eyebrow")}
+                title={t("circle-title")}
+                description={t("circle-description")}
+                cta={t("circle-cta")}
+                href={circleHref}
+              />
+
+              <HomeCommunityCta
+                eyebrow={t("community-eyebrow")}
+                title={t("community-title")}
+                description={t("community-description")}
+                cta={t("community-cta")}
+                href={communityHref}
+              />
+
+              <span id="fresh" className="sr-only" aria-hidden="true" />
+              <HomeRecentWriting
+                eyebrow={t("fresh-eyebrow")}
+                title={t("fresh-title-two")}
+                description={t("paragraph-fresh")}
+                posts={writingPosts}
+                empty={t("writing-empty")}
+                readMore={t("btn-fresh")}
+                viewAll={t("fresh-view-all")}
+                viewAllHref={writingHref}
+              />
+            </div>
+
+            <aside
+              aria-label={t("sidebar-index")}
+              className="hidden w-[260px] shrink-0 pr-4 sm:pr-6 md:pr-8 min-[1280px]:block min-[1280px]:pr-10"
+            >
+              <div className="sticky top-[5rem] pb-12 pt-[7.5rem] md:top-[5.5rem]">
+                <HomeSidebar />
+              </div>
+            </aside>
+          </div>
         </div>
       </main>
     </>

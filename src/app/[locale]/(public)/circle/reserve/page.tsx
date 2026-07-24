@@ -22,15 +22,15 @@ const PRICE_CENTS = CIRCLE_EARLY_PRICE * 100;
 const PRODUCT_S3KEY = "live-sessions/rebuilding-reverence-circle";
 const PRODUCT_TYPE = "live_session";
 const SUCCESS_PATH = "/circle/success";
-const CIRCLE_RESERVE_IMAGE = "/adl-circle-community-clean.jpg";
+const CIRCLE_RESERVE_IMAGE = "/ashley-leon-circle.jpg";
 
 function getCircleCheckoutImage(locale: string) {
   return {
     src: CIRCLE_RESERVE_IMAGE,
     alt:
       locale === "es"
-        ? "Tres mujeres conversando durante una experiencia grupal de The Circle"
-        : "Three women in conversation during a Rebuilding Reverence Circle group experience",
+        ? "Mujeres tomadas de la mano durante un encuentro de The Circle"
+        : "Women holding hands during a The Circle gathering",
   };
 }
 
@@ -169,7 +169,7 @@ export default async function ReservePage({
                         alt={coverImage.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-cover object-[center_18%]"
+                        className="object-cover object-center"
                       />
                     </div>
                   </CardContent>

@@ -35,11 +35,11 @@ export function HomeCircleCta({
           </span>
           <div className="relative min-h-[20rem] overflow-hidden md:col-span-5 md:min-h-[34rem] lg:min-h-[31rem]">
             <Image
-              src="/adl-circle-community-clean.jpg"
+              src="/ashley-leon-circle.jpg"
               alt=""
               fill
               sizes="(min-width: 1280px) 35vw, (min-width: 768px) 42vw, 100vw"
-              className="object-cover object-[center_18%] transition-transform duration-[1400ms] ease-out motion-safe:group-hover:scale-[1.035]"
+              className="object-cover object-center transition-transform duration-[1400ms] ease-out motion-safe:group-hover:scale-[1.035]"
             />
             <div
               aria-hidden
