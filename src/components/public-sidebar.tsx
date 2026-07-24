@@ -53,7 +53,7 @@ export async function PublicSidebar({
       mobileDescription={sidebarDescription}
       className="border-l border-foreground/10 shadow-2xl"
     >
-      <SidebarContent className="relative overflow-hidden bg-[#F9F8F6] pt-8">
+      <SidebarContent className="relative overflow-y-auto overscroll-contain bg-[#F9F8F6] pb-[calc(env(safe-area-inset-bottom)+5rem)] pt-8 [-webkit-overflow-scrolling:touch]">
         <SidebarGroup className="relative">
           <div className="px-7 pb-5 font-[family-name:var(--font-lora)] text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-foreground/45">
             {isSpanish ? "Menú" : "Menu"}

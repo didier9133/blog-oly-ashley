@@ -215,7 +215,7 @@ export default async function Home({
                     {t("hero-description")}
                   </p>
                 </div>
-                <div className="home-hero-reveal home-hero-reveal-4 mt-5 flex w-full max-w-[30rem] flex-col gap-2.5 min-[390px]:grid min-[390px]:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] min-[390px]:gap-3 sm:mt-9 sm:max-w-[34rem] md:mt-7">
+                <div className="home-hero-reveal home-hero-reveal-4 mt-5 flex w-full max-w-[30rem] flex-col gap-2.5 sm:mt-9 sm:grid sm:max-w-[34rem] sm:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] sm:gap-3 md:mt-7">
                   <Link
                     href={primaryWorkbookHref}
                     className="home-hero-button group inline-flex min-h-14 w-full items-center justify-between gap-4 overflow-hidden border border-[#7d4432] bg-[#8f513b] px-5 py-3.5 font-[family-name:var(--font-lora)] text-[0.72rem] font-bold uppercase leading-[1.35] tracking-[0.115em] text-[#fffaf5] shadow-[0_12px_30px_-18px_rgba(92,45,31,0.9)] transition-[background-color,border-color,transform,box-shadow] duration-500 motion-safe:hover:-translate-y-0.5 hover:border-[#6f3b2c] hover:bg-[#784330] hover:shadow-[0_18px_38px_-20px_rgba(92,45,31,0.95)] active:translate-y-px active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] sm:min-h-14 sm:px-6 sm:py-3.5 sm:text-[0.69rem] sm:tracking-[0.15em] md:min-h-12 md:py-3"

@@ -42,12 +42,13 @@ describe("footer localization", () => {
       "lead-magnet-consent":
         "Recibe la guía gratuita y las reflexiones ocasionales de Ashley. Sin spam; cancela cuando quieras.",
       "lead-magnet-landing-eyebrow":
-        "Una guía gratuita para reconocer la tensión",
+        "Una guía gratuita para reconocer la herida",
       "lead-magnet-landing-title":
-        "Cuando el dolor vivido en la iglesia te deja entre dos caminos",
+        "Cuando las heridas de la iglesia te hacen dudar del camino a seguir",
       "lead-magnet-landing-desc":
-        "Cinco reflexiones breves para reconocer la tensión entre tu fe, tu identidad y tu sentido de pertenencia. Sin respuestas correctas ni conclusiones impuestas: solo un punto de partida para nombrar lo que estás viviendo.",
-      "lead-magnet-landing-cta": "Ayúdame a nombrar lo que estoy viviendo",
+        "Cinco reflexiones breves para reconocer la herida que atraviesa tu fe, tu identidad y tu sentido de pertenencia. Sin respuestas correctas ni conclusiones impuestas: solo un punto de partida para nombrar lo que estás viviendo.",
+      "lead-magnet-landing-cta":
+        "Ayúdame a darle nombre a lo que estoy viviendo",
       "brand-desc":
         "Ensayos, guías y encuentros en vivo para reconstruir la fe, recuperar la reverencia y volver a lo sagrado sin renunciar a quien eres.",
       explore: "Para empezar",

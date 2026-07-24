@@ -15,6 +15,16 @@ const navItemSource = readFileSync(
   new URL("../src/components/item-nav-bar.tsx", import.meta.url),
   "utf8",
 );
+const homeSource = readFileSync(
+  new URL("../src/app/[locale]/(public)/page.tsx", import.meta.url),
+  "utf8",
+);
+const englishMessages = JSON.parse(
+  readFileSync(new URL("../messages/en.json", import.meta.url), "utf8"),
+);
+const spanishMessages = JSON.parse(
+  readFileSync(new URL("../messages/es.json", import.meta.url), "utf8"),
+);
 
 describe("public navigation", () => {
   test("uses the English pillar in place of Home", () => {
@@ -44,5 +54,18 @@ describe("public navigation", () => {
     expect(desktopNavSource.includes("featured=")).toBe(false);
     expect(navItemSource.includes("featured")).toBe(false);
     expect(mobileNavSource.includes('item.url !== "/contact"')).toBe(false);
+  });
+
+  test("keeps Church Hurt untranslated across both navigation languages", () => {
+    expect(englishMessages.navigation["church-hurt"]).toBe("Church Hurt");
+    expect(spanishMessages.navigation["church-hurt"]).toBe("Church Hurt");
+  });
+
+  test("keeps mobile actions stacked and the full menu reachable on iPhone", () => {
+    expect(homeSource.includes("min-[390px]:grid")).toBe(false);
+    expect(homeSource).toContain("sm:grid-cols-");
+    expect(mobileNavSource).toContain("overflow-y-auto");
+    expect(mobileNavSource).toContain("env(safe-area-inset-bottom)");
+    expect(mobileNavSource).toContain("[-webkit-overflow-scrolling:touch]");
   });
 });

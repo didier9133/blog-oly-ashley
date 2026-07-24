@@ -29,7 +29,7 @@ const FORM_COPY = {
     label: "Correo electrónico",
     placeholder: "tu@correo.com",
     sending: "Enviando…",
-    cta: "Ayúdame a nombrar lo que estoy viviendo",
+    cta: "Ayúdame a darle nombre a lo que estoy viviendo",
     trust:
       "Gratis. Cinco minutos. La guía está en inglés y llegará a tu correo; después recibirás un mensaje breve de Ashley para acompañar el siguiente paso.",
   },
