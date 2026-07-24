@@ -9,13 +9,16 @@ import {
 const titleToPath = (item: PublicNavItem): string => {
   if (item.external) return "merch";
   if (item.url === "/") return "home";
+  if (item.url === "/church-hurt-guide") return "church-hurt";
   if (item.url.includes("#newsletter")) return "subscribe";
   return item.url.replace(/^\//, "");
 };
 
 export async function PublicItemsNavBar({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "navigation" });
-  const items = getPublicNavigationItems(locale);
+  const items = getPublicNavigationItems(locale).filter(
+    (item) => item.url !== "/contact",
+  );
 
   const itemsTranslated = items.map((item) => ({
     ...item,

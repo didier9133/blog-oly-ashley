@@ -72,7 +72,7 @@ export function ItemNavBar({
       onClick={handleClick}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={`relative font-[family-name:var(--font-lora)] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:bg-foreground/60 after:transition-all ${
+      className={`relative font-[family-name:var(--font-lora)] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[1px] after:transition-all ${
         compact
           ? "whitespace-nowrap text-[0.82rem] tracking-[0.02em] xl:text-[1rem] xl:tracking-[0.035em]"
           : "text-[1rem] tracking-[0.035em]"

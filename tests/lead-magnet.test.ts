@@ -23,6 +23,10 @@ const heroFormSource = readFileSync(
   new URL("../src/components/substack-hero-subscribe.tsx", import.meta.url),
   "utf8",
 );
+const churchHurtGuideFormSource = readFileSync(
+  new URL("../src/components/church-hurt-guide-form.tsx", import.meta.url),
+  "utf8",
+);
 const ownerEmailSource = readFileSync(
   new URL("../src/components/email/notify-newsletter.tsx", import.meta.url),
   "utf8",
@@ -84,12 +88,8 @@ describe("newsletter lead magnet", () => {
   });
 
   test("keeps community primary and the workbook secondary", () => {
-    expect(followupEmailSource).toContain(
-      "Join The In-Between — free",
-    );
-    expect(followupEmailSource).toContain(
-      "Explore Rebuilding Reverence →",
-    );
+    expect(followupEmailSource).toContain("Join The In-Between — free");
+    expect(followupEmailSource).toContain("Explore Rebuilding Reverence →");
   });
 
   test("renders the English-only follow-up with working destinations", async () => {
@@ -123,7 +123,28 @@ describe("newsletter lead magnet", () => {
   test("captures the complete browser URL from every signup form", () => {
     expect(footerFormSource).toContain("sourceUrl: window.location.href");
     expect(heroFormSource).toContain("sourceUrl: window.location.href");
+    expect(churchHurtGuideFormSource).toContain(
+      "sourceUrl: window.location.href",
+    );
     expect(newsletterActionSource).toContain('requestHeaders.get("referer")');
+  });
+
+  test("discloses and schedules the Church Hurt landing follow-up", () => {
+    expect(churchHurtGuideFormSource).toContain(
+      'source: "church_hurt_landing"',
+    );
+    expect(churchHurtGuideFormSource).toContain("followed by one gentle");
+    expect(churchHurtGuideFormSource).toContain(
+      "La guía está en inglés y llegará a tu correo",
+    );
+    expect(
+      newsletterActionSource.includes(
+        'parsed.data.source !== "church_hurt_landing"',
+      ),
+    ).toBe(false);
+    expect(newsletterActionSource).toContain(
+      "followupScheduled = await scheduleLeadMagnetFollowup",
+    );
   });
 
   test("keeps Ashley's notification entirely in English", () => {

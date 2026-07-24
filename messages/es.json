@@ -14,6 +14,7 @@
     "workbooks": "Guías",
     "circle": "The Circle",
     "community": "The In-Between",
+    "church-hurt": "Dolor en la iglesia",
     "deconstructing-christianity": "Guía para deconstruir la fe",
     "deconstructing-christianity-full": "Deconstruir el cristianismo"
   },
@@ -38,6 +39,10 @@
     "lead-magnet-eyebrow": "Una guía de reflexión sobre las heridas que deja la iglesia",
     "lead-magnet-details": "PDF de 9 páginas · enlace privado válido por 48 horas",
     "lead-magnet-consent": "Recibe la guía gratuita y las reflexiones ocasionales de Ashley. Sin spam; cancela cuando quieras.",
+    "lead-magnet-landing-eyebrow": "Una guía gratuita para reconocer la tensión",
+    "lead-magnet-landing-title": "Cuando el dolor vivido en la iglesia te deja entre dos caminos",
+    "lead-magnet-landing-desc": "Cinco reflexiones breves para reconocer la tensión entre tu fe, tu identidad y tu sentido de pertenencia. Sin respuestas correctas ni conclusiones impuestas: solo un punto de partida para nombrar lo que estás viviendo.",
+    "lead-magnet-landing-cta": "Ayúdame a nombrar lo que estoy viviendo",
     "lead-magnet-cover-alt": "Portada de la guía gratuita Which Binary Are You Standing In? de Ashley Leon",
     "delivery-confirmation": "Ya va en camino. Revisa tu correo para encontrar el enlace privado válido por 48 horas.",
     "respect-inbox": "Sin spam · puedes darte de baja cuando quieras.",
@@ -412,10 +417,7 @@
     "sidebar-circle": "The Circle",
     "sidebar-community": "The In-Between",
     "sidebar-fresh": "Ensayos recientes",
-    "sidebar-writing": "Ensayos recientes",
-    "sidebar-cta-eyebrow": "Guía de reflexión gratuita",
-    "sidebar-cta-desc": "Si estás cuestionando tu fe o intentando comprender las heridas que dejó tu experiencia en la iglesia, esta guía gratuita de 9 páginas te ayudará a ponerle nombre a tu conflicto interno.",
-    "sidebar-cta-link": "Recibir la guía gratuita"
+    "sidebar-writing": "Ensayos recientes"
   },
   "About": {
     "metadata": {

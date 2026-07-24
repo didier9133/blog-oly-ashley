@@ -31,6 +31,11 @@ export const data = {
       isActive: false,
     },
     {
+      title: "Free guide",
+      url: "/church-hurt-guide",
+      isActive: false,
+    },
+    {
       title: "Contact",
       url: "/contact",
       isActive: false,

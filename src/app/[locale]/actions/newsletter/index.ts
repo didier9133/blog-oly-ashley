@@ -94,7 +94,7 @@ const subscribeSchema = z
   .object({
     email: z.string().trim().toLowerCase().email(),
     locale: z.enum(["en", "es"]).default("en"),
-    source: z.enum(["footer", "hero"]).optional(),
+    source: z.enum(["footer", "hero", "church_hurt_landing"]).optional(),
     sourceUrl: z
       .string()
       .trim()
@@ -109,7 +109,7 @@ export async function subscribeToNewsletter(
   email: string,
   options?: {
     locale?: LeadMagnetLocale;
-    source?: "footer" | "hero";
+    source?: "footer" | "hero" | "church_hurt_landing";
     sourceUrl?: string;
   },
 ) {

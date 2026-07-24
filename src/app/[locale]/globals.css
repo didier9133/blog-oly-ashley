@@ -917,8 +917,7 @@
   }
 
   .home-hero-media {
-    animation: homeHeroImage 18s var(--ease-breath) both;
-    transform-origin: 62% 40%;
+    transform: none;
   }
 
   .home-hero-portrait {
@@ -983,17 +982,6 @@
 
   .home-hero-scroll-line {
     animation: homeHeroScroll 2.4s 1.4s var(--ease-breath) infinite;
-  }
-
-  @keyframes homeHeroImage {
-    from {
-      transform: scale(1.035);
-      filter: saturate(0.92) contrast(0.98);
-    }
-    to {
-      transform: scale(1);
-      filter: saturate(1) contrast(1);
-    }
   }
 
   @keyframes homeHeroReveal {
@@ -1152,4 +1140,7 @@ body {
   .circle-faq-details::details-content {
     transition: none;
   }
+}
+body:has([data-page="church-hurt-guide"]) [data-footer-guide-cta] {
+  display: none;
 }

@@ -20,15 +20,17 @@ const authLayoutSource = readFileSync(
 describe("footer localization", () => {
   test("positions the English guide around church hurt without overpromising", () => {
     expect(englishMessages.footer).toMatchObject({
-      "lead-magnet-eyebrow":
-        "A free reflection guide for what church hurt leaves behind",
-      "newsletter-desc":
-        "Whether you’re questioning your faith, navigating deconstruction, or trying to understand what church hurt left behind, this free 9-page guide will help you name the inner conflict that feels most like your life right now.",
+      "lead-magnet-landing-eyebrow": "A free reflection guide",
+      "lead-magnet-landing-title":
+        "Church Hurt Can Leave You Caught Between Two Answers",
+      "lead-magnet-landing-desc":
+        "Five short reflections. No score. No right conclusion. Naming the tension is the goal — not resolving it.",
+      "lead-magnet-landing-cta": "Help Me Name What I Am Carrying",
     });
-    expect(englishMessages.Home["sidebar-cta-desc"]).toContain("church hurt");
+    expect("sidebar-cta-desc" in englishMessages.Home).toBe(false);
   });
 
-  test("keeps the Spanish newsletter transcreation", () => {
+  test("keeps the Spanish footer transcreation natural and specific", () => {
     expect(spanishMessages.footer).toMatchObject({
       "newsletter-label": "Carta de Ashley",
       "subscribe-label": "Envíame la guía",
@@ -39,15 +41,20 @@ describe("footer localization", () => {
         "PDF de 9 páginas · enlace privado válido por 48 horas",
       "lead-magnet-consent":
         "Recibe la guía gratuita y las reflexiones ocasionales de Ashley. Sin spam; cancela cuando quieras.",
+      "lead-magnet-landing-eyebrow":
+        "Una guía gratuita para reconocer la tensión",
+      "lead-magnet-landing-title":
+        "Cuando el dolor vivido en la iglesia te deja entre dos caminos",
+      "lead-magnet-landing-desc":
+        "Cinco reflexiones breves para reconocer la tensión entre tu fe, tu identidad y tu sentido de pertenencia. Sin respuestas correctas ni conclusiones impuestas: solo un punto de partida para nombrar lo que estás viviendo.",
+      "lead-magnet-landing-cta": "Ayúdame a nombrar lo que estoy viviendo",
       "brand-desc":
         "Ensayos, guías y encuentros en vivo para reconstruir la fe, recuperar la reverencia y volver a lo sagrado sin renunciar a quien eres.",
       explore: "Para empezar",
       company: "Más sobre Ashley",
       "based-in": "Escribiendo desde lo que todavía está tomando forma",
     });
-    expect(spanishMessages.Home["sidebar-cta-desc"]).toContain(
-      "las heridas que dejó tu experiencia en la iglesia",
-    );
+    expect("sidebar-cta-desc" in spanishMessages.Home).toBe(false);
   });
 
   test("renders server-side footer translations with the route locale", () => {

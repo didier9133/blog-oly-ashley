@@ -1,11 +1,10 @@
-import Image from "next/image";
-import { FormSubscribeNewsletter } from "@/components/subscribe-newsletter";
 import Link from "next/link";
-import { Download, Facebook, Instagram, Youtube, Mail } from "lucide-react";
+import { Facebook, Instagram, Youtube, Mail } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { CONTACT_NOTIFICATION_EMAIL } from "@/lib/server/notification-emails";
 import { localizedHref } from "@/lib/url";
 import { BrandWordmark } from "@/components/brand-wordmark";
+import { FooterChurchHurtGuideCta } from "@/components/footer-church-hurt-guide-cta";
 
 export async function Footer({ locale }: { locale: string }) {
   const currentYear = new Date().getFullYear();
@@ -14,59 +13,18 @@ export async function Footer({ locale }: { locale: string }) {
     getTranslations({ locale, namespace: "navigation" }),
   ]);
   const href = (path: string) => localizedHref(locale, path);
+  const churchHurtGuideHref = localizedHref(locale, "/church-hurt-guide");
 
   return (
     <footer className="mt-auto flex flex-col w-full">
-      {/* Top Section: Free guide lead magnet */}
-      <div
-        id="newsletter"
-        className="relative w-full overflow-hidden bg-[#62684f] py-20 md:py-28"
-      >
-        <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:26px_26px]" />
-        <div className="absolute -left-24 bottom-[-12rem] size-[28rem] rounded-full border border-[#f1c8b7]/20" />
-        <div className="absolute -right-44 top-[-14rem] size-[34rem] rounded-full bg-[#bd775c]/15 blur-3xl" />
-
-        <div className="relative z-10 container mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-[0.72fr_1.28fr] md:gap-16 md:px-10 lg:gap-24">
-          <div className="relative mx-auto w-[12.5rem] sm:w-[15rem] md:w-full md:max-w-[17rem]">
-            <div className="absolute -inset-4 translate-x-5 translate-y-5 rotate-3 border border-[#e8ddcc]/25 bg-[#4e5340]" />
-            <div className="relative -rotate-2 overflow-hidden rounded-[2px] bg-[#f2eee6] shadow-[0_28px_70px_rgba(24,25,19,0.42)] transition-transform duration-700 hover:rotate-0 hover:scale-[1.015] motion-reduce:transform-none">
-              <Image
-                src="/which-binary-guide-cover.jpg"
-                alt={t("lead-magnet-cover-alt")}
-                width={612}
-                height={792}
-                sizes="(max-width: 767px) 240px, 272px"
-                className="h-auto w-full"
-                loading="lazy"
-              />
-            </div>
-            <span className="absolute -bottom-5 -right-5 inline-flex size-14 items-center justify-center rounded-full bg-[#bd775c] text-white shadow-lg sm:size-16">
-              <Download className="size-5 sm:size-6" aria-hidden="true" />
-            </span>
-          </div>
-
-          <div className="text-center text-white md:text-left">
-            <p className="mb-5 font-sans text-[11px] font-bold uppercase tracking-[0.24em] text-[#efc8b8]">
-              {t("lead-magnet-eyebrow")}
-            </p>
-            <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[2.75rem] font-medium leading-[0.98] text-white sm:text-5xl lg:text-6xl">
-              {t("stay-in-loop")}
-            </h2>
-            <p className="mx-auto mt-6 max-w-2xl font-[family-name:var(--font-lora)] text-sm leading-7 text-[#f7f2e8]/85 sm:text-base md:mx-0">
-              {t("newsletter-desc")}
-            </p>
-            <p className="mt-4 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-[#e8ddcc]">
-              {t("lead-magnet-details")}
-            </p>
-
-            <FormSubscribeNewsletter
-              showLabel={false}
-              variant="transparent"
-              className="mt-8 w-full"
-            />
-          </div>
-        </div>
-      </div>
+      <FooterChurchHurtGuideCta
+        href={churchHurtGuideHref}
+        eyebrow={t("lead-magnet-landing-eyebrow")}
+        title={t("lead-magnet-landing-title")}
+        description={t("lead-magnet-landing-desc")}
+        cta={t("lead-magnet-landing-cta")}
+        coverAlt={t("lead-magnet-cover-alt")}
+      />
 
       {/* Bottom Section: Dark Footer */}
       <div className="bg-[#2b2b2b] text-white/80 pt-20 pb-8">
@@ -126,7 +84,10 @@ export async function Footer({ locale }: { locale: string }) {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href={href("/writing")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/writing")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("writing")}
                     </Link>
                   </li>
@@ -141,17 +102,26 @@ export async function Footer({ locale }: { locale: string }) {
                     </li>
                   ) : null}
                   <li>
-                    <Link href={href("/workbooks")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/workbooks")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("workbooks")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={href("/circle")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/circle")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("circle")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={href("/community")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/community")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("community")}
                     </Link>
                   </li>
@@ -164,27 +134,42 @@ export async function Footer({ locale }: { locale: string }) {
                 </h4>
                 <ul className="space-y-4 text-sm font-sans text-white/70">
                   <li>
-                    <Link href={href("/about")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/about")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("about")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={href("/contact")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/contact")}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("contact")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={`${href("/")}#newsletter`} className="hover:text-white transition-colors">
+                    <Link
+                      href={`${href("/")}#newsletter`}
+                      className="hover:text-white transition-colors"
+                    >
                       {navT("subscribe")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={href("/privacy")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/privacy")}
+                      className="hover:text-white transition-colors"
+                    >
                       {t("privacy")}
                     </Link>
                   </li>
                   <li>
-                    <Link href={href("/terms")} className="hover:text-white transition-colors">
+                    <Link
+                      href={href("/terms")}
+                      className="hover:text-white transition-colors"
+                    >
                       {t("terms")}
                     </Link>
                   </li>

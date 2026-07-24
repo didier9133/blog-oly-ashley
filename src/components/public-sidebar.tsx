@@ -18,6 +18,7 @@ import {
 const titleToPath = (item: PublicNavItem): string => {
   if (item.external) return "merch";
   if (item.url === "/") return "home";
+  if (item.url === "/church-hurt-guide") return "church-hurt";
   if (item.url.includes("#newsletter")) return "subscribe";
   return item.url.replace(/^\//, "");
 };

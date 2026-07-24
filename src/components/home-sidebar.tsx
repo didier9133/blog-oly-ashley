@@ -14,20 +14,7 @@ const SECTIONS = [
 
 export function HomeSidebar() {
   const t = useTranslations("Home");
-  const [pastHero, setPastHero] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastHero(!entry.isIntersecting && entry.boundingClientRect.top < 0),
-      { threshold: 0, rootMargin: "0px" }
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const sections = SECTIONS.map(({ id }) => document.getElementById(id)).filter(
@@ -102,28 +89,6 @@ export function HomeSidebar() {
         </ol>
       </div>
 
-      <div
-        className={`border-t border-foreground/10 pt-8 transition-all duration-700 ease-out ${
-          pastHero
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-2 pointer-events-none"
-        }`}
-        aria-hidden={!pastHero}
-      >
-        <span className="editorial-eyebrow mb-3 block tracking-[0.34em] text-foreground/55">
-          {t("sidebar-cta-eyebrow")}
-        </span>
-        <p className="font-[family-name:var(--font-lora)] text-[0.8125rem] font-light leading-relaxed text-foreground/60 text-pretty">
-          {t("sidebar-cta-desc")}
-        </p>
-        <a
-          href="#newsletter"
-          className="editorial-link mt-6 text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-        >
-          {t("sidebar-cta-link")}
-          <span className="editorial-link-arrow">→</span>
-        </a>
-      </div>
     </nav>
   );
 }

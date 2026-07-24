@@ -11,7 +11,7 @@ const LOCALES = ["es", "en"] as const;
 // Fechas reales de última modificación por ruta.
 // Actualizar manualmente cuando cambie contenido estático significativo.
 const STATIC_ROUTES: { path: string; lastModified: string }[] = [
-  { path: "", lastModified: "2026-07-17" },
+  { path: "", lastModified: "2026-07-24" },
   { path: "/about", lastModified: "2026-07-17" },
   { path: "/writing", lastModified: "2026-07-17" },
   { path: "/workbooks", lastModified: "2026-07-17" },
@@ -21,6 +21,7 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
   { path: "/privacy", lastModified: "2026-07-17" },
   { path: "/terms", lastModified: "2026-07-17" },
   { path: "/deconstructing-christianity", lastModified: "2026-07-17" },
+  { path: "/church-hurt-guide", lastModified: "2026-07-24" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
