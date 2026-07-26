@@ -29,12 +29,13 @@ const protectedMiddleware = clerkMiddleware(async (auth, req) => {
 
   return intlResponse || NextResponse.next();
 });
+const apiMiddleware = clerkMiddleware(() => NextResponse.next());
 
 export default function middleware(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
 
   if (pathname.startsWith("/api") || pathname.startsWith("/trpc")) {
-    return NextResponse.next();
+    return apiMiddleware(req, event);
   }
 
   if (isProtectedRoute(req)) {

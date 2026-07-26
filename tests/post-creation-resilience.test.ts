@@ -18,6 +18,7 @@ const imageClient = readFileSync(
   join(root, "src/lib/client/upload-og-image.ts"),
   "utf8",
 );
+const middleware = readFileSync(join(root, "src/middleware.ts"), "utf8");
 
 describe("post creation resilience", () => {
   test("keeps the form intact after a failed publish attempt", () => {
@@ -38,5 +39,9 @@ describe("post creation resilience", () => {
     expect(imageClient).toContain('fetch("/api/upload/image"');
     expect(imageClient).toContain('method: "PUT"');
     expect(createPage).toContain("finalizeOgImageUpload(temporaryImageKey)");
+    expect(middleware).toContain(
+      "const apiMiddleware = clerkMiddleware(() => NextResponse.next())",
+    );
+    expect(middleware).toContain("return apiMiddleware(req, event)");
   });
 });
