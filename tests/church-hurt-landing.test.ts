@@ -37,14 +37,16 @@ const sitemapSource = readFileSync(
 );
 
 describe("Church Hurt guide landing", () => {
-  test("preserves Ashley's approved core copy and CTA", () => {
+  test("preserves Ashley's approved free-guide copy and CTA", () => {
     expect(landingSource).toContain(
-      "Church Hurt Can Leave You Caught Between Two Answers",
+      "When Faith, Identity, and Belonging Stop Fitting Together",
     );
     expect(landingSource).toContain(
-      "This free reflection guide helps you name the",
+      "Every next step can start to feel like choosing a side",
     );
-    expect(landingSource).toContain("There’s no score, no right");
+    expect(landingSource).toContain(
+      "five short reflections. Start with the one that sounds most like your life right now.",
+    );
     expect(landingSource).toContain(
       "<ChurchHurtGuideForm locale={currentLocale} />",
     );
@@ -56,7 +58,7 @@ describe("Church Hurt guide landing", () => {
       "localizedAlternates(currentLocale, PATHS)",
     );
     expect(landingSource).toContain(
-      "El dolor vivido en la iglesia puede dejarte entre dos respuestas",
+      "Cuando la fe, la identidad y la pertenencia dejan de encajar",
     );
     expect(landingSource.includes("permanentRedirect")).toBe(false);
     expect(sitemapSource).toContain(

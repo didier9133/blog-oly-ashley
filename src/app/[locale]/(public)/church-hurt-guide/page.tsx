@@ -28,11 +28,11 @@ const COPY = {
     ogAlt:
       "Which Binary Are You Standing In? — a free church hurt reflection guide by Ashley Leon",
     eyebrow: "Free · Five short reflections",
-    headline: "Church Hurt Can Leave You Caught Between Two Answers",
+    headline: "When Faith, Identity, and Belonging Stop Fitting Together",
     supporting:
-      "When faith, belonging, and identity no longer fit together the way they used to, every next step can start to feel like choosing a side. This free reflection guide helps you name the tension underneath it — without telling you what to believe, or where your questions should lead.",
+      "Every next step can start to feel like choosing a side — stay or leave, believe or doubt, forgive or walk away. This free reflection guide helps you name the tension underneath it, without telling you what to believe or where your questions should lead.",
     bridge:
-      "is five short reflections. Start with the one that sounds most like your life right now. There’s no score, no right conclusion, and nothing to get right — just a place to start naming what you’re actually standing in.",
+      "— five short reflections. Start with the one that sounds most like your life right now.",
     coverAlt: "Cover of Which Binary Are You Standing In? by Ashley Leon",
     aboutName: "Church hurt",
     guideDescription:
@@ -51,12 +51,11 @@ const COPY = {
     ogAlt:
       "Which Binary Are You Standing In? — guía gratuita de reflexión de Ashley Leon",
     eyebrow: "Gratis · Cinco reflexiones breves",
-    headline:
-      "El dolor vivido en la iglesia puede dejarte entre dos respuestas",
+    headline: "Cuando la fe, la identidad y la pertenencia dejan de encajar",
     supporting:
-      "Cuando la fe, el sentido de pertenencia y la identidad dejan de encajar como antes, cualquier paso puede sentirse como si tuvieras que elegir un lado. Esta guía gratuita te ayuda a reconocer la tensión que hay debajo, sin decirte qué creer ni hacia dónde deberían llevarte tus preguntas.",
+      "Cada paso puede sentirse como si tuvieras que elegir un lado: quedarte o irte, creer o dudar, perdonar o alejarte. Esta guía de reflexión gratuita te ayuda a ponerle nombre a la tensión que hay debajo, sin decirte qué creer ni hacia dónde deberían llevarte tus preguntas.",
     bridge:
-      "reúne cinco reflexiones breves. Empieza por la que más se parezca a lo que estás viviendo hoy. No hay puntuación ni una conclusión correcta; tampoco hay nada que tengas que hacer bien. Es solo un punto de partida para nombrar la tensión que ya estás viviendo.",
+      "— cinco reflexiones breves. Empieza por la que más se parezca a lo que estás viviendo hoy.",
     coverAlt: "Portada de Which Binary Are You Standing In? de Ashley Leon",
     aboutName: "Dolor causado por experiencias en la iglesia",
     guideDescription:

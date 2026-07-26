@@ -56,9 +56,9 @@ describe("public navigation", () => {
     expect(mobileNavSource.includes('item.url !== "/contact"')).toBe(false);
   });
 
-  test("keeps Church Hurt untranslated across both navigation languages", () => {
-    expect(englishMessages.navigation["church-hurt"]).toBe("Church Hurt");
-    expect(spanishMessages.navigation["church-hurt"]).toBe("Church Hurt");
+  test("labels the guide consistently across both navigation languages", () => {
+    expect(englishMessages.navigation["church-hurt"]).toBe("Free Guide");
+    expect(spanishMessages.navigation["church-hurt"]).toBe("Free Guide");
   });
 
   test("keeps mobile actions stacked and the full menu reachable on iPhone", () => {

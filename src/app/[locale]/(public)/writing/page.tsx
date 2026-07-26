@@ -342,7 +342,7 @@ export default async function Page(props: {
                       </Button>
                     </Link>
                     <Link
-                      href="https://substack.com/@ashleyleon?utm_campaign=profile&utm_medium=profile-page"
+                      href="https://substack.com/@ashleydianaleon"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto"
