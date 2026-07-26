@@ -482,7 +482,7 @@ export default async function BlogPostPage(props: { params: Params }) {
               <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-7 text-muted-foreground">
                 {currentLanguage === "es"
                   ? "Ashley Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Escribe sobre la deconstrucción de la fe, la identidad, la espiritualidad queer y la sanación emocional."
-                  : "Ashley Leon is a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach. She writes about faith deconstruction, queer spirituality, identity, and emotional healing."}
+                  : "Ashley Leon is a writer, former missionary, workshop facilitator, and certified holistic mind-body coach, raised in Miami by Cuban and Colombian immigrant parents. She writes about faith deconstruction, non-binary spirituality, identity, and emotional healing."}
               </p>
               <Link
                 href={localizedHref(locale, "/about")}
