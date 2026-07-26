@@ -16,7 +16,7 @@ const PATHS = { en: PATH, es: PATH } as const;
 
 const COPY = {
   en: {
-    metadataTitle: "Church Hurt Reflection Guide | Free PDF | Ashley Leon",
+    metadataTitle: "Church Hurt Reflection Guide | Free PDF | Ashley Diana Leon",
     metadataDescription:
       "A free reflection guide for naming the tension church hurt can leave between faith, identity, and belonging—without pressure or a prescribed conclusion.",
     keywords: [
@@ -26,20 +26,20 @@ const COPY = {
       "religious deconstruction",
     ],
     ogAlt:
-      "Which Binary Are You Standing In? — a free church hurt reflection guide by Ashley Leon",
+      "Which Binary Are You Standing In? — a free church hurt reflection guide by Ashley Diana Leon",
     eyebrow: "Free · Five short reflections",
     headline: "When Faith, Identity, and Belonging Stop Fitting Together",
     supporting:
       "Every next step can start to feel like choosing a side — stay or leave, believe or doubt, forgive or walk away. This free reflection guide helps you name the tension underneath it, without telling you what to believe or where your questions should lead.",
     bridge:
       "— five short reflections. Start with the one that sounds most like your life right now.",
-    coverAlt: "Cover of Which Binary Are You Standing In? by Ashley Leon",
+    coverAlt: "Cover of Which Binary Are You Standing In? by Ashley Diana Leon",
     aboutName: "Church hurt",
     guideDescription:
       "A free five-reflection guide for naming the tension church hurt can leave between faith, identity, and belonging.",
   },
   es: {
-    metadataTitle: "Dolor vivido en la iglesia | Guía gratuita | Ashley Leon",
+    metadataTitle: "Dolor vivido en la iglesia | Guía gratuita | Ashley Diana Leon",
     metadataDescription:
       "Una guía gratuita para ponerle nombre a la tensión entre fe, identidad y pertenencia después de una experiencia dolorosa en la iglesia, sin respuestas impuestas.",
     keywords: [
@@ -49,14 +49,14 @@ const COPY = {
       "guía de reflexión sobre la fe",
     ],
     ogAlt:
-      "Which Binary Are You Standing In? — guía gratuita de reflexión de Ashley Leon",
+      "Which Binary Are You Standing In? — guía gratuita de reflexión de Ashley Diana Leon",
     eyebrow: "Gratis · Cinco reflexiones breves",
     headline: "Cuando la fe, la identidad y la pertenencia dejan de encajar",
     supporting:
       "Cada paso puede sentirse como si tuvieras que elegir un lado: quedarte o irte, creer o dudar, perdonar o alejarte. Esta guía de reflexión gratuita te ayuda a ponerle nombre a la tensión que hay debajo, sin decirte qué creer ni hacia dónde deberían llevarte tus preguntas.",
     bridge:
       "— cinco reflexiones breves. Empieza por la que más se parezca a lo que estás viviendo hoy.",
-    coverAlt: "Portada de Which Binary Are You Standing In? de Ashley Leon",
+    coverAlt: "Portada de Which Binary Are You Standing In? de Ashley Diana Leon",
     aboutName: "Dolor causado por experiencias en la iglesia",
     guideDescription:
       "Una guía gratuita con cinco reflexiones para reconocer la tensión entre la fe, la identidad y el sentido de pertenencia después de una experiencia dolorosa en la iglesia.",
@@ -84,9 +84,9 @@ export async function generateMetadata({
     title: copy.metadataTitle,
     description: copy.metadataDescription,
     keywords: [...copy.keywords],
-    authors: [{ name: "Ashley Leon" }],
-    creator: "Ashley Leon",
-    publisher: "Ashley Leon",
+    authors: [{ name: "Ashley Diana Leon" }],
+    creator: "Ashley Diana Leon",
+    publisher: "Ashley Diana Leon",
     robots: indexableRobots,
     alternates: localizedAlternates(currentLocale, PATHS),
     openGraph: {

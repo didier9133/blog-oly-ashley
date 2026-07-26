@@ -73,8 +73,8 @@ export function AppSidebar({
             className="flex-shrink-0"
             aria-label={
               isSpanish
-                ? "ADL por Ashley Leon — Inicio"
-                : "ADL by Ashley Leon — Home"
+                ? "ADL por Ashley Diana Leon — Inicio"
+                : "ADL by Ashley Diana Leon — Home"
             }
           >
             <BrandWordmark className="text-[2.15rem]" />

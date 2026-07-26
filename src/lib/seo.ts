@@ -35,7 +35,7 @@ export function localizedOpenGraph(locale: string) {
   return {
     locale: currentLocale === "es" ? "es_ES" : "en_US",
     alternateLocale: currentLocale === "es" ? ["en_US"] : ["es_ES"],
-    siteName: "Ashley Leon",
+    siteName: "Ashley Diana Leon",
   };
 }
 

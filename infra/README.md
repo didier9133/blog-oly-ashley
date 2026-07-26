@@ -1,4 +1,4 @@
-# Ashley Leon AWS infrastructure
+# Ashley Diana Leon AWS infrastructure
 
 This CDK project defines the storage and image-delivery infrastructure used by
 the application. `InfraStack` provisions public and private S3 storage, a

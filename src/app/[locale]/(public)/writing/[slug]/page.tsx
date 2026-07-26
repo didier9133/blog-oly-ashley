@@ -131,7 +131,7 @@ export async function generateMetadata({
   );
   const title = decision?.displayTitle?.[supportedLocale] ?? storedTitle;
   const pageTitle =
-    decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Leon`;
+    decision?.seoTitle?.[supportedLocale] ?? `${title} | Ashley Diana Leon`;
   const seoDescription =
     decision?.description?.[supportedLocale] ?? description;
   const detailSlug = publicPostSlug(
@@ -246,10 +246,7 @@ export default async function BlogPostPage(props: { params: Params }) {
   const recentPostsLabel = t("recent-posts");
   const noPostsLabel = t("no-posts");
 
-  const authorName = [post.author.firstName, post.author.lastName]
-    .map((part) => part.trim())
-    .filter(Boolean)
-    .join(" ");
+  const authorName = "Ashley Diana Leon";
   const pageUrl = fullUrl(locale, `/writing/${detailSlug}`);
   const imageUrl = post.image.startsWith("http")
     ? post.image
@@ -481,8 +478,8 @@ export default async function BlogPostPage(props: { params: Params }) {
               </p>
               <p className="mt-3 font-[family-name:var(--font-lora)] text-sm leading-7 text-muted-foreground">
                 {currentLanguage === "es"
-                  ? "Ashley Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Escribe sobre la deconstrucción de la fe, la identidad, la espiritualidad queer y la sanación emocional."
-                  : "Ashley Leon is a writer, former missionary, workshop facilitator, and certified holistic mind-body coach, raised in Miami by Cuban and Colombian immigrant parents. She writes about faith deconstruction, non-binary spirituality, identity, and emotional healing."}
+                  ? "Ashley Diana Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Escribe sobre la deconstrucción de la fe, la identidad, la espiritualidad queer y la sanación emocional."
+                  : "Ashley Diana Leon is a writer, former missionary, workshop facilitator, and certified holistic mind-body coach, raised in Miami by Cuban and Colombian immigrant parents. She writes about faith deconstruction, non-binary spirituality, identity, and emotional healing."}
               </p>
               <Link
                 href={localizedHref(locale, "/about")}

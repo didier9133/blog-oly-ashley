@@ -50,7 +50,7 @@ export default function LeadMagnetEmailTemplate({
       <Body style={main}>
         <Container style={container}>
           <Section style={masthead}>
-            <Text style={brand}>Ashley Leon</Text>
+            <Text style={brand}>Ashley Diana Leon</Text>
             <Text style={eyebrow}>{copy.eyebrow}</Text>
           </Section>
 

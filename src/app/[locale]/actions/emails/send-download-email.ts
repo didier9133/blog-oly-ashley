@@ -36,7 +36,7 @@ export async function sendDownloadEmail({
     );
 
     const { data, error } = await resend.emails.send({
-      from: `Ashley Leon <noreply@${emailDomain}>`, // Ajusta tu dominio
+      from: `Ashley Diana Leon <noreply@${emailDomain}>`, // Ajusta tu dominio
       to: [email],
       subject:
         locale === "es"

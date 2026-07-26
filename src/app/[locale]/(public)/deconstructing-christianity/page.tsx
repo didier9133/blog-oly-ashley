@@ -42,7 +42,7 @@ function getGuideOgImage(locale: "en" | "es") {
       width: 1730,
       height: 909,
       type: "image/png",
-      alt: "Ashley Leon junto al título «Deconstruir el cristianismo»",
+      alt: "Ashley Diana Leon junto al título «Deconstruir el cristianismo»",
     };
   }
 
@@ -51,7 +51,7 @@ function getGuideOgImage(locale: "en" | "es") {
     width: 1200,
     height: 630,
     type: "image/jpeg",
-    alt: "Ashley Leon beside the message “Returning to yourself is returning to the sacred”",
+    alt: "Ashley Diana Leon beside the message “Returning to yourself is returning to the sacred”",
   };
 }
 
@@ -64,7 +64,7 @@ export async function generateMetadata({
 
   if (!isSupportedLocale(locale)) {
     return {
-      title: "Page not found | Ashley Leon",
+      title: "Page not found | Ashley Diana Leon",
       robots: { index: false, follow: false },
     };
   }
@@ -77,9 +77,9 @@ export async function generateMetadata({
   return {
     title: content.seoTitle,
     description: content.description,
-    authors: [{ name: "Ashley Leon", url: aboutUrl }],
-    creator: "Ashley Leon",
-    publisher: "Ashley Leon",
+    authors: [{ name: "Ashley Diana Leon", url: aboutUrl }],
+    creator: "Ashley Diana Leon",
+    publisher: "Ashley Diana Leon",
     robots: indexableRobots,
     alternates: localizedAlternates(locale, {
       en: DECONSTRUCTING_CHRISTIANITY_PATH,
@@ -89,7 +89,7 @@ export async function generateMetadata({
       type: "article",
       locale: content.ogLocale,
       alternateLocale: [content.alternateOgLocale],
-      siteName: "Ashley Leon",
+      siteName: "Ashley Diana Leon",
       url: pageUrl,
       title: content.seoTitle,
       description: content.description,
@@ -257,7 +257,7 @@ export default async function DeconstructingChristianityPage({
                     rel="author"
                     className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    Ashley Leon
+                    Ashley Diana Leon
                   </Link>
                 </span>
                 <span aria-hidden="true">·</span>
@@ -578,8 +578,8 @@ export default async function DeconstructingChristianityPage({
               src="/ashley-about-portrait.jpeg"
               alt={
                 locale === "es"
-                  ? "Retrato de Ashley Leon"
-                  : "Portrait of Ashley Leon"
+                  ? "Retrato de Ashley Diana Leon"
+                  : "Portrait of Ashley Diana Leon"
               }
               width={240}
               height={300}

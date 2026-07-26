@@ -19,12 +19,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata" });
   const title =
     locale === "es"
-      ? "Política de privacidad | Ashley Leon"
-      : "Privacy Policy | Ashley Leon";
+      ? "Política de privacidad | Ashley Diana Leon"
+      : "Privacy Policy | Ashley Diana Leon";
   const description =
     locale === "es"
-      ? "Consulta cómo Ashley Leon recopila, utiliza, protege y gestiona los datos personales, las cookies y tus derechos de privacidad en este sitio."
-      : "Learn how Ashley Leon collects, uses, protects, and manages personal data, cookies, and your privacy rights when you use this website.";
+      ? "Consulta cómo Ashley Diana Leon recopila, utiliza, protege y gestiona los datos personales, las cookies y tus derechos de privacidad en este sitio."
+      : "Learn how Ashley Diana Leon collects, uses, protects, and manages personal data, cookies, and your privacy rights when you use this website.";
   const image = ogImageUrl(locale);
   const imageAlt = t("ogImageAlt");
 

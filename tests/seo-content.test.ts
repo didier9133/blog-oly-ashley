@@ -50,7 +50,7 @@ describe("bilingual SEO configuration", () => {
     expect(localizedOpenGraph("es")).toMatchObject({
       locale: "es_ES",
       alternateLocale: ["en_US"],
-      siteName: "Ashley Leon",
+      siteName: "Ashley Diana Leon",
     });
     expect(configuredNumber("0", 10)).toBe(0);
     expect(configuredNumber("", 10)).toBe(10);
@@ -177,7 +177,7 @@ describe("bilingual SEO configuration", () => {
       "spiritual balance between faith and material life",
     );
     expect(decision?.seoTitle?.es).toContain(
-      "Equilibrio espiritual entre fe y vida material",
+      "Equilibrio entre fe y vida material",
     );
     expect(decision?.displayTitle?.en).toContain("Spiritual Balance");
     expect(decision?.semanticRules?.en?.insertBefore?.length).toBe(3);
@@ -194,13 +194,39 @@ describe("bilingual SEO configuration", () => {
       es: "Fe LGBTQ+ y el amor incondicional de Dios",
     });
     expect(decision?.seoTitle?.en).toBe(
-      "Gay Christian and God’s Unconditional Love | Ashley Leon",
+      "Gay Christian and God’s Unconditional Love | Ashley Diana Leon",
     );
     expect(decision?.seoTitle?.es).toBe(
-      "Fe LGBTQ+ y amor incondicional de Dios | Ashley Leon",
+      "Fe LGBTQ+ y amor incondicional de Dios | Ashley Diana Leon",
     );
     expect(decision?.semanticRules?.en?.promote?.length).toBe(5);
     expect(decision?.semanticRules?.es?.promote?.length).toBe(5);
+  });
+
+  test("connects the gay deliverance essay to the relevant content cluster", () => {
+    const decision = getPostSeoDecision(
+      "the-day-i-tried-to-cast-the-gay-demon-out-of-me",
+      "el-dia-que-intente-sacarme-el-demonio-gay",
+    );
+    const faithEssay = getPostSeoDecision(
+      "gay-christian-and-gods-unconditional-love",
+    );
+    const belongingEssay = getPostSeoDecision(
+      "what-does-belonging-really-mean",
+    );
+
+    expect(decision?.productCta).toBe("queer-and-called");
+    expect(decision?.relatedReading?.en?.length).toBe(2);
+    expect(decision?.relatedReading?.es?.length).toBe(2);
+    expect(decision?.relatedGuide?.en?.href).toBe(
+      "/deconstructing-christianity",
+    );
+    expect(faithEssay?.relatedReading?.es?.[0]?.href).toBe(
+      "/writing/el-dia-que-intente-sacarme-el-demonio-gay",
+    );
+    expect(belongingEssay?.relatedReading?.en?.[0]?.href).toBe(
+      "/writing/the-day-i-tried-to-cast-the-gay-demon-out-of-me",
+    );
   });
 
   test("gives grief, belonging, and advice handcrafted bilingual metadata", () => {

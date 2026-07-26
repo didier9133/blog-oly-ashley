@@ -57,7 +57,7 @@ async function scheduleLeadMagnetFollowup({
 
   const scheduled = await resend.emails.send(
     {
-      from: `Ashley Leon <${SUPPORT_EMAIL}>`,
+      from: `Ashley Diana Leon <${SUPPORT_EMAIL}>`,
       to: [email],
       replyTo: SUPPORT_EMAIL,
       subject: LEAD_MAGNET_FOLLOWUP_SUBJECT,
@@ -161,14 +161,14 @@ export async function subscribeToNewsletter(
 
   const [delivery, notification] = await Promise.all([
     resend.emails.send({
-      from: `Ashley Leon <${SUPPORT_EMAIL}>`,
+      from: `Ashley Diana Leon <${SUPPORT_EMAIL}>`,
       to: [normalizedEmail],
       replyTo: SUPPORT_EMAIL,
       subject: LEAD_MAGNET_EMAIL_SUBJECT,
       html: emailHtml,
     }),
     resend.emails.send({
-      from: `Ashley Leon <${SUPPORT_EMAIL}>`,
+      from: `Ashley Diana Leon <${SUPPORT_EMAIL}>`,
       to: NOTIFICATION_EMAIL,
       replyTo: SUPPORT_EMAIL,
       subject: `New free guide signup: ${normalizedEmail}`,

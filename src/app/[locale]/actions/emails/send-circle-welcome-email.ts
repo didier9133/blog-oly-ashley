@@ -33,7 +33,7 @@ export async function sendCircleWelcomeEmail({
     );
 
     const { data, error } = await resend.emails.send({
-      from: `Ashley Leon <noreply@${emailDomain}>`,
+      from: `Ashley Diana Leon <noreply@${emailDomain}>`,
       to: [email],
       subject:
         locale === "es"

@@ -129,7 +129,7 @@ def set_page_field_footer(section) -> None:
     p = footer.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.space_before = Pt(4)
-    r = p.add_run("Ashley Leon  |  Baseline BSL-DC-2026-07-13  |  Page ")
+    r = p.add_run("Ashley Diana Leon  |  Baseline BSL-DC-2026-07-13  |  Page ")
     r.font.size = Pt(8.5)
     r.font.color.rgb = MUTED
     page_run = p.add_run()
@@ -435,7 +435,7 @@ def build_document() -> Document:
     rr.font.color.rgb = NAVY
     set_cell_border(divider.cell(0, 2), bottom={"val": "single", "sz": "10", "color": BLUE_HEX})
 
-    add_text(doc, "Prepared for Ashley Leon", bold=True, color=NAVY, size=11.5,
+    add_text(doc, "Prepared for Ashley Diana Leon", bold=True, color=NAVY, size=11.5,
              align=WD_ALIGN_PARAGRAPH.CENTER, before=62, after=3)
     add_text(doc, "Pre-launch cut-off: July 13, 2026", color=GRAY, size=10,
              align=WD_ALIGN_PARAGRAPH.CENTER, after=3)
@@ -540,7 +540,7 @@ def build_document() -> Document:
 
     # Page 4
     add_section_title(doc, "03", "Organic search demand baseline",
-                      "Keyword Planner estimates establish demand before publication; they do not represent Ashley Leon’s current rankings or traffic.")
+                      "Keyword Planner estimates establish demand before publication; they do not represent Ashley Diana Leon’s current rankings or traffic.")
     add_callout(
         doc,
         "Important volume rule",
@@ -753,7 +753,7 @@ def main() -> None:
     doc = build_document()
     doc.core_properties.title = "Organic Search & Analytics Baseline — Deconstructing Christianity"
     doc.core_properties.subject = "Pre-launch measurement reference"
-    doc.core_properties.author = "Ashley Leon SEO Implementation"
+    doc.core_properties.author = "Ashley Diana Leon SEO Implementation"
     doc.core_properties.keywords = "SEO, GA4, Search Console, baseline, deconstructing Christianity"
     doc.save(OUT_FILE)
     print(OUT_FILE)

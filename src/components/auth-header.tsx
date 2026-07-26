@@ -18,8 +18,8 @@ export async function AuthHeader({ locale }: { locale: string }) {
           className="flex-shrink-0 min-w-0 md:hidden"
           aria-label={
             isSpanish
-              ? "ADL por Ashley Leon — Inicio"
-              : "ADL by Ashley Leon — Home"
+              ? "ADL por Ashley Diana Leon — Inicio"
+              : "ADL by Ashley Diana Leon — Home"
           }
         >
           <BrandWordmark className="text-[1.8rem] sm:text-[2.05rem]" />

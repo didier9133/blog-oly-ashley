@@ -46,7 +46,7 @@ export async function generateMetadata({
   const content = getWorkbookContent(book, supportedLocale);
   const title = content.title;
   const seo = getWorkbookSeo(supportedLocale, book.slug_en);
-  const metadataTitle = seo?.title ?? `${title} | Ashley Leon`;
+  const metadataTitle = seo?.title ?? `${title} | Ashley Diana Leon`;
   const description = seo?.description ?? content.subtitle;
   const coverImage = getWorkbookCoverImage(book, supportedLocale);
   const detailSlug = locale === "en" ? book.slug_en : book.slug_es;
@@ -145,7 +145,7 @@ export default async function PageDetail({
     "@id": `${pageUrl}#book`,
     name: bookTitle,
     sku: book.slug_en,
-    brand: { "@type": "Brand", name: "Ashley Leon" },
+    brand: { "@type": "Brand", name: "Ashley Diana Leon" },
     description:
       supportedLocale === "es"
         ? bookDescription

@@ -39,8 +39,8 @@ export async function generateMetadata({
   const { locale } = await params;
   const title =
     locale === "es"
-      ? "Compra confirmada | Ashley Leon"
-      : "Purchase complete | Ashley Leon";
+      ? "Compra confirmada | Ashley Diana Leon"
+      : "Purchase complete | Ashley Diana Leon";
   const description =
     locale === "es"
       ? "Tu compra fue confirmada. Revisa tu correo para descargar la guía y consultar los próximos pasos."
@@ -48,8 +48,8 @@ export async function generateMetadata({
   const image = ogImageUrl(locale);
   const imageAlt =
     locale === "es"
-      ? "Ashley Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
-      : "Ashley Leon beside the message “Returning to yourself is returning to the sacred”";
+      ? "Ashley Diana Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
+      : "Ashley Diana Leon beside the message “Returning to yourself is returning to the sacred”";
 
   return {
     title,

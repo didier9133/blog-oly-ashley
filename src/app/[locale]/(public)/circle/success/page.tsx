@@ -39,8 +39,8 @@ export async function generateMetadata({
   const { locale } = await params;
   const title =
     locale === "es"
-      ? "Reserva confirmada | Ashley Leon"
-      : "Reservation complete | Ashley Leon";
+      ? "Reserva confirmada | Ashley Diana Leon"
+      : "Reservation complete | Ashley Diana Leon";
   const description =
     locale === "es"
       ? "Tu lugar en The Rebuilding Reverence Circle quedó reservado. Revisa tu correo para conocer los próximos pasos."
@@ -48,8 +48,8 @@ export async function generateMetadata({
   const image = ogImageUrl(locale);
   const imageAlt =
     locale === "es"
-      ? "Ashley Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
-      : "Ashley Leon beside the message “Returning to yourself is returning to the sacred”";
+      ? "Ashley Diana Leon junto al mensaje «Volver a ti es volver a lo sagrado»"
+      : "Ashley Diana Leon beside the message “Returning to yourself is returning to the sacred”";
 
   return {
     title,

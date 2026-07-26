@@ -19,12 +19,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata" });
   const title =
     locale === "es"
-      ? "Términos y condiciones | Ashley Leon"
-      : "Terms of Service | Ashley Leon";
+      ? "Términos y condiciones | Ashley Diana Leon"
+      : "Terms of Service | Ashley Diana Leon";
   const description =
     locale === "es"
-      ? "Lee los términos que regulan el uso del sitio de Ashley Leon, sus contenidos, compras digitales, propiedad intelectual y responsabilidades."
-      : "Read the terms governing use of Ashley Leon's website, its content, digital purchases, intellectual property, and user responsibilities.";
+      ? "Lee los términos que regulan el uso del sitio de Ashley Diana Leon, sus contenidos, compras digitales, propiedad intelectual y responsabilidades."
+      : "Read the terms governing use of Ashley Diana Leon's website, its content, digital purchases, intellectual property, and user responsibilities.";
   const image = ogImageUrl(locale);
   const imageAlt = t("ogImageAlt");
 

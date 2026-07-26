@@ -49,8 +49,8 @@ export async function generateMetadata({
       : image.alt;
   const title =
     locale === "es"
-      ? "Reserva tu lugar en The Circle | Ashley Leon"
-      : "Reserve your place in The Circle | Ashley Leon";
+      ? "Reserva tu lugar en The Circle | Ashley Diana Leon"
+      : "Reserve your place in The Circle | Ashley Diana Leon";
   const description = t("metadata-description");
 
   return {

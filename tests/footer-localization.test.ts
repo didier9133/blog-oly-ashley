@@ -18,11 +18,11 @@ const authLayoutSource = readFileSync(
 );
 
 describe("footer localization", () => {
-  test("positions the English guide around church hurt without overpromising", () => {
+  test("positions the English guide around faith, identity, and belonging", () => {
     expect(englishMessages.footer).toMatchObject({
       "lead-magnet-landing-eyebrow": "A free reflection guide",
       "lead-magnet-landing-title":
-        "Church Hurt Can Leave You Caught Between Two Answers",
+        "When Faith, Identity, and Belonging Stop Fitting Together",
       "lead-magnet-landing-desc":
         "Five short reflections. No score. No right conclusion. Naming the tension is the goal — not resolving it.",
       "lead-magnet-landing-cta": "Help Me Name What I Am Carrying",
@@ -44,7 +44,7 @@ describe("footer localization", () => {
       "lead-magnet-landing-eyebrow":
         "Una guía gratuita para reconocer la herida",
       "lead-magnet-landing-title":
-        "Cuando las heridas de la iglesia te hacen dudar del camino a seguir",
+        "Cuando la fe, la identidad y la pertenencia dejan de encajar",
       "lead-magnet-landing-desc":
         "Cinco reflexiones breves para reconocer la herida que atraviesa tu fe, tu identidad y tu sentido de pertenencia. Sin respuestas correctas ni conclusiones impuestas: solo un punto de partida para nombrar lo que estás viviendo.",
       "lead-magnet-landing-cta":

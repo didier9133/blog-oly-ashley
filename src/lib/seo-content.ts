@@ -264,8 +264,8 @@ const BELONGING_SEO_DECISION: PostSeoDecision = {
     es: "qué significa pertenecer",
   },
   seoTitle: {
-    en: "What Does Belonging Really Mean? | Ashley Leon",
-    es: "¿Qué significa realmente pertenecer? | Ashley Leon",
+    en: "What Does Belonging Really Mean? | Ashley Diana Leon",
+    es: "¿Qué significa realmente pertenecer? | Ashley Diana Leon",
   },
   description: {
     en: "A personal reflection on belonging, shame, discomfort, and learning to remain connected without disappearing to be accepted.",
@@ -299,6 +299,20 @@ const BELONGING_SEO_DECISION: PostSeoDecision = {
       ],
     },
   },
+  relatedReading: {
+    en: [
+      {
+        href: "/writing/the-day-i-tried-to-cast-the-gay-demon-out-of-me",
+        label: "Read Ashley’s story about shame, deliverance, and returning to herself",
+      },
+    ],
+    es: [
+      {
+        href: "/writing/el-dia-que-intente-sacarme-el-demonio-gay",
+        label: "Lee la historia de Ashley sobre vergüenza, liberación y el regreso a sí misma",
+      },
+    ],
+  },
 };
 
 export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
@@ -320,8 +334,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: "cómo reconstruir la fe después de la deconstrucción",
     },
     seoTitle: {
-      en: "How to Rebuild Faith After Deconstruction | Ashley Leon",
-      es: "Reconstruir la fe después de la deconstrucción | Ashley Leon",
+      en: "How to Rebuild Faith After Deconstruction | Ashley Diana Leon",
+      es: "Reconstruir la fe tras deconstruir | Ashley Diana Leon",
     },
     description: {
       en: "A personal reflection on rebuilding faith after deconstruction, releasing self-abandonment, and learning to trust the sacred again.",
@@ -397,8 +411,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: "equilibrio espiritual entre fe y vida material",
     },
     seoTitle: {
-      en: "Spiritual Balance Between Faith and Material Life | Ashley Leon",
-      es: "Equilibrio espiritual entre fe y vida material | Ashley Leon",
+      en: "Spiritual Balance: Faith and Material Life | Ashley Diana Leon",
+      es: "Equilibrio entre fe y vida material | Ashley Diana Leon",
     },
     description: {
       en: "A personal reflection on seeking God first while finding a healthier spiritual balance between faith, ambition, material life, and everyday responsibility.",
@@ -482,8 +496,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: "duelo gestacional",
     },
     seoTitle: {
-      en: "Grief After Miscarriage: The Life You Imagined | Ashley Leon",
-      es: "Duelo gestacional por la vida que imaginaste | Ashley Leon",
+      en: "Grief After Miscarriage | Ashley Diana Leon",
+      es: "Duelo gestacional por la vida que imaginaste | Ashley Diana Leon",
     },
     description: {
       en: "A personal reflection on grief after miscarriage, the future you imagined, and giving your body permission to mourn what never came to be.",
@@ -564,8 +578,8 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
       es: "fe LGBTQ+ y amor incondicional de Dios",
     },
     seoTitle: {
-      en: "Gay Christian and God’s Unconditional Love | Ashley Leon",
-      es: "Fe LGBTQ+ y amor incondicional de Dios | Ashley Leon",
+      en: "Gay Christian and God’s Unconditional Love | Ashley Diana Leon",
+      es: "Fe LGBTQ+ y amor incondicional de Dios | Ashley Diana Leon",
     },
     description: {
       en: "A queer Christian reflection on coming out, conditional religion, and learning to trust God’s unconditional love without abandoning your identity.",
@@ -594,6 +608,82 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
         ],
       },
     },
+    relatedReading: {
+      en: [
+        {
+          href: "/writing/the-day-i-tried-to-cast-the-gay-demon-out-of-me",
+          label: "Read the story of the day Ashley tried to cast the gay demon out of herself",
+        },
+      ],
+      es: [
+        {
+          href: "/writing/el-dia-que-intente-sacarme-el-demonio-gay",
+          label: "Lee El Día Que Intenté Sacarme el Demonio Gay",
+        },
+      ],
+    },
+  },
+  "the-day-i-tried-to-cast-the-gay-demon-out-of-me": {
+    category: "Queer Faith & Identity",
+    categoryEs: "Fe e identidad LGBTQ+",
+    productCta: "queer-and-called",
+    modifiedAt: "2026-07-26",
+    lead: {
+      en: "A first-person story about religious shame, a day-long deliverance ritual, and learning that healing does not require erasing your capacity to love.",
+      es: "Una historia en primera persona sobre la vergüenza religiosa, un ritual de liberación que duró todo un día y el descubrimiento de que sanar no exige borrar tu capacidad de amar.",
+    },
+    primaryKeyword: {
+      en: "gay deliverance trauma",
+      es: "trauma religioso LGBTQ+",
+    },
+    seoTitle: {
+      en: "The Day I Tried to Cast Out the Gay Demon | Ashley Diana Leon",
+      es: "El día que intenté sacarme el demonio gay | Ashley Diana Leon",
+    },
+    description: {
+      en: "Ashley Diana Leon recounts a gay deliverance ritual, the shame it created, and the slow work of returning to her body, faith, and capacity to love.",
+      es: "Ashley Diana Leon narra un ritual de liberación, la vergüenza que dejó y el proceso de volver a confiar en su cuerpo, su fe y su capacidad de amar.",
+    },
+    relatedReading: {
+      en: [
+        {
+          href: "/writing/gay-christian-and-gods-unconditional-love",
+          label: "Continue with a reflection on being gay, Christian, and held by unconditional love",
+        },
+        {
+          href: "/writing/what-does-belonging-really-mean",
+          label: "Read what belonging can mean when shame says you do not fit",
+        },
+      ],
+      es: [
+        {
+          href: "/writing/fe-lgbtq-y-amor-incondicional-de-dios",
+          label: "Continúa con una reflexión sobre la fe LGBTQ+ y el amor incondicional de Dios",
+        },
+        {
+          href: "/writing/que-significa-realmente-pertenecer",
+          label: "Lee qué puede significar pertenecer cuando la vergüenza dice que no encajas",
+        },
+      ],
+    },
+    relatedGuide: {
+      en: {
+        href: "/deconstructing-christianity",
+        eyebrow: "A wider context for this story",
+        title: "What does deconstructing Christianity mean?",
+        description:
+          "Explore how inherited beliefs, religious harm, identity, and belonging can become part of faith deconstruction—without assuming where the process must end.",
+        label: "Read the deconstruction guide",
+      },
+      es: {
+        href: "/deconstructing-christianity",
+        eyebrow: "Un contexto más amplio para esta historia",
+        title: "¿Qué significa deconstruir el cristianismo?",
+        description:
+          "Explora cómo las creencias heredadas, el daño religioso, la identidad y la pertenencia pueden formar parte de la deconstrucción de la fe, sin imponer un destino.",
+        label: "Leer la guía sobre deconstrucción",
+      },
+    },
   },
   "what-does-belonging-really-mean": BELONGING_SEO_DECISION,
   "que-significa-realmente-pertenecer": BELONGING_SEO_DECISION,
@@ -612,7 +702,7 @@ export const POST_SEO_DECISIONS: Record<string, PostSeoDecision> = {
     },
     seoTitle: {
       en: "Don’t Take Advice From Someone Whose Life You Don’t Want",
-      es: "¿De quién deberías aceptar consejos? | Ashley Leon",
+      es: "¿De quién deberías aceptar consejos? | Ashley Diana Leon",
     },
     description: {
       en: "A reflection on whose advice to trust, how inherited beliefs shape us, and staying open to wisdom without surrendering discernment.",
@@ -726,7 +816,7 @@ export function getWorkbookSeo(
     },
     "queer-and-called": {
       en: {
-        title: "LGBTQ Christian Workbook | Queer & Called by Ashley Leon",
+        title: "LGBTQ Christian Workbook | Queer & Called by Ashley Diana Leon",
         description:
           "A guided 30-day workbook for exploring LGBTQ identity, faith, spiritual belonging, voice, and wholeness without having to choose between them.",
         supportingLine: "An affirming LGBTQ faith and identity workbook.",

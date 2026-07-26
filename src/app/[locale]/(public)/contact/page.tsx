@@ -66,7 +66,7 @@ export default async function ContactPage({
     inLanguage: locale,
     isPartOf: {
       "@type": "WebSite",
-      name: "Ashley Leon",
+      name: "Ashley Diana Leon",
       url: BASE_URL,
     },
   };

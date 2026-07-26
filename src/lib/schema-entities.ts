@@ -16,7 +16,7 @@ export const ASHLEY_SAME_AS = [
 export const organizationRef = {
   "@type": "Organization",
   "@id": SCHEMA_ENTITY_IDS.organization,
-  name: "Ashley Leon",
+  name: "Ashley Diana Leon",
   url: BASE_URL,
   logo: {
     "@type": "ImageObject",
@@ -37,7 +37,7 @@ export const personRef = {
 export const websiteRef = {
   "@type": "WebSite",
   "@id": SCHEMA_ENTITY_IDS.website,
-  name: "Ashley Leon",
+  name: "Ashley Diana Leon",
   url: BASE_URL,
 } as const;
 
@@ -45,7 +45,7 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": SCHEMA_ENTITY_IDS.organization,
-  name: "Ashley Leon",
+  name: "Ashley Diana Leon",
   url: BASE_URL,
   logo: {
     "@type": "ImageObject",
@@ -81,7 +81,7 @@ export const personSchema = {
   "@type": "Person",
   "@id": SCHEMA_ENTITY_IDS.person,
   name: "Ashley Diana Leon",
-  alternateName: "Ashley Leon",
+  alternateName: "Ashley Diana Leon",
   url: fullUrl("en", "/about"),
   jobTitle:
     "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
@@ -123,7 +123,7 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": SCHEMA_ENTITY_IDS.website,
-  name: "Ashley Leon",
+  name: "Ashley Diana Leon",
   url: BASE_URL,
   inLanguage: ["en", "es"],
   publisher: organizationRef,

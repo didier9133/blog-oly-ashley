@@ -62,7 +62,7 @@ export default function CheckoutForm({
   const paymentElementOptions = useMemo<StripePaymentElementOptions>(
     () => ({
       layout: "tabs",
-      business: { name: "Ashley Leon" },
+      business: { name: "Ashley Diana Leon" },
       fields: {
         billingDetails: {
           name: "never",

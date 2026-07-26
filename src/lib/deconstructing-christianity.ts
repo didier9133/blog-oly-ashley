@@ -7,10 +7,10 @@ export const DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT = "2026-07-26";
 export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
   en: {
     title: "Deconstructing Christianity: What It Means and What Comes Next",
-    seoTitle: "Deconstructing Christianity: What Comes Next | Ashley Leon",
+    seoTitle: "Deconstructing Christianity: What Comes Next | Ashley Diana Leon",
     description:
       "A compassionate guide to deconstructing Christianity: what faith deconstruction means, why it happens, what it can feel like, and what may come next.",
-    ogAlt: "Ashley Leon — a guide to deconstructing Christianity",
+    ogAlt: "Ashley Diana Leon — a guide to deconstructing Christianity",
     ogLocale: "en_US",
     alternateOgLocale: "es_ES",
     inLanguage: "en-US",
@@ -138,7 +138,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "“I remember telling someone I trusted — someone discipling me — that I’d fallen in love with a woman. Her response has stayed with me for over a decade: that God would still love me, but I would no longer be blessed. That I was no longer under God’s protection. That there was no longer a point investing in me spiritually if I was going to be “disobedient” in this one area. I was nineteen. I believed her, because a conditional God was the only God I’d ever been introduced to.”",
-      quoteAttribution: "Ashley Leon · a moment from her own deconstruction",
+      quoteAttribution: "Ashley Diana Leon · a moment from her own deconstruction",
       conclusion:
         "This moment is one reason the focus here is Christian deconstruction rather than a generalized account of every faith tradition. It shows how questions can begin in the gap between unconditional love as an ideal and conditional belonging as a lived reality.",
     },
@@ -148,7 +148,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
         "The In-Between names the conviction that the false binary itself is the wound — not either side of it. Most people are taught they must choose: stay devout or leave entirely, be spiritual or be practical, be gay or be godly, be certain or be lost. The In-Between is the belief that this forced choosing is the injury, and that healing means learning to live undivided in the tension, rather than collapsing into either extreme.",
       quote:
         "“The conviction that the false binary is the wound — not either side of it.”",
-      quoteAttribution: "Ashley Leon · The In-Between",
+      quoteAttribution: "Ashley Diana Leon · The In-Between",
       framework:
         "Primarily, The In-Between is a framework and teaching lens—the intellectual and spiritual core of Ashley's writing and teaching. It is also the name of her free community, where people can practice living this out together.",
       conviction:
@@ -180,7 +180,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "“It’s okay to grieve something that didn’t happen. You can grieve the story your mind thought was going to unfold. Sometimes the moment I get quiet with myself, the tears just come — like my body has been waiting for me to feel it.”",
-      quoteAttribution: "Ashley Leon",
+      quoteAttribution: "Ashley Diana Leon",
       conclusion:
         "The shame of feeling like you do not belong anywhere deserves to be named directly, even when no one is actively rejecting you. These are possibilities, not stages: relief does not erase grief, missing a community does not decide whether returning is right, and keeping a practice does not invalidate the questions that changed it.",
     },
@@ -274,7 +274,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
     faqIntro:
       "Short answers to common questions, with room for each person's experience to remain more complex than a definition.",
     authorEyebrow: "About the author",
-    authorName: "Ashley Leon",
+    authorName: "Ashley Diana Leon",
     authorBio:
       "Ashley is a writer, workshop facilitator, and certified holistic mind-body coach working at the intersection of faith deconstruction, queer spirituality, and emotional healing. Her work is affirming, non-doctrinal, and coaching-based—not therapy.",
     authorLinkLabel: "More about Ashley",
@@ -296,10 +296,10 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
   },
   es: {
     title: "Deconstruir el cristianismo: qué significa y qué viene después",
-    seoTitle: "Deconstruir el cristianismo: qué viene después | Ashley Leon",
+    seoTitle: "Deconstruir el cristianismo: qué viene después | Ashley Diana Leon",
     description:
       "Una guía compasiva para entender la deconstrucción de la fe cristiana: qué significa, por qué sucede, cómo se vive y qué puede venir después.",
-    ogAlt: "Ashley Leon — una guía para deconstruir el cristianismo",
+    ogAlt: "Ashley Diana Leon — una guía para deconstruir el cristianismo",
     ogLocale: "es_ES",
     alternateOgLocale: "en_US",
     inLanguage: "es-419",
@@ -427,7 +427,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "«Recuerdo que le conté a alguien en quien confiaba —alguien que me acompañaba espiritualmente— que me había enamorado de una mujer. Nunca olvidé su respuesta, aunque han pasado más de diez años: Dios todavía me amaría, pero ya no me bendeciría. Ya no estaría bajo su protección. Ya no tenía sentido seguir acompañándome en mi fe si iba a ser “desobediente” en esa única área. Yo tenía diecinueve años. Le creí, porque el único Dios que me habían presentado era un Dios que ponía condiciones».",
-      quoteAttribution: "Ashley Leon · un momento de su propia deconstrucción",
+      quoteAttribution: "Ashley Diana Leon · un momento de su propia deconstrucción",
       conclusion:
         "Este momento ayuda a explicar por qué aquí hablamos específicamente de deconstrucción cristiana, en lugar de intentar resumir todas las tradiciones de fe. También muestra cómo las preguntas pueden nacer en la distancia entre el ideal de un amor incondicional y la experiencia de una pertenencia condicionada.",
     },
@@ -437,7 +437,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
         "The In-Between pone nombre a una convicción: muchas veces, lo que lastima no es una de las dos opciones, sino sentir que solo existen esas dos. A la mayoría nos enseñan que debemos elegir: seguir dentro de la fe o irnos por completo, vivir la espiritualidad o atender lo práctico, ser LGBTQ+ o agradar a Dios, tener certezas o haber perdido el rumbo. The In-Between propone dejar de vivir esas elecciones como una condena y aprender a vivir con integridad sin dividirnos por dentro.",
       quote:
         "«Muchas veces, lo que nos hiere no es una de las dos opciones, sino creer que solo podemos escoger entre ellas».",
-      quoteAttribution: "Ashley Leon · The In-Between",
+      quoteAttribution: "Ashley Diana Leon · The In-Between",
       framework:
         "Ante todo, The In-Between es un marco para comprender y enseñar: el centro intelectual y espiritual de lo que Ashley escribe y comparte. También es el nombre de su comunidad gratuita, donde podemos practicar esta forma de vivir en compañía.",
       conviction:
@@ -469,7 +469,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "«Está bien vivir un duelo por algo que no sucedió. También puedes llorar la historia que imaginabas vivir. A veces, en cuanto hago silencio, las lágrimas aparecen; es como si mi cuerpo llevara tiempo esperando que yo pudiera sentirlo».",
-      quoteAttribution: "Ashley Leon",
+      quoteAttribution: "Ashley Diana Leon",
       conclusion:
         "La vergüenza de sentir que ya no perteneces a ningún lugar merece ser nombrada, incluso cuando nadie te está rechazando activamente. Estas son posibilidades, no etapas: el alivio no borra el duelo; extrañar una comunidad no significa que volver sea lo correcto; y conservar una práctica no invalida las preguntas que la transformaron.",
     },
@@ -564,7 +564,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
     faqIntro:
       "Respuestas breves a preguntas comunes, sin reducir la experiencia de cada persona a una sola definición.",
     authorEyebrow: "Sobre la autora",
-    authorName: "Ashley Leon",
+    authorName: "Ashley Diana Leon",
     authorBio:
       "Ashley es escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral. Su trabajo parte de una mirada afirmativa y no doctrinal, centrada en la reflexión y el acompañamiento. No sustituye la terapia.",
     authorLinkLabel: "Conoce más sobre Ashley",

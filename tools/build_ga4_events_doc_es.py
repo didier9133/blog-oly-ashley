@@ -292,7 +292,7 @@ def configure_styles(doc: Document) -> None:
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.space_before = Pt(0)
     p.paragraph_format.space_after = Pt(0)
-    r = p.add_run("Ashley Leon  |  Página ")
+    r = p.add_run("Ashley Diana Leon  |  Página ")
     set_run_font(r, size=8.5, color=MUTED)
     page = p.add_run()
     add_field(page, "PAGE")
@@ -374,7 +374,7 @@ def build_document() -> Document:
     r = subtitle.add_run("Inventario técnico con descripciones provisionales para documentación interna")
     set_run_font(r, size=12.5, color=MUTED, italic=True)
 
-    add_metadata_line(doc, "Proyecto", "Ashley Leon — blog, comunidad y productos digitales")
+    add_metadata_line(doc, "Proyecto", "Ashley Diana Leon — blog, comunidad y productos digitales")
     add_metadata_line(doc, "Fecha de revisión", "17 de julio de 2026")
     add_metadata_line(doc, "Alcance", "Eventos enviados explícitamente desde la aplicación mediante la integración de GA4")
 
@@ -431,7 +431,7 @@ def build_document() -> Document:
 
     doc.core_properties.title = "Eventos rastreados en GA4"
     doc.core_properties.subject = "Inventario de eventos de analítica con descripciones provisionales"
-    doc.core_properties.author = "Ashley Leon"
+    doc.core_properties.author = "Ashley Diana Leon"
     doc.core_properties.keywords = "GA4, analítica, eventos, ecommerce, CTA, newsletter"
     return doc
 

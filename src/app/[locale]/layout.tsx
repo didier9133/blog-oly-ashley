@@ -73,9 +73,9 @@ export async function generateMetadata({
     title,
     description,
     keywords,
-    authors: [{ name: "Ashley Leon" }],
-    creator: "Ashley Leon",
-    publisher: "Ashley Leon",
+    authors: [{ name: "Ashley Diana Leon" }],
+    creator: "Ashley Diana Leon",
+    publisher: "Ashley Diana Leon",
     robots: indexableRobots,
     alternates: localizedAlternates(locale, { en: "/", es: "/" }),
     openGraph: {

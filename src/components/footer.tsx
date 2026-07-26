@@ -181,7 +181,7 @@ export async function Footer({ locale }: { locale: string }) {
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-sans text-white/50">
             <p>
-              &copy; {currentYear} Ashley Leon. {t("rights-reserved")}
+              &copy; {currentYear} Ashley Diana Leon. {t("rights-reserved")}
             </p>
             <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-center">
               <a

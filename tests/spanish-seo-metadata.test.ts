@@ -37,7 +37,7 @@ describe("Spanish SEO transcreation", () => {
       spanishMessages.metadata.keywords.includes("deconstrucción de fe,"),
     ).toBe(false);
     expect(spanishMessages.metadata.ogImageAlt).toBe(
-      "Ashley Leon junto al mensaje «Volver a ti es volver a lo sagrado»",
+      "Ashley Diana Leon junto al mensaje «Volver a ti es volver a lo sagrado»",
     );
   });
 

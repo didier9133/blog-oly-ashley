@@ -48,7 +48,7 @@ def set_footer_es(section) -> None:
     p = footer.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     p.paragraph_format.space_before = Pt(4)
-    r = p.add_run("Ashley Leon  |  Línea base BSL-DC-2026-07-13  |  Página ")
+    r = p.add_run("Ashley Diana Leon  |  Línea base BSL-DC-2026-07-13  |  Página ")
     r.font.size = Pt(8.5)
     r.font.color.rgb = base.MUTED
     page_run = p.add_run()
@@ -157,7 +157,7 @@ def build_document_es() -> Document:
     r.font.color.rgb = base.NAVY
     base.set_cell_border(divider.cell(0, 2), bottom={"val": "single", "sz": "10", "color": base.BLUE_HEX})
 
-    base.add_text(doc, "Preparado para Ashley Leon", bold=True, color=base.NAVY, size=11.5,
+    base.add_text(doc, "Preparado para Ashley Diana Leon", bold=True, color=base.NAVY, size=11.5,
                   align=WD_ALIGN_PARAGRAPH.CENTER, before=62, after=3)
     base.add_text(doc, "Fecha de corte previa al lanzamiento: 13 de julio de 2026",
                   color=base.GRAY, size=10, align=WD_ALIGN_PARAGRAPH.CENTER, after=3)
@@ -273,7 +273,7 @@ def build_document_es() -> Document:
         doc,
         "03",
         "Línea base de demanda orgánica",
-        "Las estimaciones de Keyword Planner documentan demanda antes de publicar; no representan los rankings ni el tráfico actual de Ashley Leon.",
+        "Las estimaciones de Keyword Planner documentan demanda antes de publicar; no representan los rankings ni el tráfico actual de Ashley Diana Leon.",
     )
     base.add_callout(
         doc,
@@ -500,7 +500,7 @@ def main() -> None:
     doc = build_document_es()
     doc.core_properties.title = "Línea base de búsqueda orgánica y analítica — Deconstrucción del cristianismo"
     doc.core_properties.subject = "Referencia de medición previa al lanzamiento"
-    doc.core_properties.author = "Implementación SEO de Ashley Leon"
+    doc.core_properties.author = "Implementación SEO de Ashley Diana Leon"
     doc.core_properties.keywords = "SEO, GA4, Search Console, línea base, deconstrucción del cristianismo"
     doc.save(OUT_FILE)
     print(OUT_FILE)

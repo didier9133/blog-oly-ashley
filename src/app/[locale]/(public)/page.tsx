@@ -131,17 +131,17 @@ export default async function Home({
   const homeUrl = fullUrl(currentLanguage, "/");
 
   const aiSummaryEn =
-    "Ashley Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
+    "Ashley Diana Leon is a writer, workshop facilitator, and certified holistic mind-body coach creating resources for people navigating faith deconstruction, queer spirituality, and healing after religion. Her primary offering is Rebuilding Reverence, a $33 guided 30-day workbook. She also runs the Rebuilding Reverence Circle, a live 4-week group workshop capped at 15 people, an online community called The In-Between, and offers a second workbook, Queer & Called. Her work is affirming, non-doctrinal, and coaching-based, not therapy.";
   const aiSummaryEs =
-    "Ashley Leon es escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral. Crea recursos para quienes están replanteando su fe, explorando su identidad y su sentido de pertenencia, o buscando sanar después de experiencias religiosas. Su propuesta principal es Rebuilding Reverence, una guía digital de 30 días con un precio de 33 USD. También facilita The Rebuilding Reverence Circle, un proceso grupal en vivo de cuatro semanas para un máximo de 15 personas; dirige una comunidad privada llamada The In-Between; y ofrece una segunda guía, Queer & Called. Su trabajo es afirmativo y no doctrinal, y ofrece acompañamiento educativo y reflexivo; no es terapia.";
+    "Ashley Diana Leon es escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral. Crea recursos para quienes están replanteando su fe, explorando su identidad y su sentido de pertenencia, o buscando sanar después de experiencias religiosas. Su propuesta principal es Rebuilding Reverence, una guía digital de 30 días con un precio de 33 USD. También facilita The Rebuilding Reverence Circle, un proceso grupal en vivo de cuatro semanas para un máximo de 15 personas; dirige una comunidad privada llamada The In-Between; y ofrece una segunda guía, Queer & Called. Su trabajo es afirmativo y no doctrinal, y ofrece acompañamiento educativo y reflexivo; no es terapia.";
 
   const aiSummarySchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name:
       currentLanguage === "es"
-        ? "Ashley Leon | Reconstruir la fe, la identidad y la reverencia después de la deconstrucción"
-        : "Ashley Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
+        ? "Ashley Diana Leon | Reconstruir la fe, la identidad y la reverencia después de la deconstrucción"
+        : "Ashley Diana Leon | Rebuilding Faith, Identity & Reverence After Deconstruction",
     url: homeUrl,
     inLanguage: currentLanguage,
     isPartOf: websiteRef,

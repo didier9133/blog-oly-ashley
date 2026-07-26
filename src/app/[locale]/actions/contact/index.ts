@@ -23,7 +23,7 @@ export async function sendContactEmail({
 
   try {
     const { error } = await resend.emails.send({
-      from: `Ashley Leon <no-reply@${emailDomain}>`,
+      from: `Ashley Diana Leon <no-reply@${emailDomain}>`,
       to: email,
       subject: t("subject"),
       react: ContactEmailTemplateProps({
@@ -49,7 +49,7 @@ export async function notifyContactFormSubmission(params: {
   message: string;
 }) {
   await resend.emails.send({
-    from: `Ashley Leon <notify@${emailDomain}>`,
+    from: `Ashley Diana Leon <notify@${emailDomain}>`,
     to: NOTIFICATION_EMAIL,
     subject: `Nuevo mensaje de contacto de ${params.name}`,
     react: OwnerNotificationTemplate({

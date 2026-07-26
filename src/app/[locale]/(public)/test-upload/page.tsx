@@ -11,7 +11,7 @@ export async function generateMetadata({
 
   return {
     title:
-      locale === "es" ? "Prueba de carga | Ashley Leon" : "Test Upload",
+      locale === "es" ? "Prueba de carga | Ashley Diana Leon" : "Test Upload",
     robots: { index: false, follow: false },
     alternates: { canonical: fullUrl(locale, "/test-upload") },
     openGraph: null,

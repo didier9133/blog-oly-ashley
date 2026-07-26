@@ -98,8 +98,8 @@ const toCard = (
       `/${PATH}/${publicPostSlug(locale === "es" ? post.slug_es : post.slug_en)}`,
     ),
     publishedAt: post.createdAt,
-    authorFirstName: post.author.firstName,
-    authorLastName: post.author.lastName,
+    authorFirstName: "Ashley Diana",
+    authorLastName: "Leon",
   };
 };
 
@@ -122,8 +122,8 @@ export async function generateMetadata({
   const title =
     page > 1
       ? locale === "es"
-        ? `Ensayos sobre fe y deconstrucción — Página ${page} | Ashley Leon`
-        : `Essays on Faith and Deconstruction — Page ${page} | Ashley Leon`
+        ? `Ensayos sobre fe y deconstrucción — Página ${page} | Ashley Diana Leon`
+        : `Essays on Faith and Deconstruction — Page ${page} | Ashley Diana Leon`
       : baseTitle;
   const description = t("description");
   const path = page > 1 ? `/writing?page=${page}` : "/writing";

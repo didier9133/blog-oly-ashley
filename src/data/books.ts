@@ -43,7 +43,7 @@ export const books: BookV2[] = [
       "A sacred invitation to reclaim your voice, reimagine your faith, and return to yourself — whole and holy",
     subtitle_es:
       "Una invitación sagrada a recuperar tu voz, reimaginar tu fe y volver a ti — íntegre y sagrade",
-    author: "Ashley Leon",
+    author: "Ashley Diana Leon",
     price: 3300,
     coverImage_en: "/Queer_y_Called.jpeg",
     coverImage_es: "/Queer_y_Llamados.jpeg",
@@ -94,7 +94,7 @@ Este diario guiado de 30 días te invita a la reflexión sagrada, a preguntas ho
     subtitle_en: "A 30-Day Journey to Reconnect with Your Inner Self",
     subtitle_es:
       "UN CAMINO DE 30 DÍAS PARA VOLVER A LO SAGRADO DESPUÉS DE UNA FE QUE SE QUEBRÓ",
-    author: "Ashley Leon",
+    author: "Ashley Diana Leon",
     price: 3300,
     coverImage_es: "/Reconstruyendo_la_Reverencia.jpeg",
     coverImage_en: "/Rebuilding_Reverence.jpeg",

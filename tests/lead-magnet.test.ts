@@ -114,7 +114,7 @@ describe("newsletter lead magnet", () => {
 
   test("sends from and replies to the support address only", () => {
     expect(newsletterActionSource).toContain(
-      "from: `Ashley Leon <${SUPPORT_EMAIL}>`",
+      "from: `Ashley Diana Leon <${SUPPORT_EMAIL}>`",
     );
     expect(newsletterActionSource).toContain("replyTo: SUPPORT_EMAIL");
     expect(newsletterActionSource.includes("noreply@")).toBe(false);
