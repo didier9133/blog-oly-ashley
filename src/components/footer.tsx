@@ -59,7 +59,7 @@ export async function Footer({ locale }: { locale: string }) {
                   <Youtube className="w-5 h-5" />
                 </SocialLink>
                 <SocialLink
-                  href="https://ashleyleon.substack.com"
+                  href="https://substack.com/@ashleydianaleon"
                   label={t("social.substack")}
                 >
                   <svg

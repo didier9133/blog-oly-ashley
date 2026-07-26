@@ -10,7 +10,7 @@ export const ASHLEY_SAME_AS = [
   "https://www.instagram.com/ashleydianaleon",
   "https://www.facebook.com/ashley.leon.684699",
   "https://www.youtube.com/@ashleydianaleon",
-  "https://ashleyleon.substack.com",
+  "https://substack.com/@ashleydianaleon",
 ] as const;
 
 export const organizationRef = {
@@ -31,7 +31,7 @@ export const personRef = {
   "@id": SCHEMA_ENTITY_IDS.person,
   name: "Ashley Diana Leon",
   url: fullUrl("en", "/about"),
-  image: `${BASE_URL}/profile4.jpeg`,
+  image: `${BASE_URL}/ashley-about-portrait.jpeg`,
 } as const;
 
 export const websiteRef = {
@@ -86,13 +86,13 @@ export const personSchema = {
   jobTitle:
     "Writer, Workshop Facilitator, and Certified Holistic Mind-Body Coach",
   description:
-    "Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach exploring faith deconstruction, queer spirituality, identity, and emotional healing.",
-  image: `${BASE_URL}/profile4.jpeg`,
+    "Writer, former missionary, workshop facilitator, and certified holistic mind-body coach, raised in Miami by Cuban and Colombian immigrant parents. She writes about faith deconstruction, non-binary spirituality, identity, and emotional healing.",
+  image: `${BASE_URL}/ashley-about-portrait.jpeg`,
   worksFor: organizationRef,
   sameAs: [...ASHLEY_SAME_AS],
   knowsAbout: [
     "Faith deconstruction",
-    "Queer spirituality",
+    "Non-binary spirituality",
     "Emotional healing",
     "Spiritual integration",
     "Guided reflective practice",
@@ -108,10 +108,10 @@ export function getPersonSchema(locale: string) {
     jobTitle:
       "Escritora, facilitadora de talleres y acompañante holística certificada en bienestar integral",
     description:
-      "Escritora cubano-colombiana, exmisionera y facilitadora de talleres que explora la deconstrucción de la fe, la espiritualidad queer, la identidad y la sanación emocional.",
+      "Escritora, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral, criada en Miami por padres inmigrantes cubanos y colombianos. Escribe sobre la deconstrucción de la fe, la espiritualidad no binaria, la identidad y la sanación emocional.",
     knowsAbout: [
       "Deconstrucción de la fe",
-      "Espiritualidad queer",
+      "Espiritualidad no binaria",
       "Sanación emocional",
       "Integración espiritual",
       "Prácticas guiadas de reflexión",

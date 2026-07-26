@@ -80,7 +80,7 @@ export default async function Page({
           <section className="w-full flex flex-col md:flex-row items-stretch gap-12 lg:gap-20">
             <div className="w-full md:w-1/2 group transition-all duration-700 flex items-center">
               <Image
-                src="/profile4.jpeg"
+                src="/ashley-about-portrait.jpeg"
                 alt={t("image-alt")}
                 width={800}
                 height={1000}

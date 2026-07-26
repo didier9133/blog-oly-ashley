@@ -575,7 +575,7 @@ export default async function DeconstructingChristianityPage({
             className="mt-16 grid gap-7 border-y border-border py-9 sm:grid-cols-[8rem_1fr] sm:items-center"
           >
             <Image
-              src="/profile4.jpeg"
+              src="/ashley-about-portrait.jpeg"
               alt={
                 locale === "es"
                   ? "Retrato de Ashley Leon"

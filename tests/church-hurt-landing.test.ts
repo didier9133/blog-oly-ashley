@@ -62,7 +62,7 @@ describe("Church Hurt guide landing", () => {
     );
     expect(landingSource.includes("permanentRedirect")).toBe(false);
     expect(sitemapSource).toContain(
-      '{ path: "/church-hurt-guide", lastModified: "2026-07-24" }',
+      '{ path: "/church-hurt-guide", lastModified: "2026-07-26" }',
     );
     expect(sitemapSource.includes("ENGLISH_ONLY_STATIC_ROUTES")).toBe(false);
   });

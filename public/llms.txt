@@ -1,7 +1,7 @@
 # Ashley Diana Leon
-> Ashley Leon is a Cuban-Colombian writer, former missionary, workshop facilitator, and certified holistic mind-body coach creating affirming resources for life after inherited religion.
+> Ashley Leon is a writer, former missionary, workshop facilitator, and certified holistic mind-body coach, raised in Miami by Cuban and Colombian immigrant parents. She creates affirming resources for life after inherited religion.
 
-Ashley writes about faith deconstruction, queer spirituality, identity, emotional healing, belonging, and spiritual integration. Her educational resources are coaching-based and are not therapy or clinical care.
+Ashley writes about faith deconstruction, non-binary spirituality, identity, emotional healing, belonging, and spiritual integration. Her educational resources are coaching-based and are not therapy or clinical care.
 
 ## Writing — Essays on faith, deconstruction & healing
 - [Writing](https://ashleydianaleon.com/en/writing): First-person essays on faith deconstruction, identity, queerness, healing, belonging, and return.
@@ -16,20 +16,20 @@ Ashley writes about faith deconstruction, queer spirituality, identity, emotiona
 - [The In-Between](https://ashleydianaleon.com/en/community): Ashley's free community for practicing the conviction that the false binary is the wound, with reflection, conversation, and belonging without a required conclusion.
 
 ## About the author
-- [About](https://ashleydianaleon.com/en/about): Ashley's first-person background, experience inside religion, Cuban-Colombian and queer identity, former missionary and seminary experience, and current scope of work.
+- [About](https://ashleydianaleon.com/en/about): Ashley's first-person background, Cuban-Colombian and queer identity, Miami upbringing, former missionary and seminary experience, and current scope of work.
 
 ## Key facts
 - Languages: English and Spanish; each localized URL identifies its language and alternate version.
-- Primary topics: Queer spirituality, faith deconstruction, identity, healing, reverence, belonging
+- Primary topics: Non-binary spirituality, faith deconstruction, identity, healing, reverence, belonging
 - Name: Ashley Diana Leon; published name: Ashley Leon
 - Content scope: education, reflection, coaching-based resources, live workshops, and community; not therapy
 - Contact: support@ashleydianaleon.com
 - Sitemap: https://ashleydianaleon.com/sitemap.xml
 
 ## Versión en español
-> Ashley Leon es escritora cubano-colombiana, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral. Crea recursos afirmativos para quienes están replanteando la fe que recibieron.
+> Ashley Leon es escritora, exmisionera, facilitadora de talleres y acompañante holística certificada en bienestar integral, criada en Miami por padres inmigrantes cubanos y colombianos. Crea recursos afirmativos para quienes están replanteando la fe que recibieron.
 
-Ashley escribe sobre deconstrucción de la fe, espiritualidad queer, identidad, sanación emocional, pertenencia e integración espiritual. Sus recursos son educativos y de acompañamiento; no sustituyen la terapia ni la atención clínica.
+Ashley escribe sobre deconstrucción de la fe, espiritualidad no binaria, identidad, sanación emocional, pertenencia e integración espiritual. Sus recursos son educativos y de acompañamiento; no sustituyen la terapia ni la atención clínica.
 
 ### Ensayos sobre fe, deconstrucción y sanación
 - [Ensayos](https://ashleydianaleon.com/es/writing): Reflexiones en primera persona sobre deconstrucción de la fe, identidad, espiritualidad queer, sanación, pertenencia y el proceso de volver a construir.
@@ -44,11 +44,11 @@ Ashley escribe sobre deconstrucción de la fe, espiritualidad queer, identidad, 
 - [The In-Between](https://ashleydianaleon.com/es/community): La comunidad gratuita de Ashley para conversar con honestidad, reflexionar y encontrar pertenencia sin que nadie exija una conclusión determinada.
 
 ### Sobre la autora
-- [Sobre Ashley](https://ashleydianaleon.com/es/about): Su historia en primera persona, su experiencia dentro de la religión, su identidad cubano-colombiana y queer, su etapa como misionera y seminarista y el trabajo que realiza hoy.
+- [Sobre Ashley](https://ashleydianaleon.com/es/about): Su historia en primera persona, su identidad cubano-colombiana y queer, su crianza en Miami, su etapa como misionera y seminarista y el trabajo que realiza hoy.
 
 ### Datos clave
 - Idiomas: inglés y español; cada URL localizada identifica su idioma y enlaza a la versión alternativa.
-- Temas principales: espiritualidad queer, deconstrucción de la fe, identidad, sanación emocional, reverencia y pertenencia.
+- Temas principales: espiritualidad no binaria, deconstrucción de la fe, identidad, sanación emocional, reverencia y pertenencia.
 - Nombre: Ashley Diana Leon; nombre con el que publica: Ashley Leon.
 - Alcance: educación, reflexión, recursos de acompañamiento, talleres en vivo y comunidad; no es terapia.
 - Contacto: support@ashleydianaleon.com
