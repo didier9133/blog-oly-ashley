@@ -4,6 +4,13 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 // import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { auth } from "@clerk/nextjs/server";
+import { randomUUID } from "node:crypto";
+
+import {
+  OG_IMAGE_MAX_INPUT_SIZE,
+  OG_IMAGE_MAX_INPUT_SIZE_MB,
+} from "@/lib/og-image-validation";
+import { optimizeOgImage } from "@/lib/server/optimize-og-image";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
@@ -48,27 +55,34 @@ function getPublicImageUrl(key: string): string {
   return `https://${CLOUDFRONT_DISTRIBUTION}/${key}`;
 }
 
-async function uploadFileToS3(
-  file: File,
-  contentType: string,
-  folder: string
-): Promise<string> {
+async function uploadFileToS3(file: File): Promise<string> {
   const { userId } = await auth();
 
-  const fileExtension =
-    file.name.substring(file.name.lastIndexOf(".")) || ".jpg";
-  const key = `${folder}/${userId}/${Date.now()}${fileExtension}`;
+  if (!userId) {
+    throw new Error("No autorizado");
+  }
 
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
+  if (!BUCKET_NAME || !CLOUDFRONT_DISTRIBUTION) {
+    throw new Error("El almacenamiento de imágenes no está configurado");
+  }
+
+  if (file.size === 0 || file.size > OG_IMAGE_MAX_INPUT_SIZE) {
+    throw new Error(
+      `La imagen debe pesar entre 1 byte y ${OG_IMAGE_MAX_INPUT_SIZE_MB} MB`,
+    );
+  }
 
   try {
-    // Subir directamente usando el SDK
+    const arrayBuffer = await file.arrayBuffer();
+    const optimizedBuffer = await optimizeOgImage(Buffer.from(arrayBuffer));
+    const key = `uploads/${userId}/${Date.now()}-${randomUUID()}.jpg`;
+
     const command = new PutObjectCommand({
-      Bucket: BUCKET_NAME!,
+      Bucket: BUCKET_NAME,
       Key: key,
-      Body: buffer,
-      ContentType: contentType,
+      Body: optimizedBuffer,
+      ContentType: "image/jpeg",
+      CacheControl: "public, max-age=31536000, immutable",
     });
 
     await s3Client.send(command);
@@ -80,12 +94,8 @@ async function uploadFileToS3(
   }
 }
 
-export async function uploadImageToS3(
-  file: File,
-  contentType: string,
-  folder: string = "uploads"
-): Promise<string> {
-  return uploadFileToS3(file, contentType, folder);
+export async function uploadImageToS3(file: File): Promise<string> {
+  return uploadFileToS3(file);
 }
 
 // export async function uploadVideoToS3(

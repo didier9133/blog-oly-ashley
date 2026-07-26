@@ -46,11 +46,16 @@ import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
+  canTransformToOgImage,
+  exceedsOgImagePixelLimit,
   getImageDimensions,
+  hasWorkableOgImageAspectRatio,
   isAllowedOgImageFile,
   OG_IMAGE_HEIGHT,
-  OG_IMAGE_MAX_SIZE,
-  OG_IMAGE_MAX_SIZE_MB,
+  OG_IMAGE_MAX_INPUT_SIZE,
+  OG_IMAGE_MAX_INPUT_SIZE_MB,
+  OG_IMAGE_MAX_MEGAPIXELS,
+  OG_IMAGE_MAX_UPSCALE_PERCENT,
   OG_IMAGE_WIDTH,
 } from "@/lib/og-image-validation";
 
@@ -159,11 +164,11 @@ function buildFormPostSchema(t: TFn) {
               }
               const file = val[0];
 
-              if (file.size > OG_IMAGE_MAX_SIZE) {
+              if (file.size > OG_IMAGE_MAX_INPUT_SIZE) {
                 ctx.addIssue({
                   code: z.ZodIssueCode.custom,
                   message: t("validation.imageMaxSize", {
-                    maxMb: OG_IMAGE_MAX_SIZE_MB,
+                    maxMb: OG_IMAGE_MAX_INPUT_SIZE_MB,
                   }),
                 });
                 return;
@@ -180,15 +185,25 @@ function buildFormPostSchema(t: TFn) {
               try {
                 const dimensions = await getImageDimensions(file);
 
-                if (
-                  dimensions.width !== OG_IMAGE_WIDTH ||
-                  dimensions.height !== OG_IMAGE_HEIGHT
-                ) {
+                if (exceedsOgImagePixelLimit(dimensions)) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: t("validation.imageMaxPixels", {
+                      maxMegapixels: OG_IMAGE_MAX_MEGAPIXELS,
+                    }),
+                  });
+                } else if (!hasWorkableOgImageAspectRatio(dimensions)) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: t("validation.imageInvalidAspectRatio"),
+                  });
+                } else if (!canTransformToOgImage(dimensions)) {
                   ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: t("validation.imageInvalidDimensions", {
                       width: OG_IMAGE_WIDTH,
                       height: OG_IMAGE_HEIGHT,
+                      maxUpscalePercent: OG_IMAGE_MAX_UPSCALE_PERCENT,
                     }),
                   });
                 }
@@ -575,7 +590,7 @@ export default function CreatePostPage() {
     try {
       // Si se ha eliminado la imagen, no subir una nueva
       if (isDeletedImage.current) {
-        urlImage = await uploadImageToS3(values.image[0], values.image[0].type);
+        urlImage = await uploadImageToS3(values.image[0]);
         console.log("Imagen subida:", urlImage);
       }
       let videoUrl: string | null = post.current?.video ?? null;
@@ -848,7 +863,7 @@ export default function CreatePostPage() {
                           <div className="border-2 flex flex-col justify-center min-h-[500px]  relative  border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
                             <Input
                               type="file"
-                              accept="image/jpeg"
+                              accept="image/jpeg,image/png,image/webp"
                               id="image"
                               aria-describedby="image-description"
                               // Remove value prop, handle file input manually

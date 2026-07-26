@@ -87,6 +87,7 @@ class CopyToOutputPlugin {
 
 const nextConfig: NextConfig = {
   /* config options here */
+  serverExternalPackages: ["sharp"],
   // Next 15's development Webpack build can reference SWR vendor chunks
   // without emitting them when Clerk and the dashboard compile together.
   // Transpile this small dependency chain into the application bundle so it
