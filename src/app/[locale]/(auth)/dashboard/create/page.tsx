@@ -39,7 +39,7 @@ import {
 } from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "@prisma/client";
 import RichTextEditor from "@/components/rich-text-editor";
-import { uploadImageToS3 } from "@/app/[locale]/actions/images";
+import { finalizeOgImageUpload } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -56,9 +56,11 @@ import {
   OG_IMAGE_MAX_UPSCALE_PERCENT,
   OG_IMAGE_WIDTH,
 } from "@/lib/og-image-validation";
+import { uploadOgImageToTemporaryStorage } from "@/lib/client/upload-og-image";
 
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
+const LOCAL_DRAFT_KEY = "adl:create-post-draft:v1";
 
 interface PresignedVideoUploadResponse {
   uploadUrl: string;
@@ -357,6 +359,8 @@ export default function CreatePostPage() {
       video: undefined,
     },
   });
+  const watchedFormValues = formPost.watch();
+  const localDraftHydratedRef = useRef(false);
 
   // Guardar el valor anterior de la categoría
   const prevCategoryRef = useRef<string>("");
@@ -419,6 +423,103 @@ export default function CreatePostPage() {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    if (
+      isLoading ||
+      localDraftHydratedRef.current ||
+      typeof window === "undefined"
+    ) {
+      return;
+    }
+
+    localDraftHydratedRef.current = true;
+    const storedDraft = window.localStorage.getItem(LOCAL_DRAFT_KEY);
+
+    if (!storedDraft) {
+      return;
+    }
+
+    try {
+      const draft = JSON.parse(storedDraft) as {
+        form?: Partial<FormPost>;
+        content_es?: string;
+        content_en?: string;
+        recipeIngredients?: string;
+        recipeInstructions?: string;
+        recipeYield?: string;
+        recipePrepTime?: string;
+        recipeCookTime?: string;
+      };
+      const category = draft.form?.category ?? "";
+
+      prevCategoryRef.current = category;
+      setSubcategories(
+        subCategoriesAll.filter(
+          (subcategory) => subcategory.categoryId === Number(category),
+        ),
+      );
+      formPost.reset({
+        title_es: draft.form?.title_es ?? "",
+        title_en: draft.form?.title_en ?? "",
+        category,
+        subcategory: draft.form?.subcategory ?? "",
+        isPublished: draft.form?.isPublished ?? false,
+        video: undefined,
+      });
+      setContent_es(draft.content_es ?? "");
+      setContent_en(draft.content_en ?? "");
+      setRecipeIngredients(draft.recipeIngredients ?? "");
+      setRecipeInstructions(draft.recipeInstructions ?? "");
+      setRecipeYield(draft.recipeYield ?? "");
+      setRecipePrepTime(draft.recipePrepTime ?? "");
+      setRecipeCookTime(draft.recipeCookTime ?? "");
+    } catch {
+      window.localStorage.removeItem(LOCAL_DRAFT_KEY);
+    }
+  }, [formPost, isLoading, subCategoriesAll]);
+
+  useEffect(() => {
+    if (
+      !localDraftHydratedRef.current ||
+      typeof window === "undefined"
+    ) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      window.localStorage.setItem(
+        LOCAL_DRAFT_KEY,
+        JSON.stringify({
+          form: {
+            title_es: watchedFormValues.title_es,
+            title_en: watchedFormValues.title_en,
+            category: watchedFormValues.category,
+            subcategory: watchedFormValues.subcategory,
+            isPublished: watchedFormValues.isPublished,
+          },
+          content_es,
+          content_en,
+          recipeIngredients,
+          recipeInstructions,
+          recipeYield,
+          recipePrepTime,
+          recipeCookTime,
+        }),
+      );
+    }, 500);
+
+    return () => window.clearTimeout(timeout);
+  }, [
+    content_en,
+    content_es,
+    recipeCookTime,
+    recipeIngredients,
+    recipeInstructions,
+    recipePrepTime,
+    recipeYield,
+    watchedFormValues,
+  ]);
+
   const onSubmit = async (values: FormPost) => {
     const isRecipePost =
       categories.find((c) => c.id.toString() === values.category)?.name ===
@@ -455,7 +556,10 @@ export default function CreatePostPage() {
 
     try {
       setIsSubmitting(true);
-      const urlImage = await uploadImageToS3(values.image[0]);
+      const temporaryImageKey = await uploadOgImageToTemporaryStorage(
+        values.image[0],
+      );
+      const urlImage = await finalizeOgImageUpload(temporaryImageKey);
       let videoUrl: string | null = null;
 
       if (values.video instanceof FileList && values.video.length > 0) {
@@ -492,14 +596,11 @@ export default function CreatePostPage() {
       await saveNewPost(data);
       toast.dismiss();
       toast.success(t("toast.create.success"));
-    } catch {
-      toast.dismiss();
-      toast.error(t("toast.create.error"));
-    } finally {
+      localDraftHydratedRef.current = false;
+      window.localStorage.removeItem(LOCAL_DRAFT_KEY);
       setImagePreview("");
       setVideoPreview("");
       formPost.reset();
-
       setContent_es("");
       setContent_en("");
       setRecipeIngredients("");
@@ -509,6 +610,10 @@ export default function CreatePostPage() {
       setRecipeCookTime("");
       setErrorMessage_en(null);
       setErrorMessage_es(null);
+    } catch {
+      toast.dismiss();
+      toast.error(t("toast.create.error"));
+    } finally {
       setIsSubmitting(false);
     }
   };

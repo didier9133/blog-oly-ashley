@@ -1,9 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { slugifyPostTitle } from "@/lib/post-slugs";
+import { ensureCurrentUserIsSynced } from "@/lib/server/sync-clerk-user";
 
 type type = {
   categoryId: number;
@@ -98,10 +98,8 @@ export async function updatePost(
   },
 ) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      throw new Error("User not authenticated");
-    }
+    const currentUser = await ensureCurrentUserIsSynced();
+    const userId = currentUser.id;
 
     // First check if the post belongs to the current user
     const post = await prisma.post.findUnique({
@@ -177,10 +175,8 @@ export async function saveNewPost(data: {
   recipeCookTime?: string | null;
 }) {
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      throw new Error("User not authenticated");
-    }
+    const currentUser = await ensureCurrentUserIsSynced();
+    const userId = currentUser.id;
     const { video = null, ...rest } = data;
 
     const slug_es = slugifyPostTitle(rest.title_es);

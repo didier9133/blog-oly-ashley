@@ -40,7 +40,7 @@ import {
 } from "@/app/[locale]/actions/posts";
 import { Subcategory, Category } from "@prisma/client";
 import RichTextEditor from "@/components/rich-text-editor";
-import { uploadImageToS3 } from "@/app/[locale]/actions/images";
+import { finalizeOgImageUpload } from "@/app/[locale]/actions/images";
 import DOMPurify from "isomorphic-dompurify";
 import Link from "next/link";
 import { notFound, useParams, useRouter } from "next/navigation";
@@ -58,6 +58,7 @@ import {
   OG_IMAGE_MAX_UPSCALE_PERCENT,
   OG_IMAGE_WIDTH,
 } from "@/lib/og-image-validation";
+import { uploadOgImageToTemporaryStorage } from "@/lib/client/upload-og-image";
 
 const VIDEO_SIZE_LIMIT = 100 * 1024 * 1024; // 100MB
 const ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
@@ -590,7 +591,10 @@ export default function CreatePostPage() {
     try {
       // Si se ha eliminado la imagen, no subir una nueva
       if (isDeletedImage.current) {
-        urlImage = await uploadImageToS3(values.image[0]);
+        const temporaryImageKey = await uploadOgImageToTemporaryStorage(
+          values.image[0],
+        );
+        urlImage = await finalizeOgImageUpload(temporaryImageKey);
         console.log("Imagen subida:", urlImage);
       }
       let videoUrl: string | null = post.current?.video ?? null;

@@ -1,10 +1,14 @@
 "use server";
 
-import { S3Client } from "@aws-sdk/client-s3";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { auth } from "@clerk/nextjs/server";
 import { randomUUID } from "node:crypto";
+
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { auth } from "@clerk/nextjs/server";
 
 import {
   OG_IMAGE_MAX_INPUT_SIZE,
@@ -23,39 +27,13 @@ const s3Client = new S3Client({
 const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME;
 const CLOUDFRONT_DISTRIBUTION = process.env.CLOUDFRONT_DISTRIBUTION;
 
-/**
- * Genera una URL prefirmada para subir una imagen
- * @param key - Ruta del archivo en S3 (ej: "usuario/123/perfil.jpg")
- * @param contentType - Tipo de contenido (ej: "image/jpeg")
- * @param expiresIn - Tiempo de expiración en segundos (default: 3600 = 1 hora)
- */
-
-// async function createPresignedUploadUrl(
-//   key: string,
-//   contentType: string,
-//   expiresIn = 3600
-// ): Promise<string> {
-//   if (!BUCKET_NAME) {
-//     throw new Error("BUCKET_NAME no está definido en variables de entorno");
-//   }
-//   const command = new PutObjectCommand({
-//     Bucket: BUCKET_NAME,
-//     Key: key,
-//     ContentType: contentType,
-//   });
-
-//   return getSignedUrl(s3Client, command, { expiresIn });
-// }
-
-/**
- * Obtiene la URL pública de una imagen
- * @param key - Ruta del archivo en S3
- */
-function getPublicImageUrl(key: string): string {
-  return `https://${CLOUDFRONT_DISTRIBUTION}/${key}`;
+function isOwnedTemporaryImageKey(key: string, userId: string) {
+  return key.startsWith(`uploads/temp-images/${userId}/`);
 }
 
-async function uploadFileToS3(file: File): Promise<string> {
+export async function finalizeOgImageUpload(
+  temporaryKey: string,
+): Promise<string> {
   const { userId } = await auth();
 
   if (!userId) {
@@ -66,42 +44,72 @@ async function uploadFileToS3(file: File): Promise<string> {
     throw new Error("El almacenamiento de imágenes no está configurado");
   }
 
-  if (file.size === 0 || file.size > OG_IMAGE_MAX_INPUT_SIZE) {
-    throw new Error(
-      `La imagen debe pesar entre 1 byte y ${OG_IMAGE_MAX_INPUT_SIZE_MB} MB`,
-    );
+  if (!isOwnedTemporaryImageKey(temporaryKey, userId)) {
+    throw new Error("La imagen temporal no pertenece a la cuenta actual");
   }
 
   try {
-    const arrayBuffer = await file.arrayBuffer();
-    const optimizedBuffer = await optimizeOgImage(Buffer.from(arrayBuffer));
-    const key = `uploads/${userId}/${Date.now()}-${randomUUID()}.jpg`;
+    const source = await s3Client.send(
+      new GetObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: temporaryKey,
+      }),
+    );
 
-    const command = new PutObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: key,
-      Body: optimizedBuffer,
-      ContentType: "image/jpeg",
-      CacheControl: "public, max-age=31536000, immutable",
-    });
+    if (!source.Body) {
+      throw new Error("La imagen temporal está vacía");
+    }
 
-    await s3Client.send(command);
+    if (
+      source.ContentLength !== undefined &&
+      (source.ContentLength < 1 ||
+        source.ContentLength > OG_IMAGE_MAX_INPUT_SIZE)
+    ) {
+      throw new Error(
+        `La imagen debe pesar entre 1 byte y ${OG_IMAGE_MAX_INPUT_SIZE_MB} MB`,
+      );
+    }
 
-    return getPublicImageUrl(key);
+    const sourceBytes = await source.Body.transformToByteArray();
+
+    if (
+      sourceBytes.byteLength < 1 ||
+      sourceBytes.byteLength > OG_IMAGE_MAX_INPUT_SIZE
+    ) {
+      throw new Error(
+        `La imagen debe pesar entre 1 byte y ${OG_IMAGE_MAX_INPUT_SIZE_MB} MB`,
+      );
+    }
+
+    const optimizedBuffer = await optimizeOgImage(Buffer.from(sourceBytes));
+    const finalKey = `uploads/${userId}/${Date.now()}-${randomUUID()}.jpg`;
+
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: finalKey,
+        Body: optimizedBuffer,
+        ContentType: "image/jpeg",
+        CacheControl: "public, max-age=31536000, immutable",
+      }),
+    );
+
+    return `https://${CLOUDFRONT_DISTRIBUTION}/${finalKey}`;
   } catch (error) {
-    console.error("Error detallado en la subida a S3:", error);
-    throw new Error("Error al subir el archivo: " + (error as Error).message);
+    console.error("Error detallado al optimizar la imagen en S3:", error);
+    throw new Error(
+      "Error al procesar la imagen: " + (error as Error).message,
+    );
+  } finally {
+    await s3Client
+      .send(
+        new DeleteObjectCommand({
+          Bucket: BUCKET_NAME,
+          Key: temporaryKey,
+        }),
+      )
+      .catch((error) => {
+        console.error("No se pudo limpiar la imagen temporal:", error);
+      });
   }
 }
-
-export async function uploadImageToS3(file: File): Promise<string> {
-  return uploadFileToS3(file);
-}
-
-// export async function uploadVideoToS3(
-//   file: File,
-//   contentType: string,
-//   folder: string = "uploads/videos"
-// ): Promise<string> {
-//   return uploadFileToS3(file, contentType, folder);
-// }
