@@ -3,6 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 import path from "node:path";
 import fs from "node:fs";
 import { POST_SLUG_REDIRECTS } from "./src/lib/post-slugs";
+import { LEGACY_UNPREFIXED_LOCALE_REDIRECTS } from "./src/lib/legacy-locale-redirects";
 
 const isPreviewDeployment =
   Boolean(process.env.VERCEL_ENV) && process.env.VERCEL_ENV !== "production";
@@ -181,6 +182,13 @@ const nextConfig: NextConfig = {
         destination: "https://ashleydianaleon.com/:path*",
         permanent: true,
       },
+      ...LEGACY_UNPREFIXED_LOCALE_REDIRECTS.map(
+        ({ source, destination }) => ({
+          source,
+          destination,
+          permanent: true,
+        }),
+      ),
       ...POST_SLUG_REDIRECTS.map(({ locale, from, to }) => ({
         source: `/${locale}/writing/${from}`,
         destination: `/${locale}/writing/${to}`,
