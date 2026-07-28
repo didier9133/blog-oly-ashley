@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 import {
@@ -15,6 +16,13 @@ import {
   OgImageValidationError,
   optimizeOgImage,
 } from "../src/lib/server/optimize-og-image";
+import { getCircleOgImage } from "../src/lib/offer-og-images";
+import {
+  DEFAULT_ABOUT_OG_IMAGE,
+  DEFAULT_OG_IMAGE,
+  SPANISH_ABOUT_OG_IMAGE,
+  SPANISH_OG_IMAGE,
+} from "../src/lib/url";
 
 async function getRejection(promise: Promise<unknown>) {
   try {
@@ -115,5 +123,28 @@ describe("OG image optimization", () => {
 
     const error = await getRejection(optimizeOgImage(svg));
     expect(error instanceof OgImageValidationError).toBe(true);
+  });
+});
+
+describe("localized site OG images", () => {
+  test("keeps every approved card at 1200x630 JPEG", async () => {
+    const images = [
+      DEFAULT_OG_IMAGE,
+      SPANISH_OG_IMAGE,
+      DEFAULT_ABOUT_OG_IMAGE,
+      SPANISH_ABOUT_OG_IMAGE,
+      getCircleOgImage("en").path,
+      getCircleOgImage("es").path,
+    ];
+
+    for (const image of images) {
+      const metadata = await sharp(
+        fileURLToPath(new URL(`../public${image}`, import.meta.url)),
+      ).metadata();
+
+      expect(metadata.format).toBe("jpeg");
+      expect(metadata.width).toBe(OG_IMAGE_WIDTH);
+      expect(metadata.height).toBe(OG_IMAGE_HEIGHT);
+    }
   });
 });

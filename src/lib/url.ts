@@ -14,8 +14,10 @@ export const BASE_URL = normalizeSiteUrl(
       : undefined) ??
     FALLBACK_SITE_URL,
 );
-export const DEFAULT_OG_IMAGE = "/og-image-en-v2.jpeg";
-export const SPANISH_OG_IMAGE = "/og-image-es-v2.jpeg";
+export const DEFAULT_OG_IMAGE = "/og-home-en-v3.jpeg";
+export const SPANISH_OG_IMAGE = "/og-home-es-v3.jpeg";
+export const DEFAULT_ABOUT_OG_IMAGE = "/og-about-en-v1.jpeg";
+export const SPANISH_ABOUT_OG_IMAGE = "/og-about-es-v1.jpeg";
 
 /** Build a locale-aware path that respects the configured prefix strategy. */
 export function localizedHref(locale: string, path: string): string {
@@ -42,4 +44,10 @@ export function ogImagePath(locale: string): string {
 
 export function ogImageUrl(locale: string): string {
   return `${BASE_URL}${ogImagePath(locale)}`;
+}
+
+export function aboutOgImageUrl(locale: string): string {
+  const image =
+    locale === "es" ? SPANISH_ABOUT_OG_IMAGE : DEFAULT_ABOUT_OG_IMAGE;
+  return `${BASE_URL}${image}`;
 }

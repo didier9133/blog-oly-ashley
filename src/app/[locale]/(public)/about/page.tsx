@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/json-ld";
-import { fullUrl, ogImageUrl } from "@/lib/url";
+import { aboutOgImageUrl, fullUrl } from "@/lib/url";
 import { localizedAlternates, localizedOpenGraph } from "@/lib/seo";
 import { getPersonSchema, personRef, websiteRef } from "@/lib/schema-entities";
 import type { Metadata } from "next";
@@ -13,14 +13,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const [t, tSite] = await Promise.all([
-    getTranslations({ locale, namespace: "About.metadata" }),
-    getTranslations({ locale, namespace: "metadata" }),
-  ]);
+  const t = await getTranslations({ locale, namespace: "About.metadata" });
   const title = t("title");
   const description = t("description");
-  const image = ogImageUrl(locale);
-  const imageAlt = tSite("ogImageAlt");
+  const image = aboutOgImageUrl(locale);
+  const imageAlt = t("ogImageAlt");
 
   return {
     title,

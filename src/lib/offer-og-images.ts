@@ -21,7 +21,7 @@ export const OFFER_OG_IMAGES = {
     alt: "The In-Between — a private community for honest conversation and shared reflection",
   },
   circle: {
-    path: "/og-rebuilding-reverence-circle.jpeg",
+    path: "/og-circle-en-v4.jpeg",
     width: 1200,
     height: 630,
     contentType: "image/jpeg",
@@ -47,10 +47,10 @@ const SPANISH_WORKBOOK_OG_IMAGES = {
 } as const;
 
 const SPANISH_CIRCLE_OG_IMAGE = {
-  path: "/og-rebuilding-reverence-circle-es-v3.png",
-  width: 1731,
-  height: 909,
-  contentType: "image/png",
+  path: "/og-circle-es-v4.jpeg",
+  width: 1200,
+  height: 630,
+  contentType: "image/jpeg",
   alt: "The Rebuilding Reverence Circle, un proceso grupal en vivo de cuatro semanas para reconstruir la fe en compañía",
 } as const;
 
