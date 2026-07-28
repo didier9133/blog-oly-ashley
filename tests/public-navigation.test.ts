@@ -34,13 +34,11 @@ describe("public navigation", () => {
     expect(items.some((item) => item.url === "/")).toBe(false);
   });
 
-  test("keeps the Spanish navigation on Home", () => {
+  test("uses the Spanish pillar in place of Home", () => {
     const items = getPublicNavigationItems("es");
 
-    expect(items[0]?.url).toBe("/");
-    expect(
-      items.some((item) => item.url === "/deconstructing-christianity"),
-    ).toBe(false);
+    expect(items[0]?.url).toBe("/deconstructing-christianity");
+    expect(items.some((item) => item.url === "/")).toBe(false);
   });
 
   test("promotes the free guide without overcrowding the desktop navigation", () => {

@@ -8,8 +8,10 @@ export type PublicNavItem = {
 };
 
 export function getPublicNavigationItems(locale: string): PublicNavItem[] {
+  const hasLocalizedPillar = locale === "en" || locale === "es";
+
   return (data.navMain as PublicNavItem[]).map((item) =>
-    locale === "en" && item.url === "/"
+    hasLocalizedPillar && item.url === "/"
       ? { ...item, url: "/deconstructing-christianity" }
       : item,
   );
