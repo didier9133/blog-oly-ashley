@@ -59,9 +59,17 @@ describe("public navigation", () => {
     expect(spanishMessages.navigation["church-hurt"]).toBe("Free Guide");
   });
 
-  test("keeps mobile actions stacked and the full menu reachable on iPhone", () => {
+  test("keeps one clear hero action and the full menu reachable on iPhone", () => {
     expect(homeSource.includes("min-[390px]:grid")).toBe(false);
-    expect(homeSource).toContain("sm:grid-cols-");
+    expect(homeSource).toContain('t("cta-journals")');
+    expect(homeSource.includes('t("cta-explore")')).toBe(false);
+    expect(homeSource).toContain("viewAllHref={writingHref}");
+    expect(englishMessages.Home["cta-journals"]).toBe(
+      "Explore the 30-day guided workbook",
+    );
+    expect(spanishMessages.Home["cta-journals"]).toBe(
+      "Conocer la guía de 30 días",
+    );
     expect(mobileNavSource).toContain("overflow-y-auto");
     expect(mobileNavSource).toContain("env(safe-area-inset-bottom)");
     expect(mobileNavSource).toContain("[-webkit-overflow-scrolling:touch]");
