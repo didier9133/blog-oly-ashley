@@ -206,7 +206,8 @@ export default async function Home({
                     {t("hero-title-two")}{" "}
                     <em className="home-hero-highlight not-italic">
                       {t("hero-title-highlight")}
-                    </em>
+                    </em>{" "}
+                    {t("hero-title-three")}
                   </span>
                 </h1>
                 <span className="home-hero-rule mt-5 block sm:mt-8 md:mt-6" />
