@@ -63,6 +63,9 @@ export function CircleStickyCta({
     >
       <a
         href={href}
+        data-analytics-cta="true"
+        data-cta-location="mobile_sticky"
+        data-cta-variant="circle"
         tabIndex={visible ? undefined : -1}
         className={cn(
           "flex items-center justify-center w-full",

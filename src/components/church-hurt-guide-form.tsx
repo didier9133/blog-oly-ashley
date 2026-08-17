@@ -93,7 +93,12 @@ export function ChurchHurtGuideForm({ locale }: { locale: GuideLocale }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full" noValidate={false}>
+    <form
+      onSubmit={onSubmit}
+      data-analytics-form-name="church_hurt_guide"
+      className="w-full"
+      noValidate={false}
+    >
       <label
         htmlFor="church-hurt-guide-email"
         className="mb-2.5 block font-sans text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#5f5a54]"

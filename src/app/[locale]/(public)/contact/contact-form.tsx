@@ -27,6 +27,7 @@ import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { sendContactEmail } from "@/app/[locale]/actions/contact";
 import { useLocale, useTranslations } from "next-intl";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const createFormContactSchema = (t: { (key: string): string }) =>
   z.object({
@@ -61,6 +62,10 @@ export default function ContactForm() {
         email: values.email,
         message: values.message,
       });
+      trackAnalyticsEvent("generate_lead", {
+        form_name: "contact",
+        locale,
+      });
       toast.dismiss();
       toast.success(t("toast-success"));
       formContact.reset();
@@ -78,6 +83,7 @@ export default function ContactForm() {
       <Form {...formContact}>
         <form
           onSubmit={formContact.handleSubmit(onSubmit)}
+          data-analytics-form-name="contact"
           className="space-y-6 font-sans"
         >
           <Card className="border-border/50 shadow-md rounded-sm bg-card">

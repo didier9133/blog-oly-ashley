@@ -5,6 +5,7 @@ import Link from "next/link";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import {
   getAnalyticsConsent,
+  getEffectiveAnalyticsConsent,
   setAnalyticsConsent,
   shouldLoadGoogleAnalytics,
   type AnalyticsConsent,
@@ -13,6 +14,8 @@ import { localizedHref } from "@/lib/url";
 
 const GA_MEASUREMENT_ID =
   process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-15V4PSKHYK";
+const CONSENT_UI_ENABLED =
+  process.env.NEXT_PUBLIC_ANALYTICS_CONSENT_UI_ENABLED === "true";
 
 const COPY = {
   en: {
@@ -44,8 +47,12 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
 
   useEffect(() => {
     const storedConsent = getAnalyticsConsent();
-    if (storedConsent) setAnalyticsConsent(storedConsent);
-    setConsent(storedConsent);
+    const effectiveConsent = getEffectiveAnalyticsConsent(
+      storedConsent,
+      CONSENT_UI_ENABLED,
+    );
+    if (effectiveConsent) setAnalyticsConsent(effectiveConsent);
+    setConsent(effectiveConsent);
     setReady(true);
   }, []);
 
@@ -55,7 +62,8 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
     setSettingsOpen(false);
   }
 
-  const showDialog = ready && (consent === null || settingsOpen);
+  const showDialog =
+    CONSENT_UI_ENABLED && ready && (consent === null || settingsOpen);
   const analyticsEnabled = shouldLoadGoogleAnalytics(
     consent,
     process.env.NODE_ENV,
@@ -121,7 +129,7 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
             </div>
           </div>
         </section>
-      ) : ready ? (
+      ) : CONSENT_UI_ENABLED && ready ? (
         <button
           type="button"
           onClick={() => setSettingsOpen(true)}

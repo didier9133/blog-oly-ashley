@@ -256,6 +256,7 @@ export default function CheckoutForm({
       <Form {...form}>
         <form
           onSubmit={handleFormSubmit}
+          data-analytics-form-name="checkout"
           noValidate
           aria-busy={!isCheckoutReady}
           className={cn(

@@ -80,6 +80,9 @@ export function ProductCta({
       <p className="mt-3 font-[family-name:var(--font-lora)] leading-relaxed text-foreground/75">{copy.description}</p>
       <Link
         href={localizedHref(locale, copy.href)}
+        data-analytics-cta="true"
+        data-cta-location={placement}
+        data-cta-variant="product"
         onClick={() =>
           trackAnalyticsEvent("blog_product_cta_click", properties)
         }

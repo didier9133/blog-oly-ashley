@@ -137,6 +137,9 @@ export function PillarCta({
       </p>
       <Link
         href={href}
+        data-analytics-cta="true"
+        data-cta-location={placement}
+        data-cta-variant={kind}
         onClick={() => trackAnalyticsEvent(events.click, properties)}
         className={cn(
           "mt-7 inline-flex min-h-11 items-center gap-3 border px-5 py-3 font-[family-name:var(--font-lora)] text-xs font-semibold uppercase tracking-[0.17em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",

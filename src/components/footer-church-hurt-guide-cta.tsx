@@ -68,6 +68,9 @@ export function FooterChurchHurtGuideCta({
           </p>
           <Link
             href={href}
+            data-analytics-cta="true"
+            data-cta-location="footer_guide"
+            data-cta-variant="lead_magnet"
             className="group mt-8 inline-flex min-h-14 items-center justify-center gap-5 bg-[#bd775c] px-7 py-4 font-sans text-[0.7rem] font-bold uppercase tracking-[0.14em] text-white shadow-[0_18px_40px_-24px_rgba(22,21,16,0.9)] transition-[background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#a96047] hover:shadow-[0_24px_48px_-24px_rgba(22,21,16,0.95)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
             <span>{cta}</span>

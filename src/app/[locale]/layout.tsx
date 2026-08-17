@@ -22,6 +22,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { MaxListenersBump } from "@/components/max-listeners-bump";
 import { GoogleAnalyticsConsent } from "@/components/google-analytics-consent";
+import { AnalyticsNavigationProvider } from "@/components/analytics-navigation-provider";
+import { EngagementTracker } from "@/components/engagement-tracker";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -170,7 +172,10 @@ export default async function RootLayout({
               locale === "es" ? "Notificaciones" : "Notifications"
             }
           />
-          {children}
+          <AnalyticsNavigationProvider>
+            {children}
+            <EngagementTracker />
+          </AnalyticsNavigationProvider>
           <GoogleAnalyticsConsent locale={locale} />
           <Analytics />
           <SpeedInsights />
