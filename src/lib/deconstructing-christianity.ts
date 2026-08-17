@@ -2,12 +2,13 @@ export const DECONSTRUCTING_CHRISTIANITY_PATH =
   "/deconstructing-christianity" as const;
 
 export const DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT = "2026-07-13";
-export const DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT = "2026-07-26";
+export const DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT = "2026-08-17";
 
 export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
   en: {
     title: "Deconstructing Christianity: What It Means and What Comes Next",
-    seoTitle: "Deconstructing Christianity: What Comes Next | Ashley Diana Leon",
+    seoTitle:
+      "Deconstructing Christianity: What Comes Next | Ashley Diana Leon",
     description:
       "A compassionate guide to deconstructing Christianity: what faith deconstruction means, why it happens, what it can feel like, and what may come next.",
     ogAlt: "Ashley Diana Leon — a guide to deconstructing Christianity",
@@ -75,6 +76,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       "Deconstructing Christianity is the process of honestly examining the beliefs, teachings, and structures you inherited — asking what still feels true, what needs to be reinterpreted, and what may need to be released. There is no single correct ending. You might stay. You might rebuild something different. You might walk away. Wherever you land, the process itself can be sacred.",
     by: "By",
     publishedDate: "July 13, 2026",
+    updatedDate: "Updated August 17, 2026",
     evergreen: "Evergreen guide",
     asideLead:
       "A guide for questioning without being told where your questions must lead.",
@@ -138,7 +140,8 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "“I remember telling someone I trusted — someone discipling me — that I’d fallen in love with a woman. Her response has stayed with me for over a decade: that God would still love me, but I would no longer be blessed. That I was no longer under God’s protection. That there was no longer a point investing in me spiritually if I was going to be “disobedient” in this one area. I was nineteen. I believed her, because a conditional God was the only God I’d ever been introduced to.”",
-      quoteAttribution: "Ashley Diana Leon · a moment from her own deconstruction",
+      quoteAttribution:
+        "Ashley Diana Leon · a moment from her own deconstruction",
       conclusion:
         "This moment is one reason the focus here is Christian deconstruction rather than a generalized account of every faith tradition. It shows how questions can begin in the gap between unconditional love as an ideal and conditional belonging as a lived reality.",
     },
@@ -296,7 +299,8 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
   },
   es: {
     title: "Deconstruir el cristianismo: qué significa y qué viene después",
-    seoTitle: "Deconstruir el cristianismo: qué viene después | Ashley Diana Leon",
+    seoTitle:
+      "Deconstruir el cristianismo: qué viene después | Ashley Diana Leon",
     description:
       "Una guía compasiva para entender la deconstrucción de la fe cristiana: qué significa, por qué sucede, cómo se vive y qué puede venir después.",
     ogAlt: "Ashley Diana Leon — una guía para deconstruir el cristianismo",
@@ -364,6 +368,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       "Deconstruir el cristianismo es mirar con honestidad las creencias, enseñanzas y estructuras que recibiste: preguntarte qué sigues reconociendo como verdadero, qué necesita una nueva interpretación y qué quizá sea momento de soltar. No hay un único final correcto. Tal vez decidas quedarte. Tal vez reconstruyas algo diferente. Tal vez te alejes. Llegues donde llegues, el proceso también puede ser sagrado.",
     by: "Por",
     publishedDate: "13 de julio de 2026",
+    updatedDate: "Actualizada el 17 de agosto de 2026",
     evergreen: "Guía de consulta",
     asideLead:
       "Una guía para hacerte preguntas sin que nadie decida de antemano adónde deben llevarte.",
@@ -427,7 +432,8 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
       ],
       quote:
         "«Recuerdo que le conté a alguien en quien confiaba —alguien que me acompañaba espiritualmente— que me había enamorado de una mujer. Nunca olvidé su respuesta, aunque han pasado más de diez años: Dios todavía me amaría, pero ya no me bendeciría. Ya no estaría bajo su protección. Ya no tenía sentido seguir acompañándome en mi fe si iba a ser “desobediente” en esa única área. Yo tenía diecinueve años. Le creí, porque el único Dios que me habían presentado era un Dios que ponía condiciones».",
-      quoteAttribution: "Ashley Diana Leon · un momento de su propia deconstrucción",
+      quoteAttribution:
+        "Ashley Diana Leon · un momento de su propia deconstrucción",
       conclusion:
         "Este momento ayuda a explicar por qué aquí hablamos específicamente de deconstrucción cristiana, en lugar de intentar resumir todas las tradiciones de fe. También muestra cómo las preguntas pueden nacer en la distancia entre el ideal de un amor incondicional y la experiencia de una pertenencia condicionada.",
     },
@@ -570,7 +576,8 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
     authorLinkLabel: "Conoce más sobre Ashley",
     communityCta: {
       eyebrow: "No tienes que ponerle nombre a todo en soledad",
-      title: "Puedes atravesar tus preguntas en compañía, sin dividirte por dentro.",
+      title:
+        "Puedes atravesar tus preguntas en compañía, sin dividirte por dentro.",
       description:
         "The In-Between es una comunidad gratuita para conversar con honestidad, reflexionar y sentir que perteneces sin que nadie te exija una conclusión definitiva.",
       label: "Únete a The In-Between",

@@ -33,7 +33,7 @@ export async function Footer({ locale }: { locale: string }) {
             {/* Brand Column */}
             <div className="md:col-span-12 lg:col-span-6 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left">
               <h3>
-                <BrandWordmark className="text-[3.25rem] !text-white" />
+                <BrandWordmark variant="footer" />
               </h3>
               <p className="text-sm leading-relaxed font-sans max-w-md text-white/70">
                 {t("brand-desc")}

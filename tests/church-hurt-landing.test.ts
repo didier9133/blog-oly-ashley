@@ -8,6 +8,13 @@ const landingSource = readFileSync(
   ),
   "utf8",
 );
+const pillarSource = readFileSync(
+  new URL(
+    "../src/app/[locale]/(public)/deconstructing-christianity/page.tsx",
+    import.meta.url,
+  ),
+  "utf8",
+);
 const homeSource = readFileSync(
   new URL("../src/app/[locale]/(public)/page.tsx", import.meta.url),
   "utf8",
@@ -52,6 +59,33 @@ describe("Church Hurt guide landing", () => {
     );
   });
 
+  test("expands the guide with English and Spanish healing content", () => {
+    expect(landingSource).toContain(
+      "Healing from Church Hurt Without Abandoning Yourself",
+    );
+    expect(landingSource).toContain("Healing from church hurt");
+    expect(landingSource).toContain("Tell the truth without minimizing it");
+    expect(landingSource).toContain("Let safety come before reconciliation");
+    expect(landingSource).toContain(
+      "Sanar el daño vivido en la iglesia sin abandonarte",
+    );
+    expect(landingSource).toContain(
+      "Sanar después del daño vivido en la iglesia",
+    );
+    expect(landingSource).toContain(
+      "Nombra lo ocurrido sin hacerlo más pequeño",
+    );
+    expect(landingSource).toContain(
+      "Pon la seguridad antes que la reconciliación",
+    );
+    expect(landingSource).toContain('"/deconstructing-christianity"');
+    expect(landingSource).toContain('localizedHref(currentLocale, "/about")');
+    expect(landingSource).toContain('id="church-hurt-guide-form"');
+    expect(pillarSource).toContain(
+      'localizedHref(locale, "/church-hurt-guide")',
+    );
+  });
+
   test("publishes indexable English and Spanish versions under the approved slug", () => {
     expect(landingSource).toContain('const PATH = "/church-hurt-guide"');
     expect(landingSource).toContain(
@@ -62,7 +96,7 @@ describe("Church Hurt guide landing", () => {
     );
     expect(landingSource.includes("permanentRedirect")).toBe(false);
     expect(sitemapSource).toContain(
-      '{ path: "/church-hurt-guide", lastModified: "2026-07-26" }',
+      '{ path: "/church-hurt-guide", lastModified: "2026-08-17" }',
     );
     expect(sitemapSource.includes("ENGLISH_ONLY_STATIC_ROUTES")).toBe(false);
   });
@@ -87,6 +121,10 @@ describe("Church Hurt guide landing", () => {
     );
     expect(footerCtaSource).toContain(
       'className="relative w-full overflow-hidden bg-[#62684f]',
+    );
+    expect(footerCtaSource).toContain("usePathname");
+    expect(footerCtaSource).toContain(
+      'normalizedPathname.endsWith("/church-hurt-guide")',
     );
     expect(landingSource).toContain('data-page="church-hurt-guide"');
     expect(globalStylesSource).toContain(

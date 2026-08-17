@@ -5,6 +5,7 @@ import { Check, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import styles from "./church-hurt-guide-form.module.css";
 
 type GuideLocale = "en" | "es";
 
@@ -78,29 +79,21 @@ export function ChurchHurtGuideForm({ locale }: { locale: GuideLocale }) {
 
   if (isDelivered) {
     return (
-      <div
-        role="status"
-        className="flex min-h-16 items-center gap-4 border border-[#65705c]/20 bg-[#eef0e9] px-5 py-4 text-[#34372f]"
-      >
-        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#62684f] text-white">
-          <Check className="size-4" aria-hidden="true" />
+      <div role="status" className={styles.success}>
+        <span className={styles.successIcon}>
+          <Check className={styles.successCheck} aria-hidden="true" />
         </span>
-        <p className="font-[family-name:var(--font-lora)] text-sm leading-relaxed">
-          {copy.success}
-        </p>
+        <p className={styles.successText}>{copy.success}</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full" noValidate={false}>
-      <label
-        htmlFor="church-hurt-guide-email"
-        className="mb-2.5 block font-sans text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#5f5a54]"
-      >
+    <form onSubmit={onSubmit} className={styles.form} noValidate={false}>
+      <label htmlFor="church-hurt-guide-email" className={styles.label}>
         {copy.label}
       </label>
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+      <div className={styles.controls}>
         <input
           ref={inputRef}
           id="church-hurt-guide-email"
@@ -113,37 +106,25 @@ export function ChurchHurtGuideForm({ locale }: { locale: GuideLocale }) {
           inputMode="email"
           required
           disabled={isSubmitting}
-          className="min-h-14 min-w-0 border border-[#7b7167]/25 bg-white/75 px-5 font-[family-name:var(--font-lora)] text-base text-[#27231f] outline-none transition-[border-color,box-shadow,background-color] duration-300 placeholder:text-[#7b7167]/55 focus:border-[#9b5941] focus:bg-white focus:shadow-[0_0_0_3px_rgba(155,89,65,0.12)]"
+          className={styles.input}
         />
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="group inline-flex min-h-14 max-w-full items-center justify-center gap-3 bg-[#8f513b] px-6 py-3.5 font-sans text-[0.7rem] font-bold uppercase leading-[1.35] tracking-[0.12em] text-[#fffaf5] shadow-[0_16px_34px_-22px_rgba(92,45,31,0.95)] transition-[background-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#784330] hover:shadow-[0_20px_38px_-20px_rgba(92,45,31,0.95)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8f513b] disabled:pointer-events-none disabled:opacity-65 sm:max-w-[17rem]"
-        >
+        <button type="submit" disabled={isSubmitting} className={styles.button}>
           {isSubmitting ? (
             <>
-              <LoaderCircle
-                className="size-4 shrink-0 animate-spin"
-                aria-hidden="true"
-              />
+              <LoaderCircle className={styles.spinner} aria-hidden="true" />
               <span>{copy.sending}</span>
             </>
           ) : (
             <>
-              <span className="text-balance">{copy.cta}</span>
-              <span
-                aria-hidden="true"
-                className="text-base transition-transform duration-300 group-hover:translate-x-0.5"
-              >
+              <span className={styles.buttonLabel}>{copy.cta}</span>
+              <span aria-hidden="true" className={styles.arrow}>
                 →
               </span>
             </>
           )}
         </button>
       </div>
-      <p className="mt-3 font-[family-name:var(--font-lora)] text-[0.7rem] leading-relaxed text-[#655f58]/75">
-        {copy.trust}
-      </p>
+      <p className={styles.trust}>{copy.trust}</p>
     </form>
   );
 }

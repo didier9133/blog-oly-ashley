@@ -77,7 +77,7 @@ export function AppSidebar({
                 : "ADL by Ashley Diana Leon — Home"
             }
           >
-            <BrandWordmark className="text-[2.15rem]" />
+            <BrandWordmark variant="sidebar" />
           </Link>
         </div>
       </SidebarHeader>
