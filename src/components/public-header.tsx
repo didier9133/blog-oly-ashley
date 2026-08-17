@@ -18,7 +18,7 @@ export function PublicHeader({ locale }: { locale: string }) {
               : "ADL by Ashley Diana Leon — Home"
           }
         >
-          <BrandWordmark className="text-[1.8rem] sm:text-[2.05rem] lg:text-[1.85rem] xl:text-[2.05rem]" />
+          <BrandWordmark variant="header" />
         </Link>
 
         <div className="hidden min-w-0 flex-1 justify-start lg:flex">

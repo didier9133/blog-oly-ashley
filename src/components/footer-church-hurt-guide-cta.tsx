@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function FooterChurchHurtGuideCta({
   href,
@@ -16,6 +19,13 @@ export function FooterChurchHurtGuideCta({
   cta: string;
   coverAlt: string;
 }) {
+  const pathname = usePathname();
+  const normalizedPathname = (pathname ?? "").replace(/\/+$/, "");
+
+  if (normalizedPathname.endsWith("/church-hurt-guide")) {
+    return null;
+  }
+
   return (
     <section
       id="newsletter"

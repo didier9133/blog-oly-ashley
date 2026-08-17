@@ -22,7 +22,7 @@ export async function AuthHeader({ locale }: { locale: string }) {
               : "ADL by Ashley Diana Leon — Home"
           }
         >
-          <BrandWordmark className="text-[1.8rem] sm:text-[2.05rem]" />
+          <BrandWordmark variant="header" />
         </Link>
 
         <div className="hidden md:flex flex-1 justify-start min-w-0">

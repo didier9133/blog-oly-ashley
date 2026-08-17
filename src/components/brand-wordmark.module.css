@@ -1,0 +1,68 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: var(--font-cormorant-garamond), Georgia, serif;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  color: var(--foreground);
+}
+
+.header {
+  font-size: 1.8rem;
+}
+
+.footer {
+  font-size: 3.25rem;
+  color: #fff;
+}
+
+.sidebar {
+  font-size: 2.15rem;
+}
+
+.mark {
+  position: relative;
+  display: inline-block;
+  width: 0.98em;
+  height: 0.84em;
+  margin-right: 0.36em;
+  flex: 0 0 auto;
+  border: 0.052em solid rgb(169 102 76 / 72%);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  transform: translateY(0.015em);
+}
+
+.markStem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 58%;
+  border-left: 0.042em solid rgb(169 102 76 / 72%);
+}
+
+.footer .mark,
+.footer .markStem {
+  border-color: rgb(239 200 184 / 78%);
+}
+
+@media (min-width: 40rem) {
+  .header {
+    font-size: 2.05rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .header {
+    font-size: 1.85rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .header {
+    font-size: 2.05rem;
+  }
+}

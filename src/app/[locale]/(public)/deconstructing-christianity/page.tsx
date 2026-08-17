@@ -265,6 +265,10 @@ export default async function DeconstructingChristianityPage({
                   {content.publishedDate}
                 </time>
                 <span aria-hidden="true">·</span>
+                <time dateTime={DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT}>
+                  {content.updatedDate}
+                </time>
+                <span aria-hidden="true">·</span>
                 <span>{content.evergreen}</span>
               </div>
             </div>
@@ -486,6 +490,20 @@ export default async function DeconstructingChristianityPage({
                 {content.religiousHarm.careNote}
               </p>
             </div>
+            {locale === "en" ? (
+              <Body>
+                If church hurt is part of your story, the free{" "}
+                <Link
+                  href={localizedHref(locale, "/church-hurt-guide")}
+                  className="text-foreground underline decoration-primary/45 underline-offset-4 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  healing from church hurt guide
+                </Link>{" "}
+                offers a gentle place to name what happened, consider
+                boundaries, and choose a next step without being told where your
+                questions must lead.
+              </Body>
+            ) : null}
           </section>
 
           <section

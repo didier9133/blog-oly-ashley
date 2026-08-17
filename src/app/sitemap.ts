@@ -20,8 +20,8 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
   { path: "/contact", lastModified: "2026-07-17" },
   { path: "/privacy", lastModified: "2026-07-17" },
   { path: "/terms", lastModified: "2026-07-17" },
-  { path: "/deconstructing-christianity", lastModified: "2026-07-26" },
-  { path: "/church-hurt-guide", lastModified: "2026-07-26" },
+  { path: "/deconstructing-christianity", lastModified: "2026-08-17" },
+  { path: "/church-hurt-guide", lastModified: "2026-08-17" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
