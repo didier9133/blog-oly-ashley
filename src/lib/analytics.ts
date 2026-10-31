@@ -66,9 +66,10 @@ export function setAnalyticsConsent(consent: AnalyticsConsent) {
   const dataLayer = window.dataLayer ?? (window.dataLayer = []);
   window.gtag =
     window.gtag ||
-    ((...args: unknown[]) => {
-      dataLayer.push(args);
-    });
+    function () {
+      // gtag.js expects the command as an Arguments object (Google's snippet).
+      dataLayer.push(arguments);
+    };
   window.gtag("consent", "update", {
     analytics_storage: consent,
     ad_storage: "denied",
@@ -86,8 +87,8 @@ export function initializeGoogleAnalytics() {
   if (getAnalyticsConsent() !== "granted" || window.adlAnalyticsInitialized)
     return;
   window.dataLayer ??= [];
-  window.gtag ??= (...args: unknown[]) => {
-    window.dataLayer!.push(args);
+  window.gtag ??= function () {
+    window.dataLayer!.push(arguments);
   };
   window.gtag("consent", "default", {
     analytics_storage: "granted",

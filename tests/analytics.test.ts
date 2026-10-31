@@ -40,6 +40,9 @@ describe("GA4 analytics safeguards", () => {
         "event",
       ]);
       expect(fakeWindow.dataLayer[3][1]).toBe("begin_checkout");
+      expect(Object.prototype.toString.call(fakeWindow.dataLayer[3])).toBe(
+        "[object Arguments]",
+      );
       storage.set(ANALYTICS_CONSENT_KEY, "denied");
       const count = fakeWindow.dataLayer.length;
       expect(
