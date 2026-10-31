@@ -55,6 +55,8 @@ sending before delivery, so webhook retries do not send the same email again.
 
 GA4 measures the following events only with analytics consent:
 
+Saved GA4 exploration: [Checkout — abandono por paso](https://analytics.google.com/analytics/web/#/analysis/a400860340p545202071/edit/Yn8X5LCIQ0mIZQbdONswkg).
+
 | Event | Meaning |
 | --- | --- |
 | `view_item` | Product viewed, including direct arrivals from advertisements. |

@@ -104,11 +104,22 @@ export default function CheckoutForm({
 
   useEffect(() => {
     if (isPaymentElementReady || paymentLoadError) return;
-    const timeout = window.setTimeout(() => {
-      setPaymentLoadError(true);
-      trackError("payment_element", "load_timeout");
-    }, 20_000);
-    return () => window.clearTimeout(timeout);
+    let timeout: number | undefined;
+    const watchVisibleLoad = () => {
+      window.clearTimeout(timeout);
+      // Browsers can suspend Stripe frames in background tabs.
+      if (document.visibilityState !== "visible") return;
+      timeout = window.setTimeout(() => {
+        setPaymentLoadError(true);
+        trackError("payment_element", "load_timeout");
+      }, 20_000);
+    };
+    watchVisibleLoad();
+    document.addEventListener("visibilitychange", watchVisibleLoad);
+    return () => {
+      window.clearTimeout(timeout);
+      document.removeEventListener("visibilitychange", watchVisibleLoad);
+    };
   }, [isPaymentElementReady, paymentLoadError, trackError]);
   const billingDetailsSchema = useMemo(
     () => createBillingDetailsSchema(t),
