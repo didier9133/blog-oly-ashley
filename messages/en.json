@@ -534,7 +534,7 @@
     "retry-button": "Retry",
     "toast-no-confirmation": "We didn't receive payment confirmation. Please try again.",
     "toast-error": "An error occurred while preparing the payment.",
-    "form-shipping-title": "Shipping information",
+    "form-shipping-title": "Your details",
     "form-shipping-description": "Fill in your delivery details to receive the confirmation and download link for your purchase.",
     "form-payment-title": "Payment method",
     "form-payment-description": "Choose your preferred method and confirm the details to complete the purchase.",

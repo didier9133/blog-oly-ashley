@@ -60,6 +60,9 @@ export function HomeCircleCta({
             </p>
             <Link
               href={href}
+              data-analytics-cta="true"
+              data-cta-location="home_circle"
+              data-cta-variant="circle"
               className="editorial-link mt-8 self-start !border-[#fbf7f1]/35 !text-[#fbf7f1] hover:!border-[#e6ad92] hover:!text-[#e6ad92] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e6ad92]"
             >
               {cta}

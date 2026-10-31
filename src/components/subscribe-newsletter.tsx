@@ -101,6 +101,7 @@ export function FormSubscribeNewsletter({
         ) : (
         <form
           onSubmit={onSubmit}
+          data-analytics-form-name="newsletter_footer"
           className="flex flex-col sm:flex-row w-full gap-3 items-center sm:items-stretch"
         >
           <Input

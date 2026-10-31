@@ -208,7 +208,7 @@ async function SuccessContent({
           transactionId={
             purchase.stripePaymentIntent ?? purchase.stripeSessionId
           }
-          itemId={purchase.productName}
+          itemId={paymentIntent?.metadata.productId ?? purchase.productName}
           itemName={purchase.productName}
           itemCategory={purchase.productType}
           locale={locale}

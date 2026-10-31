@@ -22,6 +22,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { MaxListenersBump } from "@/components/max-listeners-bump";
 import { GoogleAnalyticsConsent } from "@/components/google-analytics-consent";
+import { AnalyticsNavigationProvider } from "@/components/analytics-navigation-provider";
+import { EngagementTracker } from "@/components/engagement-tracker";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -125,12 +127,6 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){function s(i){var u=typeof i==='string'?i:(i&&i.url)||'';return String(u).indexOf('r.stripe.com')!==-1}var o=window.fetch;if(o){window.fetch=function(i,n){if(s(i)){return Promise.resolve(new Response(null,{status:200}))}return o.apply(this,arguments)}}if(navigator.sendBeacon){var b=navigator.sendBeacon;navigator.sendBeacon=function(u,d){if(s(u))return true;return b.call(this,u,d)}}})();",
-          }}
-        />
         <meta
           name="google-site-verification"
           content="google4ff5fb217dd7438f"
@@ -170,7 +166,10 @@ export default async function RootLayout({
               locale === "es" ? "Notificaciones" : "Notifications"
             }
           />
-          {children}
+          <AnalyticsNavigationProvider>
+            {children}
+            <EngagementTracker />
+          </AnalyticsNavigationProvider>
           <GoogleAnalyticsConsent locale={locale} />
           <Analytics />
           <SpeedInsights />

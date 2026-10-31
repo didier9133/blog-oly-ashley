@@ -13,6 +13,7 @@ export const PRODUCT_NAME_DICTIONARY: Record<string, string> = {
 };
 
 type RecordPaymentEventInput = {
+  dedupeKey?: string;
   stripeEventId?: string;
   stripeLivemode?: boolean | null;
   eventType: string;
@@ -37,7 +38,7 @@ function cleanString(value: unknown) {
 
 function normalizeProductName(value: unknown) {
   const raw = cleanString(value);
-  return raw ? PRODUCT_NAME_DICTIONARY[raw] ?? raw : undefined;
+  return raw ? (PRODUCT_NAME_DICTIONARY[raw] ?? raw) : undefined;
 }
 
 export async function recordPaymentEvent(input: RecordPaymentEventInput) {
@@ -65,6 +66,14 @@ export async function recordPaymentEvent(input: RecordPaymentEventInput) {
   };
 
   try {
+    if (input.dedupeKey) {
+      const id = `local:${input.dedupeKey}`;
+      return await prisma.paymentEvent.upsert({
+        where: { id },
+        update: {},
+        create: { id, ...data },
+      });
+    }
     if (data.stripeEventId) {
       return await prisma.paymentEvent.upsert({
         where: { stripeEventId: data.stripeEventId },

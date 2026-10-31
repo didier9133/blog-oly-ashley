@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { subscribeToNewsletter } from "@/app/[locale]/actions/newsletter";
 import { useLocale, useTranslations } from "next-intl";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export function SubstackHeroSubscribe() {
   const t = useTranslations("subscribeHero");
@@ -27,6 +28,10 @@ export function SubstackHeroSubscribe() {
         source: "hero",
         sourceUrl: window.location.href,
       });
+      trackAnalyticsEvent("newsletter_signup", {
+        source_location: "hero",
+        locale,
+      });
       toast.success(t("toast-success"), { id: toastId });
       setEmail("");
     } catch (err) {
@@ -38,6 +43,7 @@ export function SubstackHeroSubscribe() {
   return (
     <form
       onSubmit={onSubmit}
+      data-analytics-form-name="newsletter_hero"
       className="group flex items-end gap-3 max-w-md"
     >
       <label htmlFor="hero-email" className="sr-only">

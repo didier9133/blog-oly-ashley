@@ -333,6 +333,7 @@ export default async function PageDetail({
               <Card className="border-border/50 shadow-sm rounded-sm bg-card overflow-hidden p-0">
                 <CardContent className="p-8 bg-[#f5f0eb]/50 h-full">
                   <Checkout
+                    productId={book.slug_en}
                     ebook_price={priceCents}
                     ebook_s3key={
                       locale === "en" ? book.s3Key_en : book.s3Key_es

@@ -48,6 +48,9 @@ export function HomeCommunityCta({
             <p className="editorial-body text-pretty">{description}</p>
             <Link
               href={href}
+              data-analytics-cta="true"
+              data-cta-location="home_community"
+              data-cta-variant="community"
               className="editorial-link mt-9 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               {cta}
