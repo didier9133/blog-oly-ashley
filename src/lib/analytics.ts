@@ -68,6 +68,7 @@ export function setAnalyticsConsent(consent: AnalyticsConsent) {
     window.gtag ||
     function () {
       // gtag.js expects the command as an Arguments object (Google's snippet).
+      // eslint-disable-next-line prefer-rest-params -- Preserve Google's tag command format.
       dataLayer.push(arguments);
     };
   window.gtag("consent", "update", {
@@ -88,6 +89,7 @@ export function initializeGoogleAnalytics() {
     return;
   window.dataLayer ??= [];
   window.gtag ??= function () {
+    // eslint-disable-next-line prefer-rest-params -- Preserve Google's tag command format.
     window.dataLayer!.push(arguments);
   };
   window.gtag("consent", "default", {
