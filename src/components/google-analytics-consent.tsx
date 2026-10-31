@@ -2,18 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import {
   getAnalyticsConsent,
   getEffectiveAnalyticsConsent,
   setAnalyticsConsent,
   shouldLoadGoogleAnalytics,
   type AnalyticsConsent,
+  GA_MEASUREMENT_ID,
 } from "@/lib/analytics";
 import { localizedHref } from "@/lib/url";
 
-const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-15V4PSKHYK";
 const CONSENT_UI_ENABLED =
   process.env.NEXT_PUBLIC_ANALYTICS_CONSENT_UI_ENABLED === "true";
 
@@ -72,7 +71,11 @@ export function GoogleAnalyticsConsent({ locale }: { locale: string }) {
   return (
     <>
       {analyticsEnabled ? (
-        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+        <Script
+          id="_next-ga"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
       ) : null}
 
       {showDialog ? (

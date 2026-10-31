@@ -188,6 +188,7 @@ export default async function ReservePage({
                       </a>
                     ) : (
                       <Checkout
+                        productId="rebuilding-reverence-circle"
                         ebook_price={PRICE_CENTS}
                         ebook_s3key={PRODUCT_S3KEY}
                         productName={productName}

@@ -1,10 +1,11 @@
-import { sendGAEvent } from "@next/third-parties/google";
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-15V4PSKHYK";
+let memoryConsent: AnalyticsConsent | null = null;
 
 export const ANALYTICS_CONSENT_KEY = "adl_analytics_consent";
 export const ANALYTICS_CONSENT_EVENT = "adl:analytics-consent-change";
 export const VIEW_ITEM_SESSION_KEY_PREFIX = "adl_view_item:v1";
-export const MEANINGFUL_ENGAGEMENT_SESSION_KEY =
-  "adl_meaningful_engagement:v1";
+export const MEANINGFUL_ENGAGEMENT_SESSION_KEY = "adl_meaningful_engagement:v1";
 
 const ANALYTICS_SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 
@@ -38,35 +39,70 @@ export type SeoAnalyticsEvent =
   | "generate_lead"
   | "view_item"
   | "begin_checkout"
+  | "checkout_view"
+  | "checkout_details_complete"
+  | "add_payment_info"
+  | "checkout_submit"
+  | "checkout_error"
   | "purchase";
 
 export function getAnalyticsConsent(): AnalyticsConsent | null {
   if (typeof window === "undefined") return null;
-  const value = window.localStorage.getItem(ANALYTICS_CONSENT_KEY);
-  return value === "granted" || value === "denied" ? value : null;
+  try {
+    const value = window.localStorage.getItem(ANALYTICS_CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch {
+    return memoryConsent;
+  }
 }
 
 export function setAnalyticsConsent(consent: AnalyticsConsent) {
-  window.localStorage.setItem(ANALYTICS_CONSENT_KEY, consent);
+  memoryConsent = consent;
+  try {
+    window.localStorage.setItem(ANALYTICS_CONSENT_KEY, consent);
+  } catch {
+    /* Privacy modes can block storage. */
+  }
   const dataLayer = window.dataLayer ?? (window.dataLayer = []);
   window.gtag =
     window.gtag ||
     ((...args: unknown[]) => {
       dataLayer.push(args);
     });
-  window.gtag(
-    "consent",
-    "update",
-    {
-      analytics_storage: consent,
-      ad_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied",
-    },
-  );
+  window.gtag("consent", "update", {
+    analytics_storage: consent,
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  if (consent === "granted") initializeGoogleAnalytics();
   window.dispatchEvent(
     new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: consent }),
   );
+}
+
+/** Queue config before events, even when React effects run before the tag loads. */
+export function initializeGoogleAnalytics() {
+  if (getAnalyticsConsent() !== "granted" || window.adlAnalyticsInitialized)
+    return;
+  window.dataLayer ??= [];
+  window.gtag ??= (...args: unknown[]) => {
+    window.dataLayer!.push(args);
+  };
+  window.gtag("consent", "default", {
+    analytics_storage: "granted",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID);
+  window.adlAnalyticsInitialized = true;
+}
+
+function sendQueuedGAEvent(...args: unknown[]) {
+  initializeGoogleAnalytics();
+  window.gtag?.(...args);
 }
 
 export function getEffectiveAnalyticsConsent(
@@ -176,7 +212,7 @@ export function trackAnalyticsEvent(
   const session = readAnalyticsSession(now);
   writeAnalyticsSession({ ...session, lastActivityAt: now });
 
-  sendGAEvent("event", event, {
+  sendQueuedGAEvent("event", event, {
     ...currentPageProperties(),
     ...safeProperties,
   });
@@ -204,7 +240,7 @@ export function trackMeaningfulEngagement(
     lastActivityAt: now,
     meaningfulEngagementSent: true,
   });
-  sendGAEvent("event", "meaningful_engagement", {
+  sendQueuedGAEvent("event", "meaningful_engagement", {
     ...currentPageProperties(),
     engagement_reason: reason,
     ...sanitizeAnalyticsProperties(properties),
@@ -218,17 +254,6 @@ export function sanitizeAnalyticsProperties(properties: AnalyticsProperties) {
       (entry) => entry[1] !== null && entry[1] !== undefined,
     ),
   ) as Record<string, AnalyticsPropertyValue>;
-}
-
-export function isInternalPageNavigation(
-  currentPathname: string,
-  previousPathname: string | null,
-) {
-  return Boolean(
-    previousPathname &&
-      previousPathname.startsWith("/") &&
-      previousPathname !== currentPathname,
-  );
 }
 
 export function getViewItemSessionKey(itemId: string) {
@@ -248,6 +273,8 @@ export function shouldLoadGoogleAnalytics(
 
 declare global {
   interface Window {
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    adlAnalyticsInitialized?: boolean;
   }
 }

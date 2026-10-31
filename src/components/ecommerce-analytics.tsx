@@ -4,10 +4,8 @@ import { useEffect, useRef } from "react";
 import {
   ANALYTICS_CONSENT_EVENT,
   getViewItemSessionKey,
-  isInternalPageNavigation,
   trackAnalyticsEvent,
 } from "@/lib/analytics";
-import { useAnalyticsNavigation } from "@/components/analytics-navigation-provider";
 
 type ItemProperties = {
   itemId: string;
@@ -20,20 +18,12 @@ type ItemProperties = {
 
 export function ViewItemAnalytics(properties: ItemProperties) {
   const tracked = useRef(false);
-  const { currentPathname, previousPathname } = useAnalyticsNavigation();
-  const {
-    itemId,
-    itemName,
-    itemCategory,
-    locale,
-    value,
-    currency,
-  } = properties;
+  const { itemId, itemName, itemCategory, locale, value, currency } =
+    properties;
 
   useEffect(() => {
     const send = () => {
       if (tracked.current) return;
-      if (!isInternalPageNavigation(currentPathname, previousPathname)) return;
 
       const sessionKey = getViewItemSessionKey(itemId);
       try {
@@ -46,6 +36,7 @@ export function ViewItemAnalytics(properties: ItemProperties) {
       }
 
       const sent = trackAnalyticsEvent("view_item", {
+        product_id: itemId,
         locale,
         value,
         currency: currency?.toUpperCase(),
@@ -69,16 +60,7 @@ export function ViewItemAnalytics(properties: ItemProperties) {
     send();
     window.addEventListener(ANALYTICS_CONSENT_EVENT, send);
     return () => window.removeEventListener(ANALYTICS_CONSENT_EVENT, send);
-  }, [
-    currency,
-    currentPathname,
-    itemCategory,
-    itemId,
-    itemName,
-    locale,
-    previousPathname,
-    value,
-  ]);
+  }, [currency, itemCategory, itemId, itemName, locale, value]);
 
   return null;
 }
@@ -92,7 +74,17 @@ export function PurchaseAnalytics({
   useEffect(() => {
     const send = () => {
       if (tracked.current) return;
+      const key = `adl_purchase:v1:${transactionId}`;
+      try {
+        if (window.sessionStorage.getItem(key)) {
+          tracked.current = true;
+          return;
+        }
+      } catch {
+        /* The mount guard remains available. */
+      }
       tracked.current = trackAnalyticsEvent("purchase", {
+        product_id: properties.itemId,
         transaction_id: transactionId,
         locale: properties.locale,
         value: properties.value,
@@ -105,6 +97,13 @@ export function PurchaseAnalytics({
           },
         ],
       });
+      if (tracked.current) {
+        try {
+          window.sessionStorage.setItem(key, "1");
+        } catch {
+          /* Optional storage. */
+        }
+      }
     };
     send();
     window.addEventListener(ANALYTICS_CONSENT_EVENT, send);

@@ -127,12 +127,6 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "(function(){function s(i){var u=typeof i==='string'?i:(i&&i.url)||'';return String(u).indexOf('r.stripe.com')!==-1}var o=window.fetch;if(o){window.fetch=function(i,n){if(s(i)){return Promise.resolve(new Response(null,{status:200}))}return o.apply(this,arguments)}}if(navigator.sendBeacon){var b=navigator.sendBeacon;navigator.sendBeacon=function(u,d){if(s(u))return true;return b.call(this,u,d)}}})();",
-          }}
-        />
         <meta
           name="google-site-verification"
           content="google4ff5fb217dd7438f"
