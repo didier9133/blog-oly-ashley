@@ -5,12 +5,19 @@ import { localizedLanguages } from "@/lib/seo";
 import { publicPostSlug } from "@/lib/post-slugs";
 import { getPostModifiedAt } from "@/lib/seo-content";
 import { getWorkbookModifiedAt } from "@/lib/workbook-content";
+import {
+  DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT,
+  DECONSTRUCTING_CHRISTIANITY_PATH,
+} from "@/lib/deconstructing-christianity";
 
 const LOCALES = ["es", "en"] as const;
 
 // Fechas reales de última modificación por ruta.
 // Actualizar manualmente cuando cambie contenido estático significativo.
-const STATIC_ROUTES: { path: string; lastModified: string }[] = [
+const STATIC_ROUTES: {
+  path: string;
+  lastModified: string | Record<(typeof LOCALES)[number], string>;
+}[] = [
   { path: "", lastModified: "2026-07-26" },
   { path: "/about", lastModified: "2026-07-26" },
   { path: "/writing", lastModified: "2026-07-26" },
@@ -20,7 +27,10 @@ const STATIC_ROUTES: { path: string; lastModified: string }[] = [
   { path: "/contact", lastModified: "2026-07-17" },
   { path: "/privacy", lastModified: "2026-07-17" },
   { path: "/terms", lastModified: "2026-07-17" },
-  { path: "/deconstructing-christianity", lastModified: "2026-08-17" },
+  {
+    path: DECONSTRUCTING_CHRISTIANITY_PATH,
+    lastModified: DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT,
+  },
   { path: "/church-hurt-guide", lastModified: "2026-08-17" },
 ];
 
@@ -30,7 +40,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = LOCALES.flatMap((locale) =>
     STATIC_ROUTES.map(({ path, lastModified }) => ({
       url: fullUrl(locale, path),
-      lastModified: new Date(lastModified),
+      lastModified: new Date(
+        typeof lastModified === "string" ? lastModified : lastModified[locale],
+      ),
       alternates: {
         languages: localizedLanguages({ en: path, es: path }),
       },
