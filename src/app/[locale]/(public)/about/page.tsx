@@ -105,6 +105,16 @@ export default async function Page({
                 <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed font-[family-name:var(--font-lora)] whitespace-pre-line">
                   {t("paragraph-4")}
                 </p>
+                {locale === "es" && (
+                  <p className="font-[family-name:var(--font-lora)] text-lg sm:text-xl">
+                    <Link
+                      href="/es/writing/como-reconstruir-la-fe-despues-de-la-deconstruccion"
+                      className="text-foreground underline decoration-primary/45 underline-offset-4 hover:decoration-current focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {t("faith-reflections-link")}
+                    </Link>
+                  </p>
+                )}
               </div>
               <div className="mt-10">
                 <Link
