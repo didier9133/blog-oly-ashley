@@ -31,9 +31,6 @@ import { organizationRef, personRef } from "@/lib/schema-entities";
 const PUBLISHED_DATE = new Date(
   `${DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT}T12:00:00.000Z`,
 );
-const MODIFIED_DATE = new Date(
-  `${DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT}T12:00:00.000Z`,
-);
 
 function getGuideOgImage(locale: "en" | "es") {
   if (locale === "es") {
@@ -94,7 +91,7 @@ export async function generateMetadata({
       title: content.seoTitle,
       description: content.description,
       publishedTime: PUBLISHED_DATE.toISOString(),
-      modifiedTime: MODIFIED_DATE.toISOString(),
+      modifiedTime: `${DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT[locale]}T12:00:00.000Z`,
       authors: [aboutUrl],
       images: [
         {
@@ -143,7 +140,7 @@ export default async function DeconstructingChristianityPage({
     url: pageUrl,
     inLanguage: content.inLanguage,
     datePublished: PUBLISHED_DATE.toISOString(),
-    dateModified: MODIFIED_DATE.toISOString(),
+    dateModified: `${DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT[locale]}T12:00:00.000Z`,
     author: personRef,
     publisher: organizationRef,
     mainEntityOfPage: {
@@ -244,10 +241,10 @@ export default async function DeconstructingChristianityPage({
                   {content.headlineEmphasis}
                 </span>
               </h1>
-              <div className="mt-9 max-w-3xl border-l border-primary pl-5 sm:pl-7">
-                <p className="font-[family-name:var(--font-lora)] text-lg leading-8 text-foreground/85 sm:text-xl sm:leading-9">
-                  {content.introduction}
-                </p>
+              <div className="mt-9 max-w-3xl space-y-4 border-l border-primary pl-5 font-[family-name:var(--font-lora)] text-lg leading-8 text-foreground/85 sm:pl-7 sm:text-xl sm:leading-9">
+                {content.introduction.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
               <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-2 font-[family-name:var(--font-lora)] text-sm text-muted-foreground">
                 <span>
@@ -265,7 +262,7 @@ export default async function DeconstructingChristianityPage({
                   {content.publishedDate}
                 </time>
                 <span aria-hidden="true">·</span>
-                <time dateTime={DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT}>
+                <time dateTime={DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT[locale]}>
                   {content.updatedDate}
                 </time>
                 <span aria-hidden="true">·</span>

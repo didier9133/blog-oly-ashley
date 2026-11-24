@@ -2,7 +2,10 @@ export const DECONSTRUCTING_CHRISTIANITY_PATH =
   "/deconstructing-christianity" as const;
 
 export const DECONSTRUCTING_CHRISTIANITY_PUBLISHED_AT = "2026-07-13";
-export const DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT = "2026-08-17";
+export const DECONSTRUCTING_CHRISTIANITY_MODIFIED_AT = {
+  en: "2026-11-23",
+  es: "2026-08-17",
+} as const;
 
 export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
   en: {
@@ -72,11 +75,13 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
     eyebrow: "A compassionate guide to faith deconstruction",
     headlineLead: "Deconstructing Christianity:",
     headlineEmphasis: "What It Means and What Comes Next",
-    introduction:
+    introduction: [
       "Deconstructing Christianity is the process of honestly examining the beliefs, teachings, and structures you inherited — asking what still feels true, what needs to be reinterpreted, and what may need to be released. There is no single correct ending. You might stay. You might rebuild something different. You might walk away. Wherever you land, the process itself can be sacred.",
+      "Some people call themselves a “deconstructed Christian” after rethinking the Christian beliefs they inherited. For example, you might have grown up hearing that doubt was a sin. You still pray, and now you feel free to say, “God, I have questions.”",
+    ],
     by: "By",
     publishedDate: "July 13, 2026",
-    updatedDate: "Updated August 17, 2026",
+    updatedDate: "Updated November 23, 2026",
     evergreen: "Evergreen guide",
     asideLead:
       "A guide for questioning without being told where your questions must lead.",
@@ -216,7 +221,7 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
         },
       ],
       conclusion:
-        "Some people choose the self-description “deconstructed Christian.” Ashley does not use that label for herself; she describes her own position as living in The In-Between. The phrase can describe a process or be chosen as a personal identity, but it should not be assigned to someone or replace one fixed identity with another.",
+        "Ashley describes her own experience as living in The In-Between. You get to choose the words that fit yours, too.",
     },
     religiousHarm: {
       heading: "Can religious harm be part of faith deconstruction?",
@@ -364,8 +369,9 @@ export const DECONSTRUCTING_CHRISTIANITY_CONTENT = {
     eyebrow: "Una guía compasiva para deconstruir la fe",
     headlineLead: "Deconstruir el cristianismo:",
     headlineEmphasis: "Qué significa y qué viene después",
-    introduction:
+    introduction: [
       "Deconstruir el cristianismo es mirar con honestidad las creencias, enseñanzas y estructuras que recibiste: preguntarte qué sigues reconociendo como verdadero, qué necesita una nueva interpretación y qué quizá sea momento de soltar. No hay un único final correcto. Tal vez decidas quedarte. Tal vez reconstruyas algo diferente. Tal vez te alejes. Llegues donde llegues, el proceso también puede ser sagrado.",
+    ],
     by: "Por",
     publishedDate: "13 de julio de 2026",
     updatedDate: "Actualizada el 17 de agosto de 2026",
