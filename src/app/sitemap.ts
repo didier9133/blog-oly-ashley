@@ -19,7 +19,7 @@ const STATIC_ROUTES: {
   lastModified: string | Record<(typeof LOCALES)[number], string>;
 }[] = [
   { path: "", lastModified: "2026-07-26" },
-  { path: "/about", lastModified: "2026-07-26" },
+  { path: "/about", lastModified: { en: "2026-07-26", es: "2026-11-23" } },
   { path: "/writing", lastModified: "2026-07-26" },
   { path: "/workbooks", lastModified: "2026-07-17" },
   { path: "/circle", lastModified: "2026-07-17" },
