@@ -43,10 +43,16 @@ const SPANISH_WORKBOOK_COVERS = {
   "queer-and-called": "/queer-and-called-es-v2.png",
 } satisfies Record<ActiveWorkbookSlug, string>;
 
-const SPANISH_WORKBOOK_EDITORIAL_MODIFIED_AT = {
-  "rebuilding-reverence": "2026-07-17",
-  "queer-and-called": "2026-07-17",
-} satisfies Record<ActiveWorkbookSlug, string>;
+const WORKBOOK_EDITORIAL_MODIFIED_AT: Record<
+  ActiveWorkbookSlug,
+  Partial<Record<WorkbookContentLocale, string>>
+> = {
+  "rebuilding-reverence": {
+    en: "2026-07-26T23:45:05Z",
+    es: "2026-07-17T12:00:00Z",
+  },
+  "queer-and-called": { es: "2026-07-17T12:00:00Z" },
+};
 
 const SPANISH_WORKBOOK_CONTENT = {
   "rebuilding-reverence": {
@@ -185,19 +191,16 @@ export function getWorkbookCoverImage(
   return locale === "en" ? book.coverImage_en : book.coverImage_es;
 }
 
-/** Reflect code-owned Spanish editorial revisions in sitemap last-modified dates. */
+/** Include editorial changes shipped in code alongside database updates. */
 export function getWorkbookModifiedAt(
   fallback: Date,
   englishSlug: string,
   locale: WorkbookContentLocale,
 ): Date {
-  if (locale !== "es" || !isActiveWorkbookSlug(englishSlug)) {
-    return fallback;
-  }
+  if (!isActiveWorkbookSlug(englishSlug)) return fallback;
 
-  const editorialDate = new Date(
-    `${SPANISH_WORKBOOK_EDITORIAL_MODIFIED_AT[englishSlug]}T12:00:00.000Z`,
-  );
-
+  const revision = WORKBOOK_EDITORIAL_MODIFIED_AT[englishSlug][locale];
+  if (!revision) return fallback;
+  const editorialDate = new Date(revision);
   return fallback > editorialDate ? fallback : editorialDate;
 }

@@ -131,6 +131,15 @@ describe("workbook editorial content", () => {
     });
   });
 
+  test("the English Rebuilding Reverence sitemap date includes editorial and database changes", () => {
+    const oldRecord = new Date("2026-07-08T19:25:29.345Z");
+    const newRecord = new Date("2026-08-02T10:00:00Z");
+    expect(getWorkbookModifiedAt(oldRecord, "rebuilding-reverence", "en").toISOString())
+      .toBe("2026-07-26T23:45:05.000Z");
+    expect(getWorkbookModifiedAt(newRecord, "rebuilding-reverence", "en")).toEqual(newRecord);
+    expect(getWorkbookModifiedAt(oldRecord, "queer-and-called", "en")).toEqual(oldRecord);
+  });
+
   test("uses safe Spanish fallbacks and an editorial last-modified date", () => {
     const futureBook = {
       ...databaseBook,
